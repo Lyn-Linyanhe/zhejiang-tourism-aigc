@@ -189,9 +189,12 @@ def main() -> int:
         {"shot_id": cue.shot_id, "start": cue.start, "end": cue.end, "text": cue.text}
         for cue in audio.cues
     ]
+    # 成片收到旁白结束再留半秒，不再把静图硬垫到 30 秒。
+    voice_end = max(float(cue["end"]) for cue in cues)
+    task.input.duration = round(min(float(DURATION), voice_end + 0.5), 3)
     shot_sum = Orchestrator.apply_audio_durations(task, cues, float(audio.total_duration))
-    if abs(shot_sum - DURATION) > 0.05:
-        return _fail(f"镜头时长没有锁到 {DURATION} 秒，实际 {shot_sum}")
+    if abs(shot_sum - task.input.duration) > 0.05:
+        return _fail(f"镜头时长没有跟上旁白，实际 {shot_sum}")
 
     provider: OfflineAssetProvider | PexelsAssetProvider
     asset_source = "offline-scene-generator"
@@ -211,14 +214,18 @@ def main() -> int:
                 "order": shot.order,
                 "title": shot.title,
                 "visual_prompt": shot.visual_prompt,
+                "duration_sec": shot.duration_sec,
+                "narration": shot.narration,
             },
             assets_dir,
             "#24526a",
             "#d6ad60",
         )
         shot.asset_local_path = asset["local_path"]
-        shot.asset_media_type = "image"
-        render_shots.append(shot.__dict__.copy())
+        shot.asset_media_type = str(asset.get("media_type") or "image")
+        payload = shot.__dict__.copy()
+        payload["clip_start"] = float(asset.get("clip_start") or 0)
+        render_shots.append(payload)
 
     task.audio = {
         "voice_local_path": audio.voice_path,
@@ -227,7 +234,7 @@ def main() -> int:
         "voice_provider": audio.event.get("provider", ""),
         "cues": cues,
         "duck": audio.event.get("mix") if isinstance(audio.event.get("mix"), dict) else {},
-        "requested_duration": float(DURATION),
+        "requested_duration": float(task.input.duration),
     }
     try:
         VideoRenderer(settings.media_dir).render(
@@ -263,11 +270,15 @@ def main() -> int:
         "music_file": task.audio["music_file"],
         "voice_provider": task.audio["voice_provider"],
         "asset_source": asset_source,
+        "video_shots": sum(1 for shot in render_shots if shot.get("asset_media_type") == "video"),
     }
     print(json.dumps(report, ensure_ascii=False))
-    if srt_last > DURATION + 0.001:
+    target = float(task.input.duration)
+    if srt_last > target + 0.05:
         return 1
-    if not all(29.95 <= value <= 30.05 for value in (container, video, audio_sec)):
+    if not all(abs(value - target) <= 0.08 for value in (container, video, audio_sec)):
+        return 1
+    if report["video_shots"] < 4:
         return 1
     return 0
 
