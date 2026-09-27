@@ -1,0 +1,61 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# --- 密钥与本地配置：绝对不要提交 ---
+.env
+*.key
+*.pem
+
+# --- 编辑器与操作系统 ---
+.idea/
+.vscode/
+.claude/
+Thumbs.db
+desktop.ini
+
+# --- 前端 ---
+node_modules/
+dist/
+
+# --- 运行产物：数据库、媒体、日志 ---
+runtime/db/*.sqlite3
+!runtime/db/.gitkeep
+runtime/media/*
+!runtime/media/.gitkeep
+# 公开仓库只保留 30 秒离线验收成片，不带失败草稿和数据库。
+!runtime/media/accept_30s/
+!runtime/media/accept_30s/**
+runtime/logs/*
+!runtime/logs/.gitkeep
+# 对比实验明细是可追溯证据（作品报告素材）
+!runtime/kb_eval.json
+
+# --- 媒体与生成物 ---
+*.mp4
+*.wav
+*.mp3
+*.srt
+*.ppm
+# 曲库和验收成片是演示所需，随仓库公开。密钥仍只留在本地 .env。
+!runtime/music/*.mp3
+!runtime/media/accept_30s/*.mp4
+!runtime/media/accept_30s/*.srt
+!runtime/media/accept_30s/*.mp3
+*.tmp
+*.log
+
+# 假素材包是生成物，用 team/假素材包/make_fixtures.py 重新生成
+team/假素材包/fixtures/
+
+# 探测数据库、失败草稿和抽帧图不进公开仓库
+runtime/_wire_probe*/
+runtime/fix_task.json
+runtime/iterate_task.json
+runtime/show_task.json
+runtime/show_frames/

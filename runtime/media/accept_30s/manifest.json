@@ -1,0 +1,14 @@
+{
+  "video_url": "/media/accept_30s/final.mp4",
+  "subtitle_url": "/media/accept_30s/subtitles.srt",
+  "cover_url": "/media/accept_30s/cover.jpg",
+  "video_local_path": "D:\\some-project\\20260925(1)\\zhejiang-tourism-aigc\\runtime\\media\\accept_30s\\final.mp4",
+  "format": "MP4/H.264/AAC",
+  "aspect_ratio": "9:16",
+  "resolution": "720x1280",
+  "has_audio": true,
+  "has_burned_subtitles": true,
+  "render_provider": "ffmpeg",
+  "rendered_at": "2026-09-26T17:19:12.825953+00:00",
+  "aigc_label": "本作品包含 AI 生成或合成内容"
+}

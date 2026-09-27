@@ -1,0 +1,117 @@
+# 本版本改进说明（相对 20260913 交接版）
+
+更新时间：2026-09-16
+打包人：浙里成片 + MPT 引擎合流小组
+
+本包 = `zhejiang-tourism-aigc-complete-20260913` 全部内容 + 以下改进。`.env` 已包含可用的 DeepSeek 与 Pexels 配置（见文末安全提醒）。
+
+## 改进清单
+
+### 1. 浙江文旅知识库（新增，本项目的差异化核心）
+
+- 新增 `data_zhejiang_kb/`：46 个杭州文旅实体、210 条经联网核查的事实
+  （景区/非遗/美食/节庆/传说/名人六类，含事实核查质量记录），
+  每个实体带 `keywords_en`（精准英文素材检索词）与 `imagery`（画面意象）。
+- 新增 `backend/app/services/knowledge.py`（纯标准库，零第三方依赖），
+  同一份语料服务两个下游方向：
+  - **管画面** `english_query()`：镜头描述 → 精准英文检索词；
+  - **管文案** `build_generation_context()`：创作参数 → 经核查的事实参考块。
+
+### 1.1 知识注入（脚本生成阶段用上知识库）
+
+此前知识库只服务素材检索，脚本阶段仍只有"不得编造"的约束而没有可用素材，
+成片文案因此**文采尚可但细节空泛**——没有可核实的年代、人物、典故。
+本次打通另一半：
+
+- `build_generation_context()` 按 `city/landmark/theme/culture/festival`
+  检索，字段权重分级（地标 4.0 > 文化线索 2.0 > 节庆 1.5 > 主题 1.0），
+  命中最具体的别名优先（"虎跑公园"不会被宽泛的"西湖"抢走）；
+  渲染成不超过 1500 字的参考块，附 4 条使用规则（优先用事实、不编造、
+  事实配画面、参考画面提示）。
+- `OpenAICompatibleLLMProvider` 注入该参考块；语料缺失、路径异常或读取出错时
+  **静默降级为空串**，prompt 退回原有约束，绝不阻断脚本生成。
+- **城市过滤是硬约束**：用户选了宁波但语料只有杭州时，退回城市背景资料，
+  而不是注入杭州事实——错误的权威事实比没有事实更糟。
+
+**A/B 实测**（deepseek-chat，杭州/西湖/春日城市漫游，同参数各 4 次采样）：
+
+| 指标 | A 无注入 | B 有注入 |
+|---|---|---|
+| 知识实体命中 | 4.75 | 6.25 |
+| 具体名词使用 | 2.5 | 17.5 |
+| 事实性表述 | 2.25 | 13.5 |
+
+分镜层面做到了"一条事实配一个画面"：南宋西湖十景配苏堤镜头、
+三潭印月石塔配湖心镜头、世界遗产名录配收尾镜头。
+复现脚本：`python scripts/kb_injection_eval.py --runs 4`。
+
+**评测口径提醒**：不要用"四位年份出现次数"做指标——模型更常用
+"天启元年""北宋苏轼元祐四年"这类中式纪年，只匹配阿拉伯数字会严重低估
+注入效果（实测会得出"0 命中"的错误结论）。
+
+### 2. Pexels 素材检索修复与增强（`providers/media.py`）
+
+- **修复 Cloudflare 拦截**：Pexels 搜索与图片下载请求补浏览器 User-Agent，
+  修复 `HTTP 403 error code 1010`（此前素材会静默回退离线占位图）。
+- **检索词精准化**：`PexelsAssetProvider` 优先使用知识库给出的英文检索词
+  （如"雷峰塔"镜头 → `Leifeng Pagoda sunset`），中文描述仅作回退。
+  实测"雷峰塔"镜头从无关野湖变为真雷峰塔西湖实景。
+
+### 3. LLM 读超时可配置（`providers/llm.py` + `config.py`）
+
+- 读超时从硬编码 45 秒改为 `LLM_TIMEOUT_SECONDS` 环境变量（默认 180）。
+  中转/慢通道生成 6 镜分镜常超 45 秒，此前必然超时回退离线。
+
+### 4. 窄屏导航修复（`frontend/styles.css`）
+
+- 窗口宽度 ≤1000px 时侧边导航原本被 `display:none` 隐藏且无替代入口，
+  导致窄窗口（应用内浏览器/分屏）无法进入"作品档案"。已改为顶部横向排列。
+
+### 5. 情绪匹配背景音乐（新增）
+
+- 曲库：MPT 自带 29 首背景音乐已拷入 `runtime/music/`，配合
+  `mood_manifest.json` 情绪清单（侧边工作线标注：calm 平静/grand 恢弘/
+  ancient 古风/poetic 诗意 四类）。
+- `find_music_file` 按 `music_mood` 自动匹配：舒缓→calm、热烈→grand、
+  雅致→ancient、轻快→poetic，同类别内随机选曲（每次成片配乐有变化）；
+  任务元数据新增 `music_file` 字段记录实际用曲。
+- 版权注意：该批音乐为 MPT 上游自带（README 标注来源 YouTube），比赛展示
+  可用，**正式对外发布前建议替换为明确授权的音乐**（放入 `runtime/music`
+  即可，命名不限；`无音乐` 选项可关闭 BGM）。
+- 之前版本的合成演示音垫（ambient_demo_synth.aac / bgm-*.aac）已移除。
+
+### 6. `.env` 已配好（开箱即用）
+
+- `LLM_BASE_URL=https://api.deepseek.com`、`LLM_MODEL=deepseek-chat`、
+  `LLM_API_KEY=已填写可用 key`；
+- `ASSET_PROVIDER=pexels` + `PEXELS_API_KEY=已填写`；
+- `MPT_ROOT` 指向同级 MoneyPrinterTurbo（可选，不部署不影响主流程）；
+- `MPT_TIMEOUT_SECONDS=600`（MPT 桥接链路实测需要较长超时）。
+
+## 快速启动
+
+```powershell
+Set-Location .\zhejiang-tourism-aigc
+# .env 已配好，如需更换 DeepSeek key 编辑 .env 的 LLM_API_KEY
+.\scripts\start.ps1
+# 浏览器打开 http://127.0.0.1:8787
+```
+
+流程：填表 → 生成脚本预览（真 DeepSeek 分镜，**已注入经核查的杭州文旅事实**）
+→ 编辑每个镜头 → 生成视频（自动 Pexels 真实素材 + Edge TTS 晓晓配音 +
+情绪匹配 BGM + FFmpeg 合成）。
+
+## 安全提醒
+
+- `.env` 内含 DeepSeek 与 Pexels 的 API key，**请勿外传本包或提交到公开仓库**；
+- key 若在聊天中暴露过，建议到对应平台重置后更新 `.env`。
+
+## 已知限制
+
+- 知识库当前深度覆盖杭州（46 实体），其余 10 地市待按同结构扩充；
+  **扩充时务必沿用事实核查流程**（`_meta.json` 记录了核查口径），
+  未核查的内容注入 prompt 会变成"权威的错误"；
+- 知识注入的效果依赖 LLM 是否愿意用事实：实测 deepseek-chat 表现良好，
+  但换用弱模型时可能仍写得空泛——此时可在"补充要求"里明确点名要用的典故；
+- Pexels 为图片素材（静态图+转场），实拍视频镜头建议用"每镜头上传素材"；
+- 背景 music 需上传授权音乐或放入 `runtime/music`。

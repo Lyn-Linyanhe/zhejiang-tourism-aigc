@@ -1,0 +1,5 @@
+# 运行时默认只使用 Python 标准库，便于离线验收。
+# 可选增强依赖：
+# fastapi>=0.115
+# uvicorn[standard]>=0.30
+# pydantic>=2.8
