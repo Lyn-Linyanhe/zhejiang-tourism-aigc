@@ -281,6 +281,8 @@ def transition_filter(
     """
     del fps  # 段内转场按秒计算，避免再引入按帧放大时长的滤镜。
     kind = str(name or "fade").strip().lower()
+    if kind in {"", "cut", "none", "hard"}:
+        return ""
     if kind not in TRANSITIONS:
         kind = "fade"
     window = transition_window(duration)

@@ -52,11 +52,18 @@ class VideoRenderer:
         media_type: str = "",
         transition: str = "fade",
         grade: dict[str, Any] | None = None,
+        clip_start: float = 0.0,
     ) -> None:
         width, height = (int(value) for value in resolution.split("x", 1))
         video = is_video_media(media_type, source) if media_type else _is_video_asset(source)
         if video:
-            input_args = ["-stream_loop", "-1", "-i", str(source)]
+            # 实拍从素材中段起用，避开片头标题和片尾黑场。
+            try:
+                start = max(0.0, float(clip_start or 0))
+            except (TypeError, ValueError):
+                start = 0.0
+            # -an 放在输出侧。这里不保留素材原声，避免游船环境声盖过旁白。
+            input_args = ["-ss", f"{start:.3f}", "-an", "-i", str(source)]
         else:
             # 先铺成一段静帧，再做运镜。-loop 1 会让按帧计数的滤镜每帧重置。
             input_args = ["-loop", "1", "-framerate", str(fps), "-i", str(source)]
@@ -245,8 +252,9 @@ class VideoRenderer:
                 resolution,
                 fps,
                 media_type=str(shot.get("asset_media_type") or ""),
-                transition=str(shot.get("transition") or "fade"),
+                transition=str(shot.get("transition") or "cut"),
                 grade=active_grade,
+                clip_start=float(shot.get("clip_start") or 0),
             )
             segment_paths.append(segment)
         if not segment_paths:

@@ -135,6 +135,41 @@ def landmark_queries(shot: dict[str, Any]) -> tuple[str, list[str]]:
     return "西湖", list(LANDMARK_QUERIES["西湖"])
 
 
+def pick_pexels_video(
+    videos: list[dict[str, Any]],
+    needed_sec: float,
+    used_ids: set[str],
+) -> dict[str, Any] | None:
+    """选一条够长、还没用过的实拍。静图推镜头不像剪过，能用视频就不用图。"""
+    candidates = []
+    for video in videos:
+        video_id = str(video.get("id") or "")
+        if not video_id or video_id in used_ids:
+            continue
+        try:
+            duration = float(video.get("duration") or 0)
+        except (TypeError, ValueError):
+            duration = 0.0
+        if duration + 0.05 < needed_sec:
+            continue
+        files = [
+            item
+            for item in (video.get("video_files") or [])
+            if str(item.get("file_type") or "").lower() == "video/mp4" and item.get("link")
+        ]
+        if not files:
+            continue
+        file = min(files, key=lambda item: abs(int(item.get("height") or 0) - 720))
+        width = int(file.get("width") or 0)
+        height = int(file.get("height") or 0)
+        landscape = 1 if width >= height else 0
+        candidates.append((landscape, -abs(height - 720), video, file))
+    if not candidates:
+        return None
+    _landscape, _height, video, file = max(candidates, key=lambda item: item[:2])
+    return {"video": video, "file": file}
+
+
 def pick_pexels_photo(
     photos: list[dict[str, Any]],
     query: str,
@@ -164,6 +199,7 @@ class PexelsAssetProvider(AssetProvider):
     def __init__(self, api_key: str, base_url: str = "https://api.pexels.com/v1") -> None:
         self.api_key = api_key.strip()
         self.base_url = base_url.rstrip("/")
+        self._used_video_ids: set[str] = set()
 
     def create_or_find(
         self,
@@ -176,6 +212,14 @@ class PexelsAssetProvider(AssetProvider):
         if not self.api_key:
             raise RuntimeError("PEXELS_API_KEY is required when asset_source=pexels")
         output_dir.mkdir(parents=True, exist_ok=True)
+        try:
+            needed = float(shot.get("duration_sec") or 0)
+        except (TypeError, ValueError):
+            needed = 0.0
+        if needed <= 12:
+            video_asset = self._try_video(task_id, shot, output_dir, needed or 4.0)
+            if video_asset is not None:
+                return video_asset
         landmark, queries = landmark_queries(shot)
         needles = LANDMARK_NEEDLES.get(landmark, ())
         photo: dict[str, Any] | None = None
@@ -202,6 +246,68 @@ class PexelsAssetProvider(AssetProvider):
                 break
         if photo is None:
             raise RuntimeError(f"Pexels returned no matching photo for {landmark or query}")
+
+    def _try_video(
+        self,
+        task_id: str,
+        shot: dict[str, Any],
+        output_dir: Path,
+        needed_sec: float,
+    ) -> dict[str, Any] | None:
+        """西湖实拍优先。搜不到够长的片段时返回 None，调用方再退回照片。"""
+        _landmark, queries = landmark_queries(shot)
+        query = queries[0] if queries else "West Lake Hangzhou"
+        params = urllib.parse.urlencode(
+            {"query": query, "orientation": "landscape", "per_page": 8, "size": "medium"}
+        )
+        video_root = self.base_url.replace("/v1", "") + "/videos"
+        request = urllib.request.Request(
+            f"{video_root}/search?{params}",
+            headers={"Authorization": self.api_key, "User-Agent": _BROWSER_UA},
+        )
+        try:
+            with urllib.request.urlopen(request, timeout=30) as response:
+                payload = json.loads(response.read().decode("utf-8"))
+        except Exception:
+            return None
+        picked = pick_pexels_video(payload.get("videos") or [], needed_sec, self._used_video_ids)
+        if picked is None:
+            return None
+        video = picked["video"]
+        file = picked["file"]
+        video_id = str(video.get("id"))
+        path = output_dir / f"{shot['id']}.mp4"
+        try:
+            download = urllib.request.Request(
+                str(file["link"]),
+                headers={"User-Agent": _BROWSER_UA},
+            )
+            with urllib.request.urlopen(download, timeout=90) as response:
+                path.write_bytes(response.read())
+        except Exception:
+            return None
+        if path.stat().st_size < 10_000:
+            return None
+        self._used_video_ids.add(video_id)
+        try:
+            duration = float(video.get("duration") or needed_sec)
+        except (TypeError, ValueError):
+            duration = needed_sec
+        # 从中段起用，避开片头标题和片尾黑场。
+        start = max(0.0, (duration - needed_sec) / 2)
+        return {
+            "id": f"pexels_video_{video_id}",
+            "name": f"Pexels video {video_id}",
+            "url": f"/media/{task_id}/assets/{path.name}",
+            "local_path": str(path),
+            "source": self.name,
+            "license": "Pexels license; verify current terms before publication",
+            "author": str(((video.get("user") or {}).get("name")) or "Pexels contributor"),
+            "usage_scope": "Subject to the Pexels license and team review",
+            "is_ai_generated": False,
+            "media_type": "video",
+            "clip_start": round(start, 3),
+        }
         image_url = str((photo.get("src") or {}).get("portrait") or "")
         if not image_url:
             raise RuntimeError("Pexels response did not contain a portrait image URL")
