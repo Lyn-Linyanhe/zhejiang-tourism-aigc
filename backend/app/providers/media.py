@@ -95,6 +95,69 @@ class OfflineAssetProvider(AssetProvider):
         }
 
 
+# 验收和演示用的西湖镜头。检索词必须落到这个景点，不能拿「杭州风景」碰运气。
+# 值是候选词列表：前一个对不上说明文字时，换下一个。
+LANDMARK_QUERIES = {
+    "苏堤": ["Su Causeway West Lake Hangzhou willow", "West Lake Hangzhou willow causeway"],
+    "断桥": ["Hangzhou traditional stone bridge tourists boat", "stone arch bridge Hangzhou lake"],
+    "白堤": ["West Lake Hangzhou autumn trees lake road", "Hangzhou lake road trees"],
+    "三潭印月": ["Three Pools Mirroring the Moon West Lake", "West Lake stone pagoda lantern water"],
+    "雷峰": ["Leifeng Pagoda West Lake Hangzhou", "Hangzhou pagoda West Lake"],
+    "平湖秋月": ["West Lake Hangzhou pavilion lotus", "Hangzhou pavilion lake lotus"],
+    "西湖": ["West Lake Hangzhou"],
+}
+# 说明文字里至少要有其中一个词，否则这张图不算这个景点。
+LANDMARK_NEEDLES = {
+    "苏堤": ("causeway", "willow", "su "),
+    "断桥": ("broken", "arch", "bridge", "snow"),
+    "白堤": ("causeway", "bai", "plane"),
+    "三潭印月": ("pool", "lantern", "pagoda", "moon"),
+    "雷峰": ("leifeng", "pagoda"),
+    "平湖秋月": ("pavilion", "lotus"),
+    "西湖": ("west lake", "hangzhou"),
+}
+
+_BROWSER_UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+
+
+def landmark_queries(shot: dict[str, Any]) -> tuple[str, list[str]]:
+    """按镜头标题和旁白选景点，返回景点名和候选检索词。"""
+    text = " ".join(
+        str(shot.get(key) or "")
+        for key in ("title", "subtitle", "narration", "visual_prompt")
+    )
+    for name, queries in LANDMARK_QUERIES.items():
+        if name in text:
+            return name, list(queries)
+    precise = str(shot.get("search_query") or "").strip()
+    if precise:
+        return "", [precise[:180]]
+    return "西湖", list(LANDMARK_QUERIES["西湖"])
+
+
+def pick_pexels_photo(
+    photos: list[dict[str, Any]],
+    query: str,
+    needles: tuple[str, ...] = (),
+) -> dict[str, Any] | None:
+    """不要永远拿第一张。说明文字对得上景点词的优先；都对不上时用竖图里最像的一张。"""
+    if not photos:
+        return None
+    tokens = {token.lower() for token in query.split() if len(token) > 2}
+    ranked: list[tuple[tuple[int, int, int], dict[str, Any]]] = []
+    for photo in photos:
+        blob = " ".join(str(photo.get(key) or "") for key in ("alt", "url")).lower()
+        needle_hits = sum(1 for needle in needles if needle in blob)
+        hits = sum(1 for token in tokens if token in blob)
+        height = int(photo.get("height") or 0)
+        width = int(photo.get("width") or 0)
+        portrait = 1 if height >= width else 0
+        ranked.append(((needle_hits, portrait, hits), photo))
+    matched = [item for item in ranked if item[0][0] > 0] if needles else ranked
+    pool = matched or ranked
+    return max(pool, key=lambda item: item[0])[1]
+
+
 class PexelsAssetProvider(AssetProvider):
     name = "pexels"
 
@@ -113,32 +176,32 @@ class PexelsAssetProvider(AssetProvider):
         if not self.api_key:
             raise RuntimeError("PEXELS_API_KEY is required when asset_source=pexels")
         output_dir.mkdir(parents=True, exist_ok=True)
-        # 优先使用知识库给出的精准英文检索词（实体级），中文描述仅作回退
-        precise = str(shot.get("search_query") or "").strip()
-        query = " ".join(
-            str(precise or shot.get("visual_prompt") or shot.get("title") or "Zhejiang tourism")
-            .split()
-        )[:180]
-        params = urllib.parse.urlencode(
-            {"query": query, "orientation": "portrait", "per_page": 1}
-        )
-        request = urllib.request.Request(
-            f"{self.base_url}/search?{params}",
-            headers={
-                "Authorization": self.api_key,
-                # Pexels 的 Cloudflare 会拦截 Python 默认 UA（error 1010），必须带浏览器 UA
-                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
-            },
-        )
-        try:
-            with urllib.request.urlopen(request, timeout=30) as response:
-                payload = json.loads(response.read().decode("utf-8"))
-        except Exception as exc:
-            raise RuntimeError(f"Pexels search failed: {exc}") from exc
-        photos = payload.get("photos") or []
-        if not photos:
-            raise RuntimeError(f"Pexels returned no photo for query: {query}")
-        photo = photos[0]
+        landmark, queries = landmark_queries(shot)
+        needles = LANDMARK_NEEDLES.get(landmark, ())
+        photo: dict[str, Any] | None = None
+        query = queries[0]
+        for query in queries:
+            params = urllib.parse.urlencode(
+                {"query": query, "orientation": "portrait", "per_page": 15}
+            )
+            request = urllib.request.Request(
+                f"{self.base_url}/search?{params}",
+                headers={
+                    "Authorization": self.api_key,
+                    # Pexels 的 Cloudflare 会拦截 Python 默认 UA（error 1010），必须带浏览器 UA
+                    "User-Agent": _BROWSER_UA,
+                },
+            )
+            try:
+                with urllib.request.urlopen(request, timeout=30) as response:
+                    payload = json.loads(response.read().decode("utf-8"))
+            except Exception as exc:
+                raise RuntimeError(f"Pexels search failed: {exc}") from exc
+            photo = pick_pexels_photo(payload.get("photos") or [], query, needles)
+            if photo is not None:
+                break
+        if photo is None:
+            raise RuntimeError(f"Pexels returned no matching photo for {landmark or query}")
         image_url = str((photo.get("src") or {}).get("portrait") or "")
         if not image_url:
             raise RuntimeError("Pexels response did not contain a portrait image URL")
@@ -148,7 +211,7 @@ class PexelsAssetProvider(AssetProvider):
                 image_url,
                 headers={
                     # 图片 CDN 同样受 Cloudflare 防护，必须带浏览器 UA
-                    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+                    "User-Agent": _BROWSER_UA,
                 },
             )
             with urllib.request.urlopen(download_request, timeout=60) as response:

@@ -27,7 +27,7 @@ if str(ROOT) not in sys.path:
 
 from backend.app.config import Settings  # noqa: E402
 from backend.app.models import Shot, Task, TaskInput  # noqa: E402
-from backend.app.providers.media import OfflineAssetProvider  # noqa: E402
+from backend.app.providers.media import OfflineAssetProvider, PexelsAssetProvider  # noqa: E402
 from backend.app.providers.tts import build_audio  # noqa: E402
 from backend.app.services.orchestrator import Orchestrator  # noqa: E402
 from backend.app.services.renderer import VideoRenderer  # noqa: E402
@@ -193,7 +193,13 @@ def main() -> int:
     if abs(shot_sum - DURATION) > 0.05:
         return _fail(f"镜头时长没有锁到 {DURATION} 秒，实际 {shot_sum}")
 
-    provider = OfflineAssetProvider()
+    provider: OfflineAssetProvider | PexelsAssetProvider
+    asset_source = "offline-scene-generator"
+    if settings.pexels_api_key:
+        provider = PexelsAssetProvider(settings.pexels_api_key, settings.pexels_base_url)
+        asset_source = "pexels"
+    else:
+        return _fail("没有 PEXELS_API_KEY，拒绝用技术场景图冒充实拍")
     render_shots = []
     for shot in task.shots:
         if float(shot.duration_sec) <= 0:
@@ -256,6 +262,7 @@ def main() -> int:
         "shot_sum": round(shot_sum, 3),
         "music_file": task.audio["music_file"],
         "voice_provider": task.audio["voice_provider"],
+        "asset_source": asset_source,
     }
     print(json.dumps(report, ensure_ascii=False))
     if srt_last > DURATION + 0.001:

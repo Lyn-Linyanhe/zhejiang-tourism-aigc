@@ -32,8 +32,8 @@ DEFAULT_GRADE = {
     "colorbalance_bm": 0.02,
 }
 
-# 段内淡入淡出上限。再长会把短镜头中间也吃掉，看起来不像转场。
-MAX_TRANSITION_SEC = 0.45
+# 只在镜头交界处做短切。再长会把画面吃成黑场或白场。
+MAX_TRANSITION_SEC = 0.18
 
 
 def run_ffmpeg(args: list[str], cwd: Path | None = None) -> subprocess.CompletedProcess[str]:
@@ -270,12 +270,11 @@ def transition_filter(
 ) -> str:
     """五个声明过的转场，全部做成段内效果，不和邻段重叠。
 
-    fade：段首段尾黑场淡入淡出。
-    dissolve：同样不跨段，但淡到白，时长略长，和 fade 能看出来不是同一种。
-    slideleft / slideright：先把画面垫宽，再裁一个移动窗口，从一侧滑到居中，
-    同时淡入淡出。不能在刚好等于输出尺寸的画面上裁，否则 x 会被夹到 0，滑不动。
-    zoom：用 scale 的逐帧表达式推近再裁回原尺寸。不能再套一次 zoompan——
-    zoompan 会按输入帧数乘 d，把这一段的时长拉长。
+    只在镜头结尾收一下，开头不再从黑场或白场淡入。否则六段拼起来就是
+    反复闪白、闪黑，中间的画面也看不清。
+    fade：结尾短黑。dissolve：结尾短白，和 fade 能区分。
+    slideleft / slideright：画面垫宽后滑到居中，不再叠黑场。
+    zoom：整段轻微推近。不能再套 zoompan，它会按输入帧数乘 d，把时长拉长。
     未知名字退回 fade。fps 保留给调用方，缩放本身不靠它计帧。
     """
     del fps  # 段内转场按秒计算，避免再引入按帧放大时长的滤镜。
@@ -285,10 +284,10 @@ def transition_filter(
     window = transition_window(duration)
     if window <= 0:
         return ""
+    fade_out_start = max(0.0, duration - window)
     if kind == "dissolve":
-        longer = min(max(window * 1.35, window + 0.05), duration * 0.30)
-        return _fade_pair(duration, longer, "white")
-    fade = _fade_pair(duration, window, "black")
+        return f"fade=t=out:st={fade_out_start:.3f}:d={window:.3f}:color=white"
+    fade = f"fade=t=out:st={fade_out_start:.3f}:d={window:.3f}:color=black"
     if kind in {"slideleft", "slideright"}:
         # 画面先加宽，左右才有余量。滑动覆盖前 70% 的镜头，淡入只占开头一小段，
         # 否则运动会在黑场里结束，看起来和 fade 没有区别。
@@ -301,8 +300,7 @@ def transition_filter(
         return (
             f"scale={width + travel}:{height}:force_original_aspect_ratio=increase,"
             f"crop={width + travel}:{height},"
-            f"crop={width}:{height}:x='{x_expr}':y=0,"
-            f"{fade}"
+            f"crop={width}:{height}:x='{x_expr}':y=0"
         )
     if kind == "zoom":
         # 整段持续推近，不在淡入窗口结束时停住。scale 按帧求值，不会把时长拉长。
@@ -312,7 +310,6 @@ def transition_filter(
             f"w='trunc({width}*({grown})/2)*2':"
             f"h='trunc({height}*({grown})/2)*2':"
             "eval=frame,"
-            f"crop={width}:{height}:(in_w-{width})/2:(in_h-{height})/2,"
-            f"{fade}"
+            f"crop={width}:{height}:(in_w-{width})/2:(in_h-{height})/2"
         )
     return fade
