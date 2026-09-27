@@ -58,7 +58,8 @@ class VideoRenderer:
         if video:
             input_args = ["-stream_loop", "-1", "-i", str(source)]
         else:
-            input_args = ["-loop", "1", "-i", str(source)]
+            # 先铺成一段静帧，再做运镜。-loop 1 会让按帧计数的滤镜每帧重置。
+            input_args = ["-loop", "1", "-framerate", str(fps), "-i", str(source)]
         visual = shot_filter(width, height, duration, fps, video=video, grade=grade)
         motion = transition_filter(transition, duration, width, height, fps)
         if motion:

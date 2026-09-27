@@ -1,7 +1,7 @@
 """走产品 VideoRenderer.render，但在真正执行 ffmpeg 前截住请求。
 
-请求时长 30 时，滤镜必须把时长锁在 30，静图含 zoompan，有配乐含
-sidechaincompress，且不含 xfade。不在 pytest 里做 30 秒 zoompan。
+请求时长 30 时，滤镜必须把时长锁在 30，静图用连续裁切运镜，有配乐含
+sidechaincompress，且不含 xfade。不在 pytest 里做 30 秒渲染。
 """
 
 import tempfile
@@ -14,7 +14,7 @@ from backend.app.services.renderer import VideoRenderer
 
 
 class RenderRequestTests(unittest.TestCase):
-    def test_requested_30s_is_locked_without_running_zoompan(self):
+    def test_requested_30s_is_locked_without_running_a_long_render(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             asset = root / "scene.ppm"
@@ -66,7 +66,8 @@ class RenderRequestTests(unittest.TestCase):
                     )
 
         joined = "\n".join(" ".join(args) for args in captured)
-        self.assertIn("zoompan=", joined)
+        self.assertIn("eval=frame", joined)
+        self.assertNotIn("zoompan=", joined)
         self.assertIn("sidechaincompress=", joined)
         self.assertNotIn("xfade", joined)
         self.assertIn("-frames:v", joined)

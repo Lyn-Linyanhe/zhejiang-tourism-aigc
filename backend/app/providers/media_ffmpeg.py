@@ -222,14 +222,12 @@ def shot_filter(
     video: bool,
     grade: dict[str, Any] | None = None,
 ) -> str:
-    """静图先放大再缓慢推近；视频只铺到画布并调色，不再 zoompan。
+    """静图按时间连续推近；视频只铺到画布并调色。
 
-    zoompan 直接在原分辨率上推会抖。先放大到 2 倍再 crop，输出仍是目标分辨率。
-    推近速率沿用分工文档的 0.0008，上限 1.15，避免短镜头一下子推满。
+    不用 zoompan。它按整像素跳，再碰上循环输入会每帧重置，看起来一卡一卡。
+    crop 不认时间变量，所以先放大，再用 scale 的逐帧表达式推近，最后裁回目标尺寸。
+    推近上限约 1.12，短镜头不会一下子推满。
     """
-    # 多生成一帧，交给输出端的 -t 裁到镜头时长。zoompan 的 d 若偏短，
-    # 这一段会比 duration_sec 短，六段加起来就不再等于总时长。
-    frames = max(2, int(duration * fps + 0.999) + 1)
     color = grade_filter(grade)
     if video:
         return (
@@ -238,10 +236,14 @@ def shot_filter(
             f"{color},"
             f"fps={fps}"
         )
+    span = max(float(duration), 0.1)
+    grown = f"1+0.12*min(1\\,t/{span:.3f})"
     return (
-        f"scale={width * 2}:{height * 2}:force_original_aspect_ratio=increase,"
-        f"crop={width * 2}:{height * 2},"
-        f"zoompan=z='min(zoom+0.0008,1.15)':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d={frames}:s={width}x{height}:fps={fps},"
+        f"scale={width}:{height}:force_original_aspect_ratio=increase,"
+        f"crop={width}:{height},"
+        f"scale=w='trunc({width}*({grown})/2)*2':h='trunc({height}*({grown})/2)*2':eval=frame:flags=bicubic,"
+        f"crop={width}:{height}:(in_w-{width})/2:(in_h-{height})/2,"
+        f"fps={fps},"
         f"{color}"
     )
 
