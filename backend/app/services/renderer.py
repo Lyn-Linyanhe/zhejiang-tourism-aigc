@@ -14,6 +14,13 @@ from ..providers.media_ffmpeg import (
 )
 
 
+# 成片编码质量。成片要经过逐镜渲染 → 拼接 → 烧字幕三道重编码，
+# 每道都用同一组参数，否则最后一道会把前面的画质抹掉。
+# 想更高画质就调低 VIDEO_CRF；现场渲染太慢就把 VIDEO_PRESET 调回 veryfast。
+VIDEO_CRF = "18"
+VIDEO_PRESET = "medium"
+
+
 def _probe_stream_types(path: Path) -> set[str]:
     result = subprocess.run(
         [
@@ -86,9 +93,9 @@ class VideoRenderer:
                 "-pix_fmt",
                 "yuv420p",
                 "-preset",
-                "veryfast",
+                VIDEO_PRESET,
                 "-crf",
-                "24",
+                VIDEO_CRF,
                 str(output),
             ]
         )
@@ -109,9 +116,9 @@ class VideoRenderer:
                 "-pix_fmt",
                 "yuv420p",
                 "-preset",
-                "veryfast",
+                VIDEO_PRESET,
                 "-crf",
-                "24",
+                VIDEO_CRF,
                 "-an",
                 "-fps_mode",
                 "cfr",
@@ -294,6 +301,10 @@ class VideoRenderer:
                 "libx264",
                 "-pix_fmt",
                 "yuv420p",
+                "-preset",
+                VIDEO_PRESET,
+                "-crf",
+                VIDEO_CRF,
                 "-r",
                 str(fps),
                 "-an",
@@ -348,6 +359,10 @@ class VideoRenderer:
                     "libx264",
                     "-pix_fmt",
                     "yuv420p",
+                    "-preset",
+                    VIDEO_PRESET,
+                    "-crf",
+                    VIDEO_CRF,
                     "-r",
                     str(fps),
                     "-an",

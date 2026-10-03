@@ -61,6 +61,11 @@ class OpenAICompatibleLLMProvider(LLMProvider):
             raise RuntimeError("LLM requires base_url, api_key, and model")
         duration = int(context.get("duration", 30))
         shot_count = int(context.get("shot_count") or (4 if duration <= 15 else 6 if duration <= 30 else 8))
+        # 每镜旁白要和它的配音时长对得上：中文配音约每秒 4 字。旁白超出镜头时长时，
+        # 渲染器会把成片锁回用户选择的秒数，多出来的部分只能被裁掉。
+        per_shot_seconds = max(1.0, duration / shot_count)
+        per_shot_chars = max(8, int(per_shot_seconds * 4))
+        total_chars = per_shot_chars * shot_count
         custom_brief = str(context.get("custom_brief", "")).strip()
         knowledge_context = _resolve_knowledge_context(context)
         schema = (
@@ -79,6 +84,9 @@ class OpenAICompatibleLLMProvider(LLMProvider):
         instruction = (
             "你是浙江文旅竖屏短视频总编导。请根据用户输入生成可直接用于视频制作的 JSON。"
             f"必须生成 {shot_count} 个镜头，镜头时长总和必须等于 {duration} 秒。"
+            f"每镜约 {per_shot_seconds:.1f} 秒，该镜的 narration 必须控制在 {per_shot_chars} 个汉字以内"
+            f"（中文配音约每秒 4 字；全片旁白合计不超过 {total_chars} 字），subtitle 不超过 {per_shot_chars} 字。"
+            "旁白宁短勿长：超出镜头时长的那部分在成片时会被裁掉，导致结尾不完整。"
             "每个镜头必须有具体可视化画面、旁白和字幕，不能使用空字符串、占位符或泛泛的“风景”。"
             f"{fallback_rule}"
             f"{knowledge_context}"

@@ -426,10 +426,19 @@ class ProviderRegistry:
         result.setdefault("event", {"type": "tts", "provider": result["provider"], "ok": True})
         return result
 
+    def has(self, slot: str, name: str) -> bool:
+        """该 slot 下是否注册过这个名字（含别名）。"""
+        normalized_slot, normalized_name = slot.strip().lower(), name.strip().lower()
+        if normalized_name in self._specs.get(normalized_slot, {}):
+            return True
+        return bool(self._aliases.get(normalized_slot, {}).get(normalized_name))
+
     def candidates(self, slot: str, preferred: str = "") -> tuple[str, ...]:
         normalized_slot = slot.strip().lower()
         names: list[str] = []
-        if preferred:
+        # preferred 允许是开关值而不是 provider 名（例如 TTS_PROVIDER=auto）。
+        # 不是注册名就忽略它，直接走注册的降级链，不要在这里抛 Unknown provider。
+        if preferred and self.has(normalized_slot, preferred):
             names.append(self.resolve_name(normalized_slot, preferred))
         chain = self._chains.get(normalized_slot)
         if chain:
@@ -565,7 +574,11 @@ def build_provider_registry(settings: Any, storage: Any) -> ProviderRegistry:
     registry.register(ProviderSpec("asset", "offline", "技术测试场景图", OfflineAssetProvider, "本地生成、需人工审核", ("offline-scene-generator",)))
 
     registry.register(ProviderSpec("tts", "openai-compatible-tts", "OpenAI 兼容 TTS", lambda: _OpenAITTSAdapter(OpenAICompatibleTTSProvider(settings.tts_base_url, settings.tts_api_key, settings.tts_model)), "外部语音合成服务", ("openai",), lambda: bool(settings.tts_base_url and settings.tts_api_key)))
-    registry.register(ProviderSpec("tts", "edge-tts", "Edge TTS", _EdgeTTSAdapter, "本机 Python edge-tts 模块"))
+    registry.register(ProviderSpec(
+        "tts", "edge-tts", "Edge TTS", _EdgeTTSAdapter,
+        "需 .venv-audio 隔离运行时（scripts/setup-audio-runtime.ps1）",
+        available=lambda: settings.audio_python.exists(),
+    ))
     registry.register(ProviderSpec("tts", "windows-system-speech", "Windows 系统语音", _WindowsTTSAdapter, "使用系统已安装语音"))
     registry.register(ProviderSpec("tts", "offline-synthetic-tone", "合成测试音", _SyntheticTTSAdapter, "仅用于显式开启的技术测试", available=lambda: bool(settings.allow_synthetic_audio_fallback)))
 
