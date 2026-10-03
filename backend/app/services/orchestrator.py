@@ -2,45 +2,65 @@ from __future__ import annotations
 
 import json
 import threading
-import traceback
+from dataclasses import dataclass
 from pathlib import Path
-from typing import Any
+from typing import Any, Callable
 
 from ..config import Settings
 from ..models import AssetRecord, Shot, Task, TaskInput, TraceRecord, now_iso, new_id
-from ..providers.llm import LLMProvider, OpenAICompatibleLLMProvider
-from ..providers.media import OfflineAssetProvider, PexelsAssetProvider
-from ..providers.media_ffmpeg import generate_tone, validate_audio_file
-from ..providers.moneyprinterturbo import MoneyPrinterTurboLLMProvider
-from ..providers.music import find_music_file
-from ..providers.offline import OfflineLLMProvider
-from ..providers.tts import (
-    OpenAICompatibleTTSProvider,
-    generate_edge_tts,
-    generate_system_speech,
-)
-from ..services.renderer import VideoRenderer
+from ..providers.media_ffmpeg import validate_audio_file
+from ..providers.registry import ProviderRegistry, build_provider_registry
 from ..storage import Storage
 
 
 NO_VOICE = "\u65e0\u914d\u97f3"
 NO_MUSIC = "\u65e0\u97f3\u4e50"
-FEMALE_VOICE = "\u5973\u58f0"
-MOOD_FREQUENCIES = {
-    "\u8212\u7f13": 220,
-    "\u70ed\u70c8": 330,
-    "\u96c5\u81f4": 260,
-    "\u8f7b\u5feb": 440,
-}
+
+@dataclass(frozen=True)
+class StageSpec:
+    name: str
+    label: str
+    started_progress: int
+    completed_progress: int
+
+
+PIPELINE: tuple[StageSpec, ...] = (
+    StageSpec("scripting", "脚本", 12, 27),
+    StageSpec("storyboard", "分镜", 32, 36),
+    StageSpec("audio", "配音", 48, 58),
+    StageSpec("assets", "画面", 67, 76),
+    StageSpec("rendering", "渲染", 84, 96),
+)
 
 
 class Orchestrator:
-    def __init__(self, settings: Settings, storage: Storage) -> None:
+    def __init__(self, settings: Settings, storage: Storage, registry: ProviderRegistry | None = None) -> None:
         self.settings = settings
         self.storage = storage
-        self.renderer = VideoRenderer(settings.media_dir)
+        self.registry = registry or build_provider_registry(settings, storage)
         self._threads: dict[str, threading.Thread] = {}
         self._threads_lock = threading.RLock()
+
+    def system_config(self) -> dict[str, Any]:
+        return {
+            "providers": self.registry.describe(),
+            "selected": {
+                "llm": self.registry.resolve_name("llm", self.settings.default_provider),
+                "asset": self.registry.resolve_name("asset", self.settings.asset_provider),
+                "tts": self.settings.tts_provider,
+                "music": self.settings.music_provider,
+                "render": self.registry.resolve_name("render", self.settings.render_provider),
+            },
+            "fallbacks": {
+                "llm": list(self.settings.llm_fallback_providers) if self.settings.allow_provider_fallback else [],
+                "tts": list(self.settings.tts_fallback_providers),
+                **self.registry.describe_chains(),
+            },
+            "pipeline": [
+                {"name": item.name, "label": item.label, "order": index + 1}
+                for index, item in enumerate(PIPELINE)
+            ] + [{"name": "review", "label": "审核", "order": len(PIPELINE) + 1}],
+        }
 
     def create_task(self, task_input: TaskInput) -> Task:
         task = Task(id=new_id("task"), input=task_input)
@@ -134,7 +154,7 @@ class Orchestrator:
             raise KeyError("Task does not exist")
         if task.get("status") == "running":
             raise ValueError("Task is already running")
-        if from_stage not in ("scripting", "storyboard", "assets", "audio", "rendering"):
+        if from_stage not in {stage.name for stage in PIPELINE}:
             raise ValueError("Unsupported retry stage")
         self.start(task_id, from_stage)
         return {"task_id": task_id, "from_stage": from_stage, "accepted": True}
@@ -192,21 +212,20 @@ class Orchestrator:
     def _run(self, task_id: str, from_stage: str | None) -> None:
         task = self._load(task_id)
         try:
-            self.update(task, status="running", stage=from_stage or "scripting", progress=5)
-            if from_stage in (None, "scripting"):
-                self._scripting(task)
-                from_stage = "storyboard"
-            if from_stage in (None, "storyboard", "scripting"):
-                self._storyboard(task)
-                from_stage = "assets"
-            if from_stage in (None, "assets", "storyboard", "scripting"):
-                self._assets(task)
-                from_stage = "audio"
-            if from_stage in (None, "audio", "assets", "storyboard", "scripting"):
-                self._audio(task)
-                from_stage = "rendering"
-            if from_stage in (None, "rendering", "audio", "assets", "storyboard", "scripting"):
-                self._render(task)
+            selected_stage = from_stage or PIPELINE[0].name
+            stage_names = [stage.name for stage in PIPELINE]
+            if selected_stage not in stage_names:
+                raise ValueError(f"Unsupported pipeline stage: {selected_stage}")
+            self.update(task, status="running", stage=selected_stage, progress=5)
+            handlers: dict[str, Callable[[Task], None]] = {
+                "scripting": self._scripting,
+                "storyboard": self._storyboard,
+                "audio": self._audio,
+                "assets": self._assets,
+                "rendering": self._render,
+            }
+            for stage in PIPELINE[stage_names.index(selected_stage):]:
+                handlers[stage.name](task)
             self.update(task, status="completed", stage="review", progress=100)
         except Exception as exc:
             task.error = str(exc)
@@ -229,29 +248,24 @@ class Orchestrator:
             event={"type": "stage", "stage": "scripting", "status": "started"},
         )
         prompt = json.dumps(task.input.__dict__, ensure_ascii=False, sort_keys=True)
-        provider: LLMProvider
         selected = self.settings.default_provider.lower()
-        if selected in {"mpt", "moneyprinterturbo"}:
-            provider = MoneyPrinterTurboLLMProvider(
-                self.settings.mpt_root,
-                self.settings.mpt_timeout_seconds,
-                self.settings.mpt_python,
-            )
-        elif self.settings.llm_base_url and self.settings.llm_api_key:
-            provider = OpenAICompatibleLLMProvider(
-                self.settings.llm_base_url,
-                self.settings.llm_api_key,
-                self.settings.llm_model,
-            )
-        else:
-            provider = OfflineLLMProvider()
-        try:
-            result = provider.generate(prompt, task.input.__dict__)
-        except Exception as exc:
-            if not self.settings.allow_provider_fallback and selected != "offline":
-                raise RuntimeError(f"{self.settings.default_provider} provider failed: {exc}") from exc
-            result = OfflineLLMProvider().generate(prompt, task.input.__dict__)
-            result.event["fallback_reason"] = str(exc)
+        candidates = [selected]
+        if self.settings.allow_provider_fallback:
+            candidates.extend(self.settings.llm_fallback_providers)
+        errors: list[str] = []
+        result = None
+        for candidate in dict.fromkeys(candidates):
+            try:
+                provider = self.registry.create("llm", candidate)
+                result = provider.generate(prompt, task.input.__dict__)
+                if errors:
+                    result.fallback_used = True
+                    result.event["fallback_reason"] = "; ".join(errors)
+                break
+            except Exception as exc:
+                errors.append(f"{candidate}: {exc}")
+        if result is None:
+            raise RuntimeError(f"No LLM provider succeeded: {'; '.join(errors)}")
         normalized_shots = self._normalize_shots(
             list(result.data.get("shots") or []),
             task.input.duration,
@@ -321,7 +335,7 @@ class Orchestrator:
         self.update(
             task,
             stage="assets",
-            progress=48,
+            progress=67,
             event={"type": "stage", "stage": "assets", "status": "started"},
         )
         directory = self.settings.media_dir / task.id / "assets"
@@ -331,15 +345,14 @@ class Orchestrator:
             if task.input.asset_source == "configured"
             else task.input.asset_source
         )
-        if asset_source == "pexels":
-            provider = PexelsAssetProvider(
-                self.settings.pexels_api_key,
-                self.settings.pexels_base_url,
-            )
-        else:
-            provider = OfflineAssetProvider()
+        candidates = (
+            self.registry.candidates("asset", asset_source)
+            if task.input.asset_source == "configured"
+            else (self.registry.resolve_name("asset", asset_source),)
+        )
         existing_assets = {asset.shot_id: asset for asset in task.assets}
         task.assets = []
+        used_sources: set[str] = set()
         for shot in task.shots:
             existing = existing_assets.get(shot.id)
             if existing and existing.local_path and Path(existing.local_path).exists():
@@ -354,38 +367,51 @@ class Orchestrator:
                     "usage_scope": existing.usage_scope,
                     "is_ai_generated": existing.is_ai_generated,
                 }
-            elif asset_source == "upload":
-                raise RuntimeError(
-                    f"Shot {shot.order} has no uploaded image/video asset. "
-                    "Upload an asset for every shot or select Pexels/offline assets."
-                )
-            elif asset_source in {"local-library", "library"}:
-                query = f"{task.input.city} {task.input.theme} {shot.title}"
-                library_asset = self.storage.find_library_asset("image", query)
-                if not library_asset:
-                    library_asset = self.storage.find_library_asset("video", query)
-                if not library_asset:
-                    library_asset = self.storage.find_library_asset("image") or self.storage.find_library_asset("video")
-                if not library_asset or not Path(str(library_asset.get("local_path", ""))).is_file():
-                    raise RuntimeError("Local asset library has no usable image/video for this shot")
-                asset = {
-                    "id": library_asset["id"], "name": library_asset.get("name", shot.title),
-                    "url": library_asset.get("url", ""), "local_path": library_asset["local_path"],
-                    "source": "local-library", "license": library_asset.get("license_status", "pending-review"),
-                    "author": library_asset.get("author", "unknown"), "usage_scope": library_asset.get("usage_scope", "technical-validation"),
-                    "is_ai_generated": bool(library_asset.get("is_ai_generated", False)),
-                }
             else:
-                asset = provider.create_or_find(
-                    task.id,
-                    shot.__dict__,
-                    directory,
-                    knowledge.get("color", "#2d6c63"),
-                    knowledge.get("accent", "#d6ad60"),
-                )
+                shot_payload = shot.__dict__.copy()
+                shot_payload["library_query"] = f"{task.input.city} {task.input.theme} {shot.title}"
+                failures: list[str] = []
+                asset = None
+                for candidate in candidates:
+                    try:
+                        asset = self.registry.generate_asset(
+                            candidate,
+                            task.id,
+                            shot_payload,
+                            directory,
+                            {
+                                "color": knowledge.get("color", "#2d6c63"),
+                                "accent": knowledge.get("accent", "#d6ad60"),
+                            },
+                        )
+                        used_sources.add(candidate)
+                        if failures and task.trace:
+                            task.trace.fallback_used = True
+                            task.trace.events.append({
+                                "type": "provider_fallback", "slot": "asset",
+                                "shot_id": shot.id, "provider": candidate,
+                                "fallback_reason": "; ".join(failures),
+                            })
+                        break
+                    except Exception as exc:
+                        failures.append(f"{candidate}: {exc}")
+                if asset is None:
+                    raise RuntimeError(f"No asset provider succeeded for shot {shot.order}: {'; '.join(failures)}")
             shot.asset_url = asset["url"]
             shot.asset_id = asset["id"]
             shot.asset_local_path = asset["local_path"]
+            shot.asset_media_type = str(asset.get("media_type", ""))
+            shot.asset_model = str(asset.get("model", ""))
+            shot.asset_seed = int(asset.get("seed", 0) or 0)
+            shot.asset_first_frame_path = str(asset.get("first_frame_path", ""))
+            provider_event = dict(asset.get("event") or {})
+            if (provider_event or float(asset.get("cost", 0) or 0) > 0) and task.trace:
+                provider_event.setdefault("type", "asset")
+                provider_event.setdefault("slot", "asset")
+                provider_event.setdefault("provider", asset.get("source", "unknown"))
+                provider_event.setdefault("cost", float(asset.get("cost", 0) or 0))
+                provider_event.setdefault("shot_id", shot.id)
+                task.trace.events.append(provider_event)
             task.assets.append(
                 AssetRecord(
                     task_id=task.id,
@@ -404,18 +430,24 @@ class Orchestrator:
                             "is_ai_generated",
                         )
                     },
+                    media_type=str(asset.get("media_type", "")),
+                    model=str(asset.get("model", "")),
+                    seed=int(asset.get("seed", 0) or 0),
+                    prompt=str(asset.get("prompt", "")),
+                    first_frame_path=str(asset.get("first_frame_path", "")),
+                    cost=float(asset.get("cost", 0) or 0),
                 )
             )
         self.update(
             task,
             stage="assets",
-            progress=58,
+            progress=76,
             event={
                 "type": "stage",
                 "stage": "assets",
                 "status": "completed",
                 "asset_count": len(task.assets),
-                "source": asset_source,
+                "source": ",".join(sorted(used_sources)) or asset_source,
             },
         )
 
@@ -423,7 +455,7 @@ class Orchestrator:
         self.update(
             task,
             stage="audio",
-            progress=67,
+            progress=48,
             event={"type": "stage", "stage": "audio", "status": "started"},
         )
         directory = self.settings.media_dir / task.id
@@ -443,97 +475,66 @@ class Orchestrator:
             validate_audio_file(voice_path)
             tts_provider = "local-upload"
             tts_model = "uploaded-audio"
-        elif self.settings.tts_base_url and self.settings.tts_api_key:
-            try:
-                tts = OpenAICompatibleTTSProvider(
-                    self.settings.tts_base_url,
-                    self.settings.tts_api_key,
-                    self.settings.tts_model,
-                )
-                result = tts.synthesize(
-                    task.narration,
-                    voice_path,
-                    "alloy" if task.input.voice == FEMALE_VOICE else "onyx",
-                )
-                validate_audio_file(result.path)
-                tts_provider = result.provider
-                tts_model = result.model
-                if task.trace:
-                    task.trace.events.append(result.event)
-            except Exception as exc:
-                if not self.settings.allow_synthetic_audio_fallback:
-                    raise RuntimeError(f"TTS provider failed: {exc}") from exc
-                generate_tone(voice_path, total, 520 if task.input.voice == FEMALE_VOICE else 360, 0.11)
-                tts_provider = "offline-synthetic-tone"
-                tts_model = "explicit-fallback"
-                if task.trace:
-                    task.trace.events.append({"type": "tts", "provider": tts_provider, "ok": False, "message": str(exc)})
         else:
-            try:
+            preferred = self.settings.tts_provider
+            if preferred == "auto":
+                preferred = "openai-compatible-tts" if self.settings.tts_base_url and self.settings.tts_api_key else ""
+            candidates = list(self.registry.candidates("tts", preferred))
+            errors: list[str] = []
+            for candidate in dict.fromkeys(candidates):
                 try:
-                    edge = generate_edge_tts(
+                    result = self.registry.synthesize_tts(
+                        candidate,
                         task.narration,
                         voice_path,
                         task.input.voice,
                         task.input.voice_rate,
+                        total,
                     )
-                    tts_provider = edge["provider"]
-                    tts_model = edge["model"]
-                except Exception:
-                    generate_system_speech(task.narration, voice_path)
-                    validate_audio_file(voice_path)
-                    tts_provider = "windows-system-speech"
-                    tts_model = "installed-system-voice"
-                if task.trace:
-                    task.trace.events.append(
-                        {
-                            "type": "tts",
-                            "provider": tts_provider,
-                            "model": tts_model,
-                            "ok": True,
-                        }
-                    )
-            except Exception as exc:
-                if not self.settings.allow_synthetic_audio_fallback:
-                    raise RuntimeError(f"No usable TTS provider: {exc}") from exc
-                generate_tone(voice_path, total, 520 if task.input.voice == FEMALE_VOICE else 360, 0.11)
-                tts_provider = "offline-synthetic-tone"
-                tts_model = "explicit-fallback"
-                if task.trace:
-                    task.trace.events.append({"type": "tts", "provider": tts_provider, "ok": False, "message": str(exc)})
+                    validate_audio_file(Path(result["path"]))
+                    tts_provider, tts_model = str(result["provider"]), str(result["model"])
+                    if errors:
+                        result["event"]["fallback_reason"] = "; ".join(errors)
+                        if task.trace:
+                            task.trace.fallback_used = True
+                    if task.trace:
+                        task.trace.events.append(result["event"])
+                    if isinstance(result.get("cues"), list):
+                        task.audio["cues"] = result["cues"]
+                    break
+                except Exception as exc:
+                    errors.append(f"{candidate}: {exc}")
+            else:
+                raise RuntimeError(f"No usable TTS provider: {'; '.join(errors)}")
 
         if task.input.music_mood == NO_MUSIC:
             music_path = None
         else:
             uploaded_music_value = str(task.audio.get("music_local_path", "")).strip()
             uploaded_music = Path(uploaded_music_value) if uploaded_music_value else None
-            configured_music = find_music_file(self.settings.music_dir)
-            music_path = (
-                uploaded_music
-                if uploaded_music and uploaded_music.is_file()
-                else configured_music
-            )
-            if music_path:
+            if uploaded_music and uploaded_music.is_file():
+                music_path = uploaded_music
                 validate_audio_file(music_path)
-                music_provider = (
-                    "local-upload"
-                    if uploaded_music and uploaded_music.is_file()
-                    else "local-music-library"
-                )
-            elif self.settings.allow_synthetic_audio_fallback:
-                music_path = directory / "music.wav"
-                generate_tone(
-                    music_path,
-                    total,
-                    MOOD_FREQUENCIES.get(task.input.music_mood, 220),
-                    0.08,
-                )
-                music_provider = "offline-synthetic-tone"
+                music_provider = "local-upload"
             else:
-                raise RuntimeError(
-                    "Music was requested but no real music file is configured. "
-                    "Upload a music track, place one in MUSIC_DIR, or choose 无音乐."
-                )
+                candidates = [self.settings.music_provider]
+                if self.settings.allow_synthetic_audio_fallback:
+                    candidates.append("offline-synthetic-tone")
+                errors = []
+                for candidate in dict.fromkeys(candidates):
+                    try:
+                        music = self.registry.create("music", candidate)
+                        music_path = music.resolve(directory / "music.wav", task.input.music_mood, total)
+                        validate_audio_file(music_path)
+                        music_provider = music.name
+                        break
+                    except Exception as exc:
+                        errors.append(f"{candidate}: {exc}")
+                else:
+                    raise RuntimeError(
+                        "No usable music provider. Upload music, configure MUSIC_DIR, "
+                        f"or choose 无音乐. Details: {'; '.join(errors)}"
+                    )
 
         task.audio.update(
             {
@@ -548,12 +549,49 @@ class Orchestrator:
                 "disclosure": "Audio provider and fallback state are recorded in trace.",
             }
         )
+        self._sync_shots_to_audio(task)
         self.update(
             task,
             stage="audio",
-            progress=76,
-            event={"type": "stage", "stage": "audio", "status": "completed", "duration_sec": total},
+            progress=58,
+            event={"type": "stage", "stage": "audio", "status": "completed", "duration_sec": task.audio["duration_sec"]},
         )
+
+    @staticmethod
+    def _sync_shots_to_audio(task: Task) -> None:
+        """Apply P3 cue timing before any time-billed visual provider runs."""
+        raw_cues = task.audio.get("cues")
+        if not isinstance(raw_cues, list) or not raw_cues:
+            elapsed = 0.0
+            raw_cues = []
+            for shot in task.shots:
+                end = round(elapsed + float(shot.duration_sec), 3)
+                raw_cues.append({"shot_id": shot.id, "start": elapsed, "end": end, "text": shot.narration})
+                elapsed = end
+            task.audio["cues"] = raw_cues
+            task.audio["cue_source"] = "nominal-shot-timing"
+            return
+
+        ranges: dict[str, list[float]] = {}
+        previous_end = 0.0
+        for raw in raw_cues:
+            shot_id = str(raw.get("shot_id", ""))
+            start, end = float(raw.get("start", 0)), float(raw.get("end", 0))
+            if not shot_id or start < previous_end - 0.05 or end <= start:
+                raise ValueError("Audio cues must be ordered, non-overlapping, and have positive duration")
+            previous_end = end
+            if shot_id not in ranges:
+                ranges[shot_id] = [start, end]
+            else:
+                ranges[shot_id][1] = end
+        missing = [shot.id for shot in task.shots if shot.id not in ranges]
+        if missing:
+            raise ValueError(f"Audio cues are missing shots: {', '.join(missing)}")
+        for shot in task.shots:
+            start, end = ranges[shot.id]
+            shot.duration_sec = round(end - start, 3)
+        task.audio["duration_sec"] = round(max(item[1] for item in ranges.values()), 3)
+        task.audio["cue_source"] = "provider"
 
     def _media_url(self, task_id: str, path: Path) -> str:
         try:
@@ -570,7 +608,8 @@ class Orchestrator:
             event={"type": "stage", "stage": "rendering", "status": "started"},
         )
         render_shots = [shot.__dict__.copy() for shot in task.shots]
-        task.render = self.renderer.render(
+        renderer = self.registry.create("render", self.settings.render_provider)
+        task.render = renderer.render(
             task.id,
             render_shots,
             task.audio,

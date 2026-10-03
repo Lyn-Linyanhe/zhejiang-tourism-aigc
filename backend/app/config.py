@@ -31,12 +31,17 @@ def _env(name: str, default: str = "") -> str:
     return value.strip() if value is not None else default
 
 
+def _env_list(name: str, default: str = "") -> tuple[str, ...]:
+    return tuple(item.strip() for item in _env(name, default).split(",") if item.strip())
+
+
 @dataclass(frozen=True)
 class Settings:
     host: str = _env("APP_HOST", "127.0.0.1")
     port: int = int(_env("APP_PORT", "8787"))
     data_dir: Path = PROJECT_ROOT / _env("DATA_DIR", "runtime")
     default_provider: str = _env("DEFAULT_PROVIDER", "offline")
+    llm_fallback_providers: tuple[str, ...] = _env_list("LLM_FALLBACK_PROVIDERS", "offline")
     allow_provider_fallback: bool = _env("ALLOW_PROVIDER_FALLBACK", "false").lower() in {"1", "true", "yes"}
     mpt_root: Path = Path(
         _env("MPT_ROOT", str(PROJECT_ROOT.parent / "MoneyPrinterTurbo"))
@@ -49,10 +54,30 @@ class Settings:
     tts_base_url: str = _env("TTS_BASE_URL")
     tts_api_key: str = _env("TTS_API_KEY")
     tts_model: str = _env("TTS_MODEL", "default")
+    tts_provider: str = _env("TTS_PROVIDER", "auto")
+    tts_fallback_providers: tuple[str, ...] = _env_list(
+        "TTS_FALLBACK_PROVIDERS", "edge-tts,windows-system-speech,offline-synthetic-tone"
+    )
     asset_provider: str = _env("ASSET_PROVIDER", "offline")
+    asset_fallback_providers: tuple[str, ...] = _env_list(
+        "ASSET_FALLBACK_PROVIDERS", "local-library,offline"
+    )
+    image_provider: str = _env("IMAGE_PROVIDER", "")
+    image_base_url: str = _env("IMAGE_BASE_URL")
+    image_api_key: str = _env("IMAGE_API_KEY")
+    image_model: str = _env("IMAGE_MODEL")
+    video_provider: str = _env("VIDEO_PROVIDER", "")
+    video_base_url: str = _env("VIDEO_BASE_URL")
+    video_api_key: str = _env("VIDEO_API_KEY")
+    video_model: str = _env("VIDEO_MODEL")
     pexels_api_key: str = _env("PEXELS_API_KEY")
     pexels_base_url: str = _env("PEXELS_BASE_URL", "https://api.pexels.com/v1")
     music_dir: Path = PROJECT_ROOT / _env("MUSIC_DIR", "runtime/music")
+    music_provider: str = _env("MUSIC_PROVIDER", "local-music-library")
+    music_base_url: str = _env("MUSIC_BASE_URL")
+    music_api_key: str = _env("MUSIC_API_KEY")
+    music_model: str = _env("MUSIC_MODEL")
+    render_provider: str = _env("RENDER_PROVIDER", "ffmpeg")
     allow_synthetic_audio_fallback: bool = _env(
         "ALLOW_SYNTHETIC_AUDIO_FALLBACK", "false"
     ).lower() in {"1", "true", "yes"}

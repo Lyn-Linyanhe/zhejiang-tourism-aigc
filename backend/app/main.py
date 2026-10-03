@@ -13,6 +13,7 @@ from .config import settings
 from .models import TaskInput
 from .providers.media_ffmpeg import validate_audio_file
 from .services.catalog import get_catalog
+from .services.cost import summarize_cost
 from .services.orchestrator import Orchestrator
 from .storage import Storage
 
@@ -82,6 +83,7 @@ class AppHandler(BaseHTTPRequestHandler):
         path = unquote(parsed.path)
         try:
             if path == "/api/health":
+                system_config = orchestrator.system_config()
                 self._json(
                     200,
                     {
@@ -91,8 +93,12 @@ class AppHandler(BaseHTTPRequestHandler):
                         "model": settings.llm_model or "offline",
                         "asset_provider": settings.asset_provider,
                         "synthetic_audio_fallback": settings.allow_synthetic_audio_fallback,
+                        "pipeline": system_config["pipeline"],
                     },
                 )
+                return
+            if path == "/api/config":
+                self._json(200, orchestrator.system_config())
                 return
             if path == "/api/catalog":
                 self._json(200, get_catalog())
@@ -104,6 +110,14 @@ class AppHandler(BaseHTTPRequestHandler):
                     200,
                     {"items": items, "total": len(storage.list_tasks(200))},
                 )
+                return
+            if path.startswith("/api/tasks/") and path.endswith("/cost"):
+                task_id = path.split("/")[3]
+                task = storage.get_task(task_id)
+                if not task:
+                    self._json(404, {"error": "TASK_NOT_FOUND", "message": "Task does not exist"})
+                else:
+                    self._json(200, summarize_cost(task))
                 return
             if path == "/api/assets":
                 task_id = parse_qs(parsed.query).get("task_id", [""])[0]
@@ -125,6 +139,7 @@ class AppHandler(BaseHTTPRequestHandler):
                         {"error": "TASK_NOT_FOUND", "message": "Task does not exist"},
                     )
                 else:
+                    task["cost"] = summarize_cost(task)
                     self._json(200, task)
                 return
             if path.startswith("/media/"):

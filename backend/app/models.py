@@ -7,7 +7,7 @@ from datetime import datetime, timezone
 from typing import Any
 
 
-STAGES = ("scripting", "storyboard", "assets", "audio", "rendering", "review")
+STAGES = ("scripting", "storyboard", "audio", "assets", "rendering", "review")
 TERMINAL_STATUSES = ("completed", "failed")
 ALLOWED_DURATIONS = (15, 30, 60)
 ALLOWED_SHOT_COUNTS = (0, 4, 6, 8)
@@ -89,8 +89,8 @@ class TaskInput:
             raise ValueError("shot_count must be 4, 6, or 8")
         if values["duration"] not in ALLOWED_DURATIONS:
             raise ValueError(f"duration 只能是 {ALLOWED_DURATIONS}")
-        if values["asset_source"] not in {"configured", "offline", "upload", "pexels", "local-library", "library"}:
-            raise ValueError("asset_source must be configured, offline, upload, pexels, or local-library")
+        if values["asset_source"] not in {"configured", "offline", "upload", "pexels", "local-library", "library", "ai-image", "ai-video"}:
+            raise ValueError("asset_source must be a registered asset provider")
         if values["output_resolution"] not in ALLOWED_RESOLUTIONS:
             raise ValueError(f"output_resolution must be one of {tuple(ALLOWED_RESOLUTIONS)}")
         if values["fps"] not in (24, 25, 30, 60):
@@ -120,6 +120,10 @@ class Shot:
     asset_url: str = ""
     asset_id: str = ""
     asset_local_path: str = ""
+    asset_media_type: str = ""
+    asset_model: str = ""
+    asset_seed: int = 0
+    asset_first_frame_path: str = ""
     audio_url: str = ""
 
 
@@ -136,6 +140,12 @@ class AssetRecord:
     usage_scope: str
     is_ai_generated: bool
     local_path: str = ""
+    media_type: str = ""
+    model: str = ""
+    seed: int = 0
+    prompt: str = ""
+    first_frame_path: str = ""
+    cost: float = 0.0
     created_at: str = field(default_factory=now_iso)
 
 

@@ -1,4 +1,4 @@
-const state = { catalog: null, latestTaskId: null, pollTimer: null };
+const state = { catalog: null, systemConfig: null, latestTaskId: null, pollTimer: null };
 const $ = (selector) => document.querySelector(selector);
 const $$ = (selector) => Array.from(document.querySelectorAll(selector));
 
@@ -77,10 +77,36 @@ function formData() {
 }
 
 function stageMarkup(task) {
-  const names = { preview: "预览", scripting: "脚本", storyboard: "分镜", assets: "素材", audio: "音频", rendering: "渲染", review: "完成" };
-  const order = ["preview", "scripting", "storyboard", "assets", "audio", "rendering", "review"];
-  const currentIndex = order.indexOf(task.stage);
-  return order.map((stage, index) => `<div class="pipeline-step ${index < currentIndex ? "done" : ""} ${stage === task.stage ? "active" : ""}"><b>${String(index + 1).padStart(2, "0")}</b>${names[stage]}</div>`).join("");
+  const pipeline = state.systemConfig?.pipeline || [
+    { name: "scripting", label: "脚本" }, { name: "storyboard", label: "分镜" },
+    { name: "audio", label: "配音" }, { name: "assets", label: "画面" },
+    { name: "rendering", label: "渲染" }, { name: "review", label: "审核" },
+  ];
+  const currentIndex = task.stage === "preview" ? 2 : pipeline.findIndex((item) => item.name === task.stage);
+  return pipeline.map((item, index) => `<div class="pipeline-step ${index < currentIndex ? "done" : ""} ${item.name === task.stage ? "active" : ""}"><b>${String(index + 1).padStart(2, "0")}</b>${escapeHtml(item.label)}</div>`).join("");
+}
+
+function assetProviderOptions(selected) {
+  const providers = state.systemConfig?.providers?.asset || [
+    { name: "local-library", label: "本地素材库", available: true },
+    { name: "upload", label: "逐镜头上传", available: true },
+    { name: "pexels", label: "Pexels 在线素材", available: true },
+    { name: "offline", label: "技术测试场景图", available: true },
+  ];
+  const configured = `<option value="configured" ${selected === "configured" ? "selected" : ""}>使用服务端配置</option>`;
+  return configured + providers.map((item) => `<option value="${escapeHtml(item.name)}" ${selected === item.name ? "selected" : ""} ${item.available ? "" : "disabled"}>${escapeHtml(item.label)}${item.available ? "" : "（未配置）"}</option>`).join("");
+}
+
+async function loadSystemConfig() {
+  state.systemConfig = await api("/api/config");
+  const selected = state.systemConfig.selected || {};
+  $("#metric-provider").textContent = selected.llm || "未配置";
+  const assetSelect = $('#create-form [name="asset_source"]');
+  if (assetSelect) assetSelect.innerHTML = assetProviderOptions(assetSelect.value || "configured");
+  const pipeline = $("#system-pipeline");
+  if (pipeline) pipeline.innerHTML = state.systemConfig.pipeline.map((item) => `<div><b>${String(item.order).padStart(2, "0")}</b><span>${escapeHtml(item.label)}</span><small>${escapeHtml(item.name)}</small></div>`).join("");
+  const grid = $("#provider-registry");
+  if (grid) grid.innerHTML = Object.entries(state.systemConfig.providers).map(([slot, providers]) => `<article><span class="section-index">${escapeHtml(slot.toUpperCase())}</span><h3>${escapeHtml(selected[slot] || "按任务选择")}</h3><div class="provider-list">${providers.map((item) => `<div class="provider-row"><i class="provider-state ${item.available ? "ready" : ""}"></i><span><strong>${escapeHtml(item.label)}</strong><small>${escapeHtml(item.name)} · ${item.available ? "可用" : "未配置"}</small></span></div>`).join("")}</div></article>`).join("");
 }
 
 function reviewInputMarkup(task) {
@@ -94,7 +120,7 @@ function reviewInputMarkup(task) {
     ${fields.map(([key, label]) => `<label>${label}<input class="draft-input" data-input-field="${key}" value="${escapeHtml(input[key])}" /></label>`).join("")}
     <label>成片时长<select class="draft-input" data-input-field="duration">${[15, 30, 60].map((value) => `<option value="${value}" ${Number(input.duration) === value ? "selected" : ""}>${value} 秒</option>`).join("")}</select></label>
     <label>镜头数量<select class="draft-input" data-input-field="shot_count">${[0, 4, 6, 8].map((value) => `<option value="${value}" ${Number(input.shot_count) === value ? "selected" : ""}>${value || "自动"}${value ? " 个" : ""}</option>`).join("")}</select></label>
-    <label>素材来源<select class="draft-input" data-input-field="asset_source">${["configured", "local-library", "upload", "pexels", "offline"].map((value) => `<option value="${value}" ${input.asset_source === value ? "selected" : ""}>${value}</option>`).join("")}</select></label>
+    <label>素材来源<select class="draft-input" data-input-field="asset_source">${assetProviderOptions(input.asset_source)}</select></label>
     <label>输出规格<select class="draft-input" data-input-field="output_resolution">${["720x1280", "1080x1920", "1920x1080", "1080x1080"].map((value) => `<option value="${value}" ${input.output_resolution === value ? "selected" : ""}>${value}</option>`).join("")}</select></label>
     <label>帧率<select class="draft-input" data-input-field="fps">${[24, 25, 30, 60].map((value) => `<option value="${value}" ${Number(input.fps) === value ? "selected" : ""}>${value} fps</option>`).join("")}</select></label>
     <label>配音语速<input class="draft-input" data-input-field="voice_rate" type="number" min="0.5" max="2" step="0.1" value="${input.voice_rate}" /></label>
@@ -133,7 +159,7 @@ function renderTask(task) {
     ${reviewInputMarkup(task)}<div class="shot-editor-grid">${shotEditor(task)}</div><button class="text-button" data-save-draft="${escapeHtml(task.id)}">保存脚本、分镜和参数修改</button>
   </div>` : "";
   const uploads = task.shots?.length ? `<div class="upload-box"><div><strong>上传镜头素材</strong><small>选择图片或视频并绑定到一个镜头。上传后会覆盖该镜头的自动素材。</small></div><select id="upload-shot">${task.shots.map((shot) => `<option value="${escapeHtml(shot.id)}">镜头 ${shot.order}</option>`).join("")}</select><input id="asset-file" type="file" accept="image/*,video/*" /><button id="upload-asset" data-upload-task="${escapeHtml(task.id)}">上传素材</button></div><div class="audio-upload-row"><label>上传配音<input id="voice-file" type="file" accept="audio/*" /></label><button data-upload-audio="voice" data-upload-task="${escapeHtml(task.id)}">上传配音</button><label>上传音乐<input id="music-file" type="file" accept="audio/*" /></label><button data-upload-audio="music" data-upload-task="${escapeHtml(task.id)}">上传音乐</button></div>` : "";
-  $("#active-task").innerHTML = `<div class="task-progress"><div class="task-meta"><div><h4>${escapeHtml(task.title || "脚本预览")}</h4><p>${escapeHtml(task.summary || "请审核脚本和分镜后生成。")} / ${escapeHtml(task.status)} / ${escapeHtml(task.id)}</p></div><strong>${task.progress}%</strong></div><div class="progress-bar"><span style="width:${task.progress}%"></span></div><div class="pipeline">${stageMarkup(task)}</div>${error}${draft}${uploads}${links}<div class="asset-summary"><strong>素材记录</strong>${assetList(task)}</div><div class="trace-line">文本 provider: ${escapeHtml(task.trace?.provider || "pending")} / 模型: ${escapeHtml(task.trace?.model || "pending")} / fallback: ${String(Boolean(task.trace?.fallback_used))}<br />配音: ${escapeHtml(task.audio?.voice_provider || "pending")} / 音乐: ${escapeHtml(task.audio?.music_provider || "pending")} / 音频: ${render.has_audio ? "有" : "无"} / 烧录字幕: ${render.has_burned_subtitles ? "有" : "无"}</div></div>`;
+  $("#active-task").innerHTML = `<div class="task-progress"><div class="task-meta"><div><h4>${escapeHtml(task.title || "脚本预览")}</h4><p>${escapeHtml(task.summary || "请审核脚本和分镜后生成。")} / ${escapeHtml(task.status)} / ${escapeHtml(task.id)}</p></div><strong>${task.progress}%</strong></div><div class="progress-bar"><span style="width:${task.progress}%"></span></div><div class="pipeline">${stageMarkup(task)}</div>${error}${draft}${uploads}${links}<div class="asset-summary"><strong>素材记录</strong>${assetList(task)}</div><div class="trace-line">文本 provider: ${escapeHtml(task.trace?.provider || "pending")} / 模型: ${escapeHtml(task.trace?.model || "pending")} / fallback: ${String(Boolean(task.trace?.fallback_used))}<br />配音: ${escapeHtml(task.audio?.voice_provider || "pending")} / 音乐: ${escapeHtml(task.audio?.music_provider || "pending")} / 音频: ${render.has_audio ? "有" : "无"} / 烧录字幕: ${render.has_burned_subtitles ? "有" : "无"}<br />Provider 报告成本: ${Number(task.cost?.total || 0).toFixed(4)}（${escapeHtml(task.cost?.unit || "等待统计")}）</div></div>`;
   $$("[data-retry]").forEach((button) => button.addEventListener("click", () => retryTask(button.dataset.retry)));
   $$("[data-generate-task]").forEach((button) => button.addEventListener("click", () => generateTask(button.dataset.generateTask)));
   $$("[data-save-draft]").forEach((button) => button.addEventListener("click", () => saveDraft(button.dataset.saveDraft)));
@@ -242,6 +268,7 @@ async function boot() {
     $("#service-status").textContent = `服务已连接 / ${health.provider}`;
     $("#provider-chip").textContent = `${health.provider} / ${health.model}`;
     $(".status-dot").style.background = "#75c58b";
+    await loadSystemConfig();
     await loadCatalog();
     await loadProjects();
   } catch (error) {
