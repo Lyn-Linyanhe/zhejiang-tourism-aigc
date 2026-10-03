@@ -8,9 +8,14 @@ from typing import Any, Callable
 
 from ..config import Settings
 from ..models import AssetRecord, Shot, Task, TaskInput, TraceRecord, now_iso, new_id
+from ..providers.audio_runtime import AudioRuntimeClient
 from ..providers.media_ffmpeg import validate_audio_file
+from ..providers.music import select_music
 from ..providers.registry import ProviderRegistry, build_provider_registry
 from ..storage import Storage
+from . import consistency
+from . import knowledge as zhejiang_kb
+from .audio_sync import PerShotAudioBuilder
 
 
 NO_VOICE = "\u65e0\u914d\u97f3"
@@ -38,6 +43,10 @@ class Orchestrator:
         self.settings = settings
         self.storage = storage
         self.registry = registry or build_provider_registry(settings, storage)
+        # P3 逐镜配音：合成 → ffprobe 实测 cues → 镜间 150ms 静音。runtime 可选，
+        # 缺失时按 TTS_PROVIDER 走系统语音或云 TTS。
+        self.audio_runtime = AudioRuntimeClient.from_settings(settings)
+        self.audio_builder = PerShotAudioBuilder(settings, self.audio_runtime)
         self._threads: dict[str, threading.Thread] = {}
         self._threads_lock = threading.RLock()
 
@@ -340,16 +349,19 @@ class Orchestrator:
         )
         directory = self.settings.media_dir / task.id / "assets"
         knowledge = task.audio.get("knowledge", {})
-        asset_source = (
-            self.settings.asset_provider
-            if task.input.asset_source == "configured"
-            else task.input.asset_source
-        )
-        candidates = (
-            self.registry.candidates("asset", asset_source)
-            if task.input.asset_source == "configured"
-            else (self.registry.resolve_name("asset", asset_source),)
-        )
+        asset_source = task.input.asset_source
+        # 素材来源 → 降级链（P2 的 cloud-i2v → cloud-t2i → local-library → offline）
+        candidates = tuple(self.registry.asset_chain_for(asset_source))
+        # P2 一致性策略：统一调色参数（进 RenderRequest.grade），画面 provider 与渲染线共用
+        style_ctx = {
+            "task_id": task.id,
+            "style": task.input.style,
+            "color": knowledge.get("color", "#2d6c63"),
+            "accent": knowledge.get("accent", "#d6ad60"),
+            "resolution": task.input.output_resolution,
+        }
+        style_ctx["grade"] = consistency.grade(style_ctx)
+        task.audio["grade"] = style_ctx["grade"]
         existing_assets = {asset.shot_id: asset for asset in task.assets}
         task.assets = []
         used_sources: set[str] = set()
@@ -370,6 +382,23 @@ class Orchestrator:
             else:
                 shot_payload = shot.__dict__.copy()
                 shot_payload["library_query"] = f"{task.input.city} {task.input.theme} {shot.title}"
+                # 知识库增强：中文长句映射为经核查的英文检索词，提升素材站命中率
+                search_query = zhejiang_kb.english_query(
+                    shot.visual_prompt,
+                    shot.narration,
+                    task.input.theme,
+                    city=task.input.city,
+                    landmark=task.input.landmark,
+                )
+                if search_query:
+                    shot_payload["search_query"] = search_query
+                # 图生视频需要一张首帧，先备好；失败不打断这一镜
+                if "ai-video" in candidates:
+                    frame = self._ensure_first_frame(
+                        task, shot, shot_payload, directory, knowledge, style_ctx
+                    )
+                    if frame:
+                        shot_payload["first_frame_path"] = frame
                 failures: list[str] = []
                 asset = None
                 for candidate in candidates:
@@ -379,10 +408,7 @@ class Orchestrator:
                             task.id,
                             shot_payload,
                             directory,
-                            {
-                                "color": knowledge.get("color", "#2d6c63"),
-                                "accent": knowledge.get("accent", "#d6ad60"),
-                            },
+                            style_ctx,
                         )
                         used_sources.add(candidate)
                         if failures and task.trace:
@@ -451,6 +477,57 @@ class Orchestrator:
             },
         )
 
+    def _ensure_first_frame(
+        self,
+        task: Task,
+        shot: Shot,
+        payload: dict[str, Any],
+        directory: Path,
+        knowledge: dict[str, Any],
+        style_ctx: dict[str, Any],
+    ) -> str:
+        """图生视频需要一张首帧。文生图失败时用离线场景图，不让这一镜把任务打死。"""
+        existing = str(payload.get("first_frame_path") or "")
+        if existing and Path(existing).is_file():
+            return existing
+        try:
+            acquired = self.registry.acquire_asset(
+                ["ai-image", "offline"],
+                lambda name, provider, body=payload: provider.create_or_find(
+                    task.id,
+                    body,
+                    directory,
+                    knowledge.get("color", "#2d6c63"),
+                    knowledge.get("accent", "#d6ad60"),
+                ),
+            )
+        except Exception as exc:
+            self._note_fallback(task, "asset", "ai-image", True, str(exc))
+            return ""
+        frame = str(acquired.value.get("local_path") or "")
+        self._note_fallback(task, "asset", acquired.provider, acquired.fallback_used, acquired.reason)
+        if frame and Path(frame).suffix.lower() in {".mp4", ".mov", ".m4v", ".webm"}:
+            return ""
+        shot.asset_local_path = frame
+        return frame
+
+    def _note_fallback(self, task: Task, slot: str, provider: str, used: bool, reason: str) -> None:
+        if not task.trace:
+            return
+        if used:
+            task.trace.fallback_used = True
+        if not used and not reason:
+            return
+        task.trace.events.append(
+            {
+                "type": "fallback",
+                "slot": slot,
+                "provider": provider,
+                "fallback_used": used,
+                "reason": reason,
+            }
+        )
+
     def _audio(self, task: Task) -> None:
         self.update(
             task,
@@ -460,96 +537,80 @@ class Orchestrator:
         )
         directory = self.settings.media_dir / task.id
         directory.mkdir(parents=True, exist_ok=True)
-        total = sum(float(shot.duration_sec) for shot in task.shots)
-        voice_path: Path | None = directory / "voice.wav"
-        music_path: Path | None = directory / "music.wav"
-        tts_provider = "none"
-        tts_model = "none"
+        target = float(task.input.duration)
 
-        uploaded_voice_value = str(task.audio.get("voice_local_path", "")).strip()
-        uploaded_voice = Path(uploaded_voice_value) if uploaded_voice_value else None
-        if task.input.voice == NO_VOICE:
-            voice_path = None
-        elif uploaded_voice and uploaded_voice.is_file():
-            voice_path = uploaded_voice
-            validate_audio_file(voice_path)
-            tts_provider = "local-upload"
-            tts_model = "uploaded-audio"
-        else:
-            preferred = self.settings.tts_provider
-            if preferred == "auto":
-                preferred = "openai-compatible-tts" if self.settings.tts_base_url and self.settings.tts_api_key else ""
-            candidates = list(self.registry.candidates("tts", preferred))
-            errors: list[str] = []
-            for candidate in dict.fromkeys(candidates):
-                try:
-                    result = self.registry.synthesize_tts(
-                        candidate,
-                        task.narration,
-                        voice_path,
-                        task.input.voice,
-                        task.input.voice_rate,
-                        total,
-                    )
-                    validate_audio_file(Path(result["path"]))
-                    tts_provider, tts_model = str(result["provider"]), str(result["model"])
-                    if errors:
-                        result["event"]["fallback_reason"] = "; ".join(errors)
-                        if task.trace:
-                            task.trace.fallback_used = True
-                    if task.trace:
-                        task.trace.events.append(result["event"])
-                    if isinstance(result.get("cues"), list):
-                        task.audio["cues"] = result["cues"]
-                    break
-                except Exception as exc:
-                    errors.append(f"{candidate}: {exc}")
-            else:
-                raise RuntimeError(f"No usable TTS provider: {'; '.join(errors)}")
+        # P3 逐镜合成：每个镜头单独配音或使用上传音频，ffprobe 实测边界生成 cues，
+        # 镜间留 150ms 静音，统一 48kHz 单声道。镜头时长由实测音频反推。
+        result = self.audio_builder.build(
+            task.id,
+            task.shots,
+            voice=task.input.voice,
+            rate=task.input.voice_rate,
+            target_duration=target,
+            output_dir=directory,
+        )
 
-        if task.input.music_mood == NO_MUSIC:
-            music_path = None
-        else:
-            uploaded_music_value = str(task.audio.get("music_local_path", "")).strip()
-            uploaded_music = Path(uploaded_music_value) if uploaded_music_value else None
-            if uploaded_music and uploaded_music.is_file():
-                music_path = uploaded_music
-                validate_audio_file(music_path)
-                music_provider = "local-upload"
-            else:
+        # 音乐：优先授权曲库/带授权字段的上传（P3），否则回落 MUSIC_DIR（P1 行为），
+        # 再不行才在显式开关下用合成音。
+        music_path = ""
+        music_provider = "none"
+        if task.input.music_mood != NO_MUSIC:
+            try:
+                music = select_music(
+                    task_audio=task.audio,
+                    mood=task.input.music_mood,
+                    style=task.input.style,
+                    duration=target,
+                    catalog_path=self.settings.music_catalog_path,
+                    music_dir=self.settings.music_dir,
+                    cloud_enabled=self.settings.cloud_music_enabled,
+                    output_dir=directory,
+                )
+                music_path = str(music.path)
+                music_provider = str(getattr(music, "provider", "local-catalog"))
+                result.music_path = music_path
+                result.music_match = music.to_dict() if hasattr(music, "to_dict") else {}
+            except Exception as music_exc:
                 candidates = [self.settings.music_provider]
                 if self.settings.allow_synthetic_audio_fallback:
                     candidates.append("offline-synthetic-tone")
-                errors = []
+                errors = [str(music_exc)]
                 for candidate in dict.fromkeys(candidates):
                     try:
-                        music = self.registry.create("music", candidate)
-                        music_path = music.resolve(directory / "music.wav", task.input.music_mood, total)
-                        validate_audio_file(music_path)
-                        music_provider = music.name
+                        provider = self.registry.create("music", candidate)
+                        music_path = str(provider.resolve(directory / "music.wav", task.input.music_mood, target))
+                        validate_audio_file(Path(music_path))
+                        music_provider = provider.name
+                        result.music_path = music_path
                         break
                     except Exception as exc:
                         errors.append(f"{candidate}: {exc}")
                 else:
                     raise RuntimeError(
-                        "No usable music provider. Upload music, configure MUSIC_DIR, "
-                        f"or choose 无音乐. Details: {'; '.join(errors)}"
+                        "No usable music provider. Upload music, configure MUSIC_DIR or "
+                        f"MUSIC_CATALOG_PATH, or choose 无音乐. Details: {'; '.join(errors)}"
                     )
 
+        event = result.event if isinstance(result.event, dict) else {}
+        task.audio.update(result.to_dict())
         task.audio.update(
             {
-                "voice_provider": tts_provider if voice_path else "none",
-                "voice_model": tts_model if voice_path else "none",
-                "voice_url": self._media_url(task.id, voice_path) if voice_path else "",
-                "voice_local_path": str(voice_path) if voice_path else "",
-                "music_provider": locals().get("music_provider", "none") if music_path else "none",
-                "music_url": self._media_url(task.id, music_path) if music_path else "",
-                "music_local_path": str(music_path) if music_path else "",
-                "duration_sec": total,
+                "voice_provider": str(event.get("voice_provider", "none")) if result.voice_path else "none",
+                "voice_model": str(event.get("voice_model", "none")) if result.voice_path else "none",
+                "voice_url": self._media_url(task.id, Path(result.voice_path)) if result.voice_path else "",
+                "voice_local_path": result.voice_path,
+                "music_provider": music_provider if music_path else "none",
+                "music_url": self._media_url(task.id, Path(music_path)) if music_path else "",
+                "music_local_path": music_path,
+                "duration_sec": result.total_duration,
                 "disclosure": "Audio provider and fallback state are recorded in trace.",
             }
         )
+        if task.trace and event:
+            task.trace.events.append(dict(event, stage="audio"))
         self._sync_shots_to_audio(task)
+        # 镜头时长按 cues 实测（P1 任务3），成片容器锁回用户选择的秒数（三条不能破的指标）。
+        task.audio["requested_duration"] = target
         self.update(
             task,
             stage="audio",
@@ -609,6 +670,9 @@ class Orchestrator:
         )
         render_shots = [shot.__dict__.copy() for shot in task.shots]
         renderer = self.registry.create("render", self.settings.render_provider)
+        # 成片容器锁回用户选择的秒数（30.000s / 720x1280 / 25fps 三条不能破的指标）
+        task.audio["requested_duration"] = float(task.input.duration)
+        grade = task.audio.get("grade") if isinstance(task.audio.get("grade"), dict) else None
         task.render = renderer.render(
             task.id,
             render_shots,
@@ -619,6 +683,7 @@ class Orchestrator:
             task.input.fps,
             task.input.voice_volume,
             task.input.music_volume,
+            grade,
         )
         self.update(
             task,

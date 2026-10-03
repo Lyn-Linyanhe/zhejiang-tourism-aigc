@@ -3,6 +3,7 @@ from __future__ import annotations
 import base64
 import json
 import mimetypes
+import os
 import traceback
 from datetime import datetime, timezone
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
@@ -11,10 +12,12 @@ from urllib.parse import parse_qs, unquote, urlparse
 
 from .config import settings
 from .models import TaskInput
+from .providers.contract import CONTRACT_VERSION
 from .providers.media_ffmpeg import validate_audio_file
 from .services.catalog import get_catalog
 from .services.cost import summarize_cost
 from .services.orchestrator import Orchestrator
+from .services.uploads import validate_audio_upload
 from .storage import Storage
 
 
@@ -92,6 +95,9 @@ class AppHandler(BaseHTTPRequestHandler):
                         "provider": settings.default_provider,
                         "model": settings.llm_model or "offline",
                         "asset_provider": settings.asset_provider,
+                        "tts_provider": settings.tts_provider,
+                        "contract_version": CONTRACT_VERSION,
+                        "timing": "measured-per-shot-cues",
                         "synthetic_audio_fallback": settings.allow_synthetic_audio_fallback,
                         "pipeline": system_config["pipeline"],
                     },
@@ -317,28 +323,54 @@ class AppHandler(BaseHTTPRequestHandler):
         task = storage.get_task(task_id)
         if not task:
             raise KeyError("Task does not exist")
+        # P3：逐镜配音（voice 必须带 shot_id）与带授权字段的音乐上传
+        contract = validate_audio_upload(data, task)
         target_dir = settings.media_dir / task_id / "uploads"
         target_dir.mkdir(parents=True, exist_ok=True)
-        target = target_dir / f"{kind}-{self._safe_filename(name, f'{kind}.bin')}"
+        prefix = f"voice-{contract['shot_id']}" if kind == "voice" else "music"
+        target = target_dir / f"{prefix}-{self._safe_filename(name, f'{kind}.bin')}"
+        temporary = target.with_name(target.name + ".upload.tmp")
         payload = encoded.split(",", 1)[1] if "," in encoded else encoded
         try:
-            target.write_bytes(base64.b64decode(payload, validate=True))
+            temporary.write_bytes(base64.b64decode(payload, validate=True))
+            validate_audio_file(temporary)
+            os.replace(temporary, target)
         except Exception as exc:
+            temporary.unlink(missing_ok=True)
             raise ValueError("data_base64 is invalid") from exc
-        validate_audio_file(target)
         task.setdefault("audio", {})
-        task["audio"][f"{kind}_local_path"] = str(target)
-        task["audio"][f"{kind}_url"] = f"/media/{task_id}/uploads/{target.name}"
-        task["audio"][f"{kind}_provider"] = "local-upload"
-        task["audio"][f"{kind}_model"] = "uploaded-audio"
+        url = f"/media/{task_id}/uploads/{target.name}"
+        if kind == "voice":
+            for shot in task.get("shots", []):
+                if shot.get("id") == contract["shot_id"]:
+                    shot["audio_local_path"] = str(target)
+                    shot["audio_url"] = url
+                    break
+        else:
+            task["audio"]["music_upload"] = {
+                "id": f"upload-{target.stem}",
+                "path": str(target),
+                "url": url,
+                "moods": contract["moods"],
+                "styles": contract["styles"],
+                "license": contract["license"],
+                "author": contract["author"],
+                "usage_scope": contract["usage_scope"],
+                "approved": True,
+            }
+            # 兼容字段：历史客户端仍读取 music_local_path / music_url
+            task["audio"]["music_local_path"] = str(target)
+            task["audio"]["music_url"] = url
+            task["audio"]["music_provider"] = "task-upload"
         storage.save_raw_task(task)
         self._json(
             201,
             {
                 "task_id": task_id,
                 "kind": kind,
+                "shot_id": contract.get("shot_id", ""),
                 "name": name,
-                "url": task["audio"][f"{kind}_url"],
+                "url": url,
             },
         )
 

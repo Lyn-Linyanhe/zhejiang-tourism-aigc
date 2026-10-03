@@ -138,7 +138,7 @@ function shotEditor(task) {
     <label>画面描述<textarea data-shot-field="visual_prompt" data-shot-id="${escapeHtml(shot.id)}">${escapeHtml(shot.visual_prompt)}</textarea></label>
     <label>旁白<textarea data-shot-field="narration" data-shot-id="${escapeHtml(shot.id)}">${escapeHtml(shot.narration)}</textarea></label>
     <label>字幕<textarea data-shot-field="subtitle" data-shot-id="${escapeHtml(shot.id)}">${escapeHtml(shot.subtitle)}</textarea></label>
-    <label>转场<select data-shot-field="transition" data-shot-id="${escapeHtml(shot.id)}"><option value="fade" ${shot.transition === "fade" ? "selected" : ""}>淡入淡出</option><option value="dissolve" ${shot.transition === "dissolve" ? "selected" : ""}>叠化</option><option value="slideleft" ${shot.transition === "slideleft" ? "selected" : ""}>向左滑动</option></select></label>
+    <label>转场<select data-shot-field="transition" data-shot-id="${escapeHtml(shot.id)}"><option value="fade" ${shot.transition === "fade" ? "selected" : ""}>淡入淡出</option><option value="dissolve" ${shot.transition === "dissolve" ? "selected" : ""}>叠化</option><option value="slideleft" ${shot.transition === "slideleft" ? "selected" : ""}>向左滑动</option><option value="slideright" ${shot.transition === "slideright" ? "selected" : ""}>向右滑动</option><option value="zoom" ${shot.transition === "zoom" ? "selected" : ""}>推近</option></select></label>
     <label>时长（秒）<input type="number" min="1" max="20" step="0.1" data-shot-field="duration_sec" data-shot-id="${escapeHtml(shot.id)}" value="${shot.duration_sec}" /></label>
   </article>`).join("");
 }
@@ -158,7 +158,7 @@ function renderTask(task) {
     <label>标题<input class="draft-title" value="${escapeHtml(task.title)}" /></label><label>摘要<textarea class="draft-summary">${escapeHtml(task.summary)}</textarea></label><label>CTA<textarea class="draft-cta">${escapeHtml(task.cta)}</textarea></label><label>完整旁白<textarea class="draft-narration">${escapeHtml(task.narration)}</textarea></label>
     ${reviewInputMarkup(task)}<div class="shot-editor-grid">${shotEditor(task)}</div><button class="text-button" data-save-draft="${escapeHtml(task.id)}">保存脚本、分镜和参数修改</button>
   </div>` : "";
-  const uploads = task.shots?.length ? `<div class="upload-box"><div><strong>上传镜头素材</strong><small>选择图片或视频并绑定到一个镜头。上传后会覆盖该镜头的自动素材。</small></div><select id="upload-shot">${task.shots.map((shot) => `<option value="${escapeHtml(shot.id)}">镜头 ${shot.order}</option>`).join("")}</select><input id="asset-file" type="file" accept="image/*,video/*" /><button id="upload-asset" data-upload-task="${escapeHtml(task.id)}">上传素材</button></div><div class="audio-upload-row"><label>上传配音<input id="voice-file" type="file" accept="audio/*" /></label><button data-upload-audio="voice" data-upload-task="${escapeHtml(task.id)}">上传配音</button><label>上传音乐<input id="music-file" type="file" accept="audio/*" /></label><button data-upload-audio="music" data-upload-task="${escapeHtml(task.id)}">上传音乐</button></div>` : "";
+  const uploads = task.shots?.length ? `<div class="upload-box"><div><strong>上传镜头素材</strong><small>选择图片或视频并绑定到一个镜头。上传后会覆盖该镜头的自动素材。</small></div><select id="upload-shot">${task.shots.map((shot) => `<option value="${escapeHtml(shot.id)}">镜头 ${shot.order}</option>`).join("")}</select><input id="asset-file" type="file" accept="image/*,video/*" /><button id="upload-asset" data-upload-task="${escapeHtml(task.id)}">上传素材</button></div><div class="audio-upload-row"><label>上传配音（绑定到上面选中的镜头）<input id="voice-file" type="file" accept="audio/*" /></label><button data-upload-audio="voice" data-upload-task="${escapeHtml(task.id)}">上传配音</button></div><div class="audio-upload-row"><label>音乐情绪<input id="music-mood" value="${escapeHtml(task.input?.music_mood || "舒缓")}" /></label><label>授权说明<input id="music-license" value="已获授权" /></label><label>作者<input id="music-author" value="待填写" /></label><label>使用范围<input id="music-scope" value="比赛展示与内部审核" /></label><label><input id="music-approved" type="checkbox" checked /> 已确认授权</label><label>上传音乐<input id="music-file" type="file" accept="audio/*" /></label><button data-upload-audio="music" data-upload-task="${escapeHtml(task.id)}">上传音乐</button></div>` : "";
   $("#active-task").innerHTML = `<div class="task-progress"><div class="task-meta"><div><h4>${escapeHtml(task.title || "脚本预览")}</h4><p>${escapeHtml(task.summary || "请审核脚本和分镜后生成。")} / ${escapeHtml(task.status)} / ${escapeHtml(task.id)}</p></div><strong>${task.progress}%</strong></div><div class="progress-bar"><span style="width:${task.progress}%"></span></div><div class="pipeline">${stageMarkup(task)}</div>${error}${draft}${uploads}${links}<div class="asset-summary"><strong>素材记录</strong>${assetList(task)}</div><div class="trace-line">文本 provider: ${escapeHtml(task.trace?.provider || "pending")} / 模型: ${escapeHtml(task.trace?.model || "pending")} / fallback: ${String(Boolean(task.trace?.fallback_used))}<br />配音: ${escapeHtml(task.audio?.voice_provider || "pending")} / 音乐: ${escapeHtml(task.audio?.music_provider || "pending")} / 音频: ${render.has_audio ? "有" : "无"} / 烧录字幕: ${render.has_burned_subtitles ? "有" : "无"}<br />Provider 报告成本: ${Number(task.cost?.total || 0).toFixed(4)}（${escapeHtml(task.cost?.unit || "等待统计")}）</div></div>`;
   $$("[data-retry]").forEach((button) => button.addEventListener("click", () => retryTask(button.dataset.retry)));
   $$("[data-generate-task]").forEach((button) => button.addEventListener("click", () => generateTask(button.dataset.generateTask)));
@@ -220,7 +220,20 @@ async function uploadAudio(taskId, kind) {
   const file = input?.files[0];
   if (!file) return showToast(`请先选择${kind === "voice" ? "配音" : "音乐"}文件。`);
   try {
-    await api("/api/uploads", { method: "POST", body: JSON.stringify({ task_id: taskId, kind, name: file.name, data_base64: await readFileAsDataUrl(file) }) });
+    const payload = { task_id: taskId, kind, name: file.name, data_base64: await readFileAsDataUrl(file) };
+    if (kind === "voice") {
+      // P3：配音按镜头绑定（shot_id 必填）
+      payload.shot_id = $("#upload-shot")?.value || "";
+      if (!payload.shot_id) return showToast("请先在上方选择一个镜头。");
+    } else {
+      // P3：音乐上传必须带授权字段并确认已获授权
+      payload.mood = $("#music-mood")?.value?.trim() || "";
+      payload.license = $("#music-license")?.value?.trim() || "";
+      payload.author = $("#music-author")?.value?.trim() || "";
+      payload.usage_scope = $("#music-scope")?.value?.trim() || "";
+      payload.approved = Boolean($("#music-approved")?.checked);
+    }
+    await api("/api/uploads", { method: "POST", body: JSON.stringify(payload) });
     showToast("音频已上传。");
     renderTask(await api(`/api/tasks/${taskId}`));
   } catch (error) { showToast(error.message); }

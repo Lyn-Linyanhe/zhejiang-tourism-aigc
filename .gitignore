@@ -42,3 +42,6 @@ runtime/logs/*
 
 # 假素材包是生成物，用 team/假素材包/make_fixtures.py 重新生成
 team/假素材包/fixtures/
+
+# --- smoke 运行产物（scripts/smoke-test.ps1 写到 runtime-smoke/）---
+runtime-smoke*/

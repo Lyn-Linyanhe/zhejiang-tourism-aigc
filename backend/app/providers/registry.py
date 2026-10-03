@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import importlib
+import sys
 from dataclasses import dataclass, field
 from inspect import signature
 from pathlib import Path
@@ -30,6 +32,198 @@ class ProviderSpec:
     available: Availability = lambda: True
 
 
+@dataclass
+class AcquireResult:
+    """一次降级链尝试的结果：命中的 provider、是否降级、失败原因与逐档记录。"""
+
+    value: Any
+    provider: str
+    fallback_used: bool
+    reason: str
+    attempts: list[dict[str, str]] = field(default_factory=list)
+
+
+# --- P2 画面 provider 的适配层（来自 A 的 registry，用于填充 P1 预留的 asset 槽位）---
+
+_OFF_SWITCHES = {"off", "disabled", "false", "0", "none", "no"}
+
+
+def _switch_enabled(value: str) -> bool:
+    return str(value or "").strip().lower() not in _OFF_SWITCHES
+
+
+def _import_optional(short_name: str) -> Any | None:
+    """尝试加载 providers.image / providers.video。不存在或导入失败都返回 None。"""
+    package = __package__ or "app.providers"
+    candidates = (
+        f"{package}.{short_name}",
+        f"app.providers.{short_name}",
+        f"backend.app.providers.{short_name}",
+    )
+    seen: set[str] = set()
+    for mod_name in candidates:
+        if mod_name in seen:
+            continue
+        seen.add(mod_name)
+        try:
+            return importlib.import_module(mod_name)
+        except ModuleNotFoundError as exc:
+            missing = exc.name or ""
+            target_missing = (
+                missing == mod_name
+                or missing.endswith("." + short_name)
+                or missing == short_name
+            )
+            if target_missing:
+                continue
+            # 模块在，但内部依赖缺失。跳过，不能因此让服务起不来。
+            return None
+        except Exception:
+            return None
+    return None
+
+
+def _has_factory(module: Any) -> bool:
+    if module is None:
+        return False
+    if callable(getattr(module, "build_provider", None)) or callable(
+        getattr(module, "create_provider", None)
+    ):
+        return True
+    for class_name in (
+        "CloudVideoProvider",
+        "VideoProvider",
+        "CloudImageProvider",
+        "ImageProvider",
+        "Provider",
+    ):
+        if isinstance(getattr(module, class_name, None), type):
+            return True
+    return False
+
+
+def _instantiate(module: Any, settings: Any, kind: str) -> Any:
+    factory = getattr(module, "build_provider", None) or getattr(module, "create_provider", None)
+    if callable(factory):
+        try:
+            return factory(settings)
+        except TypeError:
+            return factory(
+                base_url=getattr(settings, f"{kind}_base_url", ""),
+                api_key=getattr(settings, f"{kind}_api_key", ""),
+                model=getattr(settings, f"{kind}_model", ""),
+            )
+    for class_name in (
+        "CloudVideoProvider",
+        "VideoProvider",
+        "CloudImageProvider",
+        "ImageProvider",
+        "Provider",
+    ):
+        cls = getattr(module, class_name, None)
+        if not isinstance(cls, type):
+            continue
+        try:
+            return cls(settings)
+        except TypeError:
+            return cls(
+                getattr(settings, f"{kind}_base_url", ""),
+                getattr(settings, f"{kind}_api_key", ""),
+                getattr(settings, f"{kind}_model", ""),
+            )
+    raise RuntimeError(f"providers.{kind} 没有 build_provider/create_provider")
+
+
+def _asset_dict_from_any(result: Any, task_id: str, shot: dict[str, Any]) -> dict[str, Any]:
+    if isinstance(result, dict):
+        if not result.get("local_path"):
+            raise RuntimeError("素材结果缺少 local_path")
+        return result
+    path = Path(str(getattr(result, "path", "") or ""))
+    if not path:
+        raise RuntimeError("素材结果缺少 path")
+    source = str(getattr(result, "source", "") or "cloud")
+    model = str(getattr(result, "model", "") or "")
+    payload = {
+        "id": f"{source}_{shot.get('id', path.stem)}",
+        "name": str(shot.get("title") or path.name),
+        "url": f"/media/{task_id}/assets/{path.name}",
+        "local_path": str(path),
+        "source": source,
+        "license": "AI 生成画面，公开发布前需人工审核",
+        "author": model or source,
+        "usage_scope": "演示、内部评审、待授权替换",
+        "is_ai_generated": True,
+        "media_type": str(getattr(result, "media_type", "") or ""),
+        "model": model,
+        "seed": int(getattr(result, "seed", 0) or 0),
+        "cost": float(getattr(result, "cost", 0) or 0),
+        "first_frame_path": str(getattr(result, "first_frame_path", "") or ""),
+        "prompt": str(getattr(result, "prompt", "") or ""),
+    }
+    validate = getattr(result, "validate", None)
+    if callable(validate):
+        validate()
+    return payload
+
+
+class _CloudAssetAdapter:
+    """包住 image.build_provider / video.build_provider。缺模块或缺密钥时 available=False。"""
+
+    def __init__(self, name: str, kind: str, module_name: str, settings: Any) -> None:
+        self.name = name
+        self.kind = kind
+        self.module_name = module_name
+        self._settings = settings
+        self._module = _import_optional(module_name)
+        self.available, self.reason = self._availability()
+
+    def _availability(self) -> tuple[bool, str]:
+        switch = getattr(self._settings, f"{self.kind}_provider", "")
+        if not _switch_enabled(switch):
+            return False, f"{self.kind.upper()}_PROVIDER 已关闭"
+        if self._module is None:
+            return False, f"providers.{self.module_name} 不存在或导入失败"
+        if not _has_factory(self._module):
+            return False, f"providers.{self.module_name} 没有 build_provider"
+        resolve = getattr(self._module, "resolve_config", None)
+        config = resolve(self._settings) if callable(resolve) else {}
+        base_url = str(config.get("base_url") or getattr(self._settings, f"{self.kind}_base_url", "") or "").strip()
+        api_key = str(config.get("api_key") or getattr(self._settings, f"{self.kind}_api_key", "") or "").strip()
+        model = str(config.get("model") or getattr(self._settings, f"{self.kind}_model", "") or "").strip()
+        # 文生图允许空密钥（本地 ComfyUI 网关）。图生视频没有密钥就不要去提交。
+        if self.kind == "video" and not api_key:
+            return False, "未配置 VIDEO_API_KEY"
+        if not base_url or not model:
+            return False, f"未配置 {self.kind.upper()}_BASE_URL 或 {self.kind.upper()}_MODEL"
+        return True, ""
+
+    def create_or_find(
+        self,
+        task_id: str,
+        shot: dict[str, Any],
+        output_dir: Path,
+        theme_color: str,
+        accent: str,
+        style_ctx: dict[str, Any] | None = None,
+    ) -> dict[str, Any]:
+        if not self.available or self._module is None:
+            raise RuntimeError(self.reason or f"{self.name} 不可用")
+        provider = _instantiate(self._module, self._settings, self.kind)
+        ctx = dict(style_ctx or {})
+        ctx.setdefault("color", theme_color)
+        ctx.setdefault("accent", accent)
+        ctx.setdefault("duration_sec", shot.get("duration_sec"))
+        ctx.setdefault("task_id", task_id)
+        if hasattr(provider, "generate"):
+            result = provider.generate(shot, output_dir, ctx)
+        elif hasattr(provider, "create_or_find"):
+            result = provider.create_or_find(task_id, shot, output_dir, theme_color, accent)
+        else:
+            raise RuntimeError(f"{self.name} 没有 generate/create_or_find")
+        return _asset_dict_from_any(result, task_id, shot)
+
+
 class ProviderRegistry:
     """Provider discovery and fallback policy shared by the worker and HTTP API."""
 
@@ -37,6 +231,72 @@ class ProviderRegistry:
         self._specs: dict[str, dict[str, ProviderSpec]] = {}
         self._aliases: dict[str, dict[str, str]] = {}
         self._chains: dict[str, FallbackChain] = {}
+        # ASSET_PROVIDER 的缺省值，供 asset_source="configured" 解析
+        self.asset_source_default: str = ""
+
+    # 用户可选的素材来源 → 降级链。名字用本注册表的规范名。
+    _SOURCE_CHAINS: dict[str, tuple[str, ...]] = {
+        "upload": ("upload",),
+        "pexels": ("pexels", "offline"),
+        "offline": ("offline",),
+        "library": ("local-library", "offline"),
+        "local-library": ("local-library", "offline"),
+        "cloud-t2i": ("ai-image", "local-library", "offline"),
+        "ai-image": ("ai-image", "local-library", "offline"),
+        "ai": ("ai-video", "ai-image", "local-library", "offline"),
+        "cloud": ("ai-video", "ai-image", "local-library", "offline"),
+        "cloud-i2v": ("ai-video", "ai-image", "local-library", "offline"),
+        "ai-video": ("ai-video", "ai-image", "local-library", "offline"),
+    }
+
+    def asset_chain_for(self, source: str) -> list[str]:
+        """把素材来源映射成一条降级链。缺省/未知来源走注册的完整 asset 链。"""
+        selected = str(source or "").strip().lower()
+        if selected in {"", "configured"}:
+            selected = str(self.asset_source_default or "").strip().lower()
+        mapped = self._SOURCE_CHAINS.get(selected)
+        if mapped:
+            return list(mapped)
+        chain = self._chains.get("asset")
+        return list(chain.providers) if chain else ["offline"]
+
+    def acquire(self, slot: str, chain: list[str], call: Callable[[str, Any], Any]) -> AcquireResult:
+        """逐档尝试降级链。call 接收 (规范名, provider)，返回该档的产物。
+
+        某一档不可用或抛错就记一条 attempts，再试下一档；全失败才抛。
+        """
+        slot_key = slot.strip().lower()
+        if not chain:
+            raise RuntimeError(f"{slot_key} 降级链为空")
+        attempts: list[dict[str, str]] = []
+        for name in chain:
+            try:
+                provider = self.create(slot_key, name)
+            except Exception as exc:
+                attempts.append({"provider": name, "reason": str(exc) or exc.__class__.__name__})
+                continue
+            try:
+                value = call(name, provider)
+            except Exception as exc:
+                attempts.append({"provider": name, "reason": str(exc) or exc.__class__.__name__})
+                continue
+            fallback_used = name != chain[0] or bool(attempts)
+            reason = "; ".join(f"{item['provider']}: {item['reason']}" for item in attempts)
+            return AcquireResult(
+                value=value,
+                provider=name,
+                fallback_used=fallback_used,
+                reason=reason,
+                attempts=attempts,
+            )
+        detail = "; ".join(f"{item['provider']}: {item['reason']}" for item in attempts) or "无可用 provider"
+        raise RuntimeError(f"{slot_key} provider 全部失败: {detail}")
+
+    def acquire_asset(self, chain: list[str], call: Callable[[str, Any], Any]) -> AcquireResult:
+        return self.acquire("asset", chain, call)
+
+    def acquire_audio(self, chain: list[str], call: Callable[[str, Any], Any]) -> AcquireResult:
+        return self.acquire("tts", chain, call)
 
     def register(self, spec: ProviderSpec, *, replace: bool = False) -> None:
         slot, name = spec.slot.strip().lower(), spec.name.strip().lower()
@@ -281,19 +541,24 @@ class _SyntheticMusicAdapter:
         return output_path
 
 
-class _PendingProvider:
-    def __init__(self, name: str) -> None:
-        raise RuntimeError(f"Provider {name} is configured but its implementation is not installed")
-
-
 def build_provider_registry(settings: Any, storage: Any) -> ProviderRegistry:
     registry = ProviderRegistry()
+    registry.asset_source_default = str(getattr(settings, "asset_provider", "") or "")
     registry.register(ProviderSpec("llm", "offline", "浙江文旅离线编辑器", OfflineLLMProvider, "无需密钥的本地脚本兜底"))
     registry.register(ProviderSpec("llm", "openai-compatible", "OpenAI 兼容文本模型", lambda: OpenAICompatibleLLMProvider(settings.llm_base_url, settings.llm_api_key, settings.llm_model), "DeepSeek 等兼容 chat/completions 的服务", ("deepseek", "openai"), lambda: bool(settings.llm_base_url and settings.llm_api_key and settings.llm_model)))
     registry.register(ProviderSpec("llm", "moneyprinterturbo", "MoneyPrinterTurbo", lambda: MoneyPrinterTurboLLMProvider(settings.mpt_root, settings.mpt_timeout_seconds, settings.mpt_python), "隔离子进程桥接", ("mpt",), lambda: settings.mpt_root.exists()))
 
-    registry.register(ProviderSpec("asset", "ai-image", "AI 生成图片", lambda: _PendingProvider("ai-image"), "等待 P2 注册具体实现", available=lambda: False))
-    registry.register(ProviderSpec("asset", "ai-video", "AI 生成视频", lambda: _PendingProvider("ai-video"), "等待 P2 注册具体实现", available=lambda: False))
+    # P2 画面 provider：文生图 / 图生视频。缺密钥或模块时 available=False，降级链自动跳过。
+    _ai_image = _CloudAssetAdapter("cloud-t2i", "image", "image", settings)
+    _ai_video = _CloudAssetAdapter("cloud-i2v", "video", "video", settings)
+    registry.register(ProviderSpec(
+        "asset", "ai-image", "AI 生成画面", lambda: _ai_image,
+        "OpenAI 兼容文生图（P2）", ("cloud-t2i",), lambda: _ai_image.available,
+    ))
+    registry.register(ProviderSpec(
+        "asset", "ai-video", "AI 生成画面", lambda: _ai_video,
+        "火山方舟图生视频（P2）", ("cloud-i2v", "ai", "cloud"), lambda: _ai_video.available,
+    ))
     registry.register(ProviderSpec("asset", "pexels", "Pexels 在线素材", lambda: PexelsAssetProvider(settings.pexels_api_key, settings.pexels_base_url), "需 PEXELS_API_KEY", available=lambda: bool(settings.pexels_api_key)))
     registry.register(ProviderSpec("asset", "local-library", "本地素材库", lambda: _LocalLibraryAssetProvider(storage), "从已登记素材中检索", ("library",)))
     registry.register(ProviderSpec("asset", "upload", "逐镜头上传", _RequiredUploadAssetProvider, "要求每个镜头已有上传素材"))
