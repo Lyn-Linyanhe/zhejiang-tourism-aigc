@@ -1,4 +1,4 @@
-"""浙里成片 · 四人协作接口契约 v1（冻结版）
+"""浙里成片 · 四人协作接口契约 v2（向后兼容版）
 
 这份文件是四条产线之间唯一的耦合点。契约冻结后：
 
@@ -27,7 +27,7 @@ from dataclasses import asdict, dataclass, field
 from typing import Any, Protocol, runtime_checkable
 
 
-CONTRACT_VERSION = "zj-team4-v1"
+CONTRACT_VERSION = "zj-team4-v2"
 
 # 画面素材类型。渲染器按这个字段决定用「静图运镜」还是「视频铺时长」。
 MEDIA_TYPE_IMAGE = "image"
@@ -120,6 +120,10 @@ class AudioResult:
     total_duration: float
     cost: float = 0.0
     event: dict[str, Any] = field(default_factory=dict)
+    target_duration: float = 0.0
+    timing_source: str = "measured-shot-audio"
+    provider_trace: list[dict[str, Any]] = field(default_factory=list)
+    music_match: dict[str, Any] = field(default_factory=dict)
 
     def validate(self) -> None:
         if self.voice_path and not self.cues:
@@ -158,7 +162,40 @@ class AudioResult:
             total_duration=float(raw.get("total_duration", 0)),
             cost=float(raw.get("cost", 0)),
             event=dict(raw.get("event", {})),
+            target_duration=float(raw.get("target_duration", raw.get("total_duration", 0))),
+            timing_source=str(raw.get("timing_source", "measured-shot-audio")),
+            provider_trace=list(raw.get("provider_trace", [])),
+            music_match=dict(raw.get("music_match", {})),
         )
+
+
+@dataclass
+class MusicResult:
+    """One licensed music selection for the complete video."""
+
+    id: str
+    path: str
+    moods: list[str]
+    styles: list[str]
+    license: str
+    author: str
+    usage_scope: str
+    approved: bool
+    provider: str = "local-catalog"
+    model: str = "metadata-match-v1"
+    event: dict[str, Any] = field(default_factory=dict)
+
+    def validate(self) -> None:
+        if not self.id or not self.path:
+            raise ValueError("MusicResult.id/path 不能为空")
+        if not self.approved:
+            raise ValueError("未批准的音乐不得进入渲染")
+        if not all((self.license, self.author, self.usage_scope)):
+            raise ValueError("音乐必须包含 license/author/usage_scope")
+
+    def to_dict(self) -> dict[str, Any]:
+        self.validate()
+        return asdict(self)
 
 
 # --------------------------------------------------------------------------
@@ -221,7 +258,7 @@ class AssetProviderProtocol(Protocol):
 
 @runtime_checkable
 class AudioProviderProtocol(Protocol):
-    """P3 的 tts.py / music.py 都实现这个形状。"""
+    """P3 的逐镜 TTS provider 实现这个形状。"""
 
     name: str
     cost_per_call: float
@@ -233,6 +270,22 @@ class AudioProviderProtocol(Protocol):
         voice: str,
         rate: float = 1.0,
     ) -> dict[str, Any]:
+        ...
+
+
+@runtime_checkable
+class MusicProviderProtocol(Protocol):
+    """Optional injected cloud music provider; disabled unless configured."""
+
+    name: str
+
+    def select(
+        self,
+        mood: str,
+        style: str,
+        duration: float,
+        output_dir: Any,
+    ) -> MusicResult:
         ...
 
 

@@ -1,12 +1,14 @@
 from __future__ import annotations
 
 import json
+import os
 import subprocess
-import sys
 import urllib.request
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
+
+from .audio_runtime import AudioRuntimeClient
 
 
 @dataclass
@@ -68,8 +70,9 @@ def generate_edge_tts(
     output_path: Path,
     voice: str,
     rate: float = 1.0,
+    runtime: AudioRuntimeClient | None = None,
 ) -> dict[str, Any]:
-    """Use the installed edge-tts CLI when the team has enabled that provider."""
+    """Use Edge TTS through the isolated Python 3.11 audio runtime."""
     if not text.strip():
         raise ValueError("speech text cannot be empty")
     voice_name = {
@@ -80,60 +83,58 @@ def generate_edge_tts(
         raise ValueError("edge TTS voice cannot be empty")
     rate_percent = round((float(rate) - 1.0) * 100)
     rate_arg = f"{rate_percent:+d}%"
-    result = subprocess.run(
-        [
-            sys.executable,
-            "-m",
-            "edge_tts",
-            "--voice",
-            voice_name,
-            "--rate",
-            rate_arg,
-            "--text",
-            text,
-            "--write-media",
-            str(output_path),
-        ],
-        text=True,
-        capture_output=True,
-        check=False,
-        timeout=120,
-    )
-    if result.returncode != 0 or not output_path.exists() or output_path.stat().st_size < 1000:
-        detail = (result.stderr or result.stdout or "").strip()
-        raise RuntimeError(detail or "edge-tts synthesis failed")
-    return {
-        "path": str(output_path),
-        "provider": "edge-tts",
-        "model": voice_name,
-    }
+    if runtime is None:
+        raise RuntimeError(
+            "Edge TTS requires the isolated audio runtime. "
+            "Run scripts/setup-audio-runtime.ps1 first."
+        )
+    return runtime.synthesize_edge_tts(text, output_path, voice_name, rate_arg)
 
 
-def generate_system_speech(text: str, output_path: Path) -> dict[str, Any]:
+def generate_system_speech(
+    text: str,
+    output_path: Path,
+    voice: str = "女声",
+    rate: float = 1.0,
+) -> dict[str, Any]:
     """Use an installed Windows speech voice without requiring another API key."""
     if not text.strip():
         raise ValueError("speech text cannot be empty")
     script = r"""
 $ErrorActionPreference = "Stop"
-$textPath = $args[0]
-$outputPath = $args[1]
+$textPath = $env:ZJ_TTS_TEXT_PATH
+$outputPath = $env:ZJ_TTS_OUTPUT_PATH
+$voicePreference = $env:ZJ_TTS_VOICE
+$rateValue = [int]$env:ZJ_TTS_RATE
 $text = [System.IO.File]::ReadAllText($textPath, [System.Text.Encoding]::UTF8)
 Add-Type -AssemblyName System.Speech
 $synth = New-Object System.Speech.Synthesis.SpeechSynthesizer
 $voices = $synth.GetInstalledVoices()
-$zh = $voices | Where-Object { $_.VoiceInfo.Culture.Name -like "zh-CN*" } | Select-Object -First 1
+$zhVoices = @($voices | Where-Object { $_.VoiceInfo.Culture.Name -like "zh-CN*" })
+$gender = if ($voicePreference -eq "男声") { "Male" } else { "Female" }
+$zh = $zhVoices | Where-Object { $_.VoiceInfo.Gender.ToString() -eq $gender } | Select-Object -First 1
+if ($null -eq $zh) { $zh = $zhVoices | Select-Object -First 1 }
 if ($null -ne $zh) {
   $synth.SelectVoice($zh.VoiceInfo.Name)
 }
+$synth.Rate = [Math]::Max(-10, [Math]::Min(10, $rateValue))
 $synth.SetOutputToWaveFile($outputPath)
 $synth.Speak($text)
+$selectedVoice = $synth.Voice.Name
 $synth.Dispose()
+$selectedVoice
 """
     text_path = output_path.with_suffix(".txt")
     text_path.write_text(text, encoding="utf-8")
+    environment = os.environ.copy()
+    environment["ZJ_TTS_TEXT_PATH"] = str(text_path.resolve())
+    environment["ZJ_TTS_OUTPUT_PATH"] = str(output_path.resolve())
+    environment["ZJ_TTS_VOICE"] = voice
+    environment["ZJ_TTS_RATE"] = str(round((float(rate) - 1.0) * 5))
     try:
         result = subprocess.run(
-            ["powershell.exe", "-NoProfile", "-NonInteractive", "-Command", script, str(text_path), str(output_path)],
+            ["powershell.exe", "-NoProfile", "-NonInteractive", "-Command", script],
+            env=environment,
             text=True,
             capture_output=True,
             check=False,
@@ -144,4 +145,8 @@ $synth.Dispose()
     if result.returncode != 0 or not output_path.exists() or output_path.stat().st_size < 1000:
         detail = (result.stderr or result.stdout or "").strip()
         raise RuntimeError(detail or "Windows system speech synthesis failed")
-    return {"path": str(output_path), "provider": "windows-system-speech"}
+    return {
+        "path": str(output_path),
+        "provider": "windows-system-speech",
+        "model": (result.stdout or "installed-system-voice").strip() or "installed-system-voice",
+    }
