@@ -89,7 +89,13 @@ class TaskInput:
             raise ValueError("shot_count must be 4, 6, or 8")
         if values["duration"] not in ALLOWED_DURATIONS:
             raise ValueError(f"duration 只能是 {ALLOWED_DURATIONS}")
-        if values["asset_source"] not in {"configured", "offline", "upload", "pexels", "local-library", "library", "ai-image", "ai-video"}:
+        if values["asset_source"] not in {
+            "configured", "offline", "upload", "pexels",
+            "local-library", "library",
+            "ai-image", "ai-video",
+            # P2 注册表使用的旧名称，作为别名一并接受
+            "cloud-i2v", "cloud-t2i", "ai", "cloud",
+        }:
             raise ValueError("asset_source must be a registered asset provider")
         if values["output_resolution"] not in ALLOWED_RESOLUTIONS:
             raise ValueError(f"output_resolution must be one of {tuple(ALLOWED_RESOLUTIONS)}")
@@ -125,6 +131,7 @@ class Shot:
     asset_seed: int = 0
     asset_first_frame_path: str = ""
     audio_url: str = ""
+    audio_local_path: str = ""
 
 
 @dataclass

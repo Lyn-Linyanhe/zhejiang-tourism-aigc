@@ -35,6 +35,11 @@ def _env_list(name: str, default: str = "") -> tuple[str, ...]:
     return tuple(item.strip() for item in _env(name, default).split(",") if item.strip())
 
 
+def _project_path(name: str, default: str) -> Path:
+    value = Path(_env(name, default)).expanduser()
+    return value if value.is_absolute() else PROJECT_ROOT / value
+
+
 @dataclass(frozen=True)
 class Settings:
     host: str = _env("APP_HOST", "127.0.0.1")
@@ -58,6 +63,18 @@ class Settings:
     tts_fallback_providers: tuple[str, ...] = _env_list(
         "TTS_FALLBACK_PROVIDERS", "edge-tts,windows-system-speech,offline-synthetic-tone"
     )
+    # P3 逐镜配音运行时（可选重依赖，缺省 .venv-audio 不存在时回落系统语音）
+    audio_python: Path = _project_path(
+        "AUDIO_PYTHON", r".venv-audio\Scripts\python.exe"
+    )
+    audio_device: str = _env("AUDIO_DEVICE", "cuda").lower()
+    audio_compute_type: str = _env("AUDIO_COMPUTE_TYPE", "float16").lower()
+    whisper_model: str = _env("WHISPER_MODEL", "small")
+    audio_model_cache: Path = _project_path("AUDIO_MODEL_CACHE", r"runtime\models")
+    audio_allow_cpu_fallback: bool = _env(
+        "AUDIO_ALLOW_CPU_FALLBACK", "true"
+    ).lower() in {"1", "true", "yes"}
+    audio_timeout_seconds: int = int(_env("AUDIO_TIMEOUT_SECONDS", "900"))
     asset_provider: str = _env("ASSET_PROVIDER", "offline")
     asset_fallback_providers: tuple[str, ...] = _env_list(
         "ASSET_FALLBACK_PROVIDERS", "local-library,offline"
@@ -73,6 +90,12 @@ class Settings:
     pexels_api_key: str = _env("PEXELS_API_KEY")
     pexels_base_url: str = _env("PEXELS_BASE_URL", "https://api.pexels.com/v1")
     music_dir: Path = PROJECT_ROOT / _env("MUSIC_DIR", "runtime/music")
+    music_catalog_path: Path = _project_path(
+        "MUSIC_CATALOG_PATH", r"runtime\music\catalog.json"
+    )
+    cloud_music_enabled: bool = _env("CLOUD_MUSIC_ENABLED", "false").lower() in {
+        "1", "true", "yes"
+    }
     music_provider: str = _env("MUSIC_PROVIDER", "local-music-library")
     music_base_url: str = _env("MUSIC_BASE_URL")
     music_api_key: str = _env("MUSIC_API_KEY")
@@ -98,6 +121,8 @@ class Settings:
         self.db_path.parent.mkdir(parents=True, exist_ok=True)
         self.media_dir.mkdir(parents=True, exist_ok=True)
         self.logs_dir.mkdir(parents=True, exist_ok=True)
+        self.audio_model_cache.mkdir(parents=True, exist_ok=True)
+        (self.data_dir / "diagnostics").mkdir(parents=True, exist_ok=True)
 
 
 settings = Settings()

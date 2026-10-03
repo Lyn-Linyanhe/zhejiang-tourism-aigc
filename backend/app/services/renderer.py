@@ -379,6 +379,17 @@ class VideoRenderer:
             "resolution": resolution,
             "has_audio": "audio" in streams,
             "has_burned_subtitles": include_subtitles,
+            "total_duration": total_duration,
+            # P3 的混音策略与时间轴口径，随 manifest 一并留档（合并时并入）
+            "mix_strategy": (
+                "sidechaincompress-asplit-2" if len(audio_tracks) >= 2
+                else "single-track" if len(audio_tracks) == 1
+                else "none"
+            ),
+            "timing_source": audio.get("timing_source", ""),
+            "target_duration": audio.get("target_duration", ""),
+            "cues": raw_cues if isinstance(raw_cues, list) else [],
+            "music_match": audio.get("music_match", None),
             "render_provider": "ffmpeg",
             "rendered_at": __import__("datetime").datetime.now(
                 __import__("datetime").timezone.utc
