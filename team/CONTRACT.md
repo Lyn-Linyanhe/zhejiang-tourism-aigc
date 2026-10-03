@@ -1,7 +1,21 @@
 # 接口契约 v1（冻结版）
 
-**契约版本**：`zj-team4-v1`
+**契约版本**：`zj-team4-v2`（2026-10-03 合并时由 `zj-team4-v1` 升级）
 **状态**：冻结。任何字段改动需先改 `contract.py` 并在 AI 日志记一条 Entry。
+
+> **v1 → v2 变更记录（合并时补记）**
+>
+> 变更内容：`AudioResult` 新增 `target_duration` / `timing_source` / `provider_trace` /
+> `music_match` 四个字段；新增 `MusicResult` 数据类与 `MusicProviderProtocol`。
+> `AssetResult` / `Cue` / `RenderRequest` / `RenderResult` / `FallbackChain` 保持不变。
+>
+> 变更理由：接入 P3 声音线的逐镜实测 cues（需要 `timing_source` 区分
+> `measured-shot-audio` 与 `nominal-no-voice`）与带授权字段的授权音乐契约
+> （`MusicResult` 强制 `license/author/usage_scope/approved`）。
+>
+> 新增字段均有缺省值，v1 调用方按位置/关键字构造 `AudioResult` 不受影响。
+> 详见 `team/AI日志/MERGE-AI-LOG.md`。按契约流程：已改 `contract.py` → 已在日志标注 →
+> 需通知全员 → 各自跟进。
 
 ---
 
