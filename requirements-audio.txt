@@ -1,0 +1,21 @@
+--extra-index-url https://download.pytorch.org/whl/cu128
+
+# Isolated Python 3.11 audio runtime. Keep these packages out of the
+# standard-library web process so the main service can continue using 3.14.
+numpy>=2.1,<3
+torch==2.8.0+cu128
+torchaudio==2.8.0+cu128
+torchvision==0.23.0+cu128
+edge-tts==7.3.1
+pydub==0.25.1
+openai-whisper==20250625
+truststore>=0.10,<1
+# WhisperX 3.8.6 is built and tested against the Transformers 4.x API.
+# Keeping this upper bound prevents a future resolver run from silently
+# selecting the incompatible 5.x line.
+transformers>=4.48,<5
+# WhisperX 3.2.0 pins faster-whisper 1.0/PyAV 11 and cannot produce a
+# stable Windows Python 3.11 environment with the current package index.
+# v3.8.6 is the first verified current release with lazy optional imports,
+# Silero VAD and an explicit CUDA 12.8 dependency set.
+whisperx @ https://codeload.github.com/m-bain/whisperX/zip/refs/tags/v3.8.6

@@ -109,15 +109,50 @@ def _city_meta(city: str) -> dict:
 
 def _match_text(entity: dict, *texts: str) -> int:
     """返回实体在给定文本中的最长命中别名长度，未命中返回 0。"""
-    blob = " ".join(str(t) for t in texts if t)
+    blob = " ".join(str(t) for t in texts if t).casefold()
     if not blob:
         return 0
     best = 0
     for needle in (entity.get("name"), *(entity.get("aliases") or [])):
-        needle = str(needle or "").strip()
+        needle = str(needle or "").strip().casefold()
         if len(needle) >= 2 and len(needle) > best and needle in blob:
             best = len(needle)
     return best
+
+
+def canonical_city(city: str) -> str:
+    return str(city or "").strip().removesuffix("市")
+
+
+def _city_entities(city: str) -> list[dict]:
+    city = canonical_city(city)
+    return [entity for entity in _entities() if not city or entity.get("city") == city]
+
+
+def list_entities(city: str = "") -> list[dict]:
+    """Entity references available for manual shot and library selection."""
+    return [{key: entity[key] for key in ("id", "name", "city", "type")} for entity in _city_entities(city)]
+
+
+def get_entity(entity_id: str, city: str = "") -> dict | None:
+    return next((entity for entity in _city_entities(city) if entity["id"] == entity_id), None)
+
+
+def _tag_match(entity: dict, *texts: str) -> int:
+    blob = " ".join(text.casefold() for text in texts if text)
+    return max((len(tag) for tag in entity.get("scenario_tags", []) if len(tag) >= 2 and tag.casefold() in blob), default=0)
+
+
+def resolve_entity(*texts: str, city: str = "", allow_tags: bool = True) -> dict | None:
+    """Use the most specific unambiguous match in the selected city."""
+    pool = _city_entities(city)
+    for matcher in (_match_text, _tag_match) if allow_tags else (_match_text,):
+        hits = [(matcher(entity, *texts), entity) for entity in pool]
+        best = max((score for score, _ in hits), default=0)
+        if best:
+            top = [entity for score, entity in hits if score == best]
+            return top[0] if len(top) == 1 else None
+    return None
 
 
 def _type_label(entity_type: str) -> str:
@@ -170,37 +205,26 @@ def build_generation_context(
     def _clean(value: Any) -> str:
         return "" if value is None else str(value).strip()
 
-    city = _clean(city)
+    city = canonical_city(city)
     landmark = _clean(landmark)
     theme = _clean(theme)
     culture = _clean(culture)
     festival = _clean(festival)
 
-    # 城市过滤是硬约束：用户选了宁波，语料里没有宁波就退回背景资料，
-    # 绝不能把杭州的事实注入宁波片子——错误的权威事实比没有事实更糟。
-    pool = [e for e in entities if not city or str(e.get("city", "")).strip() == city]
-
+    # 城市过滤同时用于脚本和画面，不跨城填充未覆盖的条目。
+    pool = _city_entities(city)
     scored: list[tuple[float, dict]] = []
     for entity in pool:
-        score = 0.0
-        if landmark:
-            hit = _match_text(entity, landmark)
+        score = max((
+            weight + hit / (hit + 10)
+            for weight, text in ((4, landmark), (3, culture), (2, festival), (1, theme))
+            if (hit := _match_text(entity, text))
+        ), default=0.0)
+        if not score:
+            hit = _tag_match(entity, landmark, culture, festival, theme)
             if hit:
-                # 地标是用户最明确的意图信号，权重最高；越具体（别名越长）越优先
-                score = max(score, 4.0 + min(hit, 8) / 10)
-        if culture:
-            hit = _match_text(entity, culture)
-            if hit:
-                score = max(score, 2.0 + min(hit, 8) / 10)
-        if festival:
-            hit = _match_text(entity, festival)
-            if hit:
-                score = max(score, 1.5 + min(hit, 8) / 10)
-        if theme:
-            hit = _match_text(entity, theme)
-            if hit:
-                score = max(score, 1.0 + min(hit, 8) / 10)
-        if score > 0:
+                score = hit / (hit + 10)
+        if score:
             scored.append((score, entity))
     scored.sort(key=lambda item: (-item[0], str(item[1].get("name", ""))))
 
@@ -265,40 +289,14 @@ def build_generation_context(
     )
 
 
-def english_query(*texts: str, city: str = "", landmark: str = "") -> str:
-    """从给定文本中识别知识实体，返回其英文检索词。
-
-    匹配规则：实体名称或别名（>=2 字符）作为子串出现在任一文本中即命中，
-    取命中名称最长（最具体）的实体；同实体多文本命中不叠加。
-    未命中或语料缺失时返回空串，调用方应回退到原有检索词逻辑。
-    """
-    blob = " ".join(str(t) for t in texts if t)
-    if not blob:
-        return ""
-    entities = _entities()
-    if not entities:
-        return ""
-
-    best_entity = None
-    best_needle = ""
-    for entity in entities:
-        needles = [str(entity.get("name") or ""), *(str(a) for a in (entity.get("aliases") or []))]
-        for needle in needles:
-            needle = needle.strip()
-            if len(needle) >= 2 and needle in blob and len(needle) > len(best_needle):
-                best_entity = entity
-                best_needle = needle
-
-    keywords: list[str] = []
-    if best_entity is not None:
-        keywords = [str(k).strip() for k in (best_entity.get("keywords_en") or []) if str(k).strip()]
-
-    # 城市/地标字段是最强信号（用户明确选择了城市与景点），始终附加，
-    # 保证未命中具体实体时至少带上地理限定词。
-    landmark_needle = str(landmark or "").strip()
-    if landmark_needle and landmark_needle in blob and len(landmark_needle) >= 2:
-        keywords.insert(0, landmark_needle)
-
-    if not keywords:
-        return ""
-    return "; ".join(keywords[:3])
+def english_query(*texts: str, city: str = "", landmark: str = "", entity_id: str = "") -> str:
+    """Return search terms for the named entity within the selected city."""
+    if entity_id:
+        entity = get_entity(entity_id, city)
+    else:
+        entity = resolve_entity(*texts, city=city)
+        # Only an explicitly mentioned, known landmark can supply a fallback.
+        if entity is None and landmark and any(landmark in text for text in texts if text):
+            entity = resolve_entity(landmark, city=city, allow_tags=False)
+    keywords = (entity or {}).get("keywords_en") or []
+    return "; ".join(str(term).strip() for term in keywords[:3] if str(term).strip())

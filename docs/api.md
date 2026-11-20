@@ -1,6 +1,6 @@
 # API Reference
 
-Base URL: `http://127.0.0.1:8787`
+Base URL: `http://127.0.0.1:8790`
 
 All request and response bodies use UTF-8 JSON.
 
@@ -10,7 +10,7 @@ Returns provider configuration without exposing secrets.
 
 ## `GET /api/catalog`
 
-Returns city knowledge, default styles, voice choices, music moods and durations. The UI uses these values as suggestions; text fields also accept custom values.
+Returns city knowledge, default styles, voice choices, music moods and durations. `entities` lists `{id, name, city, type}` references and `shot_tags` maps `wide`, `detail`, `process`, `performance`, `ambient` to display names. The UI uses these values as suggestions; text fields also accept custom values.
 
 ## `POST /api/previews`
 
@@ -32,6 +32,7 @@ Creates a draft and generates only the script/storyboard.
   "include_ai_label": true,
   "include_subtitles": true,
   "custom_brief": "",
+  "visual_usage": "preview",
   "asset_source": "configured",
   "output_resolution": "720x1280",
   "fps": 25,
@@ -76,7 +77,7 @@ The task remains a draft until generation is confirmed.
 
 ## `PATCH /api/tasks/{task_id}/shots/{shot_id}`
 
-Updates `title`, `visual_prompt`, `narration`, `subtitle`, `transition` and `duration_sec`.
+Updates `title`, `visual_prompt`, `narration`, `subtitle`, `transition`, `duration_sec`, `entity_id`, `shot_tag` and `library_asset_id`. Entities must belong to the task city; a bound asset must match the selected entity and shot tag. `library_asset_id: null` clears a library binding and its reusable file. Empty entity/tag values request automatic planning.
 
 All shot durations must add up to the task duration. The server rejects inconsistent edits.
 
@@ -85,7 +86,7 @@ All shot durations must add up to the task duration. The server rejects inconsis
 Starts actual generation from the saved draft:
 
 ```text
-assets → audio → rendering → review
+audio → assets → rendering → review
 ```
 
 This endpoint must not be called until script, storyboard, assets and audio choices have been reviewed.
@@ -133,4 +134,53 @@ Generated files are served below:
 
 ## `GET /api/library/assets`
 
-Lists reusable local library media. Optional query parameters are `type=image|video|audio` and `q` for metadata search. Assets are content-hash deduplicated and include `license_status` and `usage_scope`; scanned validation artifacts remain `pending-review` and must not be treated as publication-cleared.
+Lists reusable local library media. Filters: `type=image|video|audio`, `q`, `city`, `entity_id`, `shot_tag`, `review_status=pending|approved|rejected`, and `usage=preview|publication` (default `preview`). City names accept a trailing `市`.
+
+`publication` checks both review states, allowed usages, non-empty source/author/license/evidence, expiration, file existence and SHA-256. A missing match returns an empty list. Ordinary previews can include pending assets; rejected bindings are refused by the asset provider. Entity searches stay within the selected entity/city and do not silently use the most recent unrelated file.
+
+## `POST /api/library/assets`
+
+Uploads an image or short video, deduplicated by SHA-256. Supported extensions: JPEG, PNG, WebP, BMP, MP4, MOV, M4V and WebM; maximum decoded size is 20 MiB. Uploaded files are candidates, not proof of media identity or license.
+
+```json
+{
+  "name": "leifeng.jpg",
+  "data_base64": "data:image/jpeg;base64,...",
+  "city": "杭州",
+  "entity_id": "hz-leifengta",
+  "shot_tags": ["wide"],
+  "source_url": "https://example.org/original-file-page",
+  "source_title": "Original file title",
+  "source_publisher": "Original publisher",
+  "author": "Photographer",
+  "license": "CC BY 4.0",
+  "license_url": "https://creativecommons.org/licenses/by/4.0/",
+  "license_evidence": "License receipt and verification reference",
+  "usage_scope": "Attribution and permitted channels",
+  "valid_until": null
+}
+```
+
+Returns `201` and the asset record with `id`, `local_path`, `/library-media/...` URL and `sha256`. New uploads always start with `review_status=pending`, `license_status=pending`, `allowed_usages=["preview"]`; upload fields cannot self-approve. The city is inferred from a valid entity when omitted. A duplicate preserves existing reviewed metadata; conflicting entity/tags or changed stored content are rejected.
+
+Optional `task_id` and `shot_id` must appear together. The task must be editable, and its city/entity/tag must match before any file or library record is written. Valid binding updates the task's shot and asset record. Without these fields, the upload only registers a library candidate.
+
+## `PATCH /api/library/assets/{id}`
+
+Updates entity/place metadata and source/license/review fields. File paths, hashes, IDs and URLs of stored media are immutable. To approve publication:
+
+```json
+{
+  "review_status": "approved",
+  "license_status": "approved",
+  "allowed_usages": ["preview", "publication"]
+}
+```
+
+The server checks entity/tag, complete unexpired license evidence and an unchanged file, then records `checked_at`. `review_status=rejected` revokes publication eligibility. Invalid values return `400 INVALID_REQUEST`; a missing asset returns `404 NOT_FOUND`.
+
+## Visual use and provenance
+
+`TaskInput.visual_usage` is `preview` by default. `publication` forces the reviewed entity library for every shot, regardless of the configured fallback source. No pending, expired, unrelated or silently substituted media can enter that path; the server rechecks the current city, binding, review and file immediately before rendering, including `retry` from `rendering`.
+
+Task assets and manifest `shots` retain entity, shot tag, library asset ID and `provenance` (source, author, license, allowed usages, dates and SHA-256). Pexels is a photo-only supplemental search in this version: it records the actual query and original page as an `external-candidate`; AI providers record `ai-generated`. Neither is publication-cleared automatically. The legacy `/api/assets` remains compatible for preview uploads, while the workbench uses `/api/library/assets`.

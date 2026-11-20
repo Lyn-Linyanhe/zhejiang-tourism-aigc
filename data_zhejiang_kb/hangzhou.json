@@ -35,6 +35,20 @@
         "西湖水域面积约 6.38 平方公里，汇水面积约 21.22 平方公里"
       ],
       "cultural_significance": "江南山水美学的代表，中国文人精神家园的象征，历代留下诗词逾两万首",
+      "fact_records": [
+        {
+          "text": "从空中看西湖，湖水与周边群山相映。",
+          "source_url": "https://commons.wikimedia.org/wiki/File:Aerial_panorama_of_West_Lake_and_its_surrounding_mountains._December_2023.jpg",
+          "source_title": "Aerial panorama of West Lake and its surrounding mountains. December 2023",
+          "source_publisher": "Wikimedia Commons / Wanderingchina",
+          "evidence_quote": "Aerial panorama of West Lake and its surrounding mountains. December 2023.",
+          "fact_type": "visual_description",
+          "retrieved_at": "2026-11-20",
+          "checked_at": "2026-11-20",
+          "license_status": "仅描述已核照片内容；图片 CC BY 4.0 另存素材库，不代表全部知识事实获得媒体授权",
+          "reuse_status": "attributed-visual-description"
+        }
+      ],
       "keywords_en": [
         "West Lake Hangzhou",
         "West Lake China",
@@ -76,6 +90,20 @@
         "位于白堤东端，连接北山街与孤山，是游客量最大的西湖景点之一"
       ],
       "cultural_significance": "西湖十景之首，融自然景观与民间传说于一体",
+      "fact_records": [
+        {
+          "text": "雨中的断桥，行人撑伞走过。",
+          "source_url": "https://commons.wikimedia.org/wiki/File:Broken_Bridge_(Hangzhou)_20250505.jpg",
+          "source_title": "Broken Bridge (Hangzhou) 20250505",
+          "source_publisher": "Wikimedia Commons / Suicasmo",
+          "evidence_quote": "Broken Bridge (Hangzhou)",
+          "fact_type": "visual_description",
+          "retrieved_at": "2026-11-20",
+          "checked_at": "2026-11-20",
+          "license_status": "画面描述经目视核对；照片为 CC0，未将本图描述为断桥残雪",
+          "reuse_status": "attributed-visual-description"
+        }
+      ],
       "keywords_en": [
         "Broken Bridge West Lake",
         "West Lake bridge winter",
@@ -114,6 +142,20 @@
         "西湖十景“雷峰夕照”由此得名"
       ],
       "cultural_significance": "吴越国佛教文化见证，白蛇传说中法海镇白娘子之地",
+      "fact_records": [
+        {
+          "text": "今天的雷峰塔新塔，于2002年落成。",
+          "source_url": "http://en.leifengta.com/about.aspx?c_kind=2&c_kind2=10",
+          "source_title": "Leifeng Pagoda scenic area introduction",
+          "source_publisher": "雷峰塔景区",
+          "evidence_quote": "The new pagoda is completed on Oct.25th,2002.",
+          "fact_type": "verified_short_summary",
+          "retrieved_at": "2026-11-20",
+          "checked_at": "2026-11-20",
+          "license_status": "事实短述并保留官网来源；不据此授予页面叙述或图片的复用许可",
+          "reuse_status": "fact-only-attributed"
+        }
+      ],
       "keywords_en": [
         "Leifeng Pagoda",
         "West Lake pagoda sunset",
@@ -155,6 +197,20 @@
         "大雄宝殿内 24.8 米高的释迦牟尼佛像为中国最大的香樟木坐佛"
       ],
       "cultural_significance": "江南佛教文化中心，济公传说发源地，中国石窟艺术江南代表",
+      "fact_records": [
+        {
+          "text": "公元326年，灵隐寺在杭州始建。",
+          "source_url": "https://en.lingyinsi.org/intro/",
+          "source_title": "Lingyin Temple — Brief Introduction",
+          "source_publisher": "灵隐寺",
+          "evidence_quote": "Lingyin Temple, founded in 326AD",
+          "fact_type": "verified_short_summary",
+          "retrieved_at": "2026-11-20",
+          "checked_at": "2026-11-20",
+          "license_status": "事实短述并保留官网来源；本镜仅展示大雄宝殿，不声称画面是飞来峰造像",
+          "reuse_status": "fact-only-attributed"
+        }
+      ],
       "keywords_en": [
         "Lingyin Temple Hangzhou",
         "Feilai Peak Buddha carvings",
@@ -200,6 +256,20 @@
         "炒制一锅 250 克干茶约需 4-5 小时，锅温须在 60-200℃ 间精细调控"
       ],
       "cultural_significance": "中国绿茶代表，杭州茶文化核心，被誉为“中国十大名茶之首”",
+      "fact_records": [
+        {
+          "text": "西湖龙井制茶技艺，是2022年入选的中国传统制茶非遗项目的一部分。",
+          "source_url": "https://www.ehangzhou.gov.cn/2025-03/21/c_293024.htm",
+          "source_title": "West Lake Longjing tea and traditional tea-making",
+          "source_publisher": "杭州市政府英文网",
+          "evidence_quote": "In late 2022, China's traditional tea-making, of which West Lake Longjing tea is an important component, was inscribed on the UNESCO intangible cultural heritage list.",
+          "fact_type": "verified_short_summary",
+          "retrieved_at": "2026-11-20",
+          "checked_at": "2026-11-20",
+          "license_status": "事实短述并保留官方来源；茶汤特写仅作实体细节，非炒茶工艺过程证据",
+          "reuse_status": "fact-only-attributed"
+        }
+      ],
       "keywords_en": [
         "Longjing tea",
         "Chinese green tea",

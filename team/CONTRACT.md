@@ -1,7 +1,37 @@
-# 接口契约 v1（冻结版）
+# 接口契约 v2（向后兼容扩展）
 
-**契约版本**：`zj-team4-v1`
+**契约版本**：`zj-team4-v2`（2026-10-03 合并时由 `zj-team4-v1` 升级）
 **状态**：冻结。任何字段改动需先改 `contract.py` 并在 AI 日志记一条 Entry。
+
+> **v1 → v2 变更记录（合并时补记）**
+>
+> 变更内容：`AudioResult` 新增 `target_duration` / `timing_source` / `provider_trace` /
+> `music_match` 四个字段；新增 `MusicResult` 数据类与 `MusicProviderProtocol`。
+> `AssetResult` / `Cue` / `RenderRequest` / `RenderResult` / `FallbackChain` 保持不变。
+>
+> 变更理由：接入 P3 声音线的逐镜实测 cues（需要 `timing_source` 区分
+> `measured-shot-audio` 与 `nominal-no-voice`）与带授权字段的授权音乐契约
+> （`MusicResult` 强制 `license/author/usage_scope/approved`）。
+>
+> 新增字段均有缺省值，v1 调用方按位置/关键字构造 `AudioResult` 不受影响。
+> 详见 `team/AI日志/MERGE-AI-LOG.md`。按契约流程：已改 `contract.py` → 已在日志标注 →
+> 需通知全员 → 各自跟进。
+
+---
+
+## 2026-11-20：实体素材与发布审核扩展
+
+`contract.py` 增加 `AssetProvenance` 可选字段合同，`TaskInput.visual_usage` 默认 `preview`，`Shot` 增加 `entity_id`、`shot_tag`、`library_asset_id`，`AssetRecord.provenance` 默认空对象。保留 `zj-team4-v2` 版本及既有 dataclass 位置参数，旧任务缺字段时继续可读。
+
+素材证据含实体/城市/地点、镜头标签、来源页/标题/发布方/作者、许可/凭证/状态、`allowed_usages`、核验日期/有效期、SHA-256 与媒体尺寸/时长。`allowed_usages` 仅允许 `preview`、`publication`。`classification` 区分 `entity-approved`、`external-candidate`、`ai-generated`。
+
+- `preview`：待审候选可进入内部预览；驳回绑定不可用。实体检索不跨城、不悄悄取最近的无关素材。
+- `publication`：每镜精确绑定实体和镜头意图，且审核与许可都通过、证据完整、未过期、文件指纹不变。强制走本地已审核实体库，无符合项就失败。
+- 渲染重试仍在读取画面/焦点识别之前检查当前任务城市、实体、素材记录与文件。
+- 新上传固定为待审和仅预览；人工审核独立调用。重复文件不覆盖原审核信息；任务/镜头无效时不写库。
+- manifest 每镜保留实体、素材 ID、意图与证据；Pexels 照片记录实际查询和来源页，AI 保留生成语义。
+
+此扩展已记录于 `MERGE-AI-LOG.md` Entry 002；本轮未向其他协作者发送外部通知。后续接入方按以上可选字段消费，缺失字段不得解释为已获发布许可。
 
 ---
 
@@ -106,7 +136,9 @@ FallbackChain(
 )
 ```
 
-**最后一个必须是永远可用的本地兜底**——`OfflineAssetProvider`（`media.py:30-86` 那个程序化生成场景图的实现，丑但能跑）。它是演示永不翻车的保险。
+**技术预览**可按声明的链回退到本地兜底，并记录原因。显式的严格动态来源失败即报错。
+
+**正式发布**绕过该降级链，只接受已审核且精确匹配实体/镜头意图的库素材；无符合项必须失败，不能回退到离线图或最近素材。
 
 断网 / 限流 / 欠费时，Registry 自动往下走一格，并往 trace 里记一条 `fallback_used=true` 加原因。
 

@@ -39,6 +39,31 @@ DEFAULT_GRADE = {
 }
 
 
+# 输出规格 → 画面 provider 各自认的参数口径。
+#
+# 关键事实：图生视频继承首帧的宽高比（实测 1440x3040 的首帧出 704x1472），
+# 所以成片画幅是由文生图的 size 决定的，只给视频端 ratio 没有用。
+# size 用 2 的倍数且贴近 9:16 / 16:9 / 1:1，避免渲染时再裁掉大量画面。
+#
+# 这里刻意不映射视频分辨率：AI 视频分辨率是按账号/模型计价的，同一网关对
+# 720P 返回"当前模型未配置该分辨率的价格"、对 768P 才放行。推断不出来，
+# 所以交给 VIDEO_RESOLUTION 由运维按账号配置，成片尺寸仍由渲染器按用户选择输出。
+_OUTPUT_SPECS: dict[str, dict[str, str]] = {
+    "720x1280": {"ratio": "9:16", "size": "1440x2560"},
+    "1080x1920": {"ratio": "9:16", "size": "1440x2560"},
+    "1920x1080": {"ratio": "16:9", "size": "2560x1440"},
+    "1080x1080": {"ratio": "1:1", "size": "2048x2048"},
+}
+
+
+def output_spec(resolution: str, fallback_size: str = "") -> dict[str, str]:
+    """把用户选的成片规格翻成画面 provider 的参数。认不出就只带 size 兜底。"""
+    spec = _OUTPUT_SPECS.get(str(resolution or "").strip().lower())
+    if spec:
+        return dict(spec)
+    return {"size": fallback_size} if fallback_size else {}
+
+
 def task_seed_base(task_id: str, style_ctx: dict[str, Any] | None = None) -> int:
     """同一 task_id 永远得到同一个基点。显式 base_seed 优先。"""
     style_ctx = style_ctx or {}
