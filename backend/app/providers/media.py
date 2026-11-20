@@ -16,6 +16,7 @@ from __future__ import annotations
 import base64
 import json
 import math
+import time
 import urllib.parse
 import urllib.request
 from pathlib import Path
@@ -95,111 +96,12 @@ class OfflineAssetProvider(AssetProvider):
         }
 
 
-# 验收和演示用的西湖镜头。检索词必须落到这个景点，不能拿「杭州风景」碰运气。
-# 值是候选词列表：前一个对不上说明文字时，换下一个。
-LANDMARK_QUERIES = {
-    "苏堤": ["Su Causeway West Lake Hangzhou willow", "West Lake Hangzhou willow causeway"],
-    "断桥": ["Hangzhou traditional stone bridge tourists boat", "stone arch bridge Hangzhou lake"],
-    "白堤": ["West Lake Hangzhou autumn trees lake road", "Hangzhou lake road trees"],
-    "三潭印月": ["Three Pools Mirroring the Moon West Lake", "West Lake stone pagoda lantern water"],
-    "雷峰": ["Leifeng Pagoda West Lake Hangzhou", "Hangzhou pagoda West Lake"],
-    "平湖秋月": ["West Lake Hangzhou pavilion lotus", "Hangzhou pavilion lake lotus"],
-    "西湖": ["West Lake Hangzhou"],
-}
-# 说明文字里至少要有其中一个词，否则这张图不算这个景点。
-LANDMARK_NEEDLES = {
-    "苏堤": ("causeway", "willow", "su "),
-    "断桥": ("broken", "arch", "bridge", "snow"),
-    "白堤": ("causeway", "bai", "plane"),
-    "三潭印月": ("pool", "lantern", "pagoda", "moon"),
-    "雷峰": ("leifeng", "pagoda"),
-    "平湖秋月": ("pavilion", "lotus"),
-    "西湖": ("west lake", "hangzhou"),
-}
-
-_BROWSER_UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
-
-
-def landmark_queries(shot: dict[str, Any]) -> tuple[str, list[str]]:
-    """按镜头标题和旁白选景点，返回景点名和候选检索词。"""
-    text = " ".join(
-        str(shot.get(key) or "")
-        for key in ("title", "subtitle", "narration", "visual_prompt")
-    )
-    for name, queries in LANDMARK_QUERIES.items():
-        if name in text:
-            return name, list(queries)
-    precise = str(shot.get("search_query") or "").strip()
-    if precise:
-        return "", [precise[:180]]
-    return "西湖", list(LANDMARK_QUERIES["西湖"])
-
-
-def pick_pexels_video(
-    videos: list[dict[str, Any]],
-    needed_sec: float,
-    used_ids: set[str],
-) -> dict[str, Any] | None:
-    """选一条够长、还没用过的实拍。静图推镜头不像剪过，能用视频就不用图。"""
-    candidates = []
-    for video in videos:
-        video_id = str(video.get("id") or "")
-        if not video_id or video_id in used_ids:
-            continue
-        try:
-            duration = float(video.get("duration") or 0)
-        except (TypeError, ValueError):
-            duration = 0.0
-        if duration + 0.05 < needed_sec:
-            continue
-        files = [
-            item
-            for item in (video.get("video_files") or [])
-            if str(item.get("file_type") or "").lower() == "video/mp4" and item.get("link")
-        ]
-        if not files:
-            continue
-        file = min(files, key=lambda item: abs(int(item.get("height") or 0) - 720))
-        width = int(file.get("width") or 0)
-        height = int(file.get("height") or 0)
-        landscape = 1 if width >= height else 0
-        candidates.append((landscape, -abs(height - 720), video, file))
-    if not candidates:
-        return None
-    _landscape, _height, video, file = max(candidates, key=lambda item: item[:2])
-    return {"video": video, "file": file}
-
-
-def pick_pexels_photo(
-    photos: list[dict[str, Any]],
-    query: str,
-    needles: tuple[str, ...] = (),
-) -> dict[str, Any] | None:
-    """不要永远拿第一张。说明文字对得上景点词的优先；都对不上时用竖图里最像的一张。"""
-    if not photos:
-        return None
-    tokens = {token.lower() for token in query.split() if len(token) > 2}
-    ranked: list[tuple[tuple[int, int, int], dict[str, Any]]] = []
-    for photo in photos:
-        blob = " ".join(str(photo.get(key) or "") for key in ("alt", "url")).lower()
-        needle_hits = sum(1 for needle in needles if needle in blob)
-        hits = sum(1 for token in tokens if token in blob)
-        height = int(photo.get("height") or 0)
-        width = int(photo.get("width") or 0)
-        portrait = 1 if height >= width else 0
-        ranked.append(((needle_hits, portrait, hits), photo))
-    matched = [item for item in ranked if item[0][0] > 0] if needles else ranked
-    pool = matched or ranked
-    return max(pool, key=lambda item: item[0])[1]
-
-
 class PexelsAssetProvider(AssetProvider):
     name = "pexels"
 
     def __init__(self, api_key: str, base_url: str = "https://api.pexels.com/v1") -> None:
         self.api_key = api_key.strip()
         self.base_url = base_url.rstrip("/")
-        self._used_video_ids: set[str] = set()
 
     def create_or_find(
         self,
@@ -208,122 +110,59 @@ class PexelsAssetProvider(AssetProvider):
         output_dir: Path,
         theme_color: str,
         accent: str,
+        style_ctx: dict[str, Any] | None = None,
     ) -> dict[str, Any]:
         if not self.api_key:
             raise RuntimeError("PEXELS_API_KEY is required when asset_source=pexels")
         output_dir.mkdir(parents=True, exist_ok=True)
+        query = " ".join(
+            str(shot.get("search_query") or shot.get("visual_prompt") or shot.get("title") or "Zhejiang tourism")
+            .split()
+        )[:180]
+        # Knowledge queries may contain a Chinese label followed by English
+        # synonyms. Pexels accepts a concise English phrase more reliably.
+        alternatives = [part.strip() for part in query.split(";")]
+        query = next((part for part in alternatives if part.isascii() and any(char.isalpha() for char in part)), alternatives[0])
+        output = (style_ctx or {}).get("output_resolution", "720x1280")
         try:
-            needed = float(shot.get("duration_sec") or 0)
-        except (TypeError, ValueError):
-            needed = 0.0
-        if needed <= 12:
-            video_asset = self._try_video(task_id, shot, output_dir, needed or 4.0)
-            if video_asset is not None:
-                return video_asset
-        landmark, queries = landmark_queries(shot)
-        needles = LANDMARK_NEEDLES.get(landmark, ())
-        photo: dict[str, Any] | None = None
-        query = queries[0]
-        for query in queries:
-            params = urllib.parse.urlencode(
-                {"query": query, "orientation": "portrait", "per_page": 15}
-            )
-            request = urllib.request.Request(
-                f"{self.base_url}/search?{params}",
-                headers={
-                    "Authorization": self.api_key,
-                    # Pexels 的 Cloudflare 会拦截 Python 默认 UA（error 1010），必须带浏览器 UA
-                    "User-Agent": _BROWSER_UA,
-                },
-            )
-            try:
-                with urllib.request.urlopen(request, timeout=30) as response:
-                    payload = json.loads(response.read().decode("utf-8"))
-            except Exception as exc:
-                raise RuntimeError(f"Pexels search failed: {exc}") from exc
-            photo = pick_pexels_photo(payload.get("photos") or [], query, needles)
-            if photo is not None:
-                break
-        if photo is None:
-            raise RuntimeError(f"Pexels returned no matching photo for {landmark or query}")
-
-    def _try_video(
-        self,
-        task_id: str,
-        shot: dict[str, Any],
-        output_dir: Path,
-        needed_sec: float,
-    ) -> dict[str, Any] | None:
-        """西湖实拍优先。搜不到够长的片段时返回 None，调用方再退回照片。"""
-        _landmark, queries = landmark_queries(shot)
-        query = queries[0] if queries else "West Lake Hangzhou"
+            width, height = (int(part) for part in str(output).split("x", 1))
+        except (ValueError, TypeError):
+            width, height = 720, 1280
+        orientation = "landscape" if width > height else "square" if width == height else "portrait"
+        page = max(1, min(80, int(shot.get("order", 1) or 1)))
         params = urllib.parse.urlencode(
-            {"query": query, "orientation": "landscape", "per_page": 8, "size": "medium"}
+            {"query": query, "orientation": orientation, "per_page": 1, "page": page}
         )
-        video_root = self.base_url.replace("/v1", "") + "/videos"
         request = urllib.request.Request(
-            f"{video_root}/search?{params}",
-            headers={"Authorization": self.api_key, "User-Agent": _BROWSER_UA},
+            f"{self.base_url}/search?{params}",
+            headers={"Authorization": self.api_key, "User-Agent": "ZhejiangTourismAIGC/1.0"},
         )
         try:
             with urllib.request.urlopen(request, timeout=30) as response:
                 payload = json.loads(response.read().decode("utf-8"))
-        except Exception:
-            return None
-        picked = pick_pexels_video(payload.get("videos") or [], needed_sec, self._used_video_ids)
-        if picked is None:
-            return None
-        video = picked["video"]
-        file = picked["file"]
-        video_id = str(video.get("id"))
-        path = output_dir / f"{shot['id']}.mp4"
-        try:
-            download = urllib.request.Request(
-                str(file["link"]),
-                headers={"User-Agent": _BROWSER_UA},
-            )
-            with urllib.request.urlopen(download, timeout=90) as response:
-                path.write_bytes(response.read())
-        except Exception:
-            return None
-        if path.stat().st_size < 10_000:
-            return None
-        self._used_video_ids.add(video_id)
-        try:
-            duration = float(video.get("duration") or needed_sec)
-        except (TypeError, ValueError):
-            duration = needed_sec
-        # 从中段起用，避开片头标题和片尾黑场。
-        start = max(0.0, (duration - needed_sec) / 2)
-        return {
-            "id": f"pexels_video_{video_id}",
-            "name": f"Pexels video {video_id}",
-            "url": f"/media/{task_id}/assets/{path.name}",
-            "local_path": str(path),
-            "source": self.name,
-            "license": "Pexels license; verify current terms before publication",
-            "author": str(((video.get("user") or {}).get("name")) or "Pexels contributor"),
-            "usage_scope": "Subject to the Pexels license and team review",
-            "is_ai_generated": False,
-            "media_type": "video",
-            "clip_start": round(start, 3),
-        }
-        image_url = str((photo.get("src") or {}).get("portrait") or "")
-        if not image_url:
-            raise RuntimeError("Pexels response did not contain a portrait image URL")
-        image_path = output_dir / f"{shot['id']}.jpg"
-        try:
-            download_request = urllib.request.Request(
-                image_url,
-                headers={
-                    # 图片 CDN 同样受 Cloudflare 防护，必须带浏览器 UA
-                    "User-Agent": _BROWSER_UA,
-                },
-            )
-            with urllib.request.urlopen(download_request, timeout=60) as response:
-                image_path.write_bytes(response.read())
         except Exception as exc:
-            raise RuntimeError(f"Pexels image download failed: {exc}") from exc
+            raise RuntimeError(f"Pexels search failed: {exc}") from exc
+        photos = payload.get("photos") or []
+        if not photos:
+            raise RuntimeError(f"Pexels returned no photo for query: {query}")
+        photo = photos[0]
+        image_url = str((photo.get("src") or {}).get("large2x" if orientation == "landscape" else "square" if orientation == "square" else "portrait") or "")
+        if not image_url:
+            raise RuntimeError(f"Pexels response did not contain a {orientation} image URL")
+        image_path = output_dir / f"{shot['id']}.jpg"
+        image_request = urllib.request.Request(
+            image_url,
+            headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/120.0 Safari/537.36"},
+        )
+        for attempt in range(3):
+            try:
+                with urllib.request.urlopen(image_request, timeout=60) as response:
+                    image_path.write_bytes(response.read())
+                break
+            except Exception as exc:
+                if attempt == 2:
+                    raise RuntimeError(f"Pexels image download failed: {exc}") from exc
+                time.sleep(2 * (attempt + 1))
         if image_path.stat().st_size < 1000:
             raise RuntimeError("Pexels returned an empty image")
         return {
@@ -336,6 +175,21 @@ class PexelsAssetProvider(AssetProvider):
             "author": str((photo.get("photographer") or "Pexels contributor")),
             "usage_scope": "Subject to the Pexels license and team review",
             "is_ai_generated": False,
+            "media_type": "image",
+            "provenance": {
+                "classification": "external-candidate", "entity_id": str(shot.get("entity_id") or ""),
+                "shot_tags": [shot["shot_tag"]] if shot.get("shot_tag") else [],
+                "source_url": str(photo.get("url") or ""), "source_title": str(photo.get("alt") or ""),
+                "source_publisher": "Pexels", "author": str(photo.get("photographer") or "Pexels contributor"),
+                "license": "Pexels License", "license_url": "https://www.pexels.com/license/",
+                "license_status": "pending", "review_status": "pending", "allowed_usages": ["preview"],
+                "search_query": query,
+            },
+            "event": {
+                "type": "asset", "provider": self.name, "shot_id": shot.get("id", ""),
+                "search_query": query, "source_url": str(photo.get("url") or ""),
+                "classification": "external-candidate", "media_type": "image",
+            },
         }
 
 

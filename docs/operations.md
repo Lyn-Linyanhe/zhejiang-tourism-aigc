@@ -7,7 +7,7 @@ Set-Location <解压后的项目目录>
 .\scripts\start.ps1
 ```
 
-Open `http://127.0.0.1:8787`.
+Open `http://127.0.0.1:8790`.
 
 The startup script is ASCII-only because Windows PowerShell 5.1 can misread UTF-8 diagnostic strings.
 
@@ -33,7 +33,42 @@ ASSET_PROVIDER=pexels
 PEXELS_API_KEY=REPLACE_WITH_PEXELS_KEY
 ```
 
-Or use `asset_source=upload` and bind a licensed file to every shot.
+Or use `asset_source=upload` for previews and bind a file to every shot. Formal visual publication uses `visual_usage=publication` and the reviewed entity library.
+
+## Entity media review and publication
+
+1. Generate a draft and select a knowledge entity and shot intent for each shot. The entity list is limited to the task city.
+2. Upload an image or video through the entity library panel. An optional, independent target-shot selector binds it; otherwise it only enters the library. The older shot upload panel also registers a candidate in this library.
+3. Check the original file page, author, license, attribution conditions and expiration. The image of a tea cup does not demonstrate tea-making; a summer bridge photo does not demonstrate a snow scene. Record those restrictions in `usage_scope`.
+4. Save source/license information, then separately approve publication. New uploads cannot approve themselves. Review checks a real source and license receipt, entity/shot tags, valid dates and an unchanged SHA-256. Rejected, expired or changed files are not publication candidates.
+5. Select `正式发布` in the draft. The workbench sets `local-library`; the backend independently enforces the reviewed library and refuses an unmatched shot. There is no unrelated-file fallback in publication mode. Entity-specific previews also stay on that entity.
+6. Generate and retain `manifest.json`, task trace, per-shot source/license metadata and attribution alongside MP4. Re-rendering from `rendering` checks the current task city, review and file again. A rejected/changed file must be reselected; updating metadata cannot forge a new SHA-256.
+
+The workbench keeps script edits while refreshing the library after review/upload. For an upload bound to a task, draft edits are saved first; invalid city/entity/shot ownership fails before the file is written.
+
+A file license does not grant rights to unrelated music, people, trademarks or copied descriptions. Keep fact-source records separate from image-source records. CC BY requires author/source/license and an indication of edits; do not treat CC BY-SA as CC BY.
+
+## Reproduce the small local pilot
+
+The 2026-11-20 pilot uses an isolated data directory. It does not overwrite the normal database, existing media, `.env` or music library.
+
+```powershell
+$env:DATA_DIR = "runtime/_wire_probe_entity_assets_20261120"
+$env:DEFAULT_PROVIDER = "offline"
+$env:ASSET_PROVIDER = "local-library"
+$env:IMAGE_PROVIDER = "off"
+$env:VIDEO_PROVIDER = "off"
+python -I scripts/collect_entity_pilot.py --direct --output runtime/_wire_probe_entity_assets_20261120/downloads-new
+```
+
+Use a new output directory for every collection. The script saves Commons metadata receipts and only registers pending candidates. `--direct` changes proxy handling for these public requests only. It does not alter system proxy settings. Before `accept_entity_pilot.py`, inspect each downloaded image and receipt and verify the `VISUAL_REVIEW` choices; that separate acceptance script approves the five inspected pilot records and renders with local Windows speech. If local speech fails, it fails visibly instead of silently substituting a tone.
+
+```powershell
+python -I scripts/accept_entity_pilot.py --index runtime/_wire_probe_entity_assets_20261120/downloads-new/index.json
+```
+
+Keep `ATTRIBUTION.md`, `fact-records.json`, `task.json`, `manifest.json` and `ffprobe.json` with the sample. The input photographs are still images with slow crop/motion, not newly acquired video footage. See `docs/research/entity-assets-pilot.md` for coverage and remaining gaps. Pexels currently supplies photo candidates only; its video-search regression remains a separate task.
+
 
 For music, put an authorized file in `runtime/music` or upload it from the task panel. Use `无音乐` when no music is available.
 

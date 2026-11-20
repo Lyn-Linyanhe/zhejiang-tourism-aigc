@@ -7,6 +7,8 @@ from dataclasses import asdict, dataclass, field
 from datetime import datetime, timezone
 from typing import Any
 
+from .providers.contract import AssetProvenance, VISUAL_USAGES
+
 
 STAGES = ("scripting", "storyboard", "audio", "assets", "rendering", "review")
 TERMINAL_STATUSES = ("completed", "failed")
@@ -61,6 +63,7 @@ class TaskInput:
     voice_volume: float = 1.0
     music_volume: float = 0.18
     music_ducking: str = "不压低"
+    visual_usage: str = "preview"
 
     @classmethod
     def from_dict(cls, raw: dict[str, Any]) -> "TaskInput":
@@ -90,7 +93,10 @@ class TaskInput:
             "voice_volume": float(raw.get("voice_volume", 1.0)),
             "music_volume": float(raw.get("music_volume", 0.18)),
             "music_ducking": str(raw.get("music_ducking", "不压低")).strip(),
+            "visual_usage": str(raw.get("visual_usage", "preview")).strip(),
         }
+        if values["visual_usage"] not in VISUAL_USAGES:
+            raise ValueError(f"visual_usage must be one of {VISUAL_USAGES}")
         # Retired source: preserve its upload-only behavior for historical drafts.
         if values["voice_engine"] == "xstudio":
             values["voice_engine"] = "upload"
@@ -167,6 +173,9 @@ class Shot:
     voice_rate_scale: float = 1.0
     voice_pitch_offset: float = 0.0
     voice_pause_after: float | None = None
+    entity_id: str = ""
+    shot_tag: str = ""
+    library_asset_id: str = ""
 
 
 @dataclass
@@ -189,6 +198,7 @@ class AssetRecord:
     first_frame_path: str = ""
     cost: float = 0.0
     created_at: str = field(default_factory=now_iso)
+    provenance: AssetProvenance = field(default_factory=dict)
 
 
 @dataclass

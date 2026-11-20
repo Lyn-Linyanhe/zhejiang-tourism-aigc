@@ -4,6 +4,7 @@ from typing import Any
 
 from ..providers.offline import CITY_KNOWLEDGE
 from ..providers.tts import EDGE_VOICE_CHOICES
+from . import knowledge as zhejiang_kb
 from .voice_studio import STYLES, VOICE_LIBRARY
 from ..providers.tianyi import availability as tianyi_availability
 

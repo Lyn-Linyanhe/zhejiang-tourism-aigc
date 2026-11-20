@@ -14,12 +14,13 @@ from ..providers.audio_runtime import AudioRuntimeClient
 from ..providers.media_ffmpeg import validate_audio_file
 from ..providers.music import select_music
 from ..providers.registry import ProviderRegistry, build_provider_registry, invoke_create_or_find
-from ..storage import Storage
+from ..storage import Storage, library_provenance
 from . import consistency
 from . import knowledge as zhejiang_kb
 from .audio_sync import PerShotAudioBuilder
+from .library import library_asset_record
 from .voice_studio import validate_clip, plan_track
-from ..providers.contract import TRANSITIONS
+from ..providers.contract import SHOT_TAGS, TRANSITIONS
 
 
 NO_VOICE = "\u65e0\u914d\u97f3"
@@ -455,9 +456,9 @@ class Orchestrator:
             "style": task.input.style,
             "color": knowledge.get("color", "#2d6c63"),
             "accent": knowledge.get("accent", "#d6ad60"),
-            # 成片规格单独放一份；resolution / ratio / size 是 provider 认的口径，
-            # 直接塞 "720x1280" 会被 video.normalize_resolution 拒掉。
             "output_resolution": task.input.output_resolution,
+            "visual_usage": task.input.visual_usage,
+            "city": task.input.city,
         }
         style_ctx.update(
             consistency.output_spec(
@@ -476,14 +477,32 @@ class Orchestrator:
         # 单镜实测约 110 秒（文生图 37~70s + 图生视频 44s），串行四镜要八分钟。
         reused: dict[str, dict[str, Any]] = {}
         pending: list[dict[str, Any]] = []
+        generated: dict[str, dict[str, Any]] = {}
+        errors: list[str] = []
         for shot in task.shots:
+            if task.input.visual_usage == "publication" or shot.library_asset_id:
+                item = self._plan_shot(task, shot)
+                try:
+                    asset = self.registry.generate_asset(
+                        "local-library", task.id, item["payload"], directory, style_ctx
+                    )
+                    generated[shot.id] = {
+                        "shot_id": shot.id,
+                        "order": shot.order,
+                        "asset": asset,
+                        "used_sources": ["local-library"],
+                        "events": [],
+                        "error": "",
+                    }
+                except Exception as exc:
+                    errors.append(f"Shot {shot.order} ({shot.id}): {exc}")
+                continue
             existing = existing_assets.get(shot.id)
             if existing and (asset_source != "pexels" or existing.source == "pexels") and self._is_reusable(existing, strict_dynamic):
                 reused[shot.id] = self._reused_asset(existing)
             else:
                 pending.append(self._plan_shot(task, shot))
 
-        generated: dict[str, dict[str, Any]] = {}
         if pending:
             workers = max(1, min(self.settings.asset_concurrency, len(pending)))
             with ThreadPoolExecutor(max_workers=workers) as pool:
@@ -519,7 +538,6 @@ class Orchestrator:
                         },
                     )
 
-        errors: list[str] = []
         for shot in task.shots:
             result = generated.get(shot.id)
             if result is not None:
@@ -533,8 +551,10 @@ class Orchestrator:
                             task.trace.fallback_used = True
                             task.trace.events.extend(result["events"])
                 asset = result["asset"]
-            else:
+            elif shot.id in reused:
                 asset = reused[shot.id]
+            else:
+                continue
             self._commit_shot(task, shot, asset)
         # 有镜头失败也先把成功的提交完：素材已经落盘，重试时能直接复用，
         # 不用把已经付过费的那几镜重跑一遍。
@@ -569,9 +589,8 @@ class Orchestrator:
 
     @staticmethod
     def _reused_asset(existing: AssetRecord) -> dict[str, Any]:
-        """复用已落盘的素材。元数据字段必须一起带上，漏掉会让复用的镜头在
-        AssetRecord 里 media_type / model 变成空串，manifest 和作品档案就读不到
-        "这一镜是哪个模型出的什么类型素材"。"""
+        """复用已有任务素材时一并保留技术和授权来源。"""
+        provenance = dict(existing.provenance or {})
         return {
             "id": existing.id,
             "name": existing.name,
@@ -588,11 +607,32 @@ class Orchestrator:
             "prompt": existing.prompt,
             "first_frame_path": existing.first_frame_path,
             "cost": existing.cost,
+            "provenance": provenance,
+            "event": {"type": "asset", "provider": existing.source, **provenance},
         }
 
     def _plan_shot(self, task: Task, shot: Shot) -> dict[str, Any]:
         """准备好一镜生成所需的输入。放在主线程做，避免并发里读任务状态。"""
         payload = shot.__dict__.copy()
+        resolved = zhejiang_kb.get_entity(payload.get("entity_id", ""), city=task.input.city) if payload.get("entity_id") else None
+        if resolved is None:
+            resolved = zhejiang_kb.resolve_entity(
+                shot.title, shot.visual_prompt, shot.narration, task.input.theme,
+                city=task.input.city, allow_tags=False,
+            )
+        payload["entity_id"] = resolved["id"] if resolved else ""
+        if not payload.get("shot_tag"):
+            blob = " ".join((shot.title, shot.visual_prompt)).casefold()
+            tag = next((key for key, needles in {
+                "process": ("制作", "工艺", "采摘", "炒制", "雕刻", "刺绣", "裁缝", "制作过程"),
+                "performance": ("演出", "表演", "唱", "戏", "舞", "平调", "姚剧"),
+                "detail": ("细节", "纹样", "局部", "建筑", "器物", "塔身", "桥面"),
+                "ambient": ("空镜", "水面", "晨雾", "日落", "环境"),
+                "wide": ("全景", "远景", "航拍", "全貌", "景色", "风光"),
+            }.items() if any(needle in blob for needle in needles)), "wide")
+            payload["shot_tag"] = tag
+            shot.shot_tag = tag
+        shot.entity_id = payload["entity_id"]
         payload["library_query"] = f"{task.input.city} {task.input.theme} {shot.title}"
         # 知识库增强：中文长句映射为经核查的英文检索词，提升素材站命中率
         search_query = zhejiang_kb.english_query(
@@ -601,6 +641,7 @@ class Orchestrator:
             task.input.theme,
             city=task.input.city,
             landmark=task.input.landmark,
+            entity_id=payload.get("entity_id", ""),
         )
         if search_query:
             payload["search_query"] = search_query
@@ -686,6 +727,12 @@ class Orchestrator:
         shot.asset_model = str(asset.get("model", ""))
         shot.asset_seed = int(asset.get("seed", 0) or 0)
         shot.asset_first_frame_path = str(asset.get("first_frame_path", ""))
+        if asset.get("provenance"):
+            shot.entity_id = str(asset["provenance"].get("entity_id") or shot.entity_id)
+            shot.library_asset_id = str(asset["provenance"].get("library_asset_id") or shot.library_asset_id)
+            tags = asset["provenance"].get("shot_tags") or []
+            if tags and shot.shot_tag not in tags:
+                shot.shot_tag = str(tags[0])
         provider_event = dict(asset.get("event") or {})
         if (provider_event or float(asset.get("cost", 0) or 0) > 0) and task.trace:
             provider_event.setdefault("type", "asset")
@@ -718,6 +765,7 @@ class Orchestrator:
                 prompt=str(asset.get("prompt", "")),
                 first_frame_path=str(asset.get("first_frame_path", "")),
                 cost=float(asset.get("cost", 0) or 0),
+                provenance=dict(asset.get("provenance") or {}),
             )
         )
 
@@ -922,42 +970,55 @@ class Orchestrator:
         return f"/media/{task_id}/{relative.as_posix()}"
 
     def _render(self, task: Task) -> None:
+        render_shots = [shot.__dict__.copy() for shot in task.shots]
+        for shot, render_shot in zip(task.shots, render_shots):
+            record = next((asset for asset in reversed(task.assets) if asset.shot_id == shot.id), None)
+            render_shot["provenance"] = dict(record.provenance or {}) if record else {}
+        if task.input.visual_usage == "publication":
+            for shot, render_shot in zip(task.shots, render_shots):
+                entity = zhejiang_kb.get_entity(shot.entity_id, city=task.input.city)
+                if shot.entity_id and not entity:
+                    raise RuntimeError(f"Shot {shot.order} ({shot.id}) publication entity does not belong to task city")
+                matches = self.storage.list_library_assets(
+                    limit=500, usage="publication", asset_id=shot.library_asset_id, city=task.input.city,
+                ) if shot.library_asset_id else []
+                record = next((asset for asset in reversed(task.assets) if asset.shot_id == shot.id), None)
+                if not matches or record is None or not self.storage.library_file_matches(matches[0], Path(shot.asset_local_path)):
+                    identifier = shot.library_asset_id or "unbound"
+                    raise RuntimeError(f"No approved publication asset for shot {shot.order} ({shot.id}); library_asset_id={identifier}")
+                current = matches[0]
+                if not self.storage.library_file_matches(current, Path(record.local_path)) or record.provenance.get("library_asset_id") != current["id"]:
+                    raise RuntimeError(f"Shot {shot.order} ({shot.id}) publication asset record does not match its file")
+                if current.get("entity_id") != shot.entity_id or shot.shot_tag not in (current.get("shot_tags") or []):
+                    raise RuntimeError(f"Shot {shot.order} ({shot.id}) publication asset does not match its entity or shot tag")
+                provenance = {**dict(record.provenance or {}), **library_provenance(current)}
+                record.provenance = provenance
+                render_shot["provenance"] = provenance
+                render_shot["library_asset_id"] = current["id"]
+                render_shot["asset_media_type"] = current["asset_type"]
+                render_shot["entity_id"] = shot.entity_id
+                render_shot["shot_tag"] = shot.shot_tag
         self.update(
             task,
             stage="rendering",
             progress=84,
             event={"type": "stage", "stage": "rendering", "status": "started"},
         )
-        render_shots = [shot.__dict__.copy() for shot in task.shots]
         renderer = self.registry.create("render", self.settings.render_provider)
-        # 成片容器锁回用户选择的秒数（30.000s / 720x1280 / 25fps 三条不能破的指标）
         task.audio["requested_duration"] = float(task.input.duration)
-        # 旁白出现时 BGM 的处理方式。默认不压低，需要时由任务参数选"轻微/标准"。
-        task.audio["duck"] = {
-            "mode": task.input.music_ducking,
-            "release_sec": 0.35,
-        }
+        task.audio["duck"] = {"mode": task.input.music_ducking, "release_sec": 0.35}
         grade = task.audio.get("grade") if isinstance(task.audio.get("grade"), dict) else None
         task.render = renderer.render(
-            task.id,
-            render_shots,
-            task.audio,
-            task.input.include_ai_label,
-            task.input.include_subtitles,
-            task.input.output_resolution,
-            task.input.fps,
-            task.input.voice_volume,
-            task.input.music_volume,
-            grade,
+            task.id, render_shots, task.audio, task.input.include_ai_label,
+            task.input.include_subtitles, task.input.output_resolution, task.input.fps,
+            task.input.voice_volume, task.input.music_volume, grade,
         )
         self.update(
             task,
             stage="rendering",
             progress=96,
             event={
-                "type": "stage",
-                "stage": "rendering",
-                "status": "completed",
+                "type": "stage", "stage": "rendering", "status": "completed",
                 "video_url": task.render.get("video_url", ""),
             },
         )
@@ -972,6 +1033,48 @@ class Orchestrator:
         if patch.get("clear_audio") is True:
             shot.audio_local_path = ""
             shot.audio_url = ""
+        if "entity_id" in patch:
+            entity_id = str(patch["entity_id"] or "").strip()
+            entity = zhejiang_kb.get_entity(entity_id, task.input.city) if entity_id else None
+            if entity_id and not entity:
+                raise ValueError("entity_id is not in the selected city knowledge base")
+            shot.entity_id = entity_id
+        if "shot_tag" in patch:
+            tag = str(patch["shot_tag"] or "").strip()
+            if tag and tag not in SHOT_TAGS:
+                raise ValueError("shot_tag is invalid")
+            shot.shot_tag = tag
+        if any(key in patch for key in ("entity_id", "shot_tag", "library_asset_id")):
+            asset_id = str(patch.get("library_asset_id", shot.library_asset_id) or "").strip()
+            library_asset = self.storage.get_library_asset(asset_id) if asset_id else None
+            if asset_id and not library_asset:
+                raise ValueError("library_asset_id does not exist")
+            if library_asset:
+                if library_asset.get("entity_id") != shot.entity_id:
+                    raise ValueError("library asset does not match this shot entity")
+                if shot.shot_tag not in (library_asset.get("shot_tags") or []):
+                    raise ValueError("library asset does not match this shot tag")
+                if library_asset.get("asset_type") not in {"image", "video"} or library_asset.get("review_status") == "rejected":
+                    raise ValueError("library asset is not usable")
+                if not self.storage.library_file_matches(library_asset, Path(library_asset["local_path"])):
+                    raise ValueError("library asset file has changed")
+            if library_asset or shot.library_asset_id:
+                task.assets = [asset for asset in task.assets if asset.shot_id != shot.id]
+                shot.asset_id = ""
+                shot.asset_url = ""
+                shot.asset_local_path = ""
+                shot.asset_media_type = ""
+                shot.asset_model = ""
+                shot.asset_seed = 0
+                shot.asset_first_frame_path = ""
+            shot.library_asset_id = asset_id
+            if library_asset:
+                record = library_asset_record(task.id, shot.id, library_asset)
+                task.assets.append(record)
+                shot.asset_id = record.id
+                shot.asset_url = record.url
+                shot.asset_local_path = record.local_path
+                shot.asset_media_type = record.media_type
         for key, value in validate_clip({**vars(shot), **patch}).items():
             setattr(shot, key, value)
         for key in ("title", "visual_prompt", "subtitle", "narration", "transition"):

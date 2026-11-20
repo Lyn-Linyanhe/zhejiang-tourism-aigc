@@ -5,10 +5,7 @@ $ffmpegBin = Join-Path $projectRoot "tools\ffmpeg\bin"
 $env:PATH = "$ffmpegBin;$env:PATH"
 if (-not (Test-Path -LiteralPath (Join-Path $ffmpegBin "ffmpeg.exe")) -or
     -not (Test-Path -LiteralPath (Join-Path $ffmpegBin "ffprobe.exe"))) {
-  # 完整离线包自带 FFmpeg；从 GitHub 源码克隆时这里为空，自动补下载。
-  Write-Host "FFmpeg not found; downloading a standalone build..." -ForegroundColor Cyan
-  & (Join-Path $projectRoot "scripts\setup-ffmpeg.ps1")
-  if ($LASTEXITCODE -ne 0) { throw "FFmpeg setup failed. See README.md." }
+  throw "Bundled FFmpeg is missing. Extract the entire package again."
 }
 $python = Get-Command python -ErrorAction SilentlyContinue
 if (-not $python) { throw "Python was not found. Install Python 3.11 or 3.12 and enable Add python.exe to PATH." }

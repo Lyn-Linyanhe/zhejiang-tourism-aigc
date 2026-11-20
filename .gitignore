@@ -3,6 +3,9 @@ __pycache__/
 *.py[cod]
 .venv/
 venv/
+# 隔离的音频运行时（edge-tts / whisperx），由 scripts/setup-audio-runtime.ps1
+# 或手动 venv 创建，体积很大，不进仓库
+.venv-audio/
 .pytest_cache/
 .mypy_cache/
 .ruff_cache/
@@ -33,6 +36,9 @@ runtime/media/*
 !runtime/media/accept_30s/**
 runtime/logs/*
 !runtime/logs/.gitkeep
+runtime/audio-cache/
+runtime/models/
+runtime/entity-assets/
 # 对比实验明细是可追溯证据（作品报告素材）
 !runtime/kb_eval.json
 
@@ -40,23 +46,35 @@ runtime/logs/*
 *.mp4
 *.wav
 *.mp3
+*.m4a
 *.srt
 *.ppm
+*.tmp
+*.log
 # 曲库和验收成片是演示所需，随仓库公开。密钥仍只留在本地 .env。
 !runtime/music/*.mp3
+!runtime/music/*.m4a
+!runtime/music/*.json
 !runtime/media/accept_30s/*.mp4
 !runtime/media/accept_30s/*.srt
 !runtime/media/accept_30s/*.mp3
-*.tmp
-*.log
 
 # 假素材包是生成物，用 team/假素材包/make_fixtures.py 重新生成
 team/假素材包/fixtures/
 
+# --- smoke 运行产物（scripts/smoke-test.ps1 写到 runtime-smoke/）---
+runtime-smoke*/
+
+# --- 随包交付物：便携 FFmpeg 与压缩包不进仓库 ---
+*.zip
+tools/ffmpeg/bin/
+
 # 探测数据库、失败草稿和抽帧图不进公开仓库
 runtime/_wire_probe*/
+runtime/_probe_assets/
 runtime/fix_task.json
 runtime/iterate_task.json
 runtime/show_task.json
 runtime/show_frames/
 runtime/review_frames/
+runtime/music/_replaced-20261007/

@@ -1,12 +1,15 @@
 from __future__ import annotations
 
 import importlib
+import json
+import subprocess
 import sys
 from dataclasses import dataclass, field
 from inspect import signature
 from pathlib import Path
 from typing import Any, Callable
 
+from ..storage import library_provenance
 from .contract import AssetResult, FallbackChain
 from .llm import OpenAICompatibleLLMProvider
 from .media import OfflineAssetProvider, PexelsAssetProvider
@@ -253,7 +256,14 @@ class _CloudAssetAdapter:
             result = provider.create_or_find(task_id, shot, output_dir, theme_color, accent)
         else:
             raise RuntimeError(f"{self.name} 没有 generate/create_or_find")
-        return _asset_dict_from_any(result, task_id, shot)
+        asset = _asset_dict_from_any(result, task_id, shot)
+        asset["provenance"] = {
+            **dict(asset.get("provenance") or {}),
+            "classification": "ai-generated", "entity_id": str(shot.get("entity_id") or ""),
+            "shot_tags": [shot["shot_tag"]] if shot.get("shot_tag") else [],
+            "review_status": "pending", "license_status": "pending", "allowed_usages": ["preview"],
+        }
+        return asset
 
 
 class ProviderRegistry:
@@ -506,18 +516,93 @@ class _LocalLibraryAssetProvider:
     def __init__(self, storage: Any) -> None:
         self.storage = storage
 
-    def create_or_find(self, task_id: str, shot: dict[str, Any], output_dir: Path, theme_color: str, accent: str) -> dict[str, Any]:
+    def create_or_find(self, task_id: str, shot: dict[str, Any], output_dir: Path, theme_color: str, accent: str, style_ctx: dict[str, Any] | None = None) -> dict[str, Any]:
+        ctx = style_ctx or {}
         query = str(shot.get("library_query") or shot.get("visual_prompt") or shot.get("title") or "")
-        asset = self.storage.find_library_asset("image", query) or self.storage.find_library_asset("video", query)
-        asset = asset or self.storage.find_library_asset("image") or self.storage.find_library_asset("video")
-        if not asset or not Path(str(asset.get("local_path", ""))).is_file():
+        entity_id = str(shot.get("entity_id") or "")
+        shot_tag = str(shot.get("shot_tag") or "")
+        asset_id = str(shot.get("library_asset_id") or "")
+        usage = str(ctx.get("visual_usage") or "preview")
+        asset = None
+        city = str(ctx.get("city") or "")
+        if usage == "publication" or asset_id:
+            if usage != "publication" or (entity_id and shot_tag):
+                rows = self.storage.list_library_assets(
+                    limit=500, entity_id=entity_id, shot_tag=shot_tag, usage=usage, asset_id=asset_id, city=city,
+                )
+                for row in rows:
+                    path = Path(str(row.get("local_path") or ""))
+                    if row.get("asset_type") not in {"image", "video"} or not path.is_file():
+                        continue
+                    if row.get("review_status") == "rejected":
+                        continue
+                    if usage == "publication" and not self.storage.library_file_matches(row, path):
+                        continue
+                    asset = row
+                    break
+            if not asset:
+                message = "No approved publication asset" if usage == "publication" else "No usable bound library asset"
+                binding = f" library_asset_id={asset_id}" if asset_id else ""
+                raise RuntimeError(f"{message} for entity={entity_id or 'unlinked'} shot_tag={shot_tag or 'unspecified'}{binding}")
+        else:
+            searches = []
+            if entity_id:
+                searches.append(("", {"entity_id": entity_id, "shot_tag": shot_tag, "city": city}))
+            if query:
+                searches.append((query, {"entity_id": entity_id, "shot_tag": shot_tag, "city": city}))
+            if not entity_id and ctx.get("allow_generic_preview"):
+                searches.append(("", {"city": city}))
+            for text, filters in searches:
+                for kind in ("image", "video"):
+                    rows = self.storage.list_library_assets(kind, text, **filters)
+                    asset = next((row for row in rows if row.get("review_status") != "rejected"
+                                  and Path(str(row.get("local_path") or "")).is_file()), None)
+                    if asset:
+                        break
+                if asset:
+                    break
+        if not asset:
             raise RuntimeError("Local asset library has no usable image/video for this shot")
+        provenance = library_provenance(asset)
+        provenance["search_query"] = query if not (entity_id or asset_id) else str(shot.get("search_query") or "")
+        media_type = asset.get("asset_type", "image")
+        if media_type == "video":
+            probe = subprocess.run(
+                ["ffprobe", "-v", "error", "-show_entries", "stream=width,height:format=duration", "-of", "json", asset["local_path"]],
+                text=True, capture_output=True, check=False,
+            )
+            if probe.returncode == 0:
+                details = json.loads(probe.stdout)
+                stream = next((row for row in details.get("streams", []) if "width" in row), {})
+                provenance["width"] = int(stream.get("width", 0))
+                provenance["height"] = int(stream.get("height", 0))
+                provenance["duration_sec"] = float((details.get("format") or {}).get("duration", 0) or 0)
+        else:
+            try:
+                from PIL import Image
+                with Image.open(asset["local_path"]) as image:
+                    provenance["width"], provenance["height"] = image.size
+            except ImportError:
+                pass
+        event = {
+            "type": "asset", "provider": self.name, "shot_id": shot.get("id", ""),
+            "library_asset_id": asset["id"], "entity_id": entity_id,
+            "shot_tag": shot_tag, "search_query": provenance.get("search_query", ""),
+            "license_status": provenance.get("license_status", ""),
+            "review_status": provenance.get("review_status", ""),
+            "provenance": provenance,
+        }
         return {
             "id": asset["id"], "name": asset.get("name", shot.get("title", "library asset")),
             "url": asset.get("url", ""), "local_path": asset["local_path"], "source": self.name,
-            "license": asset.get("license_status", "pending-review"), "author": asset.get("author", "unknown"),
+            "license": asset.get("license", asset.get("license_status", "pending-review")),
+            "author": asset.get("author", "unknown"),
             "usage_scope": asset.get("usage_scope", "technical-validation"),
             "is_ai_generated": bool(asset.get("is_ai_generated", False)),
+            "media_type": asset.get("asset_type", "image"), "model": asset.get("model", "local-library"),
+            "seed": int(asset.get("seed", 0) or 0), "prompt": asset.get("prompt", ""),
+            "first_frame_path": asset.get("first_frame_path", ""), "cost": float(asset.get("cost", 0) or 0),
+            "provenance": provenance, "event": event,
         }
 
 

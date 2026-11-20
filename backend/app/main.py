@@ -12,10 +12,12 @@ from urllib.parse import parse_qs, unquote, urlparse
 
 from .config import settings
 from .models import TaskInput
-from .providers.contract import CONTRACT_VERSION
+from .providers.contract import CONTRACT_VERSION, SHOT_TAGS
 from .providers.media_ffmpeg import validate_audio_file
 from .services.catalog import get_catalog
 from .services.cost import summarize_cost
+from .services.knowledge import list_entities
+from .services.library import create_library_upload
 from .services.orchestrator import Orchestrator
 from .services.uploads import validate_audio_upload
 from .storage import Storage
@@ -38,7 +40,8 @@ class AppHandler(BaseHTTPRequestHandler):
 
     def log_message(self, fmt: str, *args: object) -> None:
         line = f"{self.address_string()} - {fmt % args}\n"
-        (settings.logs_dir / "access.log").open("a", encoding="utf-8").write(line)
+        with (settings.logs_dir / "access.log").open("a", encoding="utf-8") as log:
+            log.write(line)
 
     def _send(
         self,
@@ -107,7 +110,10 @@ class AppHandler(BaseHTTPRequestHandler):
                 self._json(200, orchestrator.system_config())
                 return
             if path == "/api/catalog":
-                self._json(200, get_catalog())
+                payload = get_catalog()
+                payload["entities"] = list_entities()
+                payload["shot_tags"] = SHOT_TAGS
+                self._json(200, payload)
                 return
             if path == "/api/tasks":
                 limit = int(parse_qs(parsed.query).get("limit", ["50"])[0])
@@ -133,7 +139,13 @@ class AppHandler(BaseHTTPRequestHandler):
                 return
             if path == "/api/library/assets":
                 query = parse_qs(parsed.query)
-                items = storage.list_library_assets(query.get("type", [""])[0], query.get("q", [""])[0])
+                items = storage.list_library_assets(
+                    query.get("type", [""])[0], query.get("q", [""])[0],
+                    entity_id=query.get("entity_id", [""])[0],
+                    shot_tag=query.get("shot_tag", [""])[0],
+                    review_status=query.get("review_status", [""])[0],
+                    city=query.get("city", [""])[0], usage=query.get("usage", ["preview"])[0],
+                )
                 self._json(200, {"items": items, "total": len(items)})
                 return
             if path.startswith("/api/tasks/"):
@@ -148,6 +160,9 @@ class AppHandler(BaseHTTPRequestHandler):
                     task["cost"] = summarize_cost(task)
                     self._json(200, task)
                 return
+            if path.startswith("/library-media/"):
+                self._serve_media(path)
+                return
             if path.startswith("/media/"):
                 self._serve_media(path)
                 return
@@ -161,6 +176,8 @@ class AppHandler(BaseHTTPRequestHandler):
                 )
                 return
             self._send(404, b"Not Found", "text/plain; charset=utf-8")
+        except ValueError as exc:
+            self._json(400, {"error": "INVALID_REQUEST", "message": str(exc)})
         except Exception as exc:
             self._json(500, {"error": "INTERNAL_ERROR", "message": str(exc)})
 
@@ -196,6 +213,9 @@ class AppHandler(BaseHTTPRequestHandler):
                     orchestrator.retry(task_id, data.get("from_stage", "scripting")),
                 )
                 return
+            if path == "/api/library/assets":
+                self._json(201, create_library_upload(storage, settings.library_dir, self._read_json()))
+                return
             if path == "/api/assets":
                 self._create_asset()
                 return
@@ -221,6 +241,10 @@ class AppHandler(BaseHTTPRequestHandler):
         parsed = urlparse(self.path)
         path = unquote(parsed.path)
         try:
+            if path.startswith("/api/library/assets/") and path.count("/") == 4:
+                asset_id = path.split("/")[4]
+                self._json(200, storage.update_library_asset(asset_id, self._read_json()))
+                return
             if path.startswith("/api/tasks/") and path.count("/") == 3:
                 task_id = path.split("/")[3]
                 self._json(200, orchestrator.update_draft(task_id, self._read_json()))
@@ -254,9 +278,18 @@ class AppHandler(BaseHTTPRequestHandler):
         self._send(200, path.read_bytes(), content_type)
 
     def _serve_media(self, path: str) -> None:
-        relative = Path(*path.removeprefix("/media/").split("/"))
-        target = (settings.media_dir / relative).resolve()
-        if not target.is_relative_to(settings.media_dir.resolve()) or not target.exists():
+        if path.startswith("/media/"):
+            relative = Path(*path.removeprefix("/media/").split("/"))
+            target = (settings.media_dir / relative).resolve()
+            root = settings.media_dir.resolve()
+        elif path.startswith("/library-media/"):
+            relative = Path(*path.removeprefix("/library-media/").split("/"))
+            target = (settings.library_dir / relative).resolve()
+            root = settings.library_dir.resolve()
+        else:
+            self._send(404, b"Not Found", "text/plain; charset=utf-8")
+            return
+        if not target.is_relative_to(root) or not target.is_file():
             self._send(404, b"Not Found", "text/plain; charset=utf-8")
             return
         content_type = mimetypes.guess_type(target.name)[0] or "application/octet-stream"

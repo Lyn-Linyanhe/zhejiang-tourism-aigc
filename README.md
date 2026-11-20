@@ -6,17 +6,9 @@
 
 1. 安装 **Python 3.11 或 3.12**，安装时勾选 **Add python.exe to PATH**。Windows 自带 PowerShell；FFmpeg 和 FFprobe 已随包提供，无需另装。
 2. 保持整个文件夹的目录结构，双击 `START.cmd`。首次启动会创建 `.venv-audio`，联网安装 `edge-tts==7.3.1`，运行简短自检，然后启动服务；后续启动直接运行。
-3. 浏览器打开 <http://127.0.0.1:8787>。在默认离线模式中，选择“无音乐”即可不依赖额外音乐文件完成技术流程。
+3. 浏览器打开 <http://127.0.0.1:8790>。在默认离线模式中，选择“无音乐”即可不依赖额外音乐文件完成技术流程。
 
 如果双击窗口立即关闭，可在 PowerShell 中进入本目录后运行 `powershell -ExecutionPolicy Bypass -File .\first_setup.ps1` 查看报错，再运行 `powershell -ExecutionPolicy Bypass -File .\start_here.ps1`。首次安装 Edge 配音需要联网；也可以在界面选择 Windows 系统语音或上传自己的配音。
-
-## 从 GitHub 源码运行
-
-仓库里只有源码、文档、知识库和 `tools/ffmpeg` 的 `LICENSE`/`README.txt`——FFmpeg 的两个 exe 各约 242MB，超过 GitHub 单文件 100MB 的上限，**不进仓库**。
-
-- **只想直接跑**：从 [Releases](../../releases) 下载完整离线包（含 FFmpeg），解压后双击 `START.cmd`，与上文步骤完全相同。
-- **从源码跑**：`git clone` 后直接双击 `START.cmd`。首次启动发现 `tools/ffmpeg/bin` 为空，会调用 `scripts/setup-ffmpeg.ps1` 自动下载 FFmpeg 到该目录，再继续安装 Edge 配音。也可以手动把 `ffmpeg.exe`/`ffprobe.exe` 放进 `tools/ffmpeg/bin`。
-- **配置**：`.env` 不进仓库（防止误提交密钥）。不创建 `.env` 时全部走代码内缺省值，即离线模式；需要真实服务时把 `.env.example` 复制为 `.env` 再填写。
 
 ## 真实创作与素材
 

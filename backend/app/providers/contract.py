@@ -24,10 +24,54 @@
 from __future__ import annotations
 
 from dataclasses import asdict, dataclass, field
-from typing import Any, Protocol, runtime_checkable
+from typing import Any, Protocol, TypedDict, runtime_checkable
 
 
 CONTRACT_VERSION = "zj-team4-v2"
+
+VISUAL_USAGES = ("preview", "publication")
+LIBRARY_USAGE_SCOPES = ("internal", "publication")
+LIBRARY_REVIEW_STATES = ("pending", "approved", "rejected")
+SHOT_TAGS = {
+    "wide": "地点全景",
+    "detail": "建筑或器物细节",
+    "process": "工艺过程",
+    "performance": "人物或演出",
+    "ambient": "环境空镜",
+}
+
+
+class AssetProvenance(TypedDict, total=False):
+    """Optional evidence on a task AssetRecord and on a rendered shot."""
+
+    entity_id: str
+    library_asset_id: str
+    classification: str
+    city: str
+    district: str
+    place_name: str
+    shot_tags: list[str]
+    source_url: str
+    source_title: str
+    source_publisher: str
+    author: str
+    license: str
+    license_url: str
+    license_evidence: str
+    license_status: str
+    usage_scope: str
+    allowed_usages: list[str]
+    retrieved_at: str
+    checked_at: str
+    valid_until: str | None
+    review_status: str
+    sha256: str
+    width: int
+    height: int
+    duration_sec: float
+    search_query: str
+    remote_task_id: str
+
 
 # 画面素材类型。渲染器按这个字段决定用「静图运镜」还是「视频铺时长」。
 MEDIA_TYPE_IMAGE = "image"

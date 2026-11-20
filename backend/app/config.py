@@ -43,7 +43,7 @@ def _project_path(name: str, default: str) -> Path:
 @dataclass(frozen=True)
 class Settings:
     host: str = _env("APP_HOST", "127.0.0.1")
-    port: int = int(_env("APP_PORT", "8787"))
+    port: int = int(_env("APP_PORT", "8790"))
     data_dir: Path = PROJECT_ROOT / _env("DATA_DIR", "runtime")
     default_provider: str = _env("DEFAULT_PROVIDER", "offline")
     llm_fallback_providers: tuple[str, ...] = _env_list("LLM_FALLBACK_PROVIDERS", "offline")
@@ -127,12 +127,17 @@ class Settings:
         return self.data_dir / "media"
 
     @property
+    def library_dir(self) -> Path:
+        return self.data_dir / "entity-assets"
+
+    @property
     def logs_dir(self) -> Path:
         return self.data_dir / "logs"
 
     def ensure_dirs(self) -> None:
         self.db_path.parent.mkdir(parents=True, exist_ok=True)
         self.media_dir.mkdir(parents=True, exist_ok=True)
+        self.library_dir.mkdir(parents=True, exist_ok=True)
         self.logs_dir.mkdir(parents=True, exist_ok=True)
         self.audio_model_cache.mkdir(parents=True, exist_ok=True)
         (self.data_dir / "diagnostics").mkdir(parents=True, exist_ok=True)
