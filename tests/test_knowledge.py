@@ -10,8 +10,33 @@ class KnowledgeContextTests(unittest.TestCase):
     def test_corpus_is_loaded(self):
         stats = knowledge.stats()
         self.assertGreater(stats["entities"], 0)
-        self.assertEqual(stats["cities"], ["杭州"])
+        self.assertEqual(stats["cities"], ["宁波", "杭州"])
+        self.assertEqual(stats["entities"], 55)
+        self.assertEqual(stats["facts"], 219)
         self.assertGreater(stats["facts"], 0)
+
+    def test_ningbo_pilot_injects_only_ningbo_facts(self):
+        context = knowledge.build_generation_context(
+            city="宁波", landmark="宁海十里红妆婚俗", theme="非遗体验"
+        )
+        self.assertIn("宁海十里红妆婚俗", context)
+        self.assertIn("国家级", context)
+        self.assertNotIn("西湖", context)
+
+    def test_pilot_facts_have_source_records_and_pending_license(self):
+        import json
+        from pathlib import Path
+
+        path = Path(knowledge._DATA_DIR) / "ningbo.json"
+        payload = json.loads(path.read_text(encoding="utf-8"))
+        self.assertEqual(len(payload["entities"]), 9)
+        for entity in payload["entities"]:
+            facts = entity.get("facts") or []
+            records = entity.get("fact_records") or []
+            self.assertEqual(len(facts), len(records))
+            self.assertTrue(records[0]["source_url"].startswith("https://www.ihningbo.cn/"))
+            self.assertEqual(records[0]["reuse_status"], "fact-only-pending-license-review")
+            self.assertNotEqual(records[0]["license_status"], "approved")
 
     def test_landmark_match_injects_verified_facts(self):
         context = knowledge.build_generation_context(
@@ -40,9 +65,10 @@ class KnowledgeContextTests(unittest.TestCase):
         self.assertTrue(len(context) <= knowledge.MAX_CONTEXT_CHARS + 600)
 
     def test_city_filter_excludes_other_cities(self):
-        """语料只有杭州时，宁波选题应退回背景资料而不是注入杭州事实。"""
-        context = knowledge.build_generation_context(city="宁波", landmark="天一阁", theme="藏书文化")
+        """未覆盖城市仍不能注入杭州或宁波事实。"""
+        context = knowledge.build_generation_context(city="嘉兴", landmark="南湖", theme="红色文化")
         self.assertNotIn("西湖", context)
+        self.assertNotIn("宁海十里红妆", context)
         self.assertNotIn("### ", context)
 
     def test_empty_corpus_lookup_returns_fallback_not_error(self):
@@ -80,6 +106,19 @@ class EnglishQueryTests(unittest.TestCase):
 
     def test_unknown_text_returns_empty_for_caller_fallback(self):
         self.assertEqual(knowledge.english_query("完全无关的文本"), "")
+
+    def test_assets_do_not_get_keywords_from_another_city(self):
+        self.assertEqual(knowledge.english_query("西湖日落", city="宁波"), "")
+        self.assertIn("West Lake", knowledge.english_query("西湖日落", city="杭州市"))
+
+    def test_entity_resolution_prefers_a_name_to_scene_tags(self):
+        entity = knowledge.resolve_entity("余姚土布", "宁海传统技艺", city="宁波")
+        self.assertEqual(entity["id"], "nb-intangible-yuyao-homespun")
+
+    def test_generation_context_can_find_a_city_entity_by_scene_tag(self):
+        context = knowledge.build_generation_context(city="宁波", theme="传统美术")
+        self.assertIn("象山竹根雕", context)
+        self.assertNotIn("西湖", context)
 
 
 if __name__ == "__main__":

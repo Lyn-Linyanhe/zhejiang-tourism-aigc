@@ -51,3 +51,13 @@ uv sync --frozen
 `config.toml` 未配置或模型请求失败，任务会记录上游错误并回退到离线浙江文旅编排器。
 下一步若要接入上游完整视频链路，应先把上游 `VideoParams` 映射为独立 DTO，再复用
 其素材/配音/字幕服务，不应直接共享全局配置或任务目录。
+
+
+## 2026-10-06 Merge note: TokenDance cloud media
+
+Integrated TokenDance Ark/MiniMax protocol settings from zhejiang-tourism-aigc-2.zip into the existing registry/orchestrator.
+
+- IMAGE_API_STYLE=auto with tokendance.space selects the Seedream payload (URL response, negative prompt folded into prompt, no seed field).
+- VIDEO_API_STYLE=auto with tokendance.space selects /video_generation submission and /query/video_generation/{task_id} polling.
+- Existing OpenAI-compatible and Volcengine-style flows remain available; set IMAGE_API_STYLE or VIDEO_API_STYLE to override detection.
+- Missing real keys mark providers unavailable; only explicit ALLOW_SYNTHETIC_AUDIO_FALLBACK enables synthetic test audio.

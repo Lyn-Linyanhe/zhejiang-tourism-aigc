@@ -1,140 +1,35 @@
-# 浙江文旅 AIGC 短视频系统
+# 浙江文旅 AIGC 视频系统  音频优化版
 
-这是一个可实际运行的单机 Web 应用，不是静态页面或演示数据。完整流程是：
+这是用于 Windows 10/11 64 位电脑的可转交版本。项目代码、知识库和 FFmpeg 已放在本文件夹，默认配置可离线生成脚本与技术测试画面；联网的 Edge 中文配音在首次启动时自动安装。真实 AI 脚本、图片或视频仍需接收方自行配置相应服务的 API 凭据。
 
-```text
-用户输入 → DeepSeek 生成脚本/分镜 → 用户编辑并确认
-→ 素材 provider / 用户上传素材 → TTS / 用户上传音频
-→ FFmpeg 合成字幕、音频和 MP4 → 任务档案与可追溯元数据
-```
+## 接收方快速启动
 
-## 运行要求
+1. 安装 **Python 3.11 或 3.12**，安装时勾选 **Add python.exe to PATH**。Windows 自带 PowerShell；FFmpeg 和 FFprobe 已随包提供，无需另装。
+2. 保持整个文件夹的目录结构，双击 `START.cmd`。首次启动会创建 `.venv-audio`，联网安装 `edge-tts==7.3.1`，运行简短自检，然后启动服务；后续启动直接运行。
+3. 浏览器打开 <http://127.0.0.1:8790>。在默认离线模式中，选择“无音乐”即可不依赖额外音乐文件完成技术流程。
 
-- Windows 10/11
-- Python 3.11 或更高版本。Python 3.12 可以直接使用本项目。
-- FFmpeg 和 FFprobe 已加入 PATH
-- Chrome、Edge 或 Firefox
-- DeepSeek API key（真实脚本生成）
-- 若不使用上传素材，需要配置 `PEXELS_API_KEY` 或接受技术测试场景图
-- 若需要背景音乐，需要上传音乐或把授权音乐放入 `MUSIC_DIR`
+如果双击窗口立即关闭，可在 PowerShell 中进入本目录后运行 `powershell -ExecutionPolicy Bypass -File .\first_setup.ps1` 查看报错，再运行 `powershell -ExecutionPolicy Bypass -File .\start_here.ps1`。首次安装 Edge 配音需要联网；也可以在界面选择 Windows 系统语音或上传自己的配音。
 
-## 安装和启动
+## 真实创作与素材
 
-```powershell
-Set-Location C:\Users\ev041\Desktop\人工智能\zhejiang-tourism-aigc
-Copy-Item .env.example .env
-notepad .env
-.\scripts\start.ps1
-```
+- 本包的 `.env` 不含任何 API key，预设 `DEFAULT_PROVIDER=offline` 和 `ASSET_PROVIDER=offline`。该模式用于验收流程，离线场景图不等同于真实旅游照片。
+- 真实脚本生成：将 `.env` 中的 `DEFAULT_PROVIDER` 改为 `deepseek`，填写自己的 `LLM_BASE_URL`、`LLM_API_KEY`、`LLM_MODEL`。配置字段见 `.env.example`。
+- 真实画面：上传自己有权使用的图片/视频，或配置图片、视频服务及密钥；相关字段见 `.env.example`。上传素材可直接使用焦点运镜与转场。
+- 背景音乐：默认曲库为空。把有权使用的音乐放入 `runtime/music` 并完善 `runtime/music/catalog.json`，或在页面上传音乐；也可选“无音乐”。
+- “天依 · 本地声库”是可选高级功能，未随轻量包复制约 4.6 GB 模型及不可跨机复用的虚拟环境。需要时用 Python 3.11 运行 `scripts/setup-tianyi.ps1`；依赖和模型需另行下载，详见 `docs/voice-studio.md`。
 
-在 `.env` 中填写新的 DeepSeek key：
+## 文件结构
 
-```dotenv
-DEFAULT_PROVIDER=deepseek
-ALLOW_PROVIDER_FALLBACK=false
-LLM_BASE_URL=https://api.deepseek.com
-LLM_API_KEY=REPLACE_WITH_NEW_KEY
-LLM_MODEL=deepseek-chat
-```
+- `backend`、`frontend`、`data_zhejiang_kb`：服务、页面和浙江知识库。
+- `tools/ffmpeg`：便携版 FFmpeg 8.1.2，附上游 `LICENSE` 和 `README.txt`；该构建使用 GPL v3。
+- `scripts`：服务启动及可选配音安装脚本。
+- `tests`：随包自检测试。
+- `runtime`：接收方首次运行后写入的新任务与缓存；本包不含原电脑的任务数据库、历史成片、日志和音频缓存。
+- `11月13日优化说明.docx`：本次版本的功能、打包范围和验证记录。
 
-不要把 `.env` 提交到 Git。用户之前在聊天中发送的旧 key 已经暴露，必须撤销并重新生成。
+## 故障定位
 
-浏览器访问 `http://127.0.0.1:8787`。
-
-## 使用流程
-
-1. 在创作工作台填写城市、地标、主题、文化线索、受众、时长、镜头数、风格、配音、音乐和输出规格。
-2. 点击“生成脚本预览”。此时只调用文本 provider，不渲染视频。
-3. 修改标题、摘要、CTA、完整旁白、分镜画面描述、每镜头旁白、字幕、时长和转场。
-4. 选择素材来源：
-   - `使用服务端配置`：使用 `.env` 的 `ASSET_PROVIDER`；
-   - `每个镜头使用上传素材`：每个镜头都必须绑定图片或视频；
-   - `Pexels 在线素材`：需要 `PEXELS_API_KEY`；
-   - `技术测试场景图`：只用于技术验收，不应直接用于正式发布。
-5. 可为任意任务上传配音和音乐。上传音频会覆盖对应 provider。
-6. 点击“保存脚本、分镜和参数修改”。
-7. 点击“确认并生成实际视频”。只有这一步才会执行素材、音频和 FFmpeg 渲染。
-8. 在任务面板检查 MP4、SRT、配音、音乐、素材来源和 trace。
-
-## 生产素材和音频
-
-### Pexels 图片
-
-```dotenv
-ASSET_PROVIDER=pexels
-PEXELS_API_KEY=REPLACE_WITH_PEXELS_KEY
-PEXELS_BASE_URL=https://api.pexels.com/v1
-```
-
-### 上传素材
-
-选择 `每个镜头使用上传素材`，生成预览后逐个选择镜头上传图片或视频。系统会保存 source、license、author 和 usage_scope。
-
-### 配音
-
-系统按以下顺序尝试：
-
-1. 任务上传的配音；
-2. `.env` 配置的 OpenAI 兼容 TTS；
-3. Edge TTS；
-4. Windows 系统语音。
-
-如果都不可用且 `ALLOW_SYNTHETIC_AUDIO_FALLBACK=false`，任务失败并记录错误。合成音调只允许在明确打开该开关时用于技术 smoke，不会默认伪装成正式配音。
-
-### 音乐
-
-上传音乐，或者把已获授权的音频文件放到 `runtime/music`。音乐选项不是“无音乐”时，如果没有真实音乐且未明确打开合成 fallback，任务会失败。
-
-## 验证
-
-```powershell
-python -m compileall -q backend tests
-node --check frontend/app.js
-python -m unittest discover -s tests -v
-```
-
-技术 smoke：
-
-```powershell
-$env:DEFAULT_PROVIDER = "offline"
-$env:ALLOW_SYNTHETIC_AUDIO_FALLBACK = "true"
-.\scripts\smoke-test.ps1
-```
-
-检查成片：
-
-```powershell
-ffprobe -v error `
-  -show_entries format=duration:stream=index,codec_name,codec_type,width,height,channels `
-  -of json `
-  runtime\media\<task_id>\final.mp4
-```
-
-正式验收必须使用 `DEFAULT_PROVIDER=deepseek`，并确认：
-
-```text
-trace.provider = openai-compatible
-trace.model = deepseek-chat
-trace.fallback_used = false
-render.has_audio = true
-render.has_burned_subtitles = true
-```
-
-## 关键目录
-
-- `backend/app/models.py`：输入、任务、镜头、素材和 trace 合约
-- `backend/app/main.py`：HTTP API 和静态文件服务
-- `backend/app/services/orchestrator.py`：阶段调度和 provider 组合
-- `backend/app/providers/llm.py`：DeepSeek/OpenAI 兼容文本 provider
-- `backend/app/providers/contract.py`：跨产线接口契约（素材、音频、渲染）
-- `backend/app/providers/media.py`：素材 provider（离线场景图、Pexels、上传）
-- `backend/app/providers/media_ffmpeg.py`：FFmpeg 调用、字幕、音频校验
-- `backend/app/providers/tts.py`：TTS provider 与无凭据兜底实现
-- `backend/app/providers/music.py`：背景音乐匹配与生成
-- `backend/app/providers/stubs/`：契约 stub，供无外部依赖时跑通全链路
-- `backend/app/services/renderer.py`：图片/视频素材、字幕、音频和 MP4 合成
-- `frontend/`：完整创作和审核工作台
-- `runtime/db/app.sqlite3`：任务持久化
-- `runtime/media/<task_id>/`：任务媒体和 manifest
-
-MoneyPrinterTurbo 是可选上游。它和本项目都使用顶层 `app` 包，因此通过子进程隔离调用；详细说明见 `docs/upstream-integration.md`。
+- 找不到 Python：重新安装并启用 PATH，或从 PowerShell 执行 `python --version` 检查。
+- 首次配音安装失败：检查网络后运行 `FIRST_SETUP.cmd`；Edge TTS 是联网服务。无需联网时可选择本机已安装的 Windows 中文语音或“无配音”。
+- 找不到音乐：在页面选择“无音乐”，或上传音乐并确认曲库条目与所选情绪和风格相符。
+- 云端生成失败：检查 `.env` 中的服务地址、密钥、模型和账号额度；离线模式无需密钥。

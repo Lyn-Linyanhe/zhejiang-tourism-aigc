@@ -25,7 +25,9 @@
     "imagery": "画面意象描述列表，供分镜引擎选择镜头内容",
     "best_season": "最佳游览/拍摄季节，可选",
     "micro_drama_hook": "微短剧式叙事钩子，用于视频开场或情绪落点，呼应‘跟着微短剧去旅行’创作计划",
-    "scenario_tags": "主题场景标签列表，供场景化检索（如“杭州亲子游”“非遗体验”）。检索时命中场景标签的实体优先级高于仅靠全文匹配偶然命中的条目。"
+    "scenario_tags": "主题场景标签列表，供场景化检索（如“杭州亲子游”“非遗体验”）。检索时命中场景标签的实体优先级高于仅靠全文匹配偶然命中的条目。",
+    "fact_records": "事实级来源记录列表，包含短事实、来源 URL、发布机构、核查日期和许可状态；不替代 facts 字符串列表",
+    "external_ids": "外部知识库或名录标识，可选；必须与对应来源和许可一起核验"
   },
   "cities": {
     "杭州": {
@@ -42,10 +44,19 @@
       ],
       "scenario_tags_total": 192,
       "status": "完整样板（已做透：46 实体覆盖景区/非遗/美食/节庆/传说/名人六类）"
+    },
+    "宁波": {
+      "file": "ningbo.json",
+      "entities": 9,
+      "facts": 9,
+      "types_covered": [
+        "intangible"
+      ],
+      "scenario_tags_total": 25,
+      "status": "小规模采集试点；事实来自宁波市非遗保护中心在线名录，商业再分发许可待核实，不应作为已获授权的数据集发布"
     }
   },
   "planned_cities": [
-    "宁波",
     "绍兴",
     "温州",
     "嘉兴",
@@ -135,8 +146,25 @@
     "雪景",
     "非遗体验"
   ],
-  "updated": "2026-09-12",
+  "updated": "2026-11-20",
   "quality_assurance": {
+    "entity_media_pilot": {
+      "checked_at": "2026-11-20",
+      "entities": ["hz-xihu", "hz-duanqiao", "hz-leifengta", "hz-lingyinsi", "hz-longjing"],
+      "fact_records_added": 5,
+      "method": "3 条短事实绑定官方正文，2 条仅描述已经目视核实的照片；不覆盖既有 facts；图片来源与许可独立存素材库。",
+      "scope": "每实体 1 张实拍照片，4 个全景与 1 个茶汤细节；尚未覆盖每实体 2–3 类镜头、宁波非遗授权画面或动态实拍视频。",
+      "manifest": "docs/research/entity-assets-pilot.md"
+    },
+    "ningbo_pilot": {
+      "checked_at": "2026-11-20",
+      "source": "宁波市文化馆（宁波市非物质文化遗产保护中心）在线非遗名录与项目详情页",
+      "source_url": "https://www.ihningbo.cn/directory",
+      "entities": 9,
+      "facts": 9,
+      "license_status": "未发现明确允许商业再分发的独立开放数据许可；仅保留短目录事实，需确认授权后方可用于正式发布",
+      "method": "逐条记录项目正式名称、所属级别、批次、门类、地区；不复制详情页叙述文本；每条事实绑定官方目录详情页 URL。"
+    },
     "fact_check": {
       "method": "对含年份/数字/绝对表述的 89 条高风险事实，逐条联网核查（权威来源：政府网站、UNESCO、中国非遗网、维基百科、主流媒体）",
       "date": "2026-09-12",

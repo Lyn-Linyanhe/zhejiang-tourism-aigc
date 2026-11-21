@@ -1,7 +1,10 @@
 """成本台账。
 
-数据源只有 AssetResult.cost（契约已定义）。最贵的调用是画面生成，
+数据源只有各 provider 上报的 cost（契约已定义）。最贵的调用是画面生成，
 所以把每次调用的 cost 加总，不在这里另算单价。
+
+本文件是合并产物：P2 的按次台账（CostLedger / sum_costs）与 P1 的按 slot
+汇总（summarize_cost）各服务一端，二者都保留。
 """
 
 from __future__ import annotations
@@ -54,3 +57,30 @@ class CostLedger:
 
     def entries(self) -> list[dict[str, Any]]:
         return list(self._entries)
+
+
+def summarize_cost(task: dict[str, Any]) -> dict[str, Any]:
+    """Summarize provider-reported costs without assuming a billing currency."""
+    by_slot = {"llm": 0.0, "asset": 0.0, "audio": 0.0, "render": 0.0}
+    type_to_slot = {
+        "llm": "llm", "asset": "asset", "image": "asset", "video": "asset",
+        "tts": "audio", "music": "audio", "render": "render",
+    }
+    events = (task.get("trace") or {}).get("events") or []
+    for event in events:
+        if not isinstance(event, dict):
+            continue
+        slot = str(event.get("slot") or type_to_slot.get(str(event.get("type", "")), ""))
+        if slot not in by_slot:
+            continue
+        try:
+            by_slot[slot] += max(0.0, float(event.get("cost", 0) or 0))
+        except (TypeError, ValueError):
+            continue
+    rounded = {key: round(value, 6) for key, value in by_slot.items()}
+    return {
+        "total": round(sum(rounded.values()), 6),
+        "by_slot": rounded,
+        "unit": "provider-reported",
+        "complete": all("cost" in event for event in events if isinstance(event, dict) and event.get("type") in type_to_slot),
+    }
