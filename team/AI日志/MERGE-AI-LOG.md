@@ -122,3 +122,18 @@
 - **Known limitations / Follow-up:** 当前仅五实体各一张静态照片，每实体 2–3 类镜头目标未完成；宁波红帮等非遗需索权/自摄；拱宸桥候选下载中断未入库；Pexels 视频搜索回归待独立修复；完整桌面/手机 GUI 与全片动态听感验收待补。
 - **Deliverables:** `docs/research/entity-assets-pilot.md`、同名 CSV；本地 MP4 目录附 `ATTRIBUTION.md`、`fact-records.json`、`task.json`、`manifest.json`、`ffprobe.json`。
 - **Workspace:** 保留当前 `feature/zhejiang-entity-assets`，未提交、未推送、未对外发布。使用独立 `runtime/_wire_probe_entity_assets_20261120`；未覆盖 `.env`、常规媒体/数据库或音乐库，未停止 8787 进程。
+
+---
+
+## Entry 003 - 2026-11-21
+
+- **Task:** 侧聊请求改进字幕字体、字号和排版；不执行父会话的提交/推送。
+- **Files:** 新增 `backend/app/providers/subtitles.py`、`tests/test_subtitles.py`；局部修改 `services/renderer.py` 和 `tests/test_rendering.py`。
+- **Change:** 保留原 SRT 下载文本和毫秒级时码，生成 `subtitles.ass` 用于烧录；微软雅黑加粗优先，其他系统回退已有中文字体。按实际画布比例设置字号、左右 8% 与竖屏底部 12% 留白，使用细描边和轻阴影。
+- **Layout:** 常规长句优先排两行，保护年份/数字/英文词与行首标点；保留手动换行和连续空格。异常长稿保留全文，必要时超过两行；超宽英文单词应急拆分。花括号及反斜杠按字面安全显示。ASS 烧录时码为厘秒精度（量化误差至多约 5ms），原 SRT 不变。
+- **Visual QA:** 首版可变思源字体被 DirectWrite/libass 选为 Thin，实际预览过细过小，已弃用该本机字体路径；改为静态雅黑字重，校准 ASS 字号（720 宽画面为 44，非等同字形高度），对照 2s/11s/22s 的实拍帧核验。短句一行、样片长句两行、浅色背景有细描边；AIGC 标识保留。
+- **Verification:** 全量 `python -B -m unittest discover -s tests -v` → **Ran 143 tests in 33.899s — OK**；局部 `git diff --check` 通过；真实 FFmpeg 烧录与音画同步测试通过。对比版 FFprobe 为 30.000000s / 720×1280 / 25fps / H.264 + AAC。原版与新版音轨 SHA-256 相同、SRT 字节相同。特殊字符探针确认路径字形不变。
+- **Preview:** `runtime/_wire_probe_entity_assets_20261120/media/subtitles_preview_20261121/final.mp4`；本地对比页 `http://127.0.0.1:8811/`，文件位于 `runtime/_probe_assets/subtitle-review-20261121/`，保留原片与独立对比产物。
+- **Contract:** 无新增对外必填字段，不改变现有 SRT URL 和烧录开关。已有 MP4 不自动覆盖；后续渲染使用新样式，运行中的服务需重新加载代码。
+- **Scope:** 本侧聊未提交、推送、修改 .env 或重启既有应用服务；只启动了 8811 本地静态对比服务。
+- **父会话交付复核:** `python -B -m unittest discover -s tests -p test_subtitles.py -v` → 9 项通过；同法运行 `test_rendering.py` → 3 项通过（真实 FFmpeg）；`python -B -m unittest discover -s tests -v` → **Ran 143 tests in 34.819s — OK**。字幕代码与这条验证记录独立提交，不包含素材或本机对比文件。

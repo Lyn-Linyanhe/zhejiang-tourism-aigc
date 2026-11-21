@@ -83,6 +83,10 @@ class RenderingTests(unittest.TestCase):
             self.assertEqual(render["resolution"], "720x1280")
             self.assertTrue((root / "media" / "task_test" / "final.mp4").exists())
             self.assertTrue((root / "media" / "task_test" / "subtitles.srt").exists())
+            ass = (root / "media" / "task_test" / "subtitles.ass").read_text(encoding="utf-8-sig")
+            self.assertIn("PlayResX: 720", ass)
+            self.assertIn("PlayResY: 1280", ass)
+            self.assertIn("测试字幕", ass)
 
     def test_renderer_can_render_without_audio_when_user_disables_voice(self):
         with tempfile.TemporaryDirectory() as directory:
