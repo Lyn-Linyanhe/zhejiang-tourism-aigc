@@ -1,0 +1,1814 @@
+{
+  "city": "杭州",
+  "city_meta": {
+    "aliases": [
+      "杭",
+      "临安",
+      "钱塘",
+      "余杭",
+      "南宋都城"
+    ],
+    "city_dna": "宋韵文化、西湖山水、茶文化、丝绸、数字经济",
+    "slogan": "上有天堂，下有苏杭",
+    "best_season": "四季皆宜，春（3-5月）看湖光花色，秋（9-11月）赏桂与红叶",
+    "positioning": "浙江省会、国家历史文化名城、中国七大古都之一"
+  },
+  "entities": [
+    {
+      "id": "hz-xihu",
+      "type": "scenic",
+      "name": "西湖",
+      "aliases": [
+        "西湖景区",
+        "West Lake",
+        "杭州西湖",
+        "西湖公园"
+      ],
+      "level": "5A",
+      "location": "杭州市西湖区",
+      "facts": [
+        "2011 年列入《世界遗产名录》，是中国首个湖泊类世界文化遗产，也是中国唯一一处湖泊类文化景观遗产",
+        "西湖十景（苏堤春晓、断桥残雪、曲院风荷、平湖秋月、柳浪闻莺、花港观鱼、雷峰夕照、双峰插云、南屏晚钟、三潭印月）得名于南宋，经清康熙帝御题碑刻而定型，是中国最早的景观题名文化",
+        "三潭印月肇始于北宋苏轼元祐四年（1089 年）所立的三座量水塔，现存石塔为明天启元年（1621 年）补立",
+        "苏轼任杭州知州期间（1089—1091年）疏浚西湖并以湖泥筑成苏堤，全长约 2.8 公里",
+        "白居易任杭州刺史期间（822—824 年）疏浚六井、修筑钱塘门外堤塘，留下“未能抛得杭州去，一半勾留是此湖”诗句",
+        "西湖水域面积约 6.38 平方公里，汇水面积约 21.22 平方公里"
+      ],
+      "cultural_significance": "江南山水美学的代表，中国文人精神家园的象征，历代留下诗词逾两万首",
+      "keywords_en": [
+        "West Lake Hangzhou",
+        "West Lake China",
+        "Hangzhou lake scenery"
+      ],
+      "imagery": [
+        "清晨薄雾中的湖面倒影",
+        "断桥与远山轮廓",
+        "苏堤柳枝垂水",
+        "雷峰塔夕照剪影",
+        "三潭印月石塔与月影"
+      ],
+      "best_season": "四季皆宜，3-5 月春花、9-11 月桂花与秋色最佳",
+      "micro_drama_hook": "白娘子与许仙在断桥相遇，一段传说让这座桥被讲述了一千年",
+      "scenario_tags": [
+        "摄影",
+        "经典必游",
+        "亲子",
+        "赏花",
+        "夜游",
+        "徒步"
+      ]
+    },
+    {
+      "id": "hz-duanqiao",
+      "type": "scenic",
+      "name": "断桥残雪",
+      "aliases": [
+        "断桥",
+        "Broken Bridge",
+        "Duanqiao"
+      ],
+      "level": "西湖十景",
+      "location": "杭州市西湖区白堤东端",
+      "facts": [
+        "西湖十景之一，名称源于冬日雪后桥面阳面雪化、阴面雪存，远看似断非断的景象",
+        "民间传说《白蛇传》中许仙与白娘子在此相遇，是杭州最著名的爱情地标",
+        "现存桥梁为民国年间改建，单孔石拱桥，长 8.8 米，宽 8.6 米",
+        "位于白堤东端，连接北山街与孤山，是游客量最大的西湖景点之一"
+      ],
+      "cultural_significance": "西湖十景之首，融自然景观与民间传说于一体",
+      "keywords_en": [
+        "Broken Bridge West Lake",
+        "West Lake bridge winter",
+        "Hangzhou Broken Bridge"
+      ],
+      "imagery": [
+        "雪后石拱桥的阴阳雪线",
+        "桥上行人与远山",
+        "暮色中的石桥剪影"
+      ],
+      "best_season": "冬季雪后最佳，春秋人流如织",
+      "micro_drama_hook": "一场雨一把伞，石桥成了中国人最熟悉的相遇地点",
+      "scenario_tags": [
+        "经典必游",
+        "摄影",
+        "爱情",
+        "雪景"
+      ]
+    },
+    {
+      "id": "hz-leifengta",
+      "type": "scenic",
+      "name": "雷峰塔",
+      "aliases": [
+        "雷峰夕照",
+        "Leifeng Pagoda",
+        "黄妃塔"
+      ],
+      "level": "西湖十景",
+      "location": "杭州市西湖区夕照山",
+      "facts": [
+        "始建于吴越国太平兴国二年（977 年），吴越国王钱俶为奉藏佛螺髻发舍利而建",
+        "1924 年 9 月旧塔倒塌，鲁迅曾两度撰文论及雷峰塔倒掉",
+        "2002 年在原址重建，新塔高 71.679 米，为中国首座彩色铜雕宝塔",
+        "地宫出土的鎏金银阿育王塔等文物为吴越国佛教艺术珍品",
+        "西湖十景“雷峰夕照”由此得名"
+      ],
+      "cultural_significance": "吴越国佛教文化见证，白蛇传说中法海镇白娘子之地",
+      "keywords_en": [
+        "Leifeng Pagoda",
+        "West Lake pagoda sunset",
+        "Hangzhou pagoda"
+      ],
+      "imagery": [
+        "夕照中的古塔轮廓",
+        "塔身铜雕细节",
+        "塔顶俯瞰西湖全景"
+      ],
+      "best_season": "黄昏夕照时分最佳",
+      "micro_drama_hook": "塔倒了，传说却留下来了——一座塔与一个故事的千年纠缠",
+      "scenario_tags": [
+        "经典必游",
+        "摄影",
+        "登高",
+        "夜景",
+        "传说"
+      ]
+    },
+    {
+      "id": "hz-lingyinsi",
+      "type": "scenic",
+      "name": "灵隐寺·飞来峰",
+      "aliases": [
+        "灵隐寺",
+        "Lingyin Temple",
+        "云林禅寺",
+        "飞来峰",
+        "灵隐"
+      ],
+      "level": "5A",
+      "location": "杭州市西湖区灵隐路法云弄1号",
+      "facts": [
+        "始建于东晋咸和元年（326 年），由印度僧人慧理创建，距今近 1700 年",
+        "是江南禅宗“五山”之一，中国佛教禅宗十大古刹之一",
+        "清康熙帝南巡时赐名“云林禅寺”，故山门匾额为“云林禅寺”",
+        "飞来峰造像现存五代至元代石刻造像 345 尊，其元代梵式（藏传风格）造像是内地现存数量最多、保存最集中的藏传佛教石刻",
+        "大雄宝殿内 24.8 米高的释迦牟尼佛像为中国最大的香樟木坐佛"
+      ],
+      "cultural_significance": "江南佛教文化中心，济公传说发源地，中国石窟艺术江南代表",
+      "keywords_en": [
+        "Lingyin Temple Hangzhou",
+        "Feilai Peak Buddha carvings",
+        "Chinese Buddhist temple"
+      ],
+      "imagery": [
+        "古寺黄墙与飞檐",
+        "飞来峰崖壁石刻造像",
+        "香火缭绕的大殿",
+        "古木掩映的石阶"
+      ],
+      "best_season": "四季皆宜，秋季银杏与红枫最佳",
+      "micro_drama_hook": "济公在这里留下传说，一座山从印度飞来只是一个开始",
+      "scenario_tags": [
+        "人文",
+        "祈福",
+        "亲子",
+        "摄影",
+        "古建"
+      ]
+    },
+    {
+      "id": "hz-longjing",
+      "type": "intangible",
+      "name": "西湖龙井茶制作技艺",
+      "aliases": [
+        "龙井茶",
+        "西湖龙井",
+        "Longjing tea",
+        "绿茶制作技艺",
+        "龙井",
+        "龙井村",
+        "梅家坞"
+      ],
+      "level": "国家级非遗（人类非遗）",
+      "location": "杭州市西湖区龙井村、梅家坞、狮峰山一带",
+      "facts": [
+        "2022 年“中国传统制茶技艺及其相关习俗”列入联合国教科文组织人类非物质文化遗产代表作名录，西湖龙井茶制作技艺为其重要组成部分",
+        "2008 年列入国家级非物质文化遗产代表性项目名录",
+        "核心工艺为“十大手法”：抓、抖、搭、拓、捺、推、扣、甩、磨、压，全程手工在铁锅中完成",
+        "核心产区为“狮、龙、云、虎、梅”五大字号，其中狮峰山龙井品质最佳",
+        "明前茶（清明前采摘）为最珍贵，一斤干茶约需 5-8 万个芽头，需人工采摘数万次",
+        "炒制一锅 250 克干茶约需 4-5 小时，锅温须在 60-200℃ 间精细调控"
+      ],
+      "cultural_significance": "中国绿茶代表，杭州茶文化核心，被誉为“中国十大名茶之首”",
+      "keywords_en": [
+        "Longjing tea",
+        "Chinese green tea",
+        "tea picking China",
+        "tea ceremony China"
+      ],
+      "imagery": [
+        "茶山晨雾中的采茶人",
+        "铁锅手工炒茶的手部特写",
+        "茶汤与青瓷杯",
+        "采茶竹篓特写"
+      ],
+      "best_season": "3 月下旬至 4 月上旬（明前、雨前茶季）",
+      "micro_drama_hook": "六万个芽头，四个小时的手上功夫，只为一口春天的味道",
+      "scenario_tags": [
+        "茶文化",
+        "研学",
+        "非遗体验",
+        "自然"
+      ]
+    },
+    {
+      "id": "hz-silk",
+      "type": "intangible",
+      "name": "杭罗织造技艺与杭州丝绸",
+      "aliases": [
+        "杭罗",
+        "杭州丝绸",
+        "Hangzhou silk",
+        "蚕桑丝织技艺"
+      ],
+      "level": "国家级非遗（人类非遗）",
+      "location": "杭州市",
+      "facts": [
+        "2009 年“中国蚕桑丝织技艺”列入联合国教科文组织人类非物质文化遗产代表作名录，杭罗织造技艺为其组成部分",
+        "杭罗与江苏云锦、四川蜀锦并称中国三大名绸",
+        "杭罗以纯桑蚕丝手工织造，工序包括蚕丝整理、上机织造、水洗等十余道",
+        "杭州自唐代起即为丝绸重镇，南宋时设“文思院”专管丝织",
+        "“丝绸之府”之名始于唐代，杭州丝绸曾沿海上丝绸之路远销海外"
+      ],
+      "cultural_significance": "中国丝织文明的代表，杭州“丝绸之府”千年底蕴",
+      "keywords_en": [
+        "Chinese silk fabric",
+        "silk weaving loom",
+        "Hangzhou silk textile"
+      ],
+      "imagery": [
+        "古法织机经纬交织特写",
+        "蚕茧与桑叶",
+        "丝绸布料垂坠光泽",
+        "染色工序"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "一根丝走过两千年，织出了半部中国贸易史",
+      "scenario_tags": [
+        "非遗体验",
+        "研学",
+        "购物",
+        "人文"
+      ]
+    },
+    {
+      "id": "hz-zhongyi",
+      "type": "intangible",
+      "name": "胡庆余堂中药文化",
+      "aliases": [
+        "胡庆余堂",
+        "Hu Qing Yu Tang",
+        "中药文化"
+      ],
+      "level": "国家级非遗",
+      "location": "杭州市上城区河坊街大井巷95号",
+      "facts": [
+        "清同治十三年（1874 年）由红顶商人胡雪岩创建，被誉为“江南药王”",
+        "2006 年“胡庆余堂中药文化”列入首批国家级非物质文化遗产名录",
+        "建筑群为全国重点文物保护单位，是国内保存最完好的晚清徽派商业建筑群之一",
+        "堂内高悬“戒欺”匾额，为胡雪岩亲书，是中国商业诚信文化的著名标志",
+        "创办“胡庆余堂雪记国药号”时的“真不二价”经营理念流传至今"
+      ],
+      "cultural_significance": "中国中医药文化活态传承样本，晚清商业伦理标志",
+      "keywords_en": [
+        "traditional Chinese medicine shop",
+        "herbal medicine China",
+        "Chinese pharmacy"
+      ],
+      "imagery": [
+        "青砖木门老药铺外观",
+        "药柜与称量工具",
+        "古法炮制药材特写",
+        "手写药方"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "一块“戒欺”匾额挂了 150 年，挂住了中国商人的底线",
+      "scenario_tags": [
+        "非遗体验",
+        "人文",
+        "研学",
+        "老字号"
+      ]
+    },
+    {
+      "id": "hz-cuisine-xihu",
+      "type": "cuisine",
+      "name": "西湖醋鱼",
+      "aliases": [
+        "西湖醋鱼",
+        "West Lake vinegar fish"
+      ],
+      "type_detail": "杭帮菜代表",
+      "location": "杭州市",
+      "facts": [
+        "杭州传统名菜之首，选用西湖草鱼，以沸水汆熟后淋糖醋芡汁，讲究“鱼肉不带土腥味”",
+        "相传源于南宋，与“叔嫂传珍”的故事相关",
+        "烹制关键在“饿养草鱼”一至两日以去土腥，为杭帮菜独特工艺",
+        "与龙井虾仁、东坡肉、叫化童鸡并称杭帮菜四大名菜"
+      ],
+      "cultural_significance": "杭帮菜烹饪哲学代表——清淡、本味、精致",
+      "keywords_en": [
+        "Chinese fish dish sweet sour",
+        "West Lake cuisine",
+        "Chinese gourmet dish"
+      ],
+      "imagery": [
+        "糖醋汁淋在整鱼上的动态",
+        "摆盘讲究的成品俯拍",
+        "厨师掌勺特写"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "一道菜里藏着一个家族的故事，酸甜都是人情",
+      "scenario_tags": [
+        "美食",
+        "杭帮菜",
+        "经典必游"
+      ]
+    },
+    {
+      "id": "hz-cuisine-dongpo",
+      "type": "cuisine",
+      "name": "东坡肉",
+      "aliases": [
+        "东坡肉",
+        "Dongpo pork",
+        "红烧肉"
+      ],
+      "type_detail": "杭帮菜代表",
+      "location": "杭州市",
+      "facts": [
+        "相传为苏轼任杭州知州时疏浚西湖期间以猪肉犒劳民工的做法演变而来",
+        "选用五花肉，以黄酒代替水，小火焖制两小时以上，成品“色如玛瑙，酥而不碎”",
+        "苏轼《猪肉颂》有“慢著火，少著水，火候足时他自美”之说",
+        "现为杭州最具辨识度的传统名菜之一"
+      ],
+      "cultural_significance": "文人治政与市井饮食结合的典范，苏轼文化的味觉载体",
+      "keywords_en": [
+        "Chinese braised pork belly",
+        "Dongpo pork",
+        "Chinese cuisine closeup"
+      ],
+      "imagery": [
+        "砂锅中酱红肉块的特写",
+        "筷子夹起颤动的肉块",
+        "黄酒与香料"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "一个诗人治理了一座湖，也顺便教会了这座城怎么吃肉",
+      "scenario_tags": [
+        "美食",
+        "杭帮菜",
+        "人文"
+      ]
+    },
+    {
+      "id": "hz-festival-guihua",
+      "type": "festival",
+      "name": "西湖桂花节·满陇桂雨",
+      "aliases": [
+        "桂花节",
+        "满陇桂雨",
+        "杭州桂花",
+        "Osmanthus Festival"
+      ],
+      "location": "杭州市西湖区满觉陇",
+      "facts": [
+        "满觉陇自明代起即为杭州赏桂胜地，“满陇桂雨”为新西湖十景之一",
+        "杭州市花为桂花，全市桂花种植历史逾千年，满觉陇一带现有桂花树数千株",
+        "每年 9 月下旬至 10 月中旬为花期，杭州人素有“赏桂、饮桂花酿、食桂花糖炒栗”的习俗",
+        "新西湖十景于 1985 年评选产生，满陇桂雨为其中之一"
+      ],
+      "cultural_significance": "杭州秋日民俗标志，市花文化的集中体现",
+      "keywords_en": [
+        "osmanthus flowers autumn",
+        "Chinese autumn flowers",
+        "golden osmanthus tree"
+      ],
+      "imagery": [
+        "桂花细密金黄的花簇特写",
+        "树下茶座品桂花茶",
+        "落桂铺满石阶"
+      ],
+      "best_season": "9 月下旬至 10 月中旬",
+      "micro_drama_hook": "整个城市在秋天集体变香，这是杭州每年最浪漫的约定",
+      "scenario_tags": [
+        "赏花",
+        "秋日",
+        "民俗",
+        "摄影",
+        "亲子"
+      ]
+    },
+    {
+      "id": "hz-festival-yinxiang",
+      "type": "festival",
+      "name": "印象西湖实景演出",
+      "aliases": [
+        "印象西湖",
+        "Impression West Lake",
+        "最忆是杭州"
+      ],
+      "location": "杭州市西湖区岳湖景区",
+      "facts": [
+        "由张艺谋、王潮歌、樊跃“印象铁三角”执导，2007 年正式公演",
+        "以岳湖为天然舞台，演出水面约 1 万平方米，是国内最早的大型山水实景演出之一",
+        "2016 年 G20 杭州峰会文艺演出《最忆是杭州》即在此地呈现，向世界展示西湖",
+        "演出融合灯光、水雾、音乐与舞蹈，演出名称取自白居易《忆江南》"
+      ],
+      "cultural_significance": "文旅融合演艺标杆，西湖夜间文化名片",
+      "keywords_en": [
+        "night show water stage",
+        "Chinese outdoor performance",
+        "light show lake night"
+      ],
+      "imagery": [
+        "夜色湖面上的光影舞台",
+        "舞者在水雾中的剪影",
+        "观众席与湖面灯光"
+      ],
+      "best_season": "3-11 月演出季",
+      "micro_drama_hook": "把整座湖变成舞台，让世界在一夜之间记住杭州",
+      "scenario_tags": [
+        "演艺",
+        "夜游",
+        "摄影",
+        "经典必游"
+      ]
+    },
+    {
+      "id": "hz-legend-baishezhuan",
+      "type": "legend",
+      "name": "白蛇传传说",
+      "aliases": [
+        "白蛇传",
+        "白娘子",
+        "Legend of the White Snake"
+      ],
+      "level": "国家级非遗",
+      "location": "杭州市",
+      "facts": [
+        "2006 年列入首批国家级非物质文化遗产名录，为杭州代表性民间文学",
+        "故事核心场景集中于西湖：断桥相遇、雷峰塔镇压、西湖水漫",
+        "故事基本定型于明代冯梦龙《警世通言·白娘子永镇雷峰塔》",
+        "与《梁祝》《孟姜女》《牛郎织女》并称中国四大民间传说",
+        "2006 年杭州越剧院《白蛇传》等改编作品使传说持续活跃于当代舞台"
+      ],
+      "cultural_significance": "中国四大民间传说之一，杭州城市文化最具辨识度的叙事母题",
+      "keywords_en": [
+        "Chinese legend bridge",
+        "West Lake romantic story",
+        "Chinese traditional costume performance"
+      ],
+      "imagery": [
+        "雨中石桥的伞下身影",
+        "古塔与云雾",
+        "越剧扮相的水袖"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "一条蛇爱上一个人，把三座建筑变成了中国人共同的记忆坐标",
+      "scenario_tags": [
+        "传说",
+        "爱情",
+        "人文",
+        "演艺"
+      ]
+    },
+    {
+      "id": "hz-legend-liangzhu",
+      "type": "legend",
+      "name": "梁祝传说·万松书院",
+      "aliases": [
+        "梁祝",
+        "梁山伯与祝英台",
+        "Butterfly Lovers"
+      ],
+      "level": "国家级非遗",
+      "location": "杭州市上城区万松岭",
+      "facts": [
+        "2006 年列入首批国家级非物质文化遗产名录",
+        "杭州万松书院相传为梁山伯与祝英台同窗共读之地，现存为明清格局重建",
+        "万松书院始建于明弘治十一年（1498 年），是明清时期杭州规模最大的书院",
+        "“梁祝”被誉为东方的《罗密欧与朱丽叶》，小提琴协奏曲《梁祝》1959 年首演于上海"
+      ],
+      "cultural_significance": "中国最著名的爱情传说之一，书院文化载体",
+      "keywords_en": [
+        "Chinese classical garden academy",
+        "butterflies pair",
+        "Chinese traditional love story"
+      ],
+      "imagery": [
+        "白墙黑瓦书院长廊",
+        "石阶古木与窗棂",
+        "成双蝴蝶"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "同窗三年不知她是女子，这段故事让一座书院被记住六百年",
+      "scenario_tags": [
+        "传说",
+        "爱情",
+        "人文",
+        "研学"
+      ]
+    },
+    {
+      "id": "hz-person-su",
+      "type": "person",
+      "name": "苏轼与杭州",
+      "aliases": [
+        "苏东坡",
+        "苏轼",
+        "Su Shi",
+        "Su Dongpo"
+      ],
+      "location": "杭州市",
+      "facts": [
+        "苏轼两次到杭州任职，任通判（1071—1074年）与知州（1089—1091年），前后共约五年",
+        "任知州期间主持疏浚西湖，以葑泥堆筑长堤即今苏堤，并建六桥以通水",
+        "任职期间在杭州作诗 450 余首，其中与杭州直接相关 300 多首，含“欲把西湖比西子”“水光潋滟晴方好”等名句",
+        "相传在杭州期间创制东坡肉，并创办安乐坊（中国最早的官办慈善医院之一）"
+      ],
+      "cultural_significance": "文人与城市互相成就的典范，“苏东坡的杭州”是杭州最重要的文化 IP 之一",
+      "keywords_en": [
+        "Chinese classical poetry",
+        "ancient Chinese scholar",
+        "Chinese calligraphy historic"
+      ],
+      "imagery": [
+        "苏堤六桥与湖面",
+        "古籍诗文与毛笔",
+        "西湖疏浚的历史意象"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "他在这里当了两年市长，却让这座城市被怀念了一千年",
+      "scenario_tags": [
+        "人文",
+        "历史名人",
+        "研学",
+        "宋韵"
+      ]
+    },
+    {
+      "id": "hz-person-yuefei",
+      "type": "person",
+      "name": "岳飞与岳王庙",
+      "aliases": [
+        "岳飞",
+        "岳王庙",
+        "Yue Fei",
+        "岳坟"
+      ],
+      "level": "全国重点文物保护单位",
+      "location": "杭州市西湖区北山街80号",
+      "facts": [
+        "岳飞（1103—1142年），南宋抗金名将，谥武穆，后追谥忠武",
+        "岳王庙始建于南宋嘉定十四年（1221 年），历经重修，现存为清代重建格局",
+        "庙前铁铸秦桧等四奸臣跪像始于明代，是中国最有名的“跪像”",
+        "岳飞墓为全国重点文物保护单位，墓阙下有“宋岳鄂王墓”碑",
+        "岳飞《满江红》为中国最著名的爱国词作之一"
+      ],
+      "cultural_significance": "忠义文化象征，杭州最重要的历史人物纪念地",
+      "keywords_en": [
+        "Chinese ancient temple memorial",
+        "Yue Fei temple",
+        "historic Chinese statue"
+      ],
+      "imagery": [
+        "岳王庙朱红大门与匾额",
+        "古柏与石阶",
+        "跪像与游人"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "两个跪像跪了五百年，历史和人心在这里同时做出了判决",
+      "scenario_tags": [
+        "人文",
+        "历史名人",
+        "爱国教育",
+        "研学"
+      ]
+    },
+    {
+      "id": "hz-grandcanal",
+      "type": "scenic",
+      "name": "京杭大运河杭州段·拱宸桥",
+      "aliases": [
+        "京杭大运河",
+        "拱宸桥",
+        "Grand Canal Hangzhou",
+        "运河"
+      ],
+      "level": "世界文化遗产（大运河组成部分）",
+      "location": "杭州市拱墅区",
+      "facts": [
+        "京杭大运河北起北京、南至杭州，全长约 1794 公里，2014 年列入《世界遗产名录》",
+        "杭州是京杭大运河的南端起点，运河杭州段长约 39 公里",
+        "拱宸桥始建于明崇祯四年（1631 年），是京杭大运河最南端的标志性古桥",
+        "桥名“拱宸”意为百姓对帝王的敬意，“宸”指帝王居所",
+        "运河杭州段沿线有桥西历史街区、小河直街等历史风貌区，保留清末民初格局"
+      ],
+      "cultural_significance": "中国古代水利与漕运文明的活遗产，杭州“因水而兴”的见证",
+      "keywords_en": [
+        "Grand Canal China boat",
+        "ancient Chinese stone bridge",
+        "canal historic town China"
+      ],
+      "imagery": [
+        "古石拱桥横跨运河",
+        "运河水道两岸老宅",
+        "桥上行人与货船",
+        "夜航船灯光"
+      ],
+      "best_season": "四季皆宜，夜游最佳",
+      "micro_drama_hook": "一条河把北京和杭州连起来，运了粮，也运了半部中国史",
+      "scenario_tags": [
+        "人文",
+        "夜游",
+        "摄影",
+        "古建",
+        "徒步"
+      ]
+    },
+    {
+      "id": "hz-wuzhen-side",
+      "type": "scenic",
+      "name": "杭州宋城",
+      "aliases": [
+        "宋城",
+        "Songcheng",
+        "宋城千古情"
+      ],
+      "level": "4A",
+      "location": "杭州市西湖区之江路148号",
+      "facts": [
+        "1996 年开园，是中国最早的宋文化主题公园",
+        "大型歌舞《宋城千古情》1997 年首演，累计演出数万场，为中国演出场次最多的旅游演艺之一",
+        "园区按《清明上河图》意境复原宋代市井风貌，设市井街、怪街、仙山等主题区",
+        "“千古情”系列已成为中国文旅演艺的标杆模式"
+      ],
+      "cultural_significance": "宋韵文化产业化呈现的代表，中国主题公园演艺模式开创者",
+      "keywords_en": [
+        "Chinese theme park traditional",
+        "ancient Chinese street architecture",
+        "Chinese stage performance"
+      ],
+      "imagery": [
+        "宋式街市与灯笼",
+        "古装表演者巡游",
+        "剧场舞台灯光效果"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "一座园子把八百年前的市井重新开张，每天客满",
+      "scenario_tags": [
+        "亲子",
+        "演艺",
+        "夜游",
+        "宋韵"
+      ]
+    },
+    {
+      "id": "hz-qingminghetu",
+      "type": "scenic",
+      "name": "良渚古城遗址",
+      "aliases": [
+        "良渚",
+        "Liangzhu",
+        "良渚古城"
+      ],
+      "level": "世界文化遗产（5A）",
+      "location": "杭州市余杭区良渚街道",
+      "facts": [
+        "2019 年列入《世界遗产名录》，填补了《世界遗产名录》东亚地区新石器时代城市考古遗址的空白",
+        "距今约 5300—4300 年，被誉为“实证中华五千年文明史的圣地”",
+        "遗址由古城、水利系统与祭坛组成，古城面积约 300 万平方米",
+        "外围水利系统是中国现存最早的大型水利工程，比传说中大禹治水的年代还要早约一千年",
+        "出土的玉琮、玉璧、玉钺代表中国史前玉器工艺高峰，神人兽面纹为良渚文化标志"
+      ],
+      "cultural_significance": "中华五千年文明的考古实证，中国史前玉文化顶峰",
+      "keywords_en": [
+        "Liangzhu ancient ruins China",
+        "neolithic jade artifact",
+        "ancient Chinese archaeological site"
+      ],
+      "imagery": [
+        "遗址草坡与考古探方",
+        "玉琮神人兽面纹特写",
+        "博物馆展陈光影"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "五千年前的城里就有人修水坝了，这里证明了文明比传说更早",
+      "scenario_tags": [
+        "亲子",
+        "人文",
+        "考古",
+        "研学",
+        "摄影"
+      ]
+    },
+    {
+      "id": "hz-xixi",
+      "type": "scenic",
+      "name": "西溪国家湿地公园",
+      "aliases": [
+        "西溪湿地",
+        "Xixi Wetland",
+        "西溪",
+        "西溪公园"
+      ],
+      "level": "5A",
+      "location": "杭州市西湖区天目山路518号",
+      "facts": [
+        "2012 年被评为国家 5A 级旅游景区，是中国首个国家湿地公园（2005 年挂牌）",
+        "总面积约 11.5 平方公里，其中水域面积约 68%，是罕见的城中次生湿地",
+        "现存桑田、竹林、芦荡等次生湿地景观，保留明清时期“西溪且留下”的渔耕文化",
+        "清代康熙、乾隆南巡均曾驾临西溪，留下御笔题咏",
+        "每年秋季芦苇花开，是杭州赏芦胜地，有“秋芦飞雪”之景"
+      ],
+      "cultural_significance": "中国湿地保护与城市共生典范，杭州“三西”（西湖、西溪、西泠）之一",
+      "keywords_en": [
+        "Xixi Wetland Hangzhou",
+        "China wetland park boat",
+        "reed marsh autumn China"
+      ],
+      "imagery": [
+        "芦苇荡间的小木船",
+        "湿地水网与白鹭",
+        "青石桥与竹林小径"
+      ],
+      "best_season": "四季皆宜，11 月芦花季最佳",
+      "micro_drama_hook": "城市中央藏着一片芦苇荡，杭州人把湿地留给了鸟",
+      "city": "杭州",
+      "scenario_tags": [
+        "亲子",
+        "自然",
+        "摄影",
+        "徒步",
+        "赏花"
+      ]
+    },
+    {
+      "id": "hz-qiandaohu",
+      "type": "scenic",
+      "name": "千岛湖",
+      "aliases": [
+        "千岛湖景区",
+        "Qiandao Lake",
+        "新安江水库",
+        "淳安千岛湖"
+      ],
+      "level": "5A",
+      "location": "杭州市淳安县",
+      "facts": [
+        "2010 年被评为国家 5A 级旅游景区，湖区面积约 573 平方公里",
+        "因湖中有 1078 个岛屿而得名，是 1959 年新安江水电站建成蓄水后形成的人工湖",
+        "湖水能见度常年达 7 米以上，为国家一级水体，被誉为“天下第一秀水”",
+        "水下保存着两座千年古城——狮城与贺城，因水库蓄水整体淹没",
+        "农夫山泉 1996 年创办于千岛湖畔的建德，其首个工厂 1997 年在此投产"
+      ],
+      "cultural_significance": "中国最大的人工湖之一，水利工程与生态旅游结合的样本",
+      "keywords_en": [
+        "Qiandao Lake islands",
+        "China lake aerial view",
+        "thousand island lake"
+      ],
+      "imagery": [
+        "湖中星罗棋布的小岛航拍",
+        "碧绿清澈的湖面",
+        "游船划过岛屿之间"
+      ],
+      "best_season": "4-10 月最佳",
+      "micro_drama_hook": "湖底沉着两座千年古城，水面上浮着一千座岛",
+      "city": "杭州",
+      "scenario_tags": [
+        "自然",
+        "亲子",
+        "摄影",
+        "避暑",
+        "水上活动"
+      ]
+    },
+    {
+      "id": "hz-jiuxi",
+      "type": "scenic",
+      "name": "九溪烟树",
+      "aliases": [
+        "九溪十八涧",
+        "Jiuxi Stream",
+        "九溪"
+      ],
+      "level": "新西湖十景",
+      "location": "杭州市西湖区龙井村南",
+      "facts": [
+        "新西湖十景之一，名称“九溪烟树”于 1985 年评选产生",
+        "溪流发源于杨梅岭，沿途汇合九条溪水，穿行于茶园与山林之间",
+        "清代学者俞樾曾以“重重叠叠山，曲曲环环路，丁丁东东泉，高高下下树”形容此处",
+        "溪畔为西湖龙井茶核心产区之一，徒步道全长约 6 公里"
+      ],
+      "cultural_significance": "杭州山林溪涧景观代表，茶乡徒步经典线路",
+      "keywords_en": [
+        "Jiuxi stream forest Hangzhou",
+        "tea field mountain stream China",
+        "forest hiking path China"
+      ],
+      "imagery": [
+        "溪水穿过石涧与枫树",
+        "茶园层层叠叠的山坡",
+        "林间小径与光影"
+      ],
+      "best_season": "5-11 月，秋季红叶最佳",
+      "micro_drama_hook": "九条溪水在山林里走了一千年，把石头磨成了圆角",
+      "city": "杭州",
+      "scenario_tags": [
+        "徒步",
+        "自然",
+        "摄影",
+        "茶文化",
+        "避暑"
+      ]
+    },
+    {
+      "id": "hz-nansongyuijie",
+      "type": "scenic",
+      "name": "南宋御街·清河坊",
+      "aliases": [
+        "南宋御街",
+        "河坊街",
+        "Southern Song Imperial Street",
+        "清河坊历史街区"
+      ],
+      "level": "历史文化街区",
+      "location": "杭州市上城区中山中路",
+      "facts": [
+        "南宋御街为南宋都城临安的主轴线，全长约 4185 米，2009 年完成保护性整治开放",
+        "御街在南宋定都临安（1138 年）后由吴越、北宋旧城主干道改建而成，是皇帝祭祀太庙的专用道路",
+        "河坊街旧称清河坊，南宋时为商业中心，现存清末民初建筑格局",
+        "街区聚集胡庆余堂、王星记扇庄、张小泉剪刀等老字号"
+      ],
+      "cultural_significance": "南宋都城风貌的当代呈现，杭州老字号与市井文化集聚地",
+      "keywords_en": [
+        "Hangzhou ancient street China",
+        "Chinese old town shop street",
+        "traditional Chinese storefront"
+      ],
+      "imagery": [
+        "青石板路上的老街建筑",
+        "老字号店招与灯笼",
+        "夜间街市人流"
+      ],
+      "best_season": "四季皆宜，夜间氛围最佳",
+      "micro_drama_hook": "八百年前的御道，如今是杭州人买扇子和剪刀的地方",
+      "city": "杭州",
+      "scenario_tags": [
+        "美食",
+        "购物",
+        "夜游",
+        "人文",
+        "老字号"
+      ]
+    },
+    {
+      "id": "hz-yuquan",
+      "type": "scenic",
+      "name": "玉泉·杭州植物园",
+      "aliases": [
+        "玉泉",
+        "杭州植物园",
+        "Yuquan",
+        "玉泉鱼跃"
+      ],
+      "level": "4A",
+      "location": "杭州市西湖区桃源岭1号",
+      "facts": [
+        "玉泉为西湖三大名泉之一，与虎跑泉、龙井泉并列",
+        "“玉泉鱼跃”为清代西湖十八景之一，池中蓄养巨鲤，观赏传统延续数百年",
+        "杭州植物园 1956 年建园，占地约 248 公顷，收集国内外植物 6000 余种（含品种）",
+        "园内“灵峰探梅”为杭州三大赏梅胜地之一，与孤山、西溪并列"
+      ],
+      "cultural_significance": "西湖泉池观鱼传统的活态遗存，城市植物科普基地",
+      "keywords_en": [
+        "Chinese botanical garden pond",
+        "koi fish pond China",
+        "plum blossom garden China"
+      ],
+      "imagery": [
+        "池中巨大的锦鲤",
+        "梅林花枝特写",
+        "园林与古树"
+      ],
+      "best_season": "2-3 月探梅，四季皆宜",
+      "micro_drama_hook": "一池鲤鱼被人看了三百年，看它们的也成了风景",
+      "city": "杭州",
+      "scenario_tags": [
+        "亲子",
+        "赏花",
+        "自然",
+        "研学"
+      ]
+    },
+    {
+      "id": "hz-hupao",
+      "type": "scenic",
+      "name": "虎跑泉·虎跑梦泉",
+      "aliases": [
+        "虎跑泉",
+        "虎跑",
+        "Hupao Spring",
+        "虎跑梦泉",
+        "虎跑公园",
+        "虎跑寺"
+      ],
+      "level": "新西湖十景",
+      "location": "杭州市西湖区虎跑路39号",
+      "facts": [
+        "西湖三大名泉之一，与龙井泉、玉泉并称，水质矿物质含量低、表面张力大",
+        "相传唐代性空大师梦神人告之“南岳有童子泉，当遣二虎移来”，故名虎跑",
+        "“虎跑梦泉”为 1985 年评选的新西湖十景之一",
+        "泉水因表面张力大，注满杯中可高出杯沿而不溢，用以冲泡龙井茶为“西湖双绝”"
+      ],
+      "cultural_significance": "西湖名泉文化代表，“龙井茶叶虎跑水”为杭州茶文化经典组合",
+      "keywords_en": [
+        "Hupao spring Hangzhou",
+        "Chinese spring water temple",
+        "ancient Chinese garden pool"
+      ],
+      "imagery": [
+        "石壁间涌出的泉水",
+        "取水人排队接水",
+        "山寺与竹林"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "两隻老虎刨出的泉水，泡出了一杯最好的龙井",
+      "city": "杭州",
+      "scenario_tags": [
+        "茶文化",
+        "自然",
+        "人文",
+        "经典必游"
+      ]
+    },
+    {
+      "id": "hz-liuhe",
+      "type": "scenic",
+      "name": "六和塔·钱塘江大桥",
+      "aliases": [
+        "六和塔",
+        "Liuhe Pagoda",
+        "钱塘江大桥",
+        "六和听涛"
+      ],
+      "level": "新西湖十景·全国重点文物保护单位",
+      "location": "杭州市西湖区之江路16号",
+      "facts": [
+        "六和塔始建于北宋开宝三年（970 年），吴越国王钱俶为镇江潮而建，现塔为南宋绍兴年间重建",
+        "塔高 59.89 米，外观十三层、内部七层，是中国现存最完整的宋代楼阁式塔之一",
+        "“六和听涛”为 1985 年评选的新西湖十景之一",
+        "钱塘江大桥 1937 年建成通车，由茅以升主持设计，是中国第一座自行设计建造的双层铁路公路两用桥",
+        "1937 年 12 月为阻日军，大桥由设计者主持炸毁，战后 1946 年起修复、1953 年全面修复通车"
+      ],
+      "cultural_significance": "中国古代建筑与近代工程技术的双重见证，杭州钱塘江文化的标志",
+      "keywords_en": [
+        "Liuhe Pagoda Hangzhou",
+        "Qiantang river bridge",
+        "Chinese ancient pagoda tower"
+      ],
+      "imagery": [
+        "江畔古塔与大桥同框",
+        "钱塘江潮水",
+        "塔内木构与眺望窗"
+      ],
+      "best_season": "农历八月十八观潮最佳",
+      "micro_drama_hook": "造桥的人亲手炸了自己的桥，这是中国工程师最悲壮的一夜",
+      "city": "杭州",
+      "scenario_tags": [
+        "人文",
+        "古建",
+        "摄影",
+        "观潮",
+        "研学"
+      ]
+    },
+    {
+      "id": "hz-qiantangchao",
+      "type": "festival",
+      "name": "钱塘江大潮·观潮习俗",
+      "aliases": [
+        "钱塘江大潮",
+        "观潮",
+        "Qiantang tidal bore",
+        "钱江潮"
+      ],
+      "level": "省级非遗（民俗）",
+      "location": "杭州市萧山区、海宁市交界江段",
+      "facts": [
+        "2009 年“钱江观潮”列入第三批浙江省非物质文化遗产名录",
+        "潮水最大潮差可达 8-9 米，涌潮推进速度约每秒 10 米，是世界著名涌潮",
+        "成因是杭州湾喇叭口地形与天体引潮力叠加，一年中农历八月十八潮最大",
+        "自唐宋起即为盛事，白居易、苏轼、周密等均有记潮文字流传",
+        "萧山观潮城、盐官等地为传统观潮点"
+      ],
+      "cultural_significance": "中国最著名的自然奇观民俗之一，钱塘江文化的核心意象",
+      "keywords_en": [
+        "Qiantang tidal bore",
+        "huge wave river China",
+        "Qiantang river waves"
+      ],
+      "imagery": [
+        "一线潮滚滚而来",
+        "观潮人群与江堤",
+        "潮水拍岸激起巨浪"
+      ],
+      "best_season": "农历八月十八前后（公历 9-10 月）",
+      "micro_drama_hook": "一条江每年准时赴约，把大海的力量送到杭州城下",
+      "city": "杭州",
+      "scenario_tags": [
+        "自然奇观",
+        "观潮",
+        "摄影",
+        "民俗",
+        "亲子"
+      ]
+    },
+    {
+      "id": "hz-xiling",
+      "type": "scenic",
+      "name": "西泠印社·孤山",
+      "aliases": [
+        "西泠印社",
+        "孤山",
+        "Xiling Seal Society",
+        "西泠"
+      ],
+      "level": "全国重点文物保护单位",
+      "location": "杭州市西湖区孤山路31号",
+      "facts": [
+        "1904 年由丁仁、王禔、叶铭、吴隐等人在孤山创立，是中国现存历史最悠久的文人社团",
+        "以“保存金石、研究印学”为宗旨，被誉为“天下第一名社”",
+        "社址依孤山而建，含柏堂、竹阁、题襟馆等建筑与摩崖题刻，为全国重点文物保护单位",
+        "孤山是西湖中最大的岛屿，面积约 20 公顷，宋代曾建西太乙宫，清康熙、乾隆行宫亦在此",
+        "首任社长吴昌硕为近代艺术大师，西泠印社社员涵盖海内外金石书画名家"
+      ],
+      "cultural_significance": "中国篆刻艺术最高殿堂，西湖人文底蕴的集中体现",
+      "keywords_en": [
+        "Xiling Seal Society Hangzhou",
+        "Chinese seal carving art",
+        "Chinese classical garden pavilion"
+      ],
+      "imagery": [
+        "孤山园林中的亭台",
+        "印章与篆刻特写",
+        "摩崖石刻与题字"
+      ],
+      "best_season": "四季皆宜，冬季梅开最佳",
+      "micro_drama_hook": "一群读书人把印章刻成了信仰，刻了一百二十年",
+      "city": "杭州",
+      "scenario_tags": [
+        "人文",
+        "艺术",
+        "摄影",
+        "古建",
+        "赏花"
+      ]
+    },
+    {
+      "id": "hz-yueju",
+      "type": "intangible",
+      "name": "越剧",
+      "aliases": [
+        "越剧",
+        "Yue Opera",
+        "绍兴戏",
+        "中国第二大剧种"
+      ],
+      "level": "国家级非遗",
+      "location": "杭州市（发源于浙江嵊州，杭州市为主要传承地之一）",
+      "facts": [
+        "2006 年列入首批国家级非物质文化遗产名录",
+        "发源于浙江嵊州，1906 年首次以“小歌班”形式登台，是新中国成立后发展最快的剧种",
+        "以女班为主，唱腔婉转柔美，代表剧目《梁山伯与祝英台》《红楼梦》《西厢记》",
+        "1953 年由上海电影制片厂摄制、华东越剧实验剧团演出的《梁山伯与祝英台》1954 年上映，是新中国第一部彩色戏曲片",
+        "浙江小百花越剧团 1984 年成立，是当代越剧创新演出代表团体"
+      ],
+      "cultural_significance": "中国第二大戏曲剧种，浙江最具代表性的文化艺术形式之一",
+      "keywords_en": [
+        "Chinese opera performance",
+        "Yue opera stage",
+        "Chinese traditional costume singing"
+      ],
+      "imagery": [
+        "水袖翻飞的舞台身段",
+        "越剧扮相与脸谱妆",
+        "戏台与观众席"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "一百年前几个农人搭台唱戏，唱出了一个全国大剧种",
+      "city": "杭州",
+      "scenario_tags": [
+        "演艺",
+        "非遗体验",
+        "人文",
+        "夜游"
+      ]
+    },
+    {
+      "id": "hz-zhangxiaoquan",
+      "type": "intangible",
+      "name": "张小泉剪刀锻制技艺",
+      "aliases": [
+        "张小泉剪刀",
+        "Zhang Xiaoquan scissors",
+        "张小泉"
+      ],
+      "level": "国家级非遗",
+      "location": "杭州市",
+      "facts": [
+        "2006 年列入首批国家级非物质文化遗产名录",
+        "始创于明崇祯元年（1628 年），创始人张小泉，制剪技艺传承近 400 年",
+        "传统工艺含嵌钢、淬火、镶钢等 72 道工序，以“剪刀锋利、开合自如”著称",
+        "清乾隆年间列入宫廷贡品，杭州民谚有“张小泉的剪刀——好钢口”",
+        "与北京王麻子并称中国两大剪刀品牌"
+      ],
+      "cultural_significance": "中国手工业老字号代表，杭州传统技艺的城市名片",
+      "keywords_en": [
+        "Chinese scissors blacksmith",
+        "traditional Chinese artisan tool",
+        "blacksmith workshop China"
+      ],
+      "imagery": [
+        "铁匠锻打钢材火花四溅",
+        "剪刀成品陈列",
+        "老作坊工具特写"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "四百年只做一件事：把两块铁磨成能剪开一切的锋刃",
+      "city": "杭州",
+      "scenario_tags": [
+        "非遗体验",
+        "老字号",
+        "购物",
+        "研学"
+      ]
+    },
+    {
+      "id": "hz-wangxingji",
+      "type": "intangible",
+      "name": "王星记扇制作技艺",
+      "aliases": [
+        "王星记扇",
+        "Wang Xingji fan",
+        "黑纸扇",
+        "杭扇"
+      ],
+      "level": "国家级非遗",
+      "location": "杭州市",
+      "facts": [
+        "王星记扇庄始创于清光绪元年（1875 年），创始人王星斋",
+        "2008 年“制扇技艺（王星记扇）”列入第二批国家级非物质文化遗产名录（第一批扩展项目）",
+        "黑纸扇以桑皮纸涂柿漆制成，可经受暴晒与热水浸泡，有“一把扇子半把伞”之称",
+        "制作需经取材、制骨、糊面、折面、修整等 86 道工序，多数须手工完成",
+        "与杭州丝绸、龙井茶并列为“杭产三绝”"
+      ],
+      "cultural_significance": "中国四大名扇之一，杭州“杭产三绝”之首",
+      "keywords_en": [
+        "Chinese folding fan craft",
+        "handmade paper fan China",
+        "traditional Chinese fan pattern"
+      ],
+      "imagery": [
+        "扇面展开的山水画",
+        "竹骨制作工序",
+        "折扇与手部特写"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "八十多道工序做一把扇子，杭州人连扇风都要讲究",
+      "city": "杭州",
+      "scenario_tags": [
+        "非遗体验",
+        "老字号",
+        "购物",
+        "艺术"
+      ]
+    },
+    {
+      "id": "hz-xiaorehun",
+      "type": "intangible",
+      "name": "小热昏",
+      "aliases": [
+        "小热昏",
+        "Xiao Re Hun",
+        "杭州小热昏"
+      ],
+      "level": "国家级非遗",
+      "location": "杭州市",
+      "facts": [
+        "2006 年列入首批国家级非物质文化遗产名录，为杭州地方曲艺",
+        "起源于清末民初街头卖梨膏糖的说唱表演，以说、学、逗、唱结合为特点",
+        "名称原意为“卖梨膏糖的疯子”，因唱者说自己“热得发昏”而得名",
+        "表演用杭州方言，配三巧板（三块竹板）击节，多为一人独演",
+        "是研究杭州方言与市井民俗的活态样本"
+      ],
+      "cultural_significance": "杭州本土曲艺代表，市井民俗与方言文化的活化石",
+      "keywords_en": [
+        "Chinese street performance folk",
+        "traditional Chinese crosstalk street",
+        "bamboo clapper instrument"
+      ],
+      "imagery": [
+        "街头艺人说唱表演",
+        "竹板击节特写",
+        "老街市井人群围观"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "卖梨膏糖的人边唱边卖，唱成了国家级非遗",
+      "city": "杭州",
+      "scenario_tags": [
+        "非遗体验",
+        "人文",
+        "市井",
+        "演艺"
+      ]
+    },
+    {
+      "id": "hz-jiqing",
+      "type": "intangible",
+      "name": "金石篆刻（西泠印社）",
+      "aliases": [
+        "篆刻",
+        "金石篆刻",
+        "seal carving",
+        "西泠篆刻"
+      ],
+      "level": "国家级非遗（人类非遗）",
+      "location": "杭州市",
+      "facts": [
+        "2006 年“金石篆刻（西泠印社）”列入首批国家级非物质文化遗产名录",
+        "2009 年“中国篆刻艺术”列入联合国教科文组织人类非物质文化遗产代表作名录",
+        "篆刻以刀代笔，在方寸石面上刻写汉字，含篆法、章法、刀法三要素",
+        "西泠印社为该项目主要保护单位，社址位于西湖孤山"
+      ],
+      "cultural_significance": "中国书法与雕刻结合的最高艺术形式，文人审美载体",
+      "keywords_en": [
+        "Chinese seal carving art",
+        "stone stamp carving",
+        "Chinese calligraphy art"
+      ],
+      "imagery": [
+        "刻刀在印石上运刀特写",
+        "印章盖印瞬间",
+        "篆书印章纹样"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "方寸之间刻下三十笔，一枚印章就是一幅浓缩的画",
+      "city": "杭州",
+      "scenario_tags": [
+        "艺术",
+        "人文",
+        "非遗体验",
+        "研学"
+      ]
+    },
+    {
+      "id": "hz-tongjuntang",
+      "type": "intangible",
+      "name": "桐君堂中药炮制技艺",
+      "aliases": [
+        "桐君堂",
+        "中药炮制技艺",
+        "杭州中药"
+      ],
+      "level": "国家级非遗",
+      "location": "杭州市",
+      "facts": [
+        "“桐君中药文化”源于上古药祖桐君，相传桐君在浙江桐庐桐君山采药济世",
+        "桐君堂始创于清乾隆年间，传承中药炮制与配方技艺两百余年",
+        "“桐君传统中药文化”列入国家级非物质文化遗产代表性项目名录",
+        "中药炮制含炒、炙、煅、蒸、煮等技法，用以减毒增效，讲究“法古不泥古”"
+      ],
+      "cultural_significance": "中药炮制技艺传承样本，浙江中医药文化的重要构成",
+      "keywords_en": [
+        "traditional Chinese medicine herbs",
+        "herbal preparation workshop",
+        "Chinese pharmacy medicine jar"
+      ],
+      "imagery": [
+        "药材称量与配伍",
+        "炮制锅灶与蒸汽",
+        "古药柜抽屉特写"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "药祖在山里尝了百草，后人把这门手艺守了三百年",
+      "city": "杭州",
+      "scenario_tags": [
+        "非遗体验",
+        "人文",
+        "研学",
+        "养生"
+      ]
+    },
+    {
+      "id": "hz-cuisine-pianerchuan",
+      "type": "cuisine",
+      "name": "片儿川",
+      "aliases": [
+        "片儿川",
+        "Pian'er Chuan noodles",
+        "杭州面"
+      ],
+      "type_detail": "杭帮面食",
+      "location": "杭州市",
+      "facts": [
+        "杭州最具代表性的面食，起源于清末，由杭州老字号奎元馆创制",
+        "浇头由雪菜（倒笃菜）、笋片、瘦肉丝三样组成，讲究“三样缺一不可”",
+        "名称源于杭州方言，“川”即“氽”，指食材在沸水中快速汆熟的做法",
+        "2013 年入选“中国十大面条”，是唯一入选的浙江面食"
+      ],
+      "cultural_significance": "杭州市井日常饮食的代表，百年老字号面食文化的活态传承",
+      "keywords_en": [
+        "Chinese noodle soup bowl",
+        "Chinese bamboo shoot noodles",
+        "hot noodle dish China"
+      ],
+      "imagery": [
+        "面条与雪菜笋片浇头特写",
+        "老面馆灶台",
+        "热气腾腾的汤面"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "一碗面一百多年没改配方，杭州人的早晨从它开始",
+      "city": "杭州",
+      "scenario_tags": [
+        "美食",
+        "市井",
+        "早餐"
+      ]
+    },
+    {
+      "id": "hz-cuisine-congbaohui",
+      "type": "cuisine",
+      "name": "葱包桧",
+      "aliases": [
+        "葱包桧",
+        "Cong Bao Hui",
+        "杭州小吃"
+      ],
+      "type_detail": "杭帮小吃",
+      "location": "杭州市",
+      "facts": [
+        "杭州传统街头小吃，以面饼卷入油条与葱段，压烤至酥脆，刷甜面酱或辣酱食用",
+        "名称源于南宋民间对秦桧的憎恶，“桧”指秦桧，暗含“把秦桧包起来咬”之意",
+        "相传起源于南宋，杭州百姓以面饼代秦桧、油条代王氏，压烤而食以泄愤",
+        "旧时多见于杭州巷口摊点，是杭州最具故事性的平民小吃"
+      ],
+      "cultural_significance": "民间情感与饮食结合的代表，南宋历史记忆的市井载体",
+      "keywords_en": [
+        "Chinese street food pancake",
+        "Chinese scallion wrap snack",
+        "street food cooking China"
+      ],
+      "imagery": [
+        "铁板压烤面饼",
+        "刷酱与卷制过程",
+        "街头摊点特写"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "杭州人把八百年前的愤怒，做成了每天早晨的小吃",
+      "city": "杭州",
+      "scenario_tags": [
+        "美食",
+        "市井",
+        "小吃",
+        "历史"
+      ]
+    },
+    {
+      "id": "hz-cuisine-dingshenggao",
+      "type": "cuisine",
+      "name": "定胜糕",
+      "aliases": [
+        "定胜糕",
+        "Ding Sheng Gao",
+        "杭州糕点"
+      ],
+      "type_detail": "杭帮糕点",
+      "location": "杭州市",
+      "facts": [
+        "杭州传统糕点，以米粉包裹豆沙馅蒸制，形如银锭，色泽淡红",
+        "相传源于南宋，百姓以此糕犒劳军队出征、取“定胜”之意（民间有韩世忠部与岳家军两说）",
+        "旧时杭州民间有考前、乔迁、建房时赠送定胜糕求吉利的习俗",
+        "制作需经磨粉、筛粉、填馅、蒸制等工序，成品松软带米香"
+      ],
+      "cultural_significance": "杭式糕点代表，民俗祈福文化的味觉符号",
+      "keywords_en": [
+        "Chinese steamed rice cake",
+        "Chinese dessert pastry pink",
+        "traditional Chinese snack"
+      ],
+      "imagery": [
+        "蒸笼中粉红米糕",
+        "木模脱模过程",
+        "糕点在竹屉上排列"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "一块糕送军队出征，杭州人把祝福蒸进了米里",
+      "city": "杭州",
+      "scenario_tags": [
+        "美食",
+        "小吃",
+        "民俗",
+        "伴手礼"
+      ]
+    },
+    {
+      "id": "hz-cuisine-longxiaren",
+      "type": "cuisine",
+      "name": "龙井虾仁",
+      "aliases": [
+        "龙井虾仁",
+        "Longjing shrimp",
+        "龙井炒虾仁"
+      ],
+      "type_detail": "杭帮菜代表",
+      "location": "杭州市",
+      "facts": [
+        "杭帮菜四大名菜之一，以龙井新茶与河虾仁同炒，讲究“茶香入馔、清鲜不腻”",
+        "相传与清乾隆帝南巡杭州时品尝龙井茶炒虾仁的传说相关",
+        "选用清明前后的龙井新茶与新鲜河虾仁，虾仁需上浆滑油至玉白色",
+        "成品虾仁晶莹、茶芽碧绿，为杭帮菜“清淡本味”哲学的典型体现"
+      ],
+      "cultural_significance": "茶文化与饮食文化融合的代表作，杭帮菜经典名菜",
+      "keywords_en": [
+        "Chinese shrimp dish tea",
+        "Longjing shrimp cuisine",
+        "Chinese gourmet seafood plate"
+      ],
+      "imagery": [
+        "虾仁与茶叶同炒特写",
+        "碧绿茶芽点缀白虾仁",
+        "精致摆盘俯拍"
+      ],
+      "best_season": "清明前后新茶季最佳",
+      "micro_drama_hook": "把明前的新茶放进锅里炒虾，只有杭州人想得出来",
+      "city": "杭州",
+      "scenario_tags": [
+        "美食",
+        "杭帮菜",
+        "茶文化"
+      ]
+    },
+    {
+      "id": "hz-cuisine-songsaoyugeng",
+      "type": "cuisine",
+      "name": "宋嫂鱼羹",
+      "aliases": [
+        "宋嫂鱼羹",
+        "Song Sao fish soup",
+        "赛蟹羹"
+      ],
+      "type_detail": "杭帮菜代表",
+      "location": "杭州市",
+      "facts": [
+        "杭州传统名菜，以鳜鱼或鲈鱼蒸熟取肉，配火腿丝、香菇、笋丝勾芡成羹",
+        "相传源于南宋，为随宋室南渡的开封女子宋五嫂所创，宋高宗游西湖时品尝后名声大振",
+        "成品色泽黄亮、口感滑嫩，因味似蟹肉而有“赛蟹羹”之称",
+        "南宋周密《武林旧事》中记有宋五嫂卖鱼羹的记载"
+      ],
+      "cultural_significance": "南宋临安饮食风貌的活态传承，杭帮菜千年谱系的代表",
+      "keywords_en": [
+        "Chinese fish soup thick",
+        "Chinese seafood soup bowl",
+        "gourmet soup China"
+      ],
+      "imagery": [
+        "浓稠鱼羹盛入碗中",
+        "撒上火腿丝与葱花的瞬间",
+        "汤勺舀起的特写"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "一个妇人在西湖边卖鱼羹，卖进了南宋皇帝的菜单",
+      "city": "杭州",
+      "scenario_tags": [
+        "美食",
+        "杭帮菜",
+        "历史"
+      ]
+    },
+    {
+      "id": "hz-cuisine-jiaohuaji",
+      "type": "cuisine",
+      "name": "叫化童鸡",
+      "aliases": [
+        "叫化童鸡",
+        "Beggar's Chicken",
+        "叫化鸡",
+        "黄泥煨鸡"
+      ],
+      "type_detail": "杭帮菜代表",
+      "location": "杭州市",
+      "facts": [
+        "杭帮菜四大名菜之一，以荷叶包裹整鸡，外糊黄泥，入火煨烤至熟",
+        "相传源于乞丐（叫化子）以泥裹鸡煨烤的做法，后经杭州厨师改良成名菜",
+        "制作需先将鸡以调料腌渍，包荷叶与猪网油，再糊泥煨烤约 4 小时",
+        "成品敲开泥壳即香气四溢，肉质酥烂脱骨，为杭帮菜粗料细作的典范"
+      ],
+      "cultural_significance": "草根智慧升华为名菜的典型，杭帮菜烹饪技艺代表",
+      "keywords_en": [
+        "Chinese clay baked chicken",
+        "lotus leaf wrapped chicken",
+        "Chinese roast chicken dish"
+      ],
+      "imagery": [
+        "敲开泥壳露出荷叶包",
+        "荷叶展开的整鸡",
+        "煨烤火堆"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "乞丐的糊鸡办法，成了杭帮菜里最难做的一道",
+      "city": "杭州",
+      "scenario_tags": [
+        "美食",
+        "杭帮菜",
+        "非遗体验"
+      ]
+    },
+    {
+      "id": "hz-cuisine-guihuanuo",
+      "type": "cuisine",
+      "name": "桂花糯米藕",
+      "aliases": [
+        "桂花糯米藕",
+        "蜜汁火方",
+        "杭州甜点",
+        "糖藕"
+      ],
+      "type_detail": "杭帮甜点",
+      "location": "杭州市",
+      "facts": [
+        "杭州传统甜点，以莲藕填入糯米，加桂花糖汁慢煮，切片后淋汁食用",
+        "秋季桂花盛开时最为应季，与杭州赏桂习俗紧密相关",
+        "制作需将糯米灌入藕孔，文火煮制数小时至软糯，成品藕香与桂花香交融",
+        "是杭州宴席与市井皆见的经典甜味"
+      ],
+      "cultural_significance": "杭州秋日时令风味代表，市花桂花融入饮食的体现",
+      "keywords_en": [
+        "Chinese lotus root dessert",
+        "osmanthus sweet dessert China",
+        "Chinese sweet snack slice"
+      ],
+      "imagery": [
+        "切片藕的孔洞与糯米",
+        "淋桂花糖汁特写",
+        "桂花点缀的成品"
+      ],
+      "best_season": "9-11 月桂花季最佳",
+      "micro_drama_hook": "把糯米塞进藕孔里，杭州人连甜品都要讲究手艺",
+      "city": "杭州",
+      "scenario_tags": [
+        "美食",
+        "甜品",
+        "赏花",
+        "秋日"
+      ]
+    },
+    {
+      "id": "hz-legend-jigong",
+      "type": "legend",
+      "person_hint": "道济禅师",
+      "name": "济公传说",
+      "aliases": [
+        "济公",
+        "道济",
+        "Ji Gong",
+        "济癫和尚"
+      ],
+      "level": "国家级非遗",
+      "location": "杭州市（主要流传于西湖区灵隐寺、净慈寺一带）",
+      "facts": [
+        "2006 年“济公传说”列入首批国家级非物质文化遗产名录",
+        "济公原型为南宋高僧道济（1148—1209 年），浙江天台人，先后驻锡灵隐寺、净慈寺",
+        "道济言行狂放不羁而乐善好施，被民间尊为“济公活佛”，其传说在杭州流传八百余年",
+        "杭州净慈寺为济公主要活动地之一，寺内有运木古井等相关遗迹传说",
+        "“济公”题材在戏曲、影视、动漫中反复改编，1985 年电视剧《济公》影响广泛"
+      ],
+      "cultural_significance": "杭州最具生命力的民间文学 IP，佛教世俗化叙事的代表",
+      "keywords_en": [
+        "Chinese monk temple legend",
+        "Chinese folk legend character",
+        "ancient Chinese temple courtyard"
+      ],
+      "imagery": [
+        "破扇和尚的民俗塑像",
+        "古寺院落与老树",
+        "运木古井"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "一个不守规矩的和尚，成了杭州人心里最亲切的神",
+      "city": "杭州",
+      "scenario_tags": [
+        "传说",
+        "人文",
+        "祈福",
+        "亲子"
+      ]
+    },
+    {
+      "id": "hz-person-baijuyi",
+      "type": "person",
+      "name": "白居易与杭州",
+      "aliases": [
+        "白居易",
+        "白乐天",
+        "Bai Juyi",
+        "白公"
+      ],
+      "location": "杭州市",
+      "facts": [
+        "白居易（772—846 年）于长庆二年至四年（822—824 年）任杭州刺史，任期约三年",
+        "任内主持疏浚六井、修筑钱塘门外的白公堤（今已湮没）以改善饮水灌溉；今西湖白堤原名白沙堤，早于其到任已存在，因后人纪念白居易而附会其名",
+        "在杭州留下诗作数十首，含《钱塘湖春行》《忆江南》等名篇",
+        "离任时留下“未能抛得杭州去，一半勾留是此湖”的诗句",
+        "白居易离任时著《钱塘湖石记》，系统记述西湖水利蓄泄之法，是研究西湖早期治理的重要文献"
+      ],
+      "cultural_significance": "文人治政与城市文化塑造的典范，西湖诗文的开创性人物",
+      "keywords_en": [
+        "Chinese ancient poet statue",
+        "West Lake causeway willow",
+        "Chinese classical poetry scroll"
+      ],
+      "imagery": [
+        "白堤柳树与湖面",
+        "古诗手稿与毛笔",
+        "湖上春色"
+      ],
+      "best_season": "春季最佳",
+      "micro_drama_hook": "他在杭州只待了三年，却给这座城留下了最温柔的一句告别",
+      "city": "杭州",
+      "scenario_tags": [
+        "人文",
+        "历史名人",
+        "诗词",
+        "研学"
+      ]
+    },
+    {
+      "id": "hz-person-qianliu",
+      "type": "person",
+      "name": "钱镠与吴越国",
+      "aliases": [
+        "钱镠",
+        "钱王",
+        "Qian Liu",
+        "吴越国王"
+      ],
+      "location": "杭州市（吴越国都城为杭州）",
+      "facts": [
+        "钱镠（852—932 年）为五代吴越国开国君主，定都杭州，在位期间公元 907—932 年",
+        "主持修筑钱塘江海塘、疏浚西湖与太湖流域，奠定杭州城市发展格局",
+        "笃信佛教，主持建雷峰塔、六和塔、保俶塔等，史称“东南佛国”之盛由此而兴",
+        "留下“陌上花开，可缓缓归矣”的名句，为写给夫人的书信",
+        "钱氏家族后裔人才辈出，近现代钱学森、钱钟书、钱三强等皆出自吴越钱氏"
+      ],
+      "cultural_significance": "杭州城市奠基者，吴越文化开创者，千年望族之源",
+      "keywords_en": [
+        "Chinese ancient king statue",
+        "Hangzhou historic temple pagoda",
+        "Chinese historical architecture stone"
+      ],
+      "imagery": [
+        "钱王祠与塑像",
+        "钱塘江畔古塔",
+        "吴越国文物展陈"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "一句话写给妻子，也写给整座城：陌上花开，可缓缓归矣",
+      "city": "杭州",
+      "scenario_tags": [
+        "人文",
+        "历史名人",
+        "古建",
+        "研学"
+      ]
+    },
+    {
+      "id": "hz-person-yuqian",
+      "type": "person",
+      "name": "于谦与于谦祠",
+      "aliases": [
+        "于谦",
+        "Yu Qian",
+        "于忠肃公",
+        "于少保"
+      ],
+      "location": "杭州市西湖区三台山路",
+      "facts": [
+        "于谦（1398—1457 年），明代名臣，杭州钱塘人，官至少保、兵部尚书",
+        "1449 年土木堡之变后力主坚守京师并拥立景帝，主持北京保卫战击退瓦剌",
+        "1457 年夺门之变后遭诬陷被杀，成化年间平反复官，弘治年间赐谥肃愍，万历十八年改谥忠肃",
+        "于谦祠始建于明弘治二年（1489 年），位于西湖三台山麓，为全国重点文物保护单位",
+        "代表作《石灰吟》“粉骨碎身浑不怕，要留清白在人间”广为传诵"
+      ],
+      "cultural_significance": "忠义气节的文化象征，西湖“三杰”之一（岳飞、于谦、张煌言）",
+      "keywords_en": [
+        "Chinese ancient memorial hall",
+        "historic Chinese official statue",
+        "Chinese classical poetry stone"
+      ],
+      "imagery": [
+        "于谦祠庭院与石阶",
+        "古碑与题刻",
+        "三台山麓绿荫"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "他写下“要留清白在人间”，然后真的用命兑现了这句话",
+      "city": "杭州",
+      "scenario_tags": [
+        "人文",
+        "历史名人",
+        "爱国教育",
+        "研学"
+      ]
+    },
+    {
+      "id": "hz-person-zhangtaiyan",
+      "type": "person",
+      "name": "章太炎与章太炎故居",
+      "aliases": [
+        "章太炎",
+        "章炳麟",
+        "Zhang Taiyan"
+      ],
+      "location": "杭州市余杭区仓前街道",
+      "facts": [
+        "章太炎（1869—1936 年），名炳麟，浙江余杭人，近代民主革命家、国学大师",
+        "早年参与维新与革命活动，为光复会、同盟会重要成员，七次遭追捕入狱",
+        "在经学、小学、诸子学领域均有开创性研究，著有《訄书》《国故论衡》",
+        "故居位于余杭仓前老街，为全国重点文物保护单位，保存清代建筑格局",
+        "鲁迅曾师从章太炎，称其为“有学问的革命家”"
+      ],
+      "cultural_significance": "近代国学与革命精神的双重象征，杭州近现代人文的高峰",
+      "keywords_en": [
+        "Chinese scholar historic residence",
+        "traditional Chinese courtyard house",
+        "old Chinese study room"
+      ],
+      "imagery": [
+        "老宅天井与木门",
+        "书房与古籍",
+        "青石板老街"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "他一边做最深的学问，一边干最危险的事",
+      "city": "杭州",
+      "scenario_tags": [
+        "人文",
+        "历史名人",
+        "研学",
+        "近代史"
+      ]
+    },
+    {
+      "id": "hz-festival-longjingcha",
+      "type": "festival",
+      "name": "西湖龙井开茶节",
+      "aliases": [
+        "开茶节",
+        "龙井开茶节",
+        "Longjing Tea Festival",
+        "茶文化节"
+      ],
+      "location": "杭州市西湖区龙井村、翁家山一带",
+      "facts": [
+        "西湖龙井开茶节为杭州年度茶事活动，通常在 3 月下旬春茶开采时举行",
+        "活动含喊山、祭茶、炒茶技艺展演等环节，还原传统茶农开园习俗",
+        "“喊山”仪式源于宋代，茶农在开采前齐声呼喊祈愿丰收，载于《宋史》相关记载",
+        "西湖龙井核心产区包含狮峰山、龙井村、翁家山、虎跑、梅家坞“狮龙云虎梅”五大字号（梅字号为后增）"
+      ],
+      "cultural_significance": "杭州茶文化活态传承的年度盛典，中国传统茶俗的当代延续",
+      "keywords_en": [
+        "tea picking festival China",
+        "Chinese tea ceremony ritual",
+        "tea plantation spring China"
+      ],
+      "imagery": [
+        "茶农齐声喊山的场面",
+        "新芽采摘特写",
+        "炒茶锅前的集体技艺展演"
+      ],
+      "best_season": "3 月下旬至 4 月上旬",
+      "micro_drama_hook": "每年春天，整座茶山会一起喊一声，喊了八百年",
+      "city": "杭州",
+      "scenario_tags": [
+        "茶文化",
+        "春季节庆",
+        "民俗",
+        "研学"
+      ]
+    }
+  ]
+}

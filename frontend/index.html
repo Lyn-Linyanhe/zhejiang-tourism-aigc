@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>浙江文旅短视频工作台</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div class="brand-mark"><span>浙</span><div><strong>浙江文旅</strong><small>TOURISM VIDEO LAB</small></div></div>
+        <p class="sidebar-note">从城市灵感到可交付的竖屏短视频，脚本、分镜、素材、音频和成片都保留可编辑记录。</p>
+        <nav>
+          <button class="nav-item active" data-view="create"><span>01</span>创作工作台</button>
+          <button class="nav-item" data-view="projects"><span>02</span>作品档案</button>
+          <button class="nav-item" data-view="about"><span>03</span>系统与配置</button>
+        </nav>
+        <div class="sidebar-footer"><span class="status-dot"></span><span id="service-status">正在连接服务</span></div>
+      </aside>
+      <main class="main">
+        <header class="topbar">
+          <div><p class="eyebrow">浙江文旅内容生产系统 / 2026</p><h1 id="page-title">创作工作台</h1></div>
+          <div class="topbar-actions"><span class="chip" id="provider-chip">检查 provider</span><button class="icon-button" id="refresh-button" title="刷新服务状态">↻</button></div>
+        </header>
+
+        <section class="view active" id="view-create">
+          <div class="hero-grid">
+            <div class="hero-copy"><span class="section-index">A / 01</span><h2>把一座城市<br /><em>写成一支片子</em></h2><p>先生成可审核的脚本和分镜，再由你确认素材、配音、音乐和输出规格，最后生成真实 MP4。任何 provider 失败都会进入任务错误状态。</p></div>
+            <div class="hero-stamp"><span>AI</span><strong>TOURISM<br />STORY<br />ENGINE</strong><small>DEEPSEEK + FFMPEG</small></div>
+          </div>
+          <div class="workspace-grid">
+            <section class="panel form-panel">
+              <div class="panel-heading"><div><span class="section-index">01 / BRIEF</span><h3>定义这支视频</h3></div><span class="required-note">* 必填</span></div>
+              <form id="create-form">
+                <div class="field-row"><label>城市 <span>*</span><select id="city" name="city" required><option value="杭州">杭州</option></select><input data-custom-for="city" placeholder="请输入自定义内容" aria-label="自定义city" hidden /></label><label>核心地标<select id="landmark" name="landmark"><option value="">未指定</option></select><input data-custom-for="landmark" placeholder="请输入自定义内容" aria-label="自定义landmark" hidden /></label></div>
+                <label>传播主题 <span>*</span><input name="theme" value="春日城市漫游" maxlength="80" required placeholder="例如：西湖边的宋韵春天" /></label>
+                <div class="field-row"><label>文化线索<select name="culture"><option value="">未指定</option></select><input data-custom-for="culture" placeholder="请输入自定义内容" aria-label="自定义culture" hidden /></label><label>节庆 / 活动<select name="festival"><option value="">未指定</option></select><input data-custom-for="festival" placeholder="请输入自定义内容" aria-label="自定义festival" hidden /></label></div>
+                <div class="field-row"><label>目标受众<select name="audience"><option value="">未指定</option></select><input data-custom-for="audience" placeholder="请输入自定义内容" aria-label="自定义audience" hidden /></label><label>成片时长 <select name="duration"><option value="15">15 秒</option><option value="30" selected>30 秒</option><option value="60">60 秒</option></select></label></div>
+                <div class="field-row"><label>镜头数量 <select name="shot_count"><option value="0" selected>自动匹配</option><option value="4">4 个镜头</option><option value="6">6 个镜头</option><option value="8">8 个镜头</option></select></label><label>叙事风格<select name="style" required><option value="诗意纪实">诗意纪实</option></select><input data-custom-for="style" placeholder="请输入自定义内容" aria-label="自定义style" hidden /></label></div>
+                <div class="field-row"><label>配音<select name="voice" required><option value="晓晓·温暖女声">晓晓·温暖女声</option></select><small class="field-note" id="create-voice-note"></small></label><label>背景音乐<select name="music_mood" required><option value="无音乐">无音乐</option></select><input data-custom-for="music_mood" placeholder="请输入自定义内容" aria-label="自定义music_mood" hidden /></label></div>
+                <div class="field-row"><label>素材来源<select name="asset_source"><option value="configured" selected>使用服务端配置</option></select></label><label>输出规格<select name="output_resolution"><option value="720x1280" selected>720 × 1280 竖屏</option><option value="1080x1920">1080 × 1920 竖屏</option><option value="1920x1080">1920 × 1080 横屏</option><option value="1080x1080">1080 × 1080 方形</option></select></label></div>
+                <div class="field-row"><label>帧率 <select name="fps"><option value="24">24 fps</option><option value="25" selected>25 fps</option><option value="30">30 fps</option><option value="60">60 fps</option></select></label><label>配音语速 <input name="voice_rate" type="number" min="0.5" max="2" step="0.1" value="1" /></label></div>
+                <label>配音音高 <input name="voice_pitch" type="number" min="-50" max="50" step="5" value="0" /><small class="field-note">赫兹偏移，0 为不变调；神经音色做音高偏移容易发假，非必要别动。</small></label>
+                <div class="field-row"><label>配音音量 <input name="voice_volume" type="number" min="0" max="2" step="0.05" value="1" /></label><label>音乐音量 <input name="music_volume" type="number" min="0" max="1" step="0.01" value="0.18" /></label></div>
+                <label>旁白出现时的音乐<select name="music_ducking"><option value="不压低" selected>保持音量不变（推荐）</option><option value="轻微">轻微压低</option><option value="标准">标准压低</option></select></label>
+                <div class="field-row toggle-row"><label class="toggle-label">烧录字幕 <input type="checkbox" name="include_subtitles" checked /><span class="toggle"></span></label><label class="toggle-label">保留 AIGC 标识 <input type="checkbox" name="include_ai_label" checked /><span class="toggle"></span></label></div>
+                <label>补充要求<textarea name="custom_brief" maxlength="500" placeholder="可以指定开场、镜头节奏、口号、禁用表达、必须出现的内容等。"></textarea></label>
+                <div class="form-footer"><span>提交后先生成脚本和分镜，不会立即消耗素材或渲染任务。</span><button class="primary-button" type="submit"><span>生成脚本预览</span><b>→</b></button></div>
+              </form>
+            </section>
+            <section class="panel insight-panel">
+              <div class="panel-heading"><div><span class="section-index">02 / INPUT</span><h3>输入检查</h3></div></div>
+              <div id="city-preview" class="city-preview"><div class="preview-city">杭州</div><div class="preview-landmark">选择城市后显示文旅线索</div></div>
+              <div class="preview-rule"></div>
+              <div class="mini-metrics"><div><strong id="metric-shots">自动</strong><span>镜头数量</span></div><div><strong id="metric-resolution">9:16</strong><span>输出画幅</span></div><div><strong id="metric-provider">DeepSeek</strong><span>文本 provider</span></div></div>
+              <div class="preview-tip"><span>!</span><p>脚本预览可编辑。选择“上传素材”时，确认生成前需要为每个镜头绑定图片或视频；选择 Pexels 时需要服务端配置 API key。</p></div>
+            </section>
+          </div>
+          <section class="panel task-panel"><div class="panel-heading"><div><span class="section-index">03 / PIPELINE</span><h3>当前任务</h3></div><button class="text-button" id="view-latest">打开最近任务 →</button></div><div id="active-task" class="empty-state">提交创作需求后，这里会出现可编辑脚本、分镜、素材、音频和成片状态。</div></section>
+        </section>
+
+        <section class="view" id="view-projects"><div class="view-intro"><span class="section-index">B / ARCHIVE</span><h2>作品档案</h2><p>每个任务都保留输入、脚本、分镜、素材授权、音频 provider、渲染结果和错误记录。</p></div><div id="project-list" class="project-list"></div></section>
+        <section class="view" id="view-about"><div class="view-intro"><span class="section-index">C / SYSTEM</span><h2>Provider 与流水线</h2><p>此页从后端注册表实时读取能力与可用状态，不展示密钥。新增实现只需注册，无需修改编排分支。</p></div><div id="system-pipeline" class="system-pipeline"></div><div id="provider-registry" class="about-grid"><article><span class="section-index">LOADING</span><h3>正在读取配置</h3></article></div></section>
+      </main>
+    </div>
+    <div id="toast" class="toast"></div>
+    <script src="/voice-studio.js"></script>
+    <script src="/app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,28 @@
+# 本地配置：可能含 API 密钥，绝不提交
+.env
+
+# Python
+.venv*/
+__pycache__/
+*.py[cod]
+
+# FFmpeg 二进制：单个 242MB，超过 GitHub 单文件 100MB 上限
+# 用 scripts/setup-ffmpeg.ps1 下载，或从 Release 的完整包获取
+tools/ffmpeg/bin/*.exe
+
+# 运行时生成物（任务库、成片、日志、音频缓存）
+runtime/logs/
+runtime/media/
+runtime/db/
+runtime/audio-cache/
+runtime/uploads/
+runtime/models/
+runtime/music/*
+!runtime/music/catalog.json
+runtime/*.json
+runtime/*.db
+
+# 杂项
+Thumbs.db
+.DS_Store
+*.zip

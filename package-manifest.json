@@ -1,0 +1,474 @@
+{
+  "package": "音频优化版",
+  "created_date": "2026-11-13",
+  "file_count": 94,
+  "content_bytes": 485571140,
+  "excluded": "personal keys, prior tasks/media, model and venv; generated Python caches and empty test database",
+  "files": [
+    {
+      "path": ".env",
+      "bytes": 363,
+      "sha256": "8f10752bd2dcd46f195d1d5bedb7a1274524f73c12c047bd0524d0b8bc75f708"
+    },
+    {
+      "path": ".env.example",
+      "bytes": 3685,
+      "sha256": "fb11522e607f3d693dd6e3e52da57ef9bf9881207e321a80ae617303b81e16af"
+    },
+    {
+      "path": "11月13日优化说明.docx",
+      "bytes": 39695,
+      "sha256": "34bc1456f4e86db22826c3b11ca437d9458899858a0dbfc796d6b3973f0f81ab"
+    },
+    {
+      "path": "backend/app/__init__.py",
+      "bytes": 49,
+      "sha256": "a5fb720da8f4b67719937b82be422f4bc2cb49de95f5bc6481a0cc4d3dbd5967"
+    },
+    {
+      "path": "backend/app/config.py",
+      "bytes": 6130,
+      "sha256": "21944d2a31d4e09f51e565b6600039264d10eadc46958f8cfb1333017b634e83"
+    },
+    {
+      "path": "backend/app/main.py",
+      "bytes": 16901,
+      "sha256": "604bc34b7871c3870aa4acf1896741370c4486789731aa1ee95d94191b5bb71c"
+    },
+    {
+      "path": "backend/app/models.py",
+      "bytes": 8947,
+      "sha256": "d8aee7422de264df911fc0e45b4b161f6bd555f6ed3c124db7f6164fc6b35ce3"
+    },
+    {
+      "path": "backend/app/providers/__init__.py",
+      "bytes": 55,
+      "sha256": "9ee1ec5d28341bbc693c8da2d8cbe4611a30e6247aae5aad2bee6bceba3ca179"
+    },
+    {
+      "path": "backend/app/providers/audio_runtime.py",
+      "bytes": 6702,
+      "sha256": "af01d52ae6e5ec56c687613001ff0244d03844d48e15799744d604c2b0bfae87"
+    },
+    {
+      "path": "backend/app/providers/audio_runtime_worker.py",
+      "bytes": 12541,
+      "sha256": "9a3b92c97942d43ccbaa876346bfdcf5bf2356630a2e4dc66b26f2fae4adc8cd"
+    },
+    {
+      "path": "backend/app/providers/contract.py",
+      "bytes": 10568,
+      "sha256": "993b891b7aa7a98caece442fd13edd20014e1d3c8b30345273b1110460220202"
+    },
+    {
+      "path": "backend/app/providers/focus.py",
+      "bytes": 2167,
+      "sha256": "5a105c1710fed4d70ca823bc7409bdfbac3e2d36aa8a54e21cc966f4e9e4aedc"
+    },
+    {
+      "path": "backend/app/providers/image.py",
+      "bytes": 10313,
+      "sha256": "d6ee81e8a63c631037b764be8b542b2d7b63bea859b88b2d4c4b1a3baa2d66ff"
+    },
+    {
+      "path": "backend/app/providers/llm.py",
+      "bytes": 12408,
+      "sha256": "37ddd04438b5a3fb7d7ab5ca46de72a940f322c6942b0587a4476c3a182813d4"
+    },
+    {
+      "path": "backend/app/providers/media.py",
+      "bytes": 8678,
+      "sha256": "1f1474e19ccad25b2e59f3fa979cba314664304ef3cf61968bf4485378faac72"
+    },
+    {
+      "path": "backend/app/providers/media_ffmpeg.py",
+      "bytes": 14828,
+      "sha256": "0016df93144f1c2889a06e4d998ee6b8ac2c91c3ac9d6131991bd58991796139"
+    },
+    {
+      "path": "backend/app/providers/moneyprinterturbo.py",
+      "bytes": 8965,
+      "sha256": "d373754e5143ee81371eafc204ab2cf8c05925ee2df928567417c202e48d243d"
+    },
+    {
+      "path": "backend/app/providers/music.py",
+      "bytes": 5355,
+      "sha256": "d2ed928194d32e7b1469eef3c49cd33ec598c371dee6877bf1f6658952519cbc"
+    },
+    {
+      "path": "backend/app/providers/offline.py",
+      "bytes": 8346,
+      "sha256": "6d2364f8f46db99f4825f80aeb7b19075a58d643b783eadef1b535d206cfa443"
+    },
+    {
+      "path": "backend/app/providers/registry.py",
+      "bytes": 31014,
+      "sha256": "1b213b811a0602d7eea8eedf5c98d9994fef736117f6138d96a3b22b34ccd6d5"
+    },
+    {
+      "path": "backend/app/providers/stubs/__init__.py",
+      "bytes": 687,
+      "sha256": "d21b4962e45ccea31340b3e788d681cb1e41bd358001a2e7334e0e5283c9ba4d"
+    },
+    {
+      "path": "backend/app/providers/stubs/stub_assets.py",
+      "bytes": 7536,
+      "sha256": "ecfda864d45215798ff0ee1c09e7a70a44d8f9f5492d9a72e23c26b9ac840618"
+    },
+    {
+      "path": "backend/app/providers/stubs/stub_audio.py",
+      "bytes": 6317,
+      "sha256": "0552ddcf32701a7066b412edef2ae8a6a3964f79bc24c8d291f54c2d067f9cbb"
+    },
+    {
+      "path": "backend/app/providers/tianyi.py",
+      "bytes": 6390,
+      "sha256": "8778dc1fa1f8858098f673187ef149c9baa69b3eb333caf58927f7fd64c4e885"
+    },
+    {
+      "path": "backend/app/providers/tianyi_worker.py",
+      "bytes": 4418,
+      "sha256": "7c6d3401647a27d982d0e90d59fec7296adb742306ae5a4a7b8bb02ace856542"
+    },
+    {
+      "path": "backend/app/providers/tts.py",
+      "bytes": 8666,
+      "sha256": "a4539a93941787d27e621ad265a4faa52c3425190a7e198772edd664e40c0ccf"
+    },
+    {
+      "path": "backend/app/providers/video.py",
+      "bytes": 26003,
+      "sha256": "6c6cdb731df6dce42cc24eaa3017eb161caaf9541e9d9a9e130a6f5db5d06108"
+    },
+    {
+      "path": "backend/app/services/audio_sync.py",
+      "bytes": 21739,
+      "sha256": "9034621557b27606db88a9e6be885cce91783c8572425fc8cf9f8d44ef57bbe2"
+    },
+    {
+      "path": "backend/app/services/catalog.py",
+      "bytes": 1494,
+      "sha256": "ca363c781ba1066c275b2870793f94a1ee3e92e51888707338fd07b7776fe18d"
+    },
+    {
+      "path": "backend/app/services/consistency.py",
+      "bytes": 7280,
+      "sha256": "248de6c0492420dbf6446cd3b4fb1044a631ea7665be54eaa2cbffd4d157cb99"
+    },
+    {
+      "path": "backend/app/services/cost.py",
+      "bytes": 3001,
+      "sha256": "3df24b5c8b8c6e1154cf47665701c4fa47667b81616b9ab540aade3dcecf53da"
+    },
+    {
+      "path": "backend/app/services/knowledge.py",
+      "bytes": 13249,
+      "sha256": "28913c0e061c10291865de2101a9d9f418f87b3702936c5c0d345eb96d55e46c"
+    },
+    {
+      "path": "backend/app/services/orchestrator.py",
+      "bytes": 47900,
+      "sha256": "74904cf310c29b97ba3fd3c306ddaa07a75ad1c93d94afce366b5a0716416fd8"
+    },
+    {
+      "path": "backend/app/services/renderer.py",
+      "bytes": 21435,
+      "sha256": "a7161622e12614abf3146a404217ebfc6737485e4772003f5f5f101c80488f06"
+    },
+    {
+      "path": "backend/app/services/uploads.py",
+      "bytes": 1403,
+      "sha256": "d80c55f925e2d716ec6708c085834d1308aa8031f744e9a0f8efaeac39b9a235"
+    },
+    {
+      "path": "backend/app/services/voice_studio.py",
+      "bytes": 5175,
+      "sha256": "1256efd7710ce80723c2576cbd7a8737ff23f2536707f5b39dc212feb94d0a1d"
+    },
+    {
+      "path": "backend/app/storage.py",
+      "bytes": 9700,
+      "sha256": "13cc7bc0c54ccd717d236b2e757f0477927ff1d74b6eac90b1bdd002403aadf5"
+    },
+    {
+      "path": "backend/main.py",
+      "bytes": 64,
+      "sha256": "a3b40ee3a4eca409dbcd1ab4afe7dd170ba5342db0a1a4fb995452656a1b1727"
+    },
+    {
+      "path": "data_zhejiang_kb/_meta.json",
+      "bytes": 5729,
+      "sha256": "6c9dff9312c30dc94baa6969f8e14d072c86e9abc681d8a9784d8647e04e8fe7"
+    },
+    {
+      "path": "data_zhejiang_kb/hangzhou.json",
+      "bytes": 67563,
+      "sha256": "ba0cd009d1fb029db2bd2f51012884362549850c05fcf39d6b47157f0ca4e8d3"
+    },
+    {
+      "path": "docs/api.md",
+      "bytes": 3387,
+      "sha256": "431d8b1a44e37f258cacabdc9496517eba3b2a160dd071cdd1ccea5ca71befcc"
+    },
+    {
+      "path": "docs/architecture.md",
+      "bytes": 3288,
+      "sha256": "fe8b1faf1e539269a7184447d31fe6bac8117536dc558b96c4108658e2d686c5"
+    },
+    {
+      "path": "docs/operations.md",
+      "bytes": 3370,
+      "sha256": "2f44cdbbe0ade6d84d6e5159bed90bcccbb4a146424012004ba0b028903c8bfd"
+    },
+    {
+      "path": "docs/upstream-integration.md",
+      "bytes": 3933,
+      "sha256": "b688298a752833050dfd05412392f9a60ce6089e4583a5c5d628cf27bf4309e6"
+    },
+    {
+      "path": "docs/voice-studio.md",
+      "bytes": 8825,
+      "sha256": "3823297f28749af39e494ad7bac52e47353d81977b0ebd77d53f3cf2061d12a0"
+    },
+    {
+      "path": "docs/项目原说明.md",
+      "bytes": 8336,
+      "sha256": "5ebb3677aae9fad6a852486029ca38cd4abb82465e2cdc39008b5b39eefc6aed"
+    },
+    {
+      "path": "FIRST_SETUP.cmd",
+      "bytes": 111,
+      "sha256": "45536c4b1780f34cfc4368edc8760828a64a6f8e91dfa120aacadaadef93f1a9"
+    },
+    {
+      "path": "first_setup.ps1",
+      "bytes": 1256,
+      "sha256": "8b35eb1d4575a5192cc24bc3a146271c29d893835efdb7cd1b3f39a8879381f7"
+    },
+    {
+      "path": "frontend/app.js",
+      "bytes": 34490,
+      "sha256": "3e2e8acb808692c53f2ab15f7cfade7542ed65e46b4ecc701cb8ea8f791aea3c"
+    },
+    {
+      "path": "frontend/index.html",
+      "bytes": 9664,
+      "sha256": "c5a7a900fb6ed94050ebbc560ca046d7d12b1137dd491421c071f2e5fbfbeab6"
+    },
+    {
+      "path": "frontend/styles.css",
+      "bytes": 18587,
+      "sha256": "921ad60584407ebbe3e76031774819d6a62f594a3819444981658071b2320730"
+    },
+    {
+      "path": "frontend/voice-studio.js",
+      "bytes": 16377,
+      "sha256": "a886368ee30fb9903c06e525d0d97976c2a12994397502cc7600b5d0a020d270"
+    },
+    {
+      "path": "README.md",
+      "bytes": 3365,
+      "sha256": "7358a2b3e70baa9b3695ea9e26199784762848223793dab901c1607092ec51ce"
+    },
+    {
+      "path": "requirements-audio.txt",
+      "bytes": 914,
+      "sha256": "12f66a6c7c7487beecb2d30c1a2238378f19e0cafec25cb8872695f66508e19d"
+    },
+    {
+      "path": "requirements-tianyi.txt",
+      "bytes": 582,
+      "sha256": "76b01152551c4dfb4c7b61833e1ccc58e7f1e55e66e166d293f5f0e1c0d4d248"
+    },
+    {
+      "path": "requirements.txt",
+      "bytes": 151,
+      "sha256": "dba742a067d02392c73f297a74e6488c86766003c55cae2eb01a8c9e0fb2771d"
+    },
+    {
+      "path": "runtime/logs/access.log",
+      "bytes": 47,
+      "sha256": "727227e8a9450fbe2cd04f2127295d2cca196c203e019d370b56c05e472ec470"
+    },
+    {
+      "path": "runtime/music/catalog.json",
+      "bytes": 37,
+      "sha256": "45b2924dccea09063a0c4ba4875d54be6052f7dda902b46dd43f4fd31b41cc7d"
+    },
+    {
+      "path": "scripts/download_voice_assets.py",
+      "bytes": 3495,
+      "sha256": "8b05f69f76d8d8624511429b51569282cd043ee0ad408ad229371e3230740f65"
+    },
+    {
+      "path": "scripts/setup-audio-runtime.ps1",
+      "bytes": 2253,
+      "sha256": "59f511f7be9910b43c8d04c14a69db71ded5dea7eb16f1f9d3af43eb6ff78f8f"
+    },
+    {
+      "path": "scripts/setup-edge-tts.ps1",
+      "bytes": 1459,
+      "sha256": "0d8079a91f516b4152a064ffd9a312db56232076b7143536d3df816aff84937c"
+    },
+    {
+      "path": "scripts/setup-tianyi.ps1",
+      "bytes": 1865,
+      "sha256": "057e578402f55011bb8352322ea63f4ae01baf99b9b674eff6376b9ffb56d3f3"
+    },
+    {
+      "path": "scripts/setup-tianyi.py",
+      "bytes": 7341,
+      "sha256": "7fd803e3ef4bc3eefd75778f9cc3a3799a70605593545e2cb634f6a81cca593f"
+    },
+    {
+      "path": "scripts/start.ps1",
+      "bytes": 413,
+      "sha256": "69ca7cb056396ed7512ea621c9650b18dff4d092ad9c6104fd13d860455dd0f7"
+    },
+    {
+      "path": "scripts/verify-audio-runtime.ps1",
+      "bytes": 301,
+      "sha256": "30a55b2f32e7eb68802c6f532baf539719f8e4bd58d097a342ee82f81c087fc9"
+    },
+    {
+      "path": "scripts/verify_audio_runtime.py",
+      "bytes": 4144,
+      "sha256": "97b0379dba3c3202843e7796633a34b43ea58cac3ac8ba7c05ac62867ebffda3"
+    },
+    {
+      "path": "START.cmd",
+      "bytes": 110,
+      "sha256": "c7cdea57ae24219c4f9606430de7e4b34622df9f021c2f9cbfdfe573701534d3"
+    },
+    {
+      "path": "start_here.ps1",
+      "bytes": 671,
+      "sha256": "7ef52072515f21efdcec92dc9d8ac3e465dce67319887397b5ee1f4262181454"
+    },
+    {
+      "path": "tests/__init__.py",
+      "bytes": 1,
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "path": "tests/test_api_contracts.py",
+      "bytes": 1275,
+      "sha256": "946ec433216c25bd5be181c16ae61c534d4b0f1632f47936e10c021ac0ad0f8f"
+    },
+    {
+      "path": "tests/test_audio_runtime.py",
+      "bytes": 1912,
+      "sha256": "62ad3dc5e98671fbe8aebd433d406f3303b65cee7a10edb16c7aa34b3795975b"
+    },
+    {
+      "path": "tests/test_audio_sync.py",
+      "bytes": 2632,
+      "sha256": "eb367a3e5a57dbee42723dcdef2374a029fbf62077793988cc77b5538805a17c"
+    },
+    {
+      "path": "tests/test_cloud_payloads.py",
+      "bytes": 3836,
+      "sha256": "e0ba12099b00cae28d612d559423daf36cadaff793e9c8beb90c1aba037b73ca"
+    },
+    {
+      "path": "tests/test_consistency_plan.py",
+      "bytes": 1377,
+      "sha256": "5a5bdf2249180eb7a4ffd550942dc26c36ac566df5503ecc5292eb8a23e05225"
+    },
+    {
+      "path": "tests/test_domain.py",
+      "bytes": 2111,
+      "sha256": "ce54703921809befcfe8a2c3b794fcc382092b5f025874d24af527610eb0b976"
+    },
+    {
+      "path": "tests/test_end_to_end_sync.py",
+      "bytes": 2665,
+      "sha256": "423f84c561bd9f9e28068ebf5c5af051d5181ebc96a762a919690f8ee290c985"
+    },
+    {
+      "path": "tests/test_focus.py",
+      "bytes": 1005,
+      "sha256": "de998c62d41110b74bad3e49e7b0314da516019f1a5ae01291e84023a2adab4d"
+    },
+    {
+      "path": "tests/test_knowledge.py",
+      "bytes": 3751,
+      "sha256": "e89121a206719b4e83dcc5a67521715aa84f03ea08855097ae0af033d409c283"
+    },
+    {
+      "path": "tests/test_mpt_adapter.py",
+      "bytes": 1388,
+      "sha256": "f27d04b64ecd22fae43828a3be16f6a62c61156038628e389a74306461759810"
+    },
+    {
+      "path": "tests/test_music_catalog.py",
+      "bytes": 1843,
+      "sha256": "ab94576c1f1e36ac791448107d659f83978c8a73d27b8cf1f137997ab32c322a"
+    },
+    {
+      "path": "tests/test_pipeline_wiring.py",
+      "bytes": 33724,
+      "sha256": "1708addeb4a4823ead4179397a9da1967d1a136dc06c64ca1bc0992426352e39"
+    },
+    {
+      "path": "tests/test_render_request.py",
+      "bytes": 3956,
+      "sha256": "66bbbf22a25c84e2b42fd5377adc3d3589d8bb1435b591c87a22c00afaa76bc6"
+    },
+    {
+      "path": "tests/test_rendering.py",
+      "bytes": 4905,
+      "sha256": "56ec49cfffa8bd065c1e56ad70f00374d2f2f62a78fdba0c631f12745bede4c4"
+    },
+    {
+      "path": "tests/test_storage.py",
+      "bytes": 2396,
+      "sha256": "9d212402487805bce32ff45431c76c25e4bea5fff6b9d38024997eb1df627f18"
+    },
+    {
+      "path": "tests/test_tianyi.py",
+      "bytes": 4663,
+      "sha256": "c29e79c7cf626b570ea4170238b7a16113fa16c704c9708feefedf385f61230b"
+    },
+    {
+      "path": "tests/test_tokendance_recovery.py",
+      "bytes": 2390,
+      "sha256": "c565ecfb35051094e9cfd47d3a97a7b4b3c06a4fc4632db7e08ed2c128fae8d3"
+    },
+    {
+      "path": "tests/test_voice_studio.py",
+      "bytes": 6835,
+      "sha256": "0870b714796b9ff6a8debcc4641fed9adeed356f196c929e2c5884c318d25cfd"
+    },
+    {
+      "path": "tools/ffmpeg/bin/ffmpeg.exe",
+      "bytes": 242496512,
+      "sha256": "ad8f211bc894755e0061c55ab280ae00e8d3d4f15a8cc4372b24cfa247b5942e"
+    },
+    {
+      "path": "tools/ffmpeg/bin/ffprobe.exe",
+      "bytes": 242291712,
+      "sha256": "9df3b0b5275e830961df6d94e1f7a71121a7abd5ff708e9fec8a0b6084a55015"
+    },
+    {
+      "path": "tools/ffmpeg/LICENSE",
+      "bytes": 35147,
+      "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903"
+    },
+    {
+      "path": "tools/ffmpeg/README.txt",
+      "bytes": 45280,
+      "sha256": "09124e0f7c3d43d9054c62726a176371e8b99960732f51ddd68c6ae68982f434"
+    },
+    {
+      "path": "VERSION-2.0.md",
+      "bytes": 821,
+      "sha256": "5bac72e6d7da171ad66edeb5edd1350fe86e743651c8da05eab9303a3937cc4b"
+    },
+    {
+      "path": "说明.md",
+      "bytes": 6772,
+      "sha256": "ef91e7c9db8db21c3f0ac42a1298dcd3ebbd02dbb2f16e11e0b09a9d753d66a6"
+    }
+  ]
+}
