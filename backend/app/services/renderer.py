@@ -17,6 +17,7 @@ from ..providers.media_ffmpeg import (
     XFADE_PRESETS,
 )
 from ..providers.focus import detect_focus
+from ..providers.subtitles import create_ass
 
 
 # 成片编码质量。成片要经过逐镜渲染 → 拼接 → 烧字幕三道重编码，
@@ -426,7 +427,8 @@ class VideoRenderer:
         # 就不烧；缺中文字体时跳过并在 manifest 里记 label_burned=false。
         overlay_filters: list[str] = []
         if include_subtitles:
-            overlay_filters.append("subtitles=subtitles.srt")
+            create_ass(srt_path, output_dir / "subtitles.ass", width, height)
+            overlay_filters.append("subtitles=subtitles.ass")
         label_text = AIGC_LABEL_TEXT if include_ai_label else ""
         label_font = find_cjk_font() if label_text else None
         label_burned = bool(label_text and label_font)
