@@ -55,15 +55,42 @@ class TaskInput:
     output_resolution: str = "720x1280"
     fps: int = 25
     voice_rate: float = 1.0
-    # edge 的音高偏移（赫兹）。0 = 不变调。
+    voice_volume: float = 1.0
+    music_volume: float = 0.18
+    # 新增参数置于旧参数之后，保留历史位置构造的音量语义。
     voice_pitch: float = 0.0
     voice_style: str = "natural"
     voice_expressiveness: float = 0.5
     voice_engine: str = "configured"
-    voice_volume: float = 1.0
-    music_volume: float = 0.18
     music_ducking: str = "不压低"
     visual_usage: str = "preview"
+
+    def __post_init__(self) -> None:
+        # b89698f briefly exposed the new voice controls before the legacy
+        # volume fields. Accept that positional shape while keeping the
+        # original volume positions used by older callers.
+        if (
+            isinstance(self.voice_volume, (int, float))
+            and isinstance(self.music_volume, str)
+            and self.music_volume in {"natural", "warm", "story", "bright", "neutral"}
+            and isinstance(self.voice_pitch, (int, float))
+            and isinstance(self.voice_style, str)
+            and self.voice_style in {"configured", "edge", "windows", "upload", "tianyi"}
+            and isinstance(self.voice_expressiveness, (int, float))
+            and isinstance(self.voice_engine, (int, float))
+        ):
+            old_pitch = self.voice_volume
+            old_style = self.music_volume
+            old_expressiveness = self.voice_pitch
+            old_engine = self.voice_style
+            old_voice_volume = self.voice_expressiveness
+            old_music_volume = self.voice_engine
+            self.voice_pitch = old_pitch
+            self.voice_style = old_style
+            self.voice_expressiveness = old_expressiveness
+            self.voice_engine = old_engine
+            self.voice_volume = old_voice_volume
+            self.music_volume = old_music_volume
 
     @classmethod
     def from_dict(cls, raw: dict[str, Any]) -> "TaskInput":

@@ -247,7 +247,9 @@ class AppHandler(BaseHTTPRequestHandler):
                 return
             if path.startswith("/api/tasks/") and path.count("/") == 3:
                 task_id = path.split("/")[3]
-                self._json(200, orchestrator.update_draft(task_id, self._read_json()))
+                task = orchestrator.update_draft(task_id, self._read_json())
+                task["cost"] = summarize_cost(task)
+                self._json(200, task)
                 return
             if path.startswith("/api/tasks/") and "/shots/" in path:
                 parts = path.split("/")

@@ -192,7 +192,10 @@ def _asset_dict_from_any(result: Any, task_id: str, shot: dict[str, Any]) -> dic
         "cost": float(getattr(result, "cost", 0) or 0),
         "first_frame_path": str(getattr(result, "first_frame_path", "") or ""),
         "prompt": str(getattr(result, "prompt", "") or ""),
+        "event": dict(getattr(result, "event", {}) or {}),
     }
+    if payload["event"].get("remote_task_id"):
+        payload["provenance"] = {"remote_task_id": str(payload["event"]["remote_task_id"])}
     validate = getattr(result, "validate", None)
     if callable(validate):
         validate()

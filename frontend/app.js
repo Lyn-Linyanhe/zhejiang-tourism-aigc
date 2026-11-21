@@ -642,7 +642,6 @@ async function saveDraft(taskId, {refresh = true, notify = true} = {}) {
     if (input.visual_usage === "publication" && (input.asset_source === "upload" || input.asset_source === "pexels")) {
       throw new Error("正式发布必须使用已审核的本地实体素材库；Pexels/上传候选不能直接进入成片。");
     }
-    await api(`/api/tasks/${taskId}`, { method: "PATCH", body: JSON.stringify({ ...topLevel, input }) });
     const grouped = {};
     $$(`[data-shot-field]`).forEach((field) => {
       const shotId = field.dataset.shotId;
@@ -650,8 +649,8 @@ async function saveDraft(taskId, {refresh = true, notify = true} = {}) {
       const empty = field.value === "" && ["voice_pause_after", "focus_x", "focus_y", "library_asset_id", "entity_id", "shot_tag"].includes(field.dataset.shotField);
       grouped[shotId][field.dataset.shotField] = empty ? null : field.type === "number" ? Number(field.value) : field.value;
     });
-    for (const [shotId, patch] of Object.entries(grouped)) await api(`/api/tasks/${taskId}/shots/${shotId}`, { method: "PATCH", body: JSON.stringify(patch) });
-    let saved = await api(`/api/tasks/${taskId}`);
+    const shots = Object.entries(grouped).map(([id, patch]) => ({id, ...patch}));
+    const saved = await api(`/api/tasks/${taskId}`, {method:"PATCH", body:JSON.stringify({...topLevel, input, shots})});
     state.activeTask = saved;
     if (notify) showToast("修改已保存。确认后才会生成实际视频。");
     if (refresh) renderTask(saved);

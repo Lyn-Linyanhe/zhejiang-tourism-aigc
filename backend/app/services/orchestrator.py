@@ -211,6 +211,8 @@ class Orchestrator:
         task = self._load(task_id)
         if task.status not in ("draft", "edited", "failed"):
             raise ValueError("Only a draft task can be edited")
+        original_duration = task.input.duration
+        original_durations = {shot.id: shot.duration_sec for shot in task.shots}
         if isinstance(patch.get("input"), dict):
             merged_input = task.input.__dict__.copy()
             merged_input.update(patch["input"])
@@ -225,6 +227,23 @@ class Orchestrator:
             if not isinstance(patch["tags"], list):
                 raise ValueError("tags must be a list")
             task.tags = [str(item).strip() for item in patch["tags"] if str(item).strip()][:20]
+        if "shots" in patch:
+            if not isinstance(patch["shots"], list):
+                raise ValueError("shots must be a list")
+            seen = set()
+            for shot_patch in patch["shots"]:
+                if not isinstance(shot_patch, dict) or not isinstance(shot_patch.get("id"), str) or shot_patch["id"] in seen:
+                    raise ValueError("shots must contain unique shot ids")
+                seen.add(shot_patch["id"])
+                self._patch_shot(task, shot_patch["id"], shot_patch)
+        changed_duration = any(
+            abs(float(shot.duration_sec) - float(original_durations[shot.id])) > 0.000001
+            for shot in task.shots
+        )
+        if (changed_duration or task.input.duration != original_duration) and abs(
+            sum(shot.duration_sec for shot in task.shots) - task.input.duration
+        ) > 0.01:
+            raise ValueError(f"Shot durations must add up to the task duration ({task.input.duration}s)")
         task.status = "draft"
         task.stage = "preview"
         task.progress = 35
@@ -617,9 +636,10 @@ class Orchestrator:
         resolved = zhejiang_kb.get_entity(payload.get("entity_id", ""), city=task.input.city) if payload.get("entity_id") else None
         if resolved is None:
             resolved = zhejiang_kb.resolve_entity(
-                shot.title, shot.visual_prompt, shot.narration, task.input.theme,
-                city=task.input.city, allow_tags=False,
+                shot.title, shot.visual_prompt, shot.narration, city=task.input.city,
             )
+        if resolved is None and not any((shot.title, shot.visual_prompt, shot.narration)):
+            resolved = zhejiang_kb.resolve_entity(task.input.theme, city=task.input.city)
         payload["entity_id"] = resolved["id"] if resolved else ""
         if not payload.get("shot_tag"):
             blob = " ".join((shot.title, shot.visual_prompt)).casefold()
@@ -852,8 +872,7 @@ class Orchestrator:
             output_dir=directory,
         )
 
-        # 音乐：优先授权曲库/带授权字段的上传（P3），否则回落 MUSIC_DIR（P1 行为），
-        # 再不行才在显式开关下用合成音。
+        # 授权曲库或明确授权的上传才可进入成片；技术音调仅限显式开启的预览。
         music_path = ""
         music_provider = "none"
         if task.input.music_mood != NO_MUSIC:
@@ -873,25 +892,15 @@ class Orchestrator:
                 result.music_path = music_path
                 result.music_match = music.to_dict() if hasattr(music, "to_dict") else {}
             except Exception as music_exc:
-                candidates = [self.settings.music_provider]
-                if self.settings.allow_synthetic_audio_fallback:
-                    candidates.append("offline-synthetic-tone")
-                errors = [str(music_exc)]
-                for candidate in dict.fromkeys(candidates):
-                    try:
-                        provider = self.registry.create("music", candidate)
-                        music_path = str(provider.resolve(directory / "music.wav", task.input.music_mood, target))
-                        validate_audio_file(Path(music_path))
-                        music_provider = provider.name
-                        result.music_path = music_path
-                        break
-                    except Exception as exc:
-                        errors.append(f"{candidate}: {exc}")
-                else:
-                    raise RuntimeError(
-                        "No usable music provider. Upload music, configure MUSIC_DIR or "
-                        f"MUSIC_CATALOG_PATH, or choose 无音乐. Details: {'; '.join(errors)}"
-                    )
+                if not self.settings.allow_synthetic_audio_fallback or task.input.visual_usage == "publication":
+                    raise RuntimeError(f"No approved music is available. Upload an authorized track or choose 无音乐. Details: {music_exc}") from music_exc
+                provider = self.registry.create("music", "offline-synthetic-tone")
+                music_path = str(provider.resolve(directory / "music.wav", task.input.music_mood, target))
+                validate_audio_file(Path(music_path))
+                music_provider = provider.name
+                result.music_path = music_path
+                result.music_match = {"provider": music_provider, "approved": False, "usage_scope": "technical-preview-only"}
+                self._note_fallback(task, "music", music_provider, True, str(music_exc))
 
         event = result.event if isinstance(result.event, dict) else {}
         task.audio.update(result.to_dict())
@@ -974,6 +983,18 @@ class Orchestrator:
         for shot, render_shot in zip(task.shots, render_shots):
             record = next((asset for asset in reversed(task.assets) if asset.shot_id == shot.id), None)
             render_shot["provenance"] = dict(record.provenance or {}) if record else {}
+            if task.input.visual_usage == "preview" and shot.library_asset_id:
+                current = self.storage.get_library_asset(shot.library_asset_id)
+                if (not current or record is None or current.get("review_status") == "rejected"
+                        or current.get("license_status") == "rejected"
+                        or current.get("entity_id") != shot.entity_id
+                        or zhejiang_kb.canonical_city(current.get("city")) != zhejiang_kb.canonical_city(task.input.city)
+                        or shot.shot_tag not in current.get("shot_tags", [])
+                        or not self.storage.library_file_matches(current, Path(shot.asset_local_path))
+                        or not self.storage.library_file_matches(current, Path(record.local_path))):
+                    raise RuntimeError(f"No usable bound preview asset for shot {shot.order} ({shot.id})")
+                render_shot["provenance"].update(library_provenance(current))
+                record.provenance = render_shot["provenance"]
         if task.input.visual_usage == "publication":
             for shot, render_shot in zip(task.shots, render_shots):
                 entity = zhejiang_kb.get_entity(shot.entity_id, city=task.input.city)
@@ -1027,9 +1048,24 @@ class Orchestrator:
         task = self._load(task_id)
         if task.status not in ("draft", "edited", "failed"):
             raise ValueError("Only a draft task can be edited")
+        original_duration = next((shot.duration_sec for shot in task.shots if shot.id == shot_id), None)
+        self._patch_shot(task, shot_id, patch)
+        shot = next(item for item in task.shots if item.id == shot_id)
+        if original_duration != shot.duration_sec and abs(sum(item.duration_sec for item in task.shots) - task.input.duration) > 0.01:
+            raise ValueError(f"Shot durations must add up to the task duration ({task.input.duration}s)")
+        task.status = "draft"
+        task.stage = "preview"
+        task.progress = 35
+        task.error = ""
+        task.updated_at = now_iso()
+        self.storage.save_task(task)
+        return task.to_dict()
+
+    def _patch_shot(self, task: Task, shot_id: str, patch: dict[str, Any]) -> None:
         shot = next((item for item in task.shots if item.id == shot_id), None)
         if not shot:
             raise KeyError("Shot does not exist")
+        original_duration = shot.duration_sec
         if patch.get("clear_audio") is True:
             shot.audio_local_path = ""
             shot.audio_url = ""
@@ -1106,21 +1142,6 @@ class Orchestrator:
             shot.focus_x, shot.focus_y = coordinates
         if "duration_sec" in patch:
             duration = float(patch["duration_sec"])
-            if not 1 <= duration <= 20:
-                raise ValueError("duration_sec must be between 1 and 20")
-            proposed = sum(
-                duration if item.id == shot_id else float(item.duration_sec)
-                for item in task.shots
-            )
-            if abs(proposed - task.input.duration) > 0.01:
-                raise ValueError(
-                    f"Shot durations must add up to the task duration ({task.input.duration}s)"
-                )
+            if not math.isfinite(duration) or duration <= 0 or (duration != original_duration and not 1 <= duration <= 20):
+                raise ValueError("Changed duration_sec must be between 1 and 20")
             shot.duration_sec = duration
-        task.status = "draft"
-        task.stage = "preview"
-        task.progress = 35
-        task.error = ""
-        task.updated_at = now_iso()
-        self.storage.save_task(task)
-        return task.to_dict()

@@ -57,7 +57,7 @@ Returns the complete task, including:
 
 ## `PATCH /api/tasks/{task_id}`
 
-Updates draft-level fields:
+Updates draft-level fields and optional shot patches in one atomic save. The task must have status `draft`, `edited` or `failed`:
 
 ```json
 {
@@ -69,17 +69,23 @@ Updates draft-level fields:
     "asset_source": "upload",
     "output_resolution": "1080x1920",
     "include_subtitles": true
-  }
+  },
+  "shots": [
+    {"id": "shot_1", "duration_sec": 4.25},
+    {"id": "shot_2", "duration_sec": 3.25}
+  ]
 }
 ```
 
-The task remains a draft until generation is confirmed.
+`shots` is an optional array of partial shot patches with unique string IDs; omitted shots are retained. All task and shot changes are validated before one save, so an invalid field or binding leaves the stored task unchanged. If the task target duration or any shot duration changes, the resulting shot total must match `input.duration` within 0.01 seconds. Changed shot durations must be between 1 and 20 seconds. Existing positive finite durations measured from audio can be saved unchanged, including values below one second or a measured total different from the requested container duration.
+
+The task returns to draft status until generation is confirmed. The workbench uses this endpoint to save its script and all shot edits together.
 
 ## `PATCH /api/tasks/{task_id}/shots/{shot_id}`
 
 Updates `title`, `visual_prompt`, `narration`, `subtitle`, `transition`, `duration_sec`, `entity_id`, `shot_tag` and `library_asset_id`. Entities must belong to the task city; a bound asset must match the selected entity and shot tag. `library_asset_id: null` clears a library binding and its reusable file. Empty entity/tag values request automatic planning.
 
-All shot durations must add up to the task duration. The server rejects inconsistent edits.
+When this request changes a duration, the resulting total must match the task duration within 0.01 seconds and the changed value must be between 1 and 20 seconds. Unchanged measured durations remain editable with other fields. Use the batch `shots` array on the task endpoint to balance changes across several shots in one save.
 
 ## `POST /api/tasks/{task_id}/generate`
 
@@ -177,10 +183,10 @@ Updates entity/place metadata and source/license/review fields. File paths, hash
 }
 ```
 
-The server checks entity/tag, complete unexpired license evidence and an unchanged file, then records `checked_at`. `review_status=rejected` revokes publication eligibility. Invalid values return `400 INVALID_REQUEST`; a missing asset returns `404 NOT_FOUND`.
+The server requires a non-empty `source_url`, author, license and license URL or evidence, plus a valid entity/tag, unexpired evidence and an unchanged file, then records `checked_at`. A source title alone is insufficient. Changing entity/place, source, author, license, usage scope or expiration evidence resets both review states to `pending`, limits use to `preview` and clears `checked_at`, unless the same request explicitly sets `review_status=approved` and passes every approval check. The workbench saves evidence and approves it separately. `review_status=rejected` revokes publication eligibility. Invalid values return `400 INVALID_REQUEST`; a missing asset returns `404 NOT_FOUND`.
 
 ## Visual use and provenance
 
 `TaskInput.visual_usage` is `preview` by default. `publication` forces the reviewed entity library for every shot, regardless of the configured fallback source. No pending, expired, unrelated or silently substituted media can enter that path; the server rechecks the current city, binding, review and file immediately before rendering, including `retry` from `rendering`.
 
-Task assets and manifest `shots` retain entity, shot tag, library asset ID and `provenance` (source, author, license, allowed usages, dates and SHA-256). Pexels is a photo-only supplemental search in this version: it records the actual query and original page as an `external-candidate`; AI providers record `ai-generated`. Neither is publication-cleared automatically. The legacy `/api/assets` remains compatible for preview uploads, while the workbench uses `/api/library/assets`.
+Task assets and manifest `shots` retain entity, shot tag, library asset ID and `provenance` (source, author, license, allowed usages, dates and SHA-256). Bound previews also recheck the current rejection state, entity/city/tag and file fingerprint before rendering retries. Pexels is a photo-only supplemental search in this version: it records the actual query and original page as an `external-candidate`; AI providers retain `ai-generated`, provider events and remote task receipts. Neither is publication-cleared automatically. The legacy `/api/assets` remains compatible for preview uploads, while the workbench uses `/api/library/assets`.

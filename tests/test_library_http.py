@@ -13,7 +13,7 @@ from unittest.mock import patch
 from urllib.parse import urlencode
 
 from backend.app.config import Settings
-from backend.app.models import Shot, Task, TaskInput
+from backend.app.models import Shot, Task, TaskInput, TraceRecord
 from backend.app.services.orchestrator import Orchestrator
 from backend.app.storage import Storage
 
@@ -166,6 +166,35 @@ class LibraryHttpTests(unittest.TestCase):
         self.request("PATCH", f"/api/library/assets/{asset['id']}", {"review_status": "rejected"})
         status, body = self.request("PATCH", f"/api/tasks/{self.task.id}/shots/shot_1", {"library_asset_id": asset["id"]})
         self.assertEqual(status, 400, body)
+
+    def test_batch_draft_save_is_atomic_over_http(self):
+        self.task.shots = [Shot(f"shot_{i}", i, 3.75, "塔", "全景", "旁白", "字幕") for i in range(1, 5)]
+        self.task.trace = TraceRecord("offline", "test", "v1", False, events=[{"type": "asset", "cost": 0.42}])
+        self.storage.save_task(self.task)
+        endpoint = f"/api/tasks/{self.task.id}"
+        status, task = self.request("PATCH", endpoint, {"title": "新标题", "shots": [
+            {"id": "shot_1", "duration_sec": 4.25}, {"id": "shot_2", "duration_sec": 3.25},
+        ]})
+        self.assertEqual(status, 200, task)
+        self.assertEqual([shot["duration_sec"] for shot in task["shots"]], [4.25, 3.25, 3.75, 3.75])
+        self.assertEqual(task["cost"]["total"], 0.42)
+        before = self.storage.get_task(self.task.id)
+        status, error = self.request("PATCH", endpoint, {"title": "不应保存", "shots": [
+            {"id": "shot_1", "duration_sec": 8}, {"id": "shot_2", "duration_sec": 3.25},
+        ]})
+        self.assertEqual(status, 400, error)
+        self.assertEqual(self.storage.get_task(self.task.id), before)
+
+    def test_measured_failed_draft_can_save_unchanged_durations_over_http(self):
+        self.task.status = "failed"
+        self.task.shots = [Shot("shot_1", 1, 0.8, "短句", "空镜", "旁白", "字幕"), Shot("shot_2", 2, 3.65, "塔", "全景", "旁白", "字幕")]
+        self.storage.save_task(self.task)
+        status, task = self.request("PATCH", f"/api/tasks/{self.task.id}", {"title": "恢复草稿", "shots": [
+            {"id": "shot_1", "duration_sec": 0.8}, {"id": "shot_2", "duration_sec": 3.65},
+        ]})
+        self.assertEqual(status, 200, task)
+        self.assertEqual(task["status"], "draft")
+        self.assertEqual(task["shots"][0]["duration_sec"], 0.8)
 
     def test_invalid_usage_is_client_error_and_media_stays_within_root(self):
         self.assertEqual(self.request("GET", "/api/library/assets?usage=invalid")[0], 400)

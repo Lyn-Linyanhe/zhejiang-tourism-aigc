@@ -44,7 +44,9 @@ Or use `asset_source=upload` for previews and bind a file to every shot. Formal 
 5. Select `正式发布` in the draft. The workbench sets `local-library`; the backend independently enforces the reviewed library and refuses an unmatched shot. There is no unrelated-file fallback in publication mode. Entity-specific previews also stay on that entity.
 6. Generate and retain `manifest.json`, task trace, per-shot source/license metadata and attribution alongside MP4. Re-rendering from `rendering` checks the current task city, review and file again. A rejected/changed file must be reselected; updating metadata cannot forge a new SHA-256.
 
-The workbench keeps script edits while refreshing the library after review/upload. For an upload bound to a task, draft edits are saved first; invalid city/entity/shot ownership fails before the file is written.
+The workbench keeps script edits while refreshing the library after review/upload. Saving a draft sends its task fields and shot patches together; an invalid edit leaves the saved task unchanged. Balance duration changes across shots in the same save. Unchanged durations measured from audio can be saved on a failed draft, even when they differ from the requested container duration. For an upload bound to a task, draft edits are saved first; invalid city/entity/shot ownership fails before the file is written.
+
+Changing entity/place, source, author, license, usage scope or expiration evidence returns a previously approved asset to pending review and preview-only use, unless the same request explicitly reapproves it and passes all publication checks. Save revised evidence first, inspect it, then approve separately. A title alone cannot replace the original source URL. Rejecting a bound preview asset also blocks rendering retries before focus detection or FFmpeg reads it.
 
 A file license does not grant rights to unrelated music, people, trademarks or copied descriptions. Keep fact-source records separate from image-source records. CC BY requires author/source/license and an indication of edits; do not treat CC BY-SA as CC BY.
 
@@ -70,7 +72,7 @@ python -I scripts/accept_entity_pilot.py --index runtime/_wire_probe_entity_asse
 Keep `ATTRIBUTION.md`, `fact-records.json`, `task.json`, `manifest.json` and `ffprobe.json` with the sample. The input photographs are still images with slow crop/motion, not newly acquired video footage. See `docs/research/entity-assets-pilot.md` for coverage and remaining gaps. Pexels currently supplies photo candidates only; its video-search regression remains a separate task.
 
 
-For music, put an authorized file in `runtime/music` or upload it from the task panel. Use `无音乐` when no music is available.
+For music, register an authorized file in `runtime/music/catalog.json` with complete license fields and `approved=true`, or upload it with explicit authorization from the task panel. Placing a file in the music directory alone does not approve it. If no approved match is available, choose `无音乐`; the pipeline fails rather than selecting an arbitrary directory file. Synthetic music fallback requires the explicit technical-preview switch and is refused in publication mode.
 
 ## Technical smoke
 

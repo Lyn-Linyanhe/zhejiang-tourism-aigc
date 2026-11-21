@@ -137,3 +137,22 @@
 - **Contract:** 无新增对外必填字段，不改变现有 SRT URL 和烧录开关。已有 MP4 不自动覆盖；后续渲染使用新样式，运行中的服务需重新加载代码。
 - **Scope:** 本侧聊未提交、推送、修改 .env 或重启既有应用服务；只启动了 8811 本地静态对比服务。
 - **父会话交付复核:** `python -B -m unittest discover -s tests -p test_subtitles.py -v` → 9 项通过；同法运行 `test_rendering.py` → 3 项通过（真实 FFmpeg）；`python -B -m unittest discover -s tests -v` → **Ran 143 tests in 34.819s — OK**。字幕代码与这条验证记录独立提交，不包含素材或本机对比文件。
+
+---
+
+## Entry 004 - 2026-11-21
+
+- **Author:** 负责人侧（PR #1 审查整改）
+- **AI 工具:** ZCode / GPT-6.1；两条只读审查轴检查固定提交，主线程复现、修改并最终验证。
+- **Change type:** Fix / Tests / Docs
+- **Files changed:** `backend/app/models.py`、`providers/registry.py`、`services/orchestrator.py`、`storage.py`、`frontend/app.js`、`tests/test_review_regressions.py`、`tests/test_library_http.py`、`docs/api.md`、`docs/operations.md`、`team/CONTRACT.md`、`docs/research/entity-assets-pr-review.md`。
+- **AI 参与度:** 主导。
+- **Reason:** 已提交版本存在音乐许可回退、主题覆盖镜头实体、预览撤销重渲、实测时长草稿保存、位置参数兼容和来源追溯等可复现问题。
+- **What changed:** 移除未批准目录音乐回退；镜头实体优先、场景标签参与召回；预览绑定重渲复验；许可证据变动退回授权待核并限制为预览，保留已驳回状态；任务目标或镜头时长变更均校验总时长；保存后 API 返回成本摘要；任务和镜头通过可选 `shots` 数组原子保存，保留未变的实测时长；兼容合并版和旧版 `TaskInput` 位置参数；透传 AI 事件与远端任务回执。新增 14 项审查回归和 2 项真实 HTTP 原子保存回归。详细两轴发现及整改见审查记录。
+- **AI 产出的部分:** 修复代码、回归用例与文档；子代理只读探索和核验。
+- **人工修改的部分:** 无，未将 AI 检查写成人工批准。
+- **Verification:** `python -B -m unittest discover -s tests -v` → **Ran 155 tests in 35.110s — OK**；`node --check frontend/app.js`、`node --check frontend/voice-studio.js`、`python -m compileall -q backend tests scripts/collect_entity_pilot.py scripts/accept_entity_pilot.py` → 成功。`git diff --check` → 成功。
+- **GUI verification:** 新建隔离库 `runtime/_wire_probe_gui_entity_20261121`，复制 7 条记录、媒体及四镜预置草稿，8792 离线服务。桌面和手机 390×844 截图已查看；时长输入编辑、待审筛选控件反馈及既有绑定显示正常。保存点击、卡片滚动及后续截图超时，完整保存/审核/重新绑定流程未完成。恢复桌面视口，六张已查看截图保存在独立 `gui-evidence` 目录。预置草稿不计 GUI 创建成功；未执行 GUI 上传、未收集 console。
+- **契约影响:** 无 provider 新必填字段；修复既有 `AssetResult.event` / `AssetProvenance.remote_task_id` 透传和旧 `TaskInput` 位置兼容。任务 PATCH 增加可选 `shots`，旧逐镜接口保留，API 与 `team/CONTRACT.md` 已同步，版本仍为 `zj-team4-v2`。
+- **Known limitations:** 完整 GUI 验收仍受阻；全量测试不代表所有音乐历史重渲路径已独立核权。无 GitHub CI 或远端 review approval；本地审查不等同远端批准，未合并 main。
+- **Follow-up:** 单独提交第二批采集记录并推送功能分支；继续补每实体 2–3 类合法素材和宁波授权媒体。
