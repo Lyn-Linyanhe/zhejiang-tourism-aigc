@@ -48,7 +48,7 @@ def _write_tone(
     path.parent.mkdir(parents=True, exist_ok=True)
     frames = max(1, int(SAMPLE_RATE * max(0.05, duration)))
     with wave.open(str(path), "wb") as handle:
-        handle.setnchannels(1)
+        handle.setnchannels(2)
         handle.setsampwidth(2)
         handle.setframerate(SAMPLE_RATE)
         data = bytearray()
@@ -57,7 +57,8 @@ def _write_tone(
             value = math.sin(2 * math.pi * frequency * t)
             if wobble:
                 value *= 0.6 + 0.4 * math.sin(2 * math.pi * 0.4 * t)
-            data += struct.pack("<h", int(max(-1.0, min(1.0, value * volume)) * 32767))
+            sample = int(max(-1.0, min(1.0, value * volume)) * 32767)
+            data += struct.pack("<hh", sample, sample)
         handle.writeframes(bytes(data))
 
 

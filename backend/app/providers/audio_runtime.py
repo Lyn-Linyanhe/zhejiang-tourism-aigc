@@ -180,10 +180,12 @@ class AudioRuntimeClient:
         audio_path: Path,
         text: str = "",
         language: str = "zh",
+        segments: list[dict] | None = None,
     ) -> dict[str, Any]:
         return self._invoke_with_device_fallback(
             {
                 "operation": "whisperx_align",
+                "segments": segments or [],
                 "audio_path": str(audio_path.resolve()),
                 "text": text,
                 "language": language,

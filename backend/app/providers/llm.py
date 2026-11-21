@@ -6,6 +6,8 @@ from dataclasses import dataclass
 from typing import Any
 
 
+from ..services.cost import provider_call, record_response
+
 def _resolve_knowledge_context(context: dict[str, Any]) -> str:
     """取本次创作的浙江文旅事实参考块，用于注入生成 prompt。
 
@@ -197,6 +199,7 @@ class OpenAICompatibleLLMProvider(LLMProvider):
                 "narration_chars": total,
                 "narration_target": total_chars,
                 "narration_rewrite_attempts": attempts,
+                "billing_instrumented": True,
             },
         )
 
@@ -216,8 +219,11 @@ class OpenAICompatibleLLMProvider(LLMProvider):
             },
             method="POST",
         )
-        with urllib.request.urlopen(request, timeout=self.timeout) as response:
-            payload = json.loads(response.read().decode("utf-8"))
+        with provider_call("llm", self.name, self.model) as billing:
+            with urllib.request.urlopen(request, timeout=self.timeout) as response:
+                record_response(billing, response)
+                payload = json.loads(response.read().decode("utf-8"))
+                record_response(billing, response, payload)
         result = json.loads(payload["choices"][0]["message"]["content"])
         if not isinstance(result, dict):
             raise RuntimeError("LLM returned a non-object JSON response")

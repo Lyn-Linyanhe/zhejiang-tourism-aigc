@@ -26,3 +26,12 @@ runtime/*.db
 Thumbs.db
 .DS_Store
 *.zip
+
+# 本机环境与运行结果
+.env.*
+!.env.example
+*.key
+*.pem
+runtime/diagnostics/
+runtime-smoke*/
+.pytest_cache/

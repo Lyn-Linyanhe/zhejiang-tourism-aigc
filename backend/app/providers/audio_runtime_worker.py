@@ -79,7 +79,7 @@ def _normalized_segments(items: list[dict[str, Any]]) -> list[dict[str, Any]]:
                     "text": str(word.get("word") or word.get("text") or "").strip(),
                     "start": float(word["start"]),
                     "end": float(word["end"]),
-                    "score": float(word.get("score", 0.0)),
+                    "score": float(word.get("score") or word.get("probability") or 0.0),
                 }
             )
         segments.append(
@@ -195,7 +195,7 @@ def pydub_normalize(request: dict[str, Any]) -> dict[str, Any]:
         raise FileNotFoundError(f"audio input does not exist: {source}")
     output.parent.mkdir(parents=True, exist_ok=True)
     audio = effects.normalize(AudioSegment.from_file(source))
-    audio = audio.set_channels(1).set_frame_rate(48000).set_sample_width(2)
+    audio = audio.set_channels(2).set_frame_rate(48000).set_sample_width(2)
     audio.export(output, format="wav")
     return {
         "ok": True,
@@ -203,7 +203,7 @@ def pydub_normalize(request: dict[str, Any]) -> dict[str, Any]:
         "path": str(output),
         "duration_sec": _probe_duration(output),
         "sample_rate": 48000,
-        "channels": 1,
+        "channels": 2,
     }
 
 
@@ -228,6 +228,7 @@ def whisper_transcribe(request: dict[str, Any]) -> dict[str, Any]:
         language=language,
         fp16=device == "cuda",
         verbose=False,
+        initial_prompt="以下是简体中文的旅游导览旁白。",
         word_timestamps=True,
     )
     return {
@@ -262,15 +263,10 @@ def whisperx_align(request: dict[str, Any]) -> dict[str, Any]:
 
     started = time.perf_counter()
     audio = whisperx.load_audio(str(source))
-    model = whisperx.load_model(
-        model_name,
-        device,
-        compute_type=compute_type,
-        language=language,
-        vad_method="silero",
-        download_root=str(cache_dir / "whisperx"),
-    )
-    if expected_text:
+    if request.get("segments"):
+        segments = request["segments"]
+        detected_language = language
+    elif expected_text:
         segments = [
             {
                 "start": 0.0,
@@ -280,6 +276,14 @@ def whisperx_align(request: dict[str, Any]) -> dict[str, Any]:
         ]
         detected_language = language
     else:
+        model = whisperx.load_model(
+            model_name,
+            device,
+            compute_type=compute_type,
+            language=language,
+            vad_method="silero",
+            download_root=str(cache_dir / "whisperx"),
+        )
         transcription = model.transcribe(audio, batch_size=4)
         segments = list(transcription.get("segments") or [])
         detected_language = str(transcription.get("language", language))

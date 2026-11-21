@@ -11,7 +11,9 @@ class DomainTests(unittest.TestCase):
             {"city": "杭州", "theme": "春日城市漫游", "duration": 30}
         )
         self.assertEqual(value.city, "杭州")
-        self.assertEqual(value.output_resolution, "720x1280")
+        self.assertEqual(value.output_resolution, "1080x1920")
+        self.assertEqual(value.fps, 30)
+        self.assertEqual(value.music_ducking, "轻微")
         self.assertEqual(value.asset_source, "configured")
         self.assertEqual(value.shot_count, 0)
         with self.assertRaises(ValueError):
@@ -25,15 +27,17 @@ class DomainTests(unittest.TestCase):
                 "duration": 15,
                 "shot_count": 4,
                 "asset_source": "upload",
-                "output_resolution": "1080x1920",
-                "fps": 30,
+                "output_resolution": "720x1280",
+                "fps": 25,
+                "music_ducking": "不压低",
                 "voice_rate": 1.2,
                 "voice_volume": 0.8,
                 "music_volume": 0.2,
             }
         )
-        self.assertEqual(value.output_resolution, "1080x1920")
-        self.assertEqual(value.fps, 30)
+        self.assertEqual(value.output_resolution, "720x1280")
+        self.assertEqual(value.fps, 25)
+        self.assertEqual(value.music_ducking, "不压低")
         with self.assertRaises(ValueError):
             TaskInput.from_dict(
                 {"city": "杭州", "theme": "测试", "duration": 15, "fps": 23}

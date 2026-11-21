@@ -9,6 +9,7 @@ import tempfile
 import threading
 import time
 import unittest
+from unittest.mock import patch
 from pathlib import Path
 from types import SimpleNamespace
 
@@ -566,6 +567,31 @@ class ParallelAssetTests(unittest.TestCase):
         settings.ensure_dirs()
         orchestrator = Orchestrator(settings, Storage(settings.db_path), registry=registry)
         return orchestrator
+
+    def test_reference_is_shared_only_by_group_and_survives_retry(self):
+        with tempfile.TemporaryDirectory() as directory:
+            registry = _SlowRegistry(delay=0)
+            registry.asset_chain_for = lambda source: ["ai-video"]
+            app = self._orchestrator(Path(directory), registry)
+            task = self._task()
+            key = "a" * 64
+            folder = app.settings.media_dir / task.id / "references"
+            folder.mkdir(parents=True)
+            ref = folder / (key + ".jpg")
+            ref.touch()
+            task.shots[0].subject_group = task.shots[1].subject_group = "塔"
+            task.shots[0].subject_reference = key
+            frames = {}
+            def first_frame(task, shot, payload, *args, **kwargs):
+                frames[shot.id] = payload.get("first_frame_path", "independent")
+                return frames[shot.id]
+            with patch.object(app, "_ensure_first_frame", side_effect=first_frame), patch("backend.app.services.orchestrator.review_group", return_value={"file":"sheet.jpg"}):
+                app._assets(task)
+                app._assets(task)
+            self.assertEqual(frames["shot_1"], str(ref))
+            self.assertEqual(frames["shot_2"], str(ref))
+            self.assertEqual(frames["shot_3"], "independent")
+            self.assertEqual(len(registry.calls), 4)
 
     def test_shots_are_generated_concurrently_not_one_by_one(self):
         with tempfile.TemporaryDirectory() as directory:

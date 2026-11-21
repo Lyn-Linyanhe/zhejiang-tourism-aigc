@@ -1,6 +1,6 @@
 {
   "dataset": "浙江文旅知识库（Zhejiang Culture & Tourism Knowledge Base）",
-  "version": "0.3.0",
+  "version": "1.0.0",
   "created": "2026-09-11",
   "description": "面向 AIGC 文旅短视频生成的结构化浙江文旅语料库。为脚本生成提供可核对的事实依据，为素材检索提供精准英文关键词，为分镜引擎提供画面意象描述。",
   "schema_version": 1,
@@ -25,7 +25,8 @@
     "imagery": "画面意象描述列表，供分镜引擎选择镜头内容",
     "best_season": "最佳游览/拍摄季节，可选",
     "micro_drama_hook": "微短剧式叙事钩子，用于视频开场或情绪落点，呼应‘跟着微短剧去旅行’创作计划",
-    "scenario_tags": "主题场景标签列表，供场景化检索（如“杭州亲子游”“非遗体验”）。检索时命中场景标签的实体优先级高于仅靠全文匹配偶然命中的条目。"
+    "scenario_tags": "主题场景标签列表，供场景化检索（如“杭州亲子游”“非遗体验”）。检索时命中场景标签的实体优先级高于仅靠全文匹配偶然命中的条目。",
+    "sources": "支持该实体事实的来源列表，包含题名、URL 和核验日期。老版杭州语料按数据集级来源查阅。"
   },
   "cities": {
     "杭州": {
@@ -42,20 +43,140 @@
       ],
       "scenario_tags_total": 192,
       "status": "完整样板（已做透：46 实体覆盖景区/非遗/美食/节庆/传说/名人六类）"
+    },
+    "湖州": {
+      "file": "huzhou.json",
+      "entities": 4,
+      "facts": 9,
+      "types_covered": [
+        "cuisine",
+        "festival",
+        "intangible",
+        "scenic"
+      ],
+      "scenario_tags_total": 8,
+      "status": "已收录代表性条目"
+    },
+    "嘉兴": {
+      "file": "jiaxing.json",
+      "entities": 6,
+      "facts": 13,
+      "types_covered": [
+        "cuisine",
+        "festival",
+        "intangible",
+        "person",
+        "scenic"
+      ],
+      "scenario_tags_total": 12,
+      "status": "已收录代表性条目"
+    },
+    "金华": {
+      "file": "jinhua.json",
+      "entities": 6,
+      "facts": 13,
+      "types_covered": [
+        "cuisine",
+        "intangible",
+        "scenic"
+      ],
+      "scenario_tags_total": 12,
+      "status": "已收录代表性条目"
+    },
+    "丽水": {
+      "file": "lishui.json",
+      "entities": 6,
+      "facts": 13,
+      "types_covered": [
+        "cuisine",
+        "festival",
+        "intangible",
+        "scenic"
+      ],
+      "scenario_tags_total": 12,
+      "status": "已收录代表性条目"
+    },
+    "宁波": {
+      "file": "ningbo.json",
+      "entities": 6,
+      "facts": 13,
+      "types_covered": [
+        "cuisine",
+        "festival",
+        "intangible",
+        "legend",
+        "scenic"
+      ],
+      "scenario_tags_total": 12,
+      "status": "已收录代表性条目"
+    },
+    "衢州": {
+      "file": "quzhou.json",
+      "entities": 5,
+      "facts": 11,
+      "types_covered": [
+        "cuisine",
+        "festival",
+        "person",
+        "scenic"
+      ],
+      "scenario_tags_total": 10,
+      "status": "已收录代表性条目"
+    },
+    "绍兴": {
+      "file": "shaoxing.json",
+      "entities": 7,
+      "facts": 16,
+      "types_covered": [
+        "cuisine",
+        "festival",
+        "intangible",
+        "person",
+        "scenic"
+      ],
+      "scenario_tags_total": 14,
+      "status": "已收录代表性条目"
+    },
+    "台州": {
+      "file": "taizhou.json",
+      "entities": 6,
+      "facts": 13,
+      "types_covered": [
+        "festival",
+        "intangible",
+        "legend",
+        "scenic"
+      ],
+      "scenario_tags_total": 12,
+      "status": "已收录代表性条目"
+    },
+    "温州": {
+      "file": "wenzhou.json",
+      "entities": 5,
+      "facts": 11,
+      "types_covered": [
+        "cuisine",
+        "intangible",
+        "scenic"
+      ],
+      "scenario_tags_total": 10,
+      "status": "已收录代表性条目"
+    },
+    "舟山": {
+      "file": "zhoushan.json",
+      "entities": 6,
+      "facts": 13,
+      "types_covered": [
+        "cuisine",
+        "festival",
+        "intangible",
+        "legend",
+        "scenic"
+      ],
+      "scenario_tags_total": 12,
+      "status": "已收录代表性条目"
     }
   },
-  "planned_cities": [
-    "宁波",
-    "绍兴",
-    "温州",
-    "嘉兴",
-    "湖州",
-    "金华",
-    "衢州",
-    "舟山",
-    "台州",
-    "丽水"
-  ],
   "data_sources": [
     {
       "name": "中国非物质文化遗产网",
@@ -135,7 +256,7 @@
     "雪景",
     "非遗体验"
   ],
-  "updated": "2026-09-12",
+  "updated": "2026-11-21",
   "quality_assurance": {
     "fact_check": {
       "method": "对含年份/数字/绝对表述的 89 条高风险事实，逐条联网核查（权威来源：政府网站、UNESCO、中国非遗网、维基百科、主流媒体）",
@@ -150,6 +271,11 @@
         "印象西湖 主题曲《忆江南》 → 演出名称取自《忆江南》，主题曲为《印象西湖雨》",
         "良渚 第一个新石器世遗 → 官方口径为填补东亚新石器时代城市遗址空白"
       ]
+    },
+    "2026-11-21": {
+      "new_records": "新增地市条目逐条保存来源页面及核验日期",
+      "legacy_hangzhou": "保留原有杭州数据与原有数据集级来源信息"
     }
-  }
+  },
+  "scope": "浙江11个设区市的文旅代表性实体与创作事实"
 }

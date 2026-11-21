@@ -1,0 +1,207 @@
+{
+  "city": "金华",
+  "city_meta": {
+    "aliases": [
+      "婺州",
+      "婺城"
+    ],
+    "city_dna": "婺剧、金华火腿、金华山与传统木雕"
+  },
+  "entities": [
+    {
+      "id": "jinhua-shuanglong",
+      "type": "scenic",
+      "name": "双龙洞",
+      "aliases": [
+        "金华双龙洞",
+        "双龙景区"
+      ],
+      "location": "金华婺城区",
+      "facts": [
+        "1636年，徐霞客游览金华双龙洞等三处岩洞。",
+        "叶圣陶在《记金华的两个岩洞》中写到内洞洞顶的两条石龙。"
+      ],
+      "keywords_en": [
+        "Shuanglong Cave Jinhua"
+      ],
+      "imagery": [
+        "狭窄水道进入溶洞",
+        "石钟乳和洞内水面"
+      ],
+      "scenario_tags": [
+        "自然",
+        "研学"
+      ],
+      "sources": [
+        {
+          "title": "婺城新闻网·北山有仙洞",
+          "url": "https://jhwcw.zjol.com.cn/wcnews/system/2023/07/14/034267546.shtml",
+          "checked_on": "2026-11-21"
+        }
+      ]
+    },
+    {
+      "id": "jinhua-wu-opera",
+      "type": "intangible",
+      "name": "婺剧",
+      "aliases": [
+        "金华戏",
+        "金华婺剧"
+      ],
+      "location": "金华金华市",
+      "facts": [
+        "婺剧俗称“金华戏”。",
+        "婺剧兼有高腔、昆腔、乱弹、徽戏、滩簧、时调等多种声腔。"
+      ],
+      "keywords_en": [
+        "Jinhua Wuju opera"
+      ],
+      "imagery": [
+        "戏台上的武戏身段",
+        "戏服和脸谱"
+      ],
+      "scenario_tags": [
+        "演艺",
+        "非遗体验"
+      ],
+      "sources": [
+        {
+          "title": "中国非遗网·婺剧",
+          "url": "https://www.ihchina.cn/project_details/13492.html",
+          "checked_on": "2026-11-21"
+        }
+      ]
+    },
+    {
+      "id": "jinhua-woodcraft",
+      "type": "intangible",
+      "name": "东阳木雕",
+      "aliases": [
+        "东阳雕花",
+        "东阳浮雕"
+      ],
+      "location": "金华东阳市",
+      "facts": [
+        "东阳木雕是流传于浙江东阳的传统工艺。",
+        "东阳木雕擅长平面浮雕，常装饰建筑与家具。"
+      ],
+      "keywords_en": [
+        "Dongyang wood carving Jinhua"
+      ],
+      "imagery": [
+        "层叠浮雕",
+        "雕花门窗",
+        "木纹刻痕"
+      ],
+      "scenario_tags": [
+        "古建",
+        "非遗体验"
+      ],
+      "sources": [
+        {
+          "title": "中国非遗网·东阳木雕",
+          "url": "https://www.ihchina.cn/project_details/14026.html",
+          "checked_on": "2026-11-21"
+        }
+      ]
+    },
+    {
+      "id": "jinhua-ham",
+      "type": "cuisine",
+      "name": "金华火腿",
+      "aliases": [
+        "火腿腌制技艺",
+        "金华火腿腌制技艺"
+      ],
+      "location": "金华金华市",
+      "facts": [
+        "金华火腿采用猪后腿制作。",
+        "传统制作包括腌制、洗晒、整形与发酵等工序。"
+      ],
+      "keywords_en": [
+        "Jinhua ham curing"
+      ],
+      "imagery": [
+        "腿肉抹盐与成排挂晾",
+        "火腿切片"
+      ],
+      "scenario_tags": [
+        "美食",
+        "非遗体验"
+      ],
+      "sources": [
+        {
+          "title": "中国非遗网·金华火腿腌制技艺",
+          "url": "https://www.ihchina.cn/project_details/14654.html",
+          "checked_on": "2026-11-21"
+        }
+      ]
+    },
+    {
+      "id": "jinhua-wine",
+      "type": "cuisine",
+      "name": "金华酒",
+      "aliases": [
+        "金华酒传统酿造技艺"
+      ],
+      "location": "金华金华市",
+      "facts": [
+        "金华酒属于传统酿造酒。",
+        "金华酒的传统酿造技艺是国家级非遗代表性项目“酿造酒传统酿造技艺”的子项。"
+      ],
+      "keywords_en": [
+        "Jinhua rice wine brewing"
+      ],
+      "imagery": [
+        "陶坛发酵",
+        "舀出酒液"
+      ],
+      "scenario_tags": [
+        "美食",
+        "人文"
+      ],
+      "sources": [
+        {
+          "title": "中国非遗网·金华酒传统酿造技艺",
+          "url": "https://www.ihchina.cn/project_details/14600.html",
+          "checked_on": "2026-11-21"
+        }
+      ]
+    },
+    {
+      "id": "jinhua-bayong",
+      "type": "scenic",
+      "name": "婺州古城",
+      "aliases": [
+        "古子城",
+        "金华古城",
+        "八咏楼"
+      ],
+      "location": "金华婺城区",
+      "facts": [
+        "八咏楼在金华城区东南、面向婺江。",
+        "南朝齐隆昌元年，即494年，沈约作《登玄畅楼》。",
+        "南宋词人李清照留有《题八咏楼》。"
+      ],
+      "keywords_en": [
+        "Bayong Tower Jinhua"
+      ],
+      "imagery": [
+        "石砌高台",
+        "楼门前的石阶",
+        "婺江"
+      ],
+      "scenario_tags": [
+        "诗词",
+        "古建"
+      ],
+      "sources": [
+        {
+          "title": "婺州古城·八咏楼",
+          "url": "https://www.wuzhougucheng.com/mobile/goods/show-2358.html",
+          "checked_on": "2026-11-21"
+        }
+      ]
+    }
+  ]
+}

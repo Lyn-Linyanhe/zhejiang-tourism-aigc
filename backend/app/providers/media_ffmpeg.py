@@ -79,6 +79,8 @@ def generate_tone(output_path: Path, duration: float, frequency: int = 440, volu
             f"volume={volume}",
             "-c:a",
             "pcm_s16le",
+            "-ac",
+            "2",
             str(output_path),
         ]
     )
@@ -156,9 +158,6 @@ def create_srt(
         for cue in timed:
             start = min(float(cue["start"]), picture_end)
             end = min(float(cue["end"]), picture_end)
-            # 贴着画面结尾时仍留一个可见窗口，避免最后一句被滤成空。
-            if end <= start:
-                start = max(0.0, end - 0.05)
             if end <= start:
                 continue
             clipped.append({**cue, "start": start, "end": end})

@@ -21,7 +21,7 @@ from ..providers.tts import (
     edge_voice_name,
 )
 from .voice_studio import plan_segments, phrase_parameters
-from ..providers.tianyi import runtime as tianyi_runtime, MODEL_ID as TIANYI_MODEL_ID
+from .catalog import bank_voices
 
 
 SILENCE_BETWEEN_SHOTS = 0.150
@@ -71,7 +71,7 @@ def _atomic_normalize(source: Path, output: Path) -> dict[str, Any]:
             str(source),
             "-vn",
             "-ac",
-            "1",
+            "2",
             "-ar",
             "48000",
             "-sample_fmt",
@@ -86,9 +86,9 @@ def _atomic_normalize(source: Path, output: Path) -> dict[str, Any]:
         raise RuntimeError(result.stderr.strip() or "Audio normalization failed")
     validate_audio_file(temporary)
     info = probe_audio(temporary)
-    if info["sample_rate"] != 48000 or info["channels"] != 1:
+    if info["sample_rate"] != 48000 or info["channels"] != 2:
         temporary.unlink(missing_ok=True)
-        raise RuntimeError("Normalized shot audio is not 48 kHz mono")
+        raise RuntimeError("Normalized shot audio is not 48 kHz stereo")
     os.replace(temporary, output)
     return info
 
@@ -139,11 +139,13 @@ class PerShotAudioBuilder:
     ) -> tuple[Path, dict[str, Any]]:
         attempts: list[tuple[str, str]] = []
         preference = force_provider or str(getattr(self.settings, "tts_provider", "windows"))
-        if preference == "tianyi":
-            attempts.append(("tianyi-local", TIANYI_MODEL_ID))
-        elif preference in {"windows", "windows-system-speech"}:
+        if preference in {"tianyi", "reselect"}:
+            raise ValueError("原声库已停用，请重新选择音色后合成")
+        if preference == "voicebank" and voice not in bank_voices(self.settings):
+            raise ValueError("该音色已从服务端声库移除，请重新选择")
+        if preference in {"windows", "windows-system-speech"}:
             attempts.append(("windows-system-speech", "installed-system-voice"))
-        elif preference in {"openai", "openai-compatible-tts"}:
+        elif preference in {"voicebank", "openai", "openai-compatible-tts"}:
             if not self.settings.tts_base_url or not self.settings.tts_api_key:
                 raise RuntimeError("TTS_PROVIDER=openai requires TTS_BASE_URL and TTS_API_KEY")
             attempts.append(("openai-compatible-tts", self.settings.tts_model))
@@ -167,13 +169,17 @@ class PerShotAudioBuilder:
         errors: list[str] = []
         self.cache_dir.mkdir(parents=True, exist_ok=True)
         for provider, model in attempts:
-            key = self._cache_key(provider, model, voice, rate, text, pitch)
+            cache_model = f"{self.settings.tts_base_url}|{model}|voice-id-v2" if provider == "openai-compatible-tts" else model
+            key = self._cache_key(provider, cache_model, voice, rate, text, pitch)
             cached = self.cache_dir / f"{key}.wav"
             metadata = cached.with_suffix(".json")
             if cached.is_file():
                 try:
                     info = probe_audio(cached)
                     if info["sample_rate"] == 48000 and info["channels"] == 1:
+                        # Upgrade an existing mono cache entry without another TTS request.
+                        info = _atomic_normalize(cached, cached)
+                    if info["sample_rate"] == 48000 and info["channels"] == 2:
                         saved = json.loads(metadata.read_text(encoding="utf-8")) if metadata.exists() else {}
                         return cached, {
                             "provider": provider,
@@ -188,17 +194,16 @@ class PerShotAudioBuilder:
 
             raw_suffix = ".mp3" if provider == "edge-tts" else ".wav"
             raw = self.cache_dir / f"{key}.raw{raw_suffix}"
+            billing = {}
             try:
-                if provider == "tianyi-local":
-                    local = tianyi_runtime.synthesize(text, raw, rate)
-                    model = str(local["model"])
-                elif provider == "openai-compatible-tts":
+                if provider == "openai-compatible-tts":
                     result = OpenAICompatibleTTSProvider(
                         self.settings.tts_base_url,
                         self.settings.tts_api_key,
                         self.settings.tts_model,
-                    ).synthesize(text, raw, "alloy" if (voice == "女声" or "女声" in voice) else "onyx", rate=rate)
+                    ).synthesize(text, raw, voice if preference == "voicebank" else {"女声": "alloy", "男声": "onyx"}.get(voice, voice), rate=rate)
                     model = result.model
+                    billing = {key: result.event.get(key) for key in ("request_id", "billing_instrumented")}
                 elif provider == "edge-tts":
                     edge = generate_edge_tts(
                         text, raw, voice, rate, self.runtime, pitch_hz=pitch
@@ -210,8 +215,7 @@ class PerShotAudioBuilder:
                 info = _atomic_normalize(raw, cached)
                 raw.unlink(missing_ok=True)
                 details = {"model": model, "pitch_applied": provider == "edge-tts"}
-                if provider == "tianyi-local":
-                    details.update({"device":local.get("device"), "source":"community", "offline":True})
+                details["voice_id"] = voice
                 metadata.write_text(json.dumps(details, ensure_ascii=False), encoding="utf-8")
                 return cached, {
                     "provider": provider,
@@ -220,6 +224,7 @@ class PerShotAudioBuilder:
                     "cache_hit": False,
                     "duration_sec": info["duration"],
                     **details,
+                    **billing,
                     "fallback_errors": errors.copy(),
                 }
             except Exception as exc:
@@ -239,14 +244,19 @@ class PerShotAudioBuilder:
         key = int(round(seconds * 1000))
         target = output_dir / f"silence-{key}ms.wav"
         if target.is_file():
-            return target
+            try:
+                info = probe_audio(target)
+                if info["sample_rate"] == 48000 and info["channels"] == 2:
+                    return target
+            except Exception:
+                pass
         temporary = output_dir / f"silence-{key}ms.tmp.wav"
         generated = run_ffmpeg(
             [
                 "-f",
                 "lavfi",
                 "-i",
-                "anullsrc=r=48000:cl=mono",
+                "anullsrc=r=48000:cl=stereo",
                 "-t",
                 f"{seconds:.3f}",
                 "-c:a",
@@ -297,7 +307,7 @@ class PerShotAudioBuilder:
                 "-ar",
                 "48000",
                 "-ac",
-                "1",
+                "2",
                 temporary.name,
             ],
             cwd=output_dir,

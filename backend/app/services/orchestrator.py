@@ -1,8 +1,10 @@
 from __future__ import annotations
 
 import json
+import hashlib
 import math
 import threading
+import subprocess
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import dataclass
 from pathlib import Path
@@ -14,7 +16,11 @@ from ..providers.audio_runtime import AudioRuntimeClient
 from ..providers.media_ffmpeg import validate_audio_file
 from ..providers.music import select_music
 from ..providers.registry import ProviderRegistry, build_provider_registry, invoke_create_or_find
-from ..storage import Storage
+from ..storage import Storage, TaskBusyError
+from .subject_review import reference_path, review_group
+from .visual_review import build_review, write_json
+from .cost import billing_scope
+from .subtitle_alignment import align_subtitles
 from . import consistency
 from . import knowledge as zhejiang_kb
 from .audio_sync import PerShotAudioBuilder
@@ -86,8 +92,12 @@ class Orchestrator:
             ] + [{"name": "review", "label": "审核", "order": len(PIPELINE) + 1}],
         }
 
+    def has_running_tasks(self) -> bool:
+        with self._threads_lock:
+            return any(worker.is_alive() for worker in self._threads.values())
+
     def create_task(self, task_input: TaskInput) -> Task:
-        task = Task(id=new_id("task"), input=task_input)
+        task = Task(id=new_id("task"), input=task_input, initial_input=vars(task_input).copy())
         task.trace = TraceRecord(
             provider="pending",
             model="pending",
@@ -99,7 +109,10 @@ class Orchestrator:
         return task
 
     def create_preview(self, task_input: TaskInput) -> Task:
-        task = Task(id=new_id("draft"), input=task_input, status="draft", stage="preview", progress=5)
+        task = Task(
+            id=new_id("draft"), input=task_input, initial_input=vars(task_input).copy(),
+            status="draft", stage="preview", progress=5,
+        )
         task.trace = TraceRecord(
             provider="pending",
             model="pending",
@@ -135,6 +148,8 @@ class Orchestrator:
             raise ValueError("Only a draft task can be generated")
         if not task.shots:
             raise ValueError("The draft has no storyboard")
+        if task.input.voice_engine == "reselect":
+            raise ValueError("原声库已停用，请重新选择音色后合成")
         self.start(task_id, "storyboard")
         return {"task_id": task_id, "accepted": True, "from_stage": "storyboard"}
 
@@ -174,16 +189,27 @@ class Orchestrator:
         track = plan_track(task.shots, task.input)
         if not synthesize:
             return track
+        if task.input.voice_engine == "reselect":
+            raise ValueError("原声库已停用，请重新选择音色后合成")
         if task.input.voice == NO_VOICE:
             raise ValueError("当前选择无配音，请先选择音色")
         directory = self.settings.media_dir / task.id / "voice-previews" / new_id("preview")
-        result = self.audio_builder.build(
-            task.id, task.shots, voice=task.input.voice, rate=task.input.voice_rate,
-            pitch=task.input.voice_pitch, style=task.input.voice_style,
-            expressiveness=task.input.voice_expressiveness,
-            force_provider="" if task.input.voice_engine == "configured" else task.input.voice_engine,
-            target_duration=0 if selected_id else task.input.duration, output_dir=directory,
-        )
+        billing_events = []
+
+        def record_preview(event):
+            billing_events.append({**event, "purpose": "voice_preview",
+                                   **({"shot_id": selected_id} if selected_id else {})})
+            directory.mkdir(parents=True, exist_ok=True)
+            write_json(directory / "billing.json", {"events": billing_events})
+
+        with billing_scope(record_preview):
+            result = self.audio_builder.build(
+                task.id, task.shots, voice=task.input.voice, rate=task.input.voice_rate,
+                pitch=task.input.voice_pitch, style=task.input.voice_style,
+                expressiveness=task.input.voice_expressiveness,
+                force_provider="" if task.input.voice_engine == "configured" else task.input.voice_engine,
+                target_duration=0 if selected_id else task.input.duration, output_dir=directory,
+            )
         track = plan_track(task.shots, task.input)
         track["timing"] = "measured"
         for clip in track["clips"]:
@@ -195,9 +221,7 @@ class Orchestrator:
         for trace in result.provider_trace:
             if trace.get("fallback_errors"):
                 warnings.append("联网语音失败，本次已使用系统语音，音色与自然度可能不同。")
-            if trace.get("provider") == "tianyi-local":
-                warnings.append("天依使用模型自然语调，未应用 Hz 音高偏移。")
-            elif trace.get("provider") in {"windows-system-speech", "openai-compatible-tts"}:
+            if trace.get("provider") in {"windows-system-speech", "openai-compatible-tts"}:
                 warnings.append("当前引擎未应用音高参数；下方显示的是规划值。")
         if result.total_duration > task.input.duration + 0.05 and not selected_id:
             warnings.append("旁白超过目标时长，请缩短文本或调整语速后再生成视频。")
@@ -231,8 +255,17 @@ class Orchestrator:
         self.update(task, event={"type": "preview", "status": "edited"})
         return task.to_dict()
 
+    def trash_task(self, task_id: str) -> str:
+        with self._threads_lock:
+            current = self._threads.get(task_id)
+            if current and current.is_alive():
+                raise TaskBusyError("任务正在生成，请完成后再删除。")
+            return self.storage.trash_task(task_id)
+
     def start(self, task_id: str, from_stage: str | None = None) -> None:
         with self._threads_lock:
+            if not self.storage.get_task(task_id):
+                raise KeyError("任务不存在")
             current = self._threads.get(task_id)
             if current and current.is_alive():
                 return
@@ -259,9 +292,12 @@ class Orchestrator:
 
     @staticmethod
     def _task_from_dict(data: dict[str, Any]) -> Task:
+        # Preserve the old defaults for records saved before these fields were present.
+        saved_input = {"output_resolution": "720x1280", "fps": 25, "music_ducking": "不压低", **data["input"]}
         task = Task(
             id=data["id"],
-            input=TaskInput.from_dict(data["input"]),
+            input=TaskInput.from_dict(saved_input),
+            initial_input=data.get("initial_input"),
             status=data.get("status", "queued"),
             stage=data.get("stage", "queued"),
             progress=int(data.get("progress", 0)),
@@ -357,7 +393,8 @@ class Orchestrator:
         for candidate in dict.fromkeys(candidates):
             try:
                 provider = self.registry.create("llm", candidate)
-                result = provider.generate(prompt, task.input.__dict__)
+                with billing_scope(lambda event: self.update(task, event=event)):
+                    result = provider.generate(prompt, task.input.__dict__)
                 if errors:
                     result.fallback_used = True
                     result.event["fallback_reason"] = "; ".join(errors)
@@ -381,9 +418,11 @@ class Orchestrator:
             model=result.model,
             prompt_version=result.event.get("prompt_version", "zj-tourism-prompt-v1"),
             fallback_used=result.fallback_used,
-            events=[result.event],
+            events=[*(task.trace.events if task.trace else []), result.event],
         )
         task.audio["knowledge"] = result.data.get("knowledge", {})
+        task.audio["knowledge_references"] = [zhejiang_kb.source_record(entity) for entity in
+            zhejiang_kb.topic_entities(task.input.city, task.input.landmark, task.input.theme, task.input.culture, task.input.festival)]
         self.update(
             task,
             stage="scripting",
@@ -467,6 +506,17 @@ class Orchestrator:
         style_ctx["grade"] = consistency.grade(style_ctx)
         task.audio["grade"] = style_ctx["grade"]
         existing_assets = {asset.shot_id: asset for asset in task.assets}
+        groups = {}
+        references = {}
+        for shot in task.shots:
+            if shot.subject_group:
+                groups.setdefault(shot.subject_group, []).append(shot)
+                if shot.subject_reference:
+                    path = reference_path(directory.parent/"references", shot.subject_reference)
+                    if references.setdefault(shot.subject_group,path) != path:
+                        raise ValueError(f"主体组 {shot.subject_group} 绑定了多张参考图，请统一")
+        if groups and candidates[0] in FRAME_REQUIRED_PROVIDERS and groups.keys()-references.keys():
+            raise ValueError("请给每个主体组上传一张参考图")
         task.assets = []
         used_sources: set[str] = set()
         strict_dynamic = asset_source in STRICT_ASSET_SOURCES
@@ -476,14 +526,29 @@ class Orchestrator:
         # 单镜实测约 110 秒（文生图 37~70s + 图生视频 44s），串行四镜要八分钟。
         reused: dict[str, dict[str, Any]] = {}
         pending: list[dict[str, Any]] = []
+        stock_source = candidates[0] in {"stock", "pixabay", "pexels"}
         for shot in task.shots:
+            item = self._plan_shot(task, shot)
+            reference = references.get(shot.subject_group, "") if candidates[0] in FRAME_REQUIRED_PROVIDERS else ""
+            selection_key = ""
+            if reference or stock_source:
+                selection = [candidates[0], task.input.city, task.input.landmark, task.input.style,
+                             task.input.output_resolution, shot.title, shot.visual_prompt, item["payload"].get("search_query"),
+                             shot.duration_sec, reference]
+                selection_key = hashlib.sha256(json.dumps(selection, ensure_ascii=False).encode()).hexdigest()
+                item["payload"]["selection_key"] = selection_key
             existing = existing_assets.get(shot.id)
-            if existing and (asset_source != "pexels" or existing.source == "pexels") and self._is_reusable(existing, strict_dynamic):
+            if (existing and (not stock_source or existing.page_url) and existing.selection_key == selection_key
+                    and self._is_reusable(existing, strict_dynamic)):
                 reused[shot.id] = self._reused_asset(existing)
             else:
-                pending.append(self._plan_shot(task, shot))
+                if reference:
+                    item["payload"]["first_frame_path"] = reference
+                pending.append(item)
 
         generated: dict[str, dict[str, Any]] = {}
+        if stock_source:
+            style_ctx.update(stock_ids={a.get("external_id") or a["id"] for a in reused.values()}, stock_lock=threading.Lock())
         if pending:
             workers = max(1, min(self.settings.asset_concurrency, len(pending)))
             with ThreadPoolExecutor(max_workers=workers) as pool:
@@ -540,6 +605,15 @@ class Orchestrator:
         # 不用把已经付过费的那几镜重跑一遍。
         if errors:
             raise RuntimeError("; ".join(errors))
+        reviews = []
+        for group, members in groups.items():
+            try:
+                sheet = review_group(group, members, directory.parent)
+                sheet["url"] = f"/media/{task.id}/{sheet['file']}"
+                reviews.append(sheet)
+            except (ValueError, OSError, subprocess.SubprocessError) as exc:
+                reviews.append({"group":group,"error":str(exc)})
+        task.audio["subject_reviews"] = reviews
         self.update(
             task,
             stage="assets",
@@ -579,6 +653,10 @@ class Orchestrator:
             "local_path": existing.local_path,
             "source": existing.source,
             "license": existing.license,
+            "grantor": existing.grantor,
+            "authorization_ref": existing.authorization_ref,
+            "selection_key": existing.selection_key, "external_id": existing.external_id, "page_url": existing.page_url, "location_evidence": existing.location_evidence,
+            "search_query": existing.search_query,
             "author": existing.author,
             "usage_scope": existing.usage_scope,
             "is_ai_generated": existing.is_ai_generated,
@@ -588,17 +666,19 @@ class Orchestrator:
             "prompt": existing.prompt,
             "first_frame_path": existing.first_frame_path,
             "cost": existing.cost,
+            "reused": True,
         }
 
     def _plan_shot(self, task: Task, shot: Shot) -> dict[str, Any]:
         """准备好一镜生成所需的输入。放在主线程做，避免并发里读任务状态。"""
         payload = shot.__dict__.copy()
+        payload.update(city=task.input.city, landmark=task.input.landmark,
+                       landmark_aliases=zhejiang_kb.english_query(task.input.landmark, city=task.input.city).split(";")[:1])
         payload["library_query"] = f"{task.input.city} {task.input.theme} {shot.title}"
         # 知识库增强：中文长句映射为经核查的英文检索词，提升素材站命中率
         search_query = zhejiang_kb.english_query(
             shot.visual_prompt,
             shot.narration,
-            task.input.theme,
             city=task.input.city,
             landmark=task.input.landmark,
         )
@@ -650,9 +730,15 @@ class Orchestrator:
                         if not frame:
                             raise RuntimeError("没有可用的首帧图片（图生视频必须有首帧）")
                         payload["first_frame_path"] = frame
-                    asset = self.registry.generate_asset(
-                        candidate, task.id, payload, directory, style_ctx
-                    )
+                    target_dir = directory
+                    if shot.subject_group and candidate in FRAME_REQUIRED_PROVIDERS and payload.get("selection_key"):
+                        target_dir = directory / payload["selection_key"][:24]
+                        target_dir.mkdir(parents=True, exist_ok=True)
+                    with billing_scope(lambda event: self.update(task, event={**event, "shot_id": shot.id})):
+                        asset = self.registry.generate_asset(candidate, task.id, payload, target_dir, style_ctx)
+                    if target_dir != directory:
+                        asset["url"] = self._media_url(task.id, Path(asset["local_path"]))
+                    asset["selection_key"] = payload.get("selection_key","")
                 except Exception as exc:
                     failures.append(f"{candidate}: {exc}")
                     continue
@@ -687,12 +773,13 @@ class Orchestrator:
         shot.asset_seed = int(asset.get("seed", 0) or 0)
         shot.asset_first_frame_path = str(asset.get("first_frame_path", ""))
         provider_event = dict(asset.get("event") or {})
-        if (provider_event or float(asset.get("cost", 0) or 0) > 0) and task.trace:
+        if task.trace and not asset.get("reused") and (provider_event or float(asset.get("cost", 0) or 0) > 0):
             provider_event.setdefault("type", "asset")
             provider_event.setdefault("slot", "asset")
             provider_event.setdefault("provider", asset.get("source", "unknown"))
             provider_event.setdefault("cost", float(asset.get("cost", 0) or 0))
             provider_event.setdefault("shot_id", shot.id)
+            provider_event.setdefault("model", asset.get("model", ""))
             task.trace.events.append(provider_event)
         task.assets.append(
             AssetRecord(
@@ -712,6 +799,11 @@ class Orchestrator:
                         "is_ai_generated",
                     )
                 },
+                selection_key=asset.get("selection_key",""),
+                grantor=asset.get("grantor", ""), authorization_ref=asset.get("authorization_ref", ""),
+                external_id=asset.get("external_id",""),
+                page_url=asset.get("page_url",""), location_evidence=asset.get("location_evidence",""),
+                search_query=asset.get("search_query",""),
                 media_type=str(asset.get("media_type", "")),
                 model=str(asset.get("model", "")),
                 seed=int(asset.get("seed", 0) or 0),
@@ -741,12 +833,11 @@ class Orchestrator:
             # 首帧也是画面 provider 出的，配色/风格/规格必须和后续图生视频一致。
             frame_ctx.setdefault("color", knowledge.get("color", "#2d6c63"))
             frame_ctx.setdefault("accent", knowledge.get("accent", "#d6ad60"))
-            acquired = self.registry.acquire_asset(
-                frame_chain,
-                lambda name, provider, body=payload, ctx=frame_ctx: invoke_create_or_find(
-                    provider, task.id, body, directory, ctx
-                ),
-            )
+            with billing_scope(lambda event: self.update(task, event={**event, "shot_id": shot.id, "purpose": "first_frame"})):
+                acquired = self.registry.acquire_asset(
+                    frame_chain,
+                    lambda name, provider: invoke_create_or_find(provider, task.id, payload, directory, frame_ctx),
+                )
         except Exception as exc:
             self._note_fallback(task, "asset", "ai-image", True, str(exc))
             return ""
@@ -790,24 +881,24 @@ class Orchestrator:
         target = float(task.input.duration)
 
         # P3 逐镜合成：每个镜头单独配音或使用上传音频，ffprobe 实测边界生成 cues，
-        # 镜间留 150ms 静音，统一 48kHz 单声道。镜头时长由实测音频反推。
-        result = self.audio_builder.build(
-            task.id,
-            task.shots,
-            voice=task.input.voice,
-            rate=task.input.voice_rate,
-            pitch=task.input.voice_pitch,
-            style=task.input.voice_style,
-            expressiveness=task.input.voice_expressiveness,
-            force_provider="" if task.input.voice_engine == "configured" else task.input.voice_engine,
-            target_duration=target,
-            output_dir=directory,
-        )
+        # 镜间留 150ms 静音，统一 48kHz 双声道。镜头时长由实测音频反推。
+        with billing_scope(lambda event: self.update(task, event=event)):
+            result = self.audio_builder.build(
+                task.id,
+                task.shots,
+                voice=task.input.voice,
+                rate=task.input.voice_rate,
+                pitch=task.input.voice_pitch,
+                style=task.input.voice_style,
+                expressiveness=task.input.voice_expressiveness,
+                force_provider="" if task.input.voice_engine == "configured" else task.input.voice_engine,
+                target_duration=target,
+                output_dir=directory,
+            )
 
-        # 音乐：优先授权曲库/带授权字段的上传（P3），否则回落 MUSIC_DIR（P1 行为），
-        # 再不行才在显式开关下用合成音。
         music_path = ""
         music_provider = "none"
+        task.audio["music_notice"] = ""
         if task.input.music_mood != NO_MUSIC:
             try:
                 music = select_music(
@@ -825,25 +916,9 @@ class Orchestrator:
                 result.music_path = music_path
                 result.music_match = music.to_dict() if hasattr(music, "to_dict") else {}
             except Exception as music_exc:
-                candidates = [self.settings.music_provider]
-                if self.settings.allow_synthetic_audio_fallback:
-                    candidates.append("offline-synthetic-tone")
-                errors = [str(music_exc)]
-                for candidate in dict.fromkeys(candidates):
-                    try:
-                        provider = self.registry.create("music", candidate)
-                        music_path = str(provider.resolve(directory / "music.wav", task.input.music_mood, target))
-                        validate_audio_file(Path(music_path))
-                        music_provider = provider.name
-                        result.music_path = music_path
-                        break
-                    except Exception as exc:
-                        errors.append(f"{candidate}: {exc}")
-                else:
-                    raise RuntimeError(
-                        "No usable music provider. Upload music, configure MUSIC_DIR or "
-                        f"MUSIC_CATALOG_PATH, or choose 无音乐. Details: {'; '.join(errors)}"
-                    )
+                task.audio["music_notice"] = "未找到符合授权与风格要求的配乐，本片未添加背景音乐。"
+                result.music_match = {"status": "omitted", "reason": str(music_exc)}
+                result.music_path = ""
 
         event = result.event if isinstance(result.event, dict) else {}
         task.audio.update(result.to_dict())
@@ -862,6 +937,10 @@ class Orchestrator:
         )
         if task.trace and event:
             task.trace.events.append(dict(event, stage="audio"))
+        task.audio.pop("subtitle_cues", None)
+        task.audio.pop("subtitle_alignment", None)
+        align_subtitles(task.audio, self.audio_runtime,
+                        sentence_only=self.settings.subtitle_alignment == "sentence")
         self._sync_shots_to_audio(task)
         # 镜头时长按 cues 实测（P1 任务3），成片容器锁回用户选择的秒数（三条不能破的指标）。
         task.audio["requested_duration"] = target
@@ -881,7 +960,7 @@ class Orchestrator:
             raw_cues = []
             for shot in task.shots:
                 end = round(elapsed + float(shot.duration_sec), 3)
-                raw_cues.append({"shot_id": shot.id, "start": elapsed, "end": end, "text": shot.narration})
+                raw_cues.append({"shot_id": shot.id, "start": elapsed, "end": end, "text": shot.subtitle or shot.narration})
                 elapsed = end
             task.audio["cues"] = raw_cues
             task.audio["cue_source"] = "nominal-shot-timing"
@@ -930,9 +1009,9 @@ class Orchestrator:
         )
         render_shots = [shot.__dict__.copy() for shot in task.shots]
         renderer = self.registry.create("render", self.settings.render_provider)
-        # 成片容器锁回用户选择的秒数（30.000s / 720x1280 / 25fps 三条不能破的指标）
+        # 成片沿用任务所选时长、画幅和帧率。
         task.audio["requested_duration"] = float(task.input.duration)
-        # 旁白出现时 BGM 的处理方式。默认不压低，需要时由任务参数选"轻微/标准"。
+        # 旁白出现时按任务所选模式调整背景音乐。
         task.audio["duck"] = {
             "mode": task.input.music_ducking,
             "release_sec": 0.35,
@@ -950,6 +1029,13 @@ class Orchestrator:
             task.input.music_volume,
             grade,
         )
+        try:
+            review = build_review(task.to_dict(), self.settings.media_dir / task.id)
+            if task.trace:
+                task.trace.events.append({"type": "visual_review", "shot_count": len(review["shots"])})
+        except (OSError, ValueError, subprocess.SubprocessError) as exc:
+            if task.trace:
+                task.trace.events.append({"type": "visual_review", "error": str(exc)})
         self.update(
             task,
             stage="rendering",
@@ -969,6 +1055,15 @@ class Orchestrator:
         shot = next((item for item in task.shots if item.id == shot_id), None)
         if not shot:
             raise KeyError("Shot does not exist")
+        if "subject_group" in patch:
+            shot.subject_group = str(patch["subject_group"]).strip()
+            if len(shot.subject_group)>80:
+                raise ValueError("主体组名不能超过 80 字")
+        if "subject_reference" in patch:
+            key = str(patch["subject_reference"]).strip()
+            if key:
+                reference_path(self.settings.media_dir/task.id/"references",key)
+            shot.subject_reference = key
         if patch.get("clear_audio") is True:
             shot.audio_local_path = ""
             shot.audio_url = ""

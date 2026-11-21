@@ -1,24 +1,37 @@
 from __future__ import annotations
 
 import base64
+import hashlib
+import hmac
 import json
 import mimetypes
 import os
+import threading
 import traceback
+from dataclasses import replace
 from datetime import datetime, timezone
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
+from tempfile import TemporaryDirectory
 from urllib.parse import parse_qs, unquote, urlparse
 
 from .config import settings
 from .models import TaskInput
 from .providers.contract import CONTRACT_VERSION
 from .providers.media_ffmpeg import validate_audio_file
-from .services.catalog import get_catalog
+from .providers.tts import generate_system_speech
+from .services.catalog import bank_voices, get_catalog
+from .services.audio_sync import _atomic_normalize
 from .services.cost import summarize_cost
+from .services.music_library import import_music, list_music_library
 from .services.orchestrator import Orchestrator
+from .services.provider_settings import public_settings, uses_local_speech, validate_changes, write_dotenv
+from .services.subject_review import save_reference
 from .services.uploads import validate_audio_upload
-from .storage import Storage
+from .services import knowledge
+from .services.task_ledger import cost_ledger, reconcile, task_ledger
+from .services.visual_review import read_review, record_review
+from .storage import Storage, TaskBusyError
 
 
 settings.ensure_dirs()
@@ -27,6 +40,13 @@ storage.scan_library(settings.media_dir)
 orchestrator = Orchestrator(settings, storage)
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 FRONTEND_ROOT = PROJECT_ROOT / "frontend"
+PROVIDER_SETTINGS_PATH = PROJECT_ROOT / ".env"
+PROVIDER_SETTINGS_ROUTE = "/api/provider-settings"
+CURRENT_PROVIDER_SETTINGS_ROUTE = f"{PROVIDER_SETTINGS_ROUTE}/current"
+MUSIC_LIBRARY_ROUTE = "/api/music-library"
+LOOPBACK = {"127.0.0.1", "::1", "localhost"}
+_provider_settings_lock = threading.RLock()
+_active_provider_posts = 0
 
 
 def json_bytes(value: object) -> bytes:
@@ -71,6 +91,9 @@ class AppHandler(BaseHTTPRequestHandler):
         return value
 
     def do_OPTIONS(self) -> None:
+        if unquote(urlparse(self.path).path) in {PROVIDER_SETTINGS_ROUTE, CURRENT_PROVIDER_SETTINGS_ROUTE, MUSIC_LIBRARY_ROUTE}:
+            self._json(405, {"error": "仅支持本机同源访问"})
+            return
         self._send(
             204,
             b"",
@@ -85,20 +108,31 @@ class AppHandler(BaseHTTPRequestHandler):
         parsed = urlparse(self.path)
         path = unquote(parsed.path)
         try:
+            if path == PROVIDER_SETTINGS_ROUTE:
+                if self._allow_provider_settings():
+                    self._json(200, public_settings(orchestrator.settings))
+                return
+            if path == MUSIC_LIBRARY_ROUTE:
+                if self._allow_provider_settings():
+                    active = orchestrator.settings
+                    self._json(200, list_music_library(active.music_catalog_path, active.music_dir))
+                return
             if path == "/api/health":
-                system_config = orchestrator.system_config()
+                current = orchestrator
+                active = current.settings
+                system_config = current.system_config()
                 self._json(
                     200,
                     {
                         "ok": True,
                         "service": "zhejiang-tourism-aigc",
-                        "provider": settings.default_provider,
-                        "model": settings.llm_model or "offline",
-                        "asset_provider": settings.asset_provider,
-                        "tts_provider": settings.tts_provider,
+                        "provider": active.default_provider,
+                        "model": active.llm_model or "offline",
+                        "asset_provider": active.asset_provider,
+                        "tts_provider": active.tts_provider,
                         "contract_version": CONTRACT_VERSION,
                         "timing": "measured-per-shot-cues",
-                        "synthetic_audio_fallback": settings.allow_synthetic_audio_fallback,
+                        "synthetic_audio_fallback": active.allow_synthetic_audio_fallback,
                         "pipeline": system_config["pipeline"],
                     },
                 )
@@ -106,8 +140,11 @@ class AppHandler(BaseHTTPRequestHandler):
             if path == "/api/config":
                 self._json(200, orchestrator.system_config())
                 return
+            if path == "/api/knowledge":
+                self._json(200, knowledge.stats())
+                return
             if path == "/api/catalog":
-                self._json(200, get_catalog())
+                self._json(200, get_catalog(orchestrator.settings))
                 return
             if path == "/api/tasks":
                 limit = int(parse_qs(parsed.query).get("limit", ["50"])[0])
@@ -117,13 +154,23 @@ class AppHandler(BaseHTTPRequestHandler):
                     {"items": items, "total": len(storage.list_tasks(200))},
                 )
                 return
-            if path.startswith("/api/tasks/") and path.endswith("/cost"):
+            if path == "/api/trash":
+                self._json(200, {"items": storage.list_trashed_tasks()})
+                return
+            if path.startswith("/api/tasks/") and path.count("/") == 4 and path.endswith(("/ledger", "/cost", "/visual-review")):
                 task_id = path.split("/")[3]
                 task = storage.get_task(task_id)
                 if not task:
                     self._json(404, {"error": "TASK_NOT_FOUND", "message": "Task does not exist"})
                 else:
-                    self._json(200, summarize_cost(task))
+                    directory = settings.media_dir / task_id
+                    if path.endswith("/ledger"):
+                        self._send(200, json_bytes(task_ledger(task, directory, orchestrator.settings.music_catalog_path)),
+                                   headers={"Content-Disposition": f'attachment; filename="{task_id}-ledger.json"'})
+                    elif path.endswith("/visual-review"):
+                        self._json(200, read_review(directory) if task.get("status") == "completed" else None)
+                    else:
+                        self._json(200, {**summarize_cost(task), "billing": cost_ledger(task, directory)})
                 return
             if path == "/api/assets":
                 task_id = parse_qs(parsed.query).get("task_id", [""])[0]
@@ -145,7 +192,11 @@ class AppHandler(BaseHTTPRequestHandler):
                         {"error": "TASK_NOT_FOUND", "message": "Task does not exist"},
                     )
                 else:
-                    task["cost"] = summarize_cost(task)
+                    directory = settings.media_dir / task_id
+                    billing = cost_ledger(task, directory)
+                    task["cost"] = {**summarize_cost(task), "billing": billing}
+                    if task.get("status") == "completed":
+                        task["visual_review"] = read_review(directory)
                     self._json(200, task)
                 return
             if path.startswith("/media/"):
@@ -153,6 +204,9 @@ class AppHandler(BaseHTTPRequestHandler):
                 return
             if path in {"/", "/index.html"}:
                 self._serve_file(FRONTEND_ROOT / "index.html", "text/html; charset=utf-8")
+                return
+            if path == "/lake-hero.webp":
+                self._serve_file(FRONTEND_ROOT / "lake-hero.webp", "image/webp")
                 return
             if path in {"/app.js", "/voice-studio.js", "/styles.css"}:
                 self._serve_file(
@@ -165,9 +219,61 @@ class AppHandler(BaseHTTPRequestHandler):
             self._json(500, {"error": "INTERNAL_ERROR", "message": str(exc)})
 
     def do_POST(self) -> None:
-        parsed = urlparse(self.path)
-        path = unquote(parsed.path)
+        global _active_provider_posts
+        path = unquote(urlparse(self.path).path)
+        if path == PROVIDER_SETTINGS_ROUTE:
+            if self._allow_provider_settings(write=True):
+                self._save_provider_settings()
+            return
+        if path == CURRENT_PROVIDER_SETTINGS_ROUTE:
+            if self._allow_provider_settings(write=True):
+                # This read-only POST carries no input fields, but consume its bounded body.
+                try:
+                    if not 0 <= int(self.headers.get("Content-Length", "0")) <= 1024:
+                        raise ValueError("配置读取请求无效")
+                    self._read_json()
+                except ValueError:
+                    self._json(400, {"error": "配置读取请求无效"})
+                    return
+                self._json(200, public_settings(orchestrator.settings, include_keys=True))
+            return
+        with _provider_settings_lock:
+            _active_provider_posts += 1
         try:
+            self._handle_post(path)
+        finally:
+            with _provider_settings_lock:
+                _active_provider_posts -= 1
+
+    def _handle_post(self, path: str) -> None:
+        try:
+            if path.startswith("/api/tasks/") and path.count("/") == 4 and path.endswith(("/visual-review", "/cost")):
+                if not self._allow_provider_settings(write=True):
+                    return
+                task_id = path.split("/")[3]
+                task = storage.get_task(task_id)
+                if task is None:
+                    raise KeyError("任务不存在")
+                directory = settings.media_dir / task_id
+                payload = self._read_json()
+                if path.endswith("/cost"):
+                    self._json(200, reconcile(task, directory, payload))
+                elif task.get("status") == "completed":
+                    self._json(200, record_review(directory, payload))
+                else:
+                    raise ValueError("请在成片完成后核验")
+                return
+            if path.startswith("/api/tasks/") and path.endswith("/subject-reference"):
+                task_id = path.split("/")[3]
+                task = storage.get_task(task_id)
+                if not task or task.get("status") not in {"draft","edited","failed"}:
+                    raise ValueError("请选择可编辑草稿")
+                key = save_reference(settings.media_dir/task_id/"references", self._read_json().get("data_base64",""))
+                self._json(201, {"reference": key})
+                return
+            if path == "/v1/audio/speech" and uses_local_speech(orchestrator.settings):
+                self._local_speech()
+                return
             if path == "/api/previews":
                 task = orchestrator.create_preview(
                     TaskInput.from_dict(self._read_json())
@@ -184,6 +290,11 @@ class AppHandler(BaseHTTPRequestHandler):
                 )
                 self._json(202, task.to_dict())
                 return
+            if path.startswith("/api/trash/") and path.count("/") == 3:
+                task_id = path.split("/")[3]
+                storage.restore_task(task_id)
+                self._json(200, {"id": task_id})
+                return
             if path.startswith("/api/tasks/") and path.endswith("/generate"):
                 task_id = path.split("/")[3]
                 self._json(202, orchestrator.generate(task_id))
@@ -195,6 +306,12 @@ class AppHandler(BaseHTTPRequestHandler):
                     202,
                     orchestrator.retry(task_id, data.get("from_stage", "scripting")),
                 )
+                return
+            if path == MUSIC_LIBRARY_ROUTE:
+                if self._allow_provider_settings(write=True):
+                    active = orchestrator.settings
+                    track = import_music(self._read_json(), active.music_catalog_path, active.music_dir)
+                    self._json(201, track)
                 return
             if path == "/api/assets":
                 self._create_asset()
@@ -241,6 +358,22 @@ class AppHandler(BaseHTTPRequestHandler):
         except Exception as exc:
             self._json(500, {"error": "INTERNAL_ERROR", "message": str(exc)})
 
+    def do_DELETE(self) -> None:
+        path = unquote(urlparse(self.path).path)
+        if not path.startswith("/api/tasks/") or path.count("/") != 3:
+            self._json(404, {"error": "NOT_FOUND", "message": "Endpoint does not exist"})
+            return
+        task_id = path.rsplit("/", 1)[1]
+        try:
+            trashed_at = orchestrator.trash_task(task_id)
+            self._json(200, {"id": task_id, "trashed_at": trashed_at})
+        except TaskBusyError as exc:
+            self._json(409, {"error": "TASK_BUSY", "message": str(exc)})
+        except KeyError:
+            self._json(404, {"error": "TASK_NOT_FOUND", "message": "任务不存在"})
+        except Exception as exc:
+            self._json(500, {"error": "INTERNAL_ERROR", "message": str(exc)})
+
     def do_PUT(self) -> None:
         self._json(
             501,
@@ -272,6 +405,88 @@ class AppHandler(BaseHTTPRequestHandler):
         safe = "".join(char for char in name if char.isalnum() or char in "._-")[:100]
         return safe or fallback
 
+    def _allow_provider_settings(self, *, write: bool = False) -> bool:
+        host = self.headers.get("Host", "")
+        try:
+            address = urlparse(f"http://{host}")
+            local_host = address.hostname in LOOPBACK and address.port == self.server.server_port
+            local_host = local_host and host.lower() in {
+                f"127.0.0.1:{address.port}", f"localhost:{address.port}", f"[::1]:{address.port}",
+            }
+        except ValueError:
+            local_host = False
+        origin = self.headers.get("Origin")
+        if (self.client_address[0] not in LOOPBACK or not local_host
+                or (origin and origin.lower() != f"http://{host.lower()}")):
+            self._json(403, {"error": "此功能仅供本机同源页面访问"})
+            return False
+        if write and self.headers.get_content_type() != "application/json":
+            self._json(415, {"error": "请通过配置页面提交 JSON"})
+            return False
+        return True
+
+    def _save_provider_settings(self) -> None:
+        global orchestrator
+        try:
+            if not 0 < int(self.headers.get("Content-Length", "0")) <= 65_536:
+                raise ValueError("配置数据长度无效")
+            submitted = self._read_json()
+            with _provider_settings_lock:
+                current = orchestrator.settings
+                updates = validate_changes(current, submitted)
+                if updates and (_active_provider_posts or orchestrator.has_running_tasks()):
+                    self._json(409, {"error": "有任务正在运行，请完成后再保存配置。"})
+                    return
+                if updates:
+                    new_settings = replace(current, **{name.lower(): value for name, value in updates.items()})
+                    previous_env = {name: os.environ.get(name) for name in updates}
+                    os.environ.update(updates)
+                    try:
+                        replacement = Orchestrator(new_settings, storage)
+                        write_dotenv(PROVIDER_SETTINGS_PATH, updates)
+                    except Exception:
+                        for name, value in previous_env.items():
+                            if value is None:
+                                os.environ.pop(name, None)
+                            else:
+                                os.environ[name] = value
+                        raise
+                    orchestrator = replacement
+                result = public_settings(orchestrator.settings)
+            self._json(200, result)
+        except ValueError as exc:
+            self._json(400, {"error": str(exc)})
+        except Exception:
+            self._json(500, {"error": "配置未保存，请检查本机配置文件是否可写。"})
+
+    def _local_speech(self) -> None:
+        """OpenAI-compatible speech backed by the machine's installed SAPI voices."""
+        active = orchestrator.settings
+        expected = f"Bearer {active.tts_api_key}"
+        authorization = self.headers.get("Authorization", "")
+        if (self.client_address[0] not in {"127.0.0.1", "::1"} or not active.tts_api_key
+                or not hmac.compare_digest(authorization.encode("utf-8"), expected.encode("utf-8"))):
+            self._json(401, {"error": "Local speech requires a valid service token"})
+            return
+        if not 0 < int(self.headers.get("Content-Length", "0")) <= 16_384:
+            raise ValueError("Invalid speech request length")
+        data = self._read_json()
+        text, voice = data.get("input"), data.get("voice")
+        if (not isinstance(text, str) or not text.strip() or len(text) > 4096
+                or not isinstance(voice, str) or voice not in bank_voices(active)):
+            raise ValueError("Enter valid speech text and choose a configured Windows voice")
+        if data.get("model") != active.tts_model or data.get("response_format", "wav") != "wav":
+            raise ValueError("Select the configured local speech model and WAV output")
+        speed = data.get("speed", 1.0)
+        if type(speed) not in {int, float} or not 0.25 <= speed <= 4:
+            raise ValueError("Speech speed must be between 0.25 and 4")
+        with TemporaryDirectory(prefix="zj-local-tts-") as folder:
+            raw = Path(folder) / "voice-raw.wav"
+            output = Path(folder) / "voice.wav"
+            generate_system_speech(text, raw, voice, speed, exact_voice=True)
+            _atomic_normalize(raw, output)
+            self._send(200, output.read_bytes(), "audio/wav")
+
     def _create_asset(self) -> None:
         data = self._read_json()
         task_id = str(data.get("task_id", "")).strip()
@@ -286,27 +501,36 @@ class AppHandler(BaseHTTPRequestHandler):
             ".mp4", ".mov", ".m4v", ".webm", ".avi", ".mkv",
         }:
             raise ValueError("Only image and video assets are supported")
-        if not storage.get_task(task_id):
+        task = storage.get_task(task_id)
+        if not task:
             raise KeyError("Task does not exist")
+        shot_id = str(data.get("shot_id", ""))
+        if task.get("status") not in {"draft", "edited", "failed"} or not any(shot["id"] == shot_id for shot in task.get("shots", [])):
+            raise ValueError("请为可编辑的草稿选择有效镜头")
+        fields = {key: str(data.get(key) or "").strip() for key in ("license", "author", "usage_scope", "grantor", "authorization_ref", "page_url")}
+        if any(len(value) > 500 for value in fields.values()):
+            raise ValueError("来源和授权字段每项最多 500 字")
+        if fields["page_url"] and urlparse(fields["page_url"]).scheme not in {"http", "https"}:
+            raise ValueError("素材来源链接需要使用 HTTP 或 HTTPS")
+        try:
+            decoded = base64.b64decode(encoded.split(",", 1)[-1], validate=True)
+        except ValueError as exc:
+            raise ValueError("data_base64 is invalid") from exc
         target_dir = settings.media_dir / task_id / "uploads"
         target_dir.mkdir(parents=True, exist_ok=True)
-        target = target_dir / self._safe_filename(name, "upload.bin")
-        payload = encoded.split(",", 1)[1] if "," in encoded else encoded
-        try:
-            target.write_bytes(base64.b64decode(payload, validate=True))
-        except Exception as exc:
-            raise ValueError("data_base64 is invalid") from exc
+        fingerprint = hashlib.sha256(task_id.encode() + b":" + shot_id.encode() + b":" + decoded).hexdigest()[:16]
+        target = target_dir / f"{fingerprint}-{self._safe_filename(name, 'upload.bin')}"
+        target.write_bytes(decoded)
         created_at = datetime.now(timezone.utc).isoformat()
         asset = {
-            "id": f"upload_{target.stem}",
+            "id": f"upload_{fingerprint}",
             "task_id": task_id,
-            "shot_id": str(data.get("shot_id", "")),
+            "shot_id": shot_id,
             "name": name,
             "url": f"/media/{task_id}/uploads/{target.name}",
             "source": "local-upload",
-            "license": data.get("license", "Pending team verification"),
-            "author": data.get("author", "Pending team verification"),
-            "usage_scope": data.get("usage_scope", "Pending team verification"),
+            **{key: fields[key] or "待团队确认" for key in ("license", "author", "usage_scope")},
+            **{key: fields[key] for key in ("grantor", "authorization_ref", "page_url")},
             "is_ai_generated": False,
             "local_path": str(target),
             "created_at": created_at,
@@ -353,14 +577,12 @@ class AppHandler(BaseHTTPRequestHandler):
         else:
             task["audio"]["music_upload"] = {
                 "id": f"upload-{target.stem}",
+                "title": name,
                 "path": str(target),
                 "url": url,
                 "moods": contract["moods"],
                 "styles": contract["styles"],
-                "license": contract["license"],
-                "author": contract["author"],
-                "usage_scope": contract["usage_scope"],
-                "approved": True,
+                **{k: contract[k] for k in ("license", "author", "usage_scope", "approved", "authorization_basis", "authorization_ref")},
             }
             # 兼容字段：历史客户端仍读取 music_local_path / music_url
             task["audio"]["music_local_path"] = str(target)

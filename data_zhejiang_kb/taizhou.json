@@ -1,0 +1,213 @@
+{
+  "city": "台州",
+  "city_meta": {
+    "aliases": [
+      "台州府",
+      "浙东南台州"
+    ],
+    "city_dna": "临海府城、天台山文化、台州曲调"
+  },
+  "entities": [
+    {
+      "id": "taizhou-fucheng",
+      "type": "scenic",
+      "name": "台州府城墙",
+      "aliases": [
+        "临海古城墙",
+        "江南长城",
+        "府城墙",
+        "兴善门"
+      ],
+      "location": "台州临海市",
+      "facts": [
+        "台州府城墙位于临海古城。",
+        "从兴善门南望可以看到绕城而过的灵江。",
+        "从兴善门北望可见紫阳古街。"
+      ],
+      "keywords_en": [
+        "Taizhou ancient city wall Linhai"
+      ],
+      "imagery": [
+        "城墙沿山势而上",
+        "兴善门和瓮城",
+        "城墙外的灵江"
+      ],
+      "scenario_tags": [
+        "古建",
+        "徒步"
+      ],
+      "sources": [
+        {
+          "title": "浙江政务公开·台州府城墙",
+          "url": "https://zjjcmspublic.oss-cn-hangzhou-zwynet-d01-a.internet.cloud.zj.gov.cn/jcms_files/jcms1/web3453/site/attach/0/cef592d2e98c4eeeb938816bad3b7c8b.pdf",
+          "checked_on": "2026-11-21"
+        }
+      ]
+    },
+    {
+      "id": "taizhou-tiantai",
+      "type": "scenic",
+      "name": "天台山国清寺",
+      "aliases": [
+        "国清寺",
+        "天台寺",
+        "天台山"
+      ],
+      "location": "台州天台县",
+      "facts": [
+        "国清寺前身天台寺始建于隋开皇十八年，即598年。",
+        "隋大业元年，即605年，天台寺改名国清寺。"
+      ],
+      "keywords_en": [
+        "Guoqing Temple Tiantai Taizhou"
+      ],
+      "imagery": [
+        "隋塔",
+        "古寺屋檐",
+        "山门甬道"
+      ],
+      "scenario_tags": [
+        "古建",
+        "研学"
+      ],
+      "sources": [
+        {
+          "title": "台州地方志·天台景区",
+          "url": "https://tzsz.zjtz.gov.cn/art/2018/12/13/art_1229209654_54440085.html",
+          "checked_on": "2026-11-21"
+        }
+      ]
+    },
+    {
+      "id": "taizhou-cidiao",
+      "type": "intangible",
+      "name": "临海词调",
+      "aliases": [
+        "才子调",
+        "仙鹤调"
+      ],
+      "location": "台州临海市",
+      "facts": [
+        "临海词调亦有“才子调”和“仙鹤调”的称呼。",
+        "词调流传于临海一带，唱法讲究吐字和行腔。"
+      ],
+      "keywords_en": [
+        "Linhai Cidiao folk music"
+      ],
+      "imagery": [
+        "小型曲艺舞台",
+        "艺人演唱",
+        "丝竹伴奏"
+      ],
+      "scenario_tags": [
+        "演艺",
+        "非遗体验"
+      ],
+      "sources": [
+        {
+          "title": "中国非遗网·临海词调",
+          "url": "https://www.ihchina.cn/project_details/13681.html",
+          "checked_on": "2026-11-21"
+        }
+      ]
+    },
+    {
+      "id": "taizhou-lion",
+      "type": "festival",
+      "name": "黄沙狮子",
+      "aliases": [
+        "黄沙舞狮",
+        "临海黄沙狮子"
+      ],
+      "location": "台州临海市白水洋镇",
+      "facts": [
+        "黄沙狮子主要流传在临海白水洋镇黄沙洋一带。",
+        "表演把舞狮与武术结合，旧时艺人在春节至二月初二间走村表演。"
+      ],
+      "keywords_en": [
+        "Huangsha lion dance Linhai"
+      ],
+      "imagery": [
+        "狮舞演员在村落表演",
+        "锣鼓和武术动作"
+      ],
+      "scenario_tags": [
+        "民俗",
+        "演艺"
+      ],
+      "sources": [
+        {
+          "title": "中国非遗网·黄沙狮子",
+          "url": "https://www.ihchina.cn/project_details/12868.html",
+          "checked_on": "2026-11-21"
+        }
+      ]
+    },
+    {
+      "id": "taizhou-jigong",
+      "type": "legend",
+      "name": "济公传说",
+      "aliases": [
+        "天台济公",
+        "道济传说"
+      ],
+      "location": "台州天台县",
+      "facts": [
+        "济公传说以南宋僧人道济相关故事为基础发展。",
+        "天台流传少年济公与济公扶危济困等故事。"
+      ],
+      "keywords_en": [
+        "Jigong folklore Tiantai"
+      ],
+      "imagery": [
+        "古寺山门",
+        "戏曲中的蒲扇与僧衣"
+      ],
+      "scenario_tags": [
+        "传说",
+        "人文"
+      ],
+      "sources": [
+        {
+          "title": "中国非遗网·济公传说",
+          "url": "https://www.ihchina.cn/project_details/12205.html",
+          "checked_on": "2026-11-21"
+        }
+      ]
+    },
+    {
+      "id": "taizhou-shenxianju",
+      "type": "scenic",
+      "name": "神仙居",
+      "aliases": [
+        "仙居神仙居",
+        "如意桥",
+        "神仙居观音峰"
+      ],
+      "location": "台州仙居县",
+      "facts": [
+        "神仙居以火山流纹岩峰林见长。",
+        "景区可见天然观音峰，如意桥也是景区的一处人文景观。"
+      ],
+      "keywords_en": [
+        "Shenxianju Xianju Taizhou"
+      ],
+      "imagery": [
+        "火山岩峰林",
+        "悬崖间如意桥",
+        "云海"
+      ],
+      "scenario_tags": [
+        "自然",
+        "摄影"
+      ],
+      "sources": [
+        {
+          "title": "央广网·当“十”神仙居",
+          "url": "https://www.cnr.cn/xzpd/20251121/t20251121_527437131.shtml",
+          "checked_on": "2026-11-21"
+        }
+      ]
+    }
+  ]
+}

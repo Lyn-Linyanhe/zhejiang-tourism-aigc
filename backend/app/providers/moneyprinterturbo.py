@@ -195,6 +195,7 @@ class MoneyPrinterTurboLLMProvider(LLMProvider):
         }
         environment = os.environ.copy()
         environment["PYTHONPATH"] = str(self.root)
+        environment["PYTHONIOENCODING"] = "utf-8"
         try:
             completed = subprocess.run(
                 [self._python_command(), "-c", _BRIDGE_CODE],
@@ -202,7 +203,8 @@ class MoneyPrinterTurboLLMProvider(LLMProvider):
                 env=environment,
                 input=json.dumps(request_body, ensure_ascii=False),
                 capture_output=True,
-                text=True,
+                encoding="utf-8",
+                errors="replace",
                 timeout=self.timeout_seconds,
                 check=False,
             )

@@ -14,15 +14,14 @@ function voiceStudioMarkup(task) {
   return `<section class="voice-studio" aria-label="配音工作台">
     <div class="voice-studio-heading"><div><span class="section-index">VOICE STUDIO</span><h5>把文字放进声音轨道</h5></div><span class="voice-badge">整句连读 · 轻量调校</span></div>
     <div class="voice-library">${(state.catalog?.voice_library || []).map(item => `<button type="button" class="voice-card" data-voice-preset="${escapeHtml(item.voice)}" data-voice-style="${item.style}"><strong>${escapeHtml(item.voice)}</strong><small>${escapeHtml(item.description)}</small><span>联网神经音色</span></button>`).join("")}
-      <button type="button" class="voice-card" data-tianyi><strong>天依 · 本地声库</strong><small>文本直接合成 · 无需导入音频</small><span>${state.catalog?.tianyi?.available ? "已安装 · 社区音色模型" : "待安装 · 社区音色模型"}</span></button>
       <button type="button" class="voice-card voice-external" data-voice-upload><strong>上传配音音频</strong><small>使用录音或已制作的配音</small><span>按镜头绑定音频</span></button>
     </div>
     <div class="review-settings-grid">
-      <label>声音来源<select data-input-field="voice_engine">${[["configured","跟随服务端配置"],["tianyi","天依本地社区声库"],["edge","神经音色（联网）"],["windows","Windows 系统语音（本地）"],["upload","上传配音音频"]].map(([key,label])=>`<option value="${key}" ${input.voice_engine===key ? "selected" : ""}>${label}</option>`).join("")}</select></label>
+      <label>声音来源<select data-input-field="voice_engine">${[["configured","跟随服务端配置"],...(input.voice_engine==="reselect" ? [["reselect","请选择新音色"]] : []),...(Object.keys(state.catalog?.bank_voices || {}).length ? [["voicebank","服务端声库"]] : []),["edge","神经音色（联网）"],["windows","Windows 系统语音（本地）"],["upload","上传配音音频"]].map(([key,label])=>`<option value="${key}" ${input.voice_engine===key ? "selected" : ""}>${label}</option>`).join("")}</select></label>
       <label>全局语气<select data-input-field="voice_style">${voiceStyleOptions(input.voice_style || "natural")}</select></label>
       <label>自动语气强度<input data-input-field="voice_expressiveness" type="number" min="0" max="1" step="0.1" value="${input.voice_expressiveness ?? 0.5}" /></label>
     </div>
-    <p class="section-note">晓晓等神经音色需要联网；天依声库在本机合成。自动语气规划随引擎能力应用，句内声调由语音模型处理。0 为关闭自动变化，局部手动设置仍生效。</p>
+    <p class="section-note">服务端声库和联网神经音色均可逐镜试听。自动语气规划随引擎能力应用，句内声调由语音模型处理。0 为关闭自动变化，局部手动设置仍生效。</p>
     <div class="voice-source-note" id="voice-source-note"></div>
     <div class="voice-toolbar"><button type="button" data-voice-preview="all">合成整轨试听</button><button type="button" data-voice-preview="selected">试听选中片段</button><button type="button" data-voice-script>下载轨道文本</button><span id="voice-timing">时间轴：分镜预估</span></div>
     <div class="voice-timeline" id="voice-timeline" aria-label="旁白片段时间轴">${task.shots.map(shot=>`<button type="button" data-select-voice="${escapeHtml(shot.id)}" style="flex:${Number(shot.duration_sec)||1}"><small>镜头 ${shot.order}</small><span>${escapeHtml(shot.narration)}</span></button>`).join("")}</div>
@@ -74,22 +73,20 @@ function refreshVoiceSource() {
   const engine = draftFieldValue("voice_engine");
   const note = $("#voice-source-note");
   if (!note) return;
-  note.textContent = engine === "tianyi"
-    ? `天依社区音色模型：${state.catalog?.tianyi?.available ? "已安装，可直接输入旁白并试听。首次加载较慢，连续片段会复用模型，空闲后自动释放模型资源。" : "运行 scripts/setup-tianyi.ps1 完成首次安装后，刷新页面。"} 这是社区训练的洛天依音色模型，非官方声库。支持语速，音高由模型自然生成，不应用手动 Hz 偏移。已绑定的导入音频仍优先使用，可在片段中解绑。`
-    : engine === "upload"
-    ? "上传配音模式：在下方选择镜头并上传音频，每镜都需绑定音频；缺失时会提示补齐。上传音频保留原有音高与语速。也可以选择天依等合成来源，只用上传音频覆盖个别镜头。"
+  note.textContent = engine === "voicebank" ? "使用已配置的声库音色 ID。" : engine === "upload"
+    ? "上传配音模式：在下方选择镜头并上传音频，每镜都需绑定音频；缺失时会提示补齐。上传音频保留原有音高与语速。也可以选择其他合成来源，只用上传音频覆盖个别镜头。"
     : engine === "windows" ? "本地模式使用已安装的 Windows 声音，不使用上方神经音色；支持语速，不支持这里的音高调校。"
     : engine === "edge" ? "将使用所选神经音色；连接失败会明确报错，可自行切换本地语音。"
     : "实际音源由服务端配置决定；试听后会显示实际引擎和音色。";
-  $$(".voice-card").forEach(el => el.classList.toggle("active", el.hasAttribute("data-tianyi") ? engine === "tianyi" : el.hasAttribute("data-voice-upload") ? engine === "upload" : !["upload","tianyi"].includes(engine) && el.dataset.voicePreset === draftFieldValue("voice")));
+  $$(".voice-card").forEach(el => el.classList.toggle("active", el.hasAttribute("data-voice-upload") ? engine === "upload" : !["upload","voicebank"].includes(engine) && el.dataset.voicePreset === draftFieldValue("voice")));
   $$("[data-input-field='voice_pitch'], [data-shot-field='voice_pitch_offset']").forEach(el => {
-    el.disabled = ["tianyi", "windows", "upload"].includes(engine);
+    el.disabled = ["voicebank", "windows", "upload"].includes(engine);
     el.title = el.disabled ? "当前声音来源不应用 Hz 音高偏移" : "";
   });
 }
 
 function renderVoicePlan(plan) {
-  const naturalPitch = draftFieldValue("voice_engine") === "tianyi";
+  const naturalPitch = draftFieldValue("voice_engine") === "voicebank";
   $("#voice-timing").textContent = `${plan.timing === "measured" ? "本次试听实测" : "分镜预估（合成后更新）"} · ${Number(plan.duration).toFixed(2)} s`;
   for (const clip of plan.clips) {
     const button = $$("[data-select-voice]").find(el => el.dataset.selectVoice === clip.shot_id);
@@ -129,7 +126,7 @@ async function previewVoice(taskId, selected) {
   const revision = ++voiceStudioRevision;
   voiceStudioBusy = true;
   $$("[data-voice-preview]").forEach(el => { el.disabled = true; });
-  $("#voice-preview-status").textContent = snapshot.input.voice_engine === "tianyi" ? "正在本地合成天依配音，首次加载模型可能需要一些时间…" : "正在合成真实配音，首次连接可能需要一些时间…";
+  $("#voice-preview-status").textContent = "正在合成真实配音，首次连接可能需要一些时间…";
   try {
     const result = await api(`/api/tasks/${taskId}/voice-preview`, {method:"POST", body:JSON.stringify(snapshot)});
     if (revision !== voiceStudioRevision || state.latestTaskId !== taskId || !$("#voice-preview-player")) return;
@@ -140,7 +137,7 @@ async function previewVoice(taskId, selected) {
     const download = $("#voice-download");
     download.href = result.audio_url;
     download.hidden = false;
-    const sourceLabel = result.provider === "tianyi-local" ? "天依·本地社区声库" : `${result.provider} / ${result.model}`;
+    const sourceLabel = `${result.provider} / ${result.model}`;
     $("#voice-preview-status").textContent = `已生成 ${result.duration.toFixed(2)} 秒 · ${sourceLabel}${result.rate_scale > 1 ? ` · 时长适配提速 ${result.rate_scale}×` : ""}。${result.warnings.join(" ")}`;
     player.ontimeupdate = () => {
       const active = result.traces.find(t => player.currentTime >= t.start && player.currentTime < t.end);
@@ -192,12 +189,6 @@ function bindVoiceStudio(task) {
     changed();
     $("[data-when='voice-upload']").scrollIntoView({behavior:"smooth", block:"center"});
     $("#voice-file").focus({preventScroll:true});
-  });
-  $("[data-tianyi]").addEventListener("click", ()=>{
-    $("[data-input-field='voice_engine']").value = "tianyi";
-    $("[data-input-field='voice']").value = "天依·本地社区音色";
-    $("[data-input-field='voice_style']").value = "natural";
-    changed();
   });
   $("[data-voice-script]").addEventListener("click", ()=>{
     const snapshot = collectVoiceSnapshot();

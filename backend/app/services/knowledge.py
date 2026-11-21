@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """浙江文旅知识库（轻量版）：为脚本生成注入经核查的事实，为素材检索提供精准英文关键词。
 
-数据来源：data_zhejiang_kb/*.json（46 个杭州实体、210 条经联网核查的事实，
+数据来源：data_zhejiang_kb/*.json（覆盖浙江 11 个设区市，
 覆盖景区/非遗/美食/节庆/传说/名人，字段契约见 _meta.json）。
 
 设计约束：
@@ -81,6 +81,7 @@ def stats() -> dict:
         "entities": len(entities),
         "cities": sorted({str(e.get("city")) for e in entities}),
         "facts": sum(len(e.get("facts") or []) for e in entities),
+        "source_linked_entities": sum(bool(e.get("sources")) for e in entities),
     }
 
 
@@ -109,12 +110,12 @@ def _city_meta(city: str) -> dict:
 
 def _match_text(entity: dict, *texts: str) -> int:
     """返回实体在给定文本中的最长命中别名长度，未命中返回 0。"""
-    blob = " ".join(str(t) for t in texts if t)
+    blob = " ".join(str(t) for t in texts if t).casefold()
     if not blob:
         return 0
     best = 0
     for needle in (entity.get("name"), *(entity.get("aliases") or [])):
-        needle = str(needle or "").strip()
+        needle = str(needle or "").strip().casefold()
         if len(needle) >= 2 and len(needle) > best and needle in blob:
             best = len(needle)
     return best
@@ -163,46 +164,9 @@ def build_generation_context(
     另注：模型常以"天启元年""北宋苏轼元祐四年"等中式纪年表达事实，而非
     裸四位数字。做效果统计时若只匹配阿拉伯数字年份会严重低估注入效果。
     """
-    entities = _entities()
-    if not entities:
-        return ""
-    # 清洗空值：None 直接字符串化会变成 "None" 参与匹配，造成假命中
-    def _clean(value: Any) -> str:
-        return "" if value is None else str(value).strip()
-
-    city = _clean(city)
-    landmark = _clean(landmark)
-    theme = _clean(theme)
-    culture = _clean(culture)
-    festival = _clean(festival)
-
-    # 城市过滤是硬约束：用户选了宁波，语料里没有宁波就退回背景资料，
-    # 绝不能把杭州的事实注入宁波片子——错误的权威事实比没有事实更糟。
-    pool = [e for e in entities if not city or str(e.get("city", "")).strip() == city]
-
-    scored: list[tuple[float, dict]] = []
-    for entity in pool:
-        score = 0.0
-        if landmark:
-            hit = _match_text(entity, landmark)
-            if hit:
-                # 地标是用户最明确的意图信号，权重最高；越具体（别名越长）越优先
-                score = max(score, 4.0 + min(hit, 8) / 10)
-        if culture:
-            hit = _match_text(entity, culture)
-            if hit:
-                score = max(score, 2.0 + min(hit, 8) / 10)
-        if festival:
-            hit = _match_text(entity, festival)
-            if hit:
-                score = max(score, 1.5 + min(hit, 8) / 10)
-        if theme:
-            hit = _match_text(entity, theme)
-            if hit:
-                score = max(score, 1.0 + min(hit, 8) / 10)
-        if score > 0:
-            scored.append((score, entity))
-    scored.sort(key=lambda item: (-item[0], str(item[1].get("name", ""))))
+    city = normalize_city(city)
+    pool = _city_entities(city)
+    scored = _ranked(pool, landmark, theme, culture, festival)
 
     meta = _city_meta(city) if city else {}
     city_dna = str(meta.get("city_dna") or "").strip()
@@ -218,7 +182,10 @@ def build_generation_context(
             if significance:
                 lines.append(f"- 文化定位：{significance}")
             if facts:
-                lines.append("- 可用事实：" + "；".join(facts[:FACTS_PER_ENTITY]))
+                lines.append("- 可用事实：" + "；".join(fact.rstrip("。") for fact in facts[:FACTS_PER_ENTITY]))
+            sources = entity.get("sources") or []
+            if sources:
+                lines.append("- 核对来源：" + "、".join(source["title"] for source in sources))
             if imagery:
                 lines.append("- 画面提示：" + "、".join(imagery[:4]))
             hook = str(entity.get("micro_drama_hook") or "").strip()
@@ -247,7 +214,7 @@ def build_generation_context(
             lines.append(f"- 代表性条目：{fallback.get('name')}")
             facts = [str(f).strip() for f in (fallback.get("facts") or []) if str(f).strip()]
             if facts:
-                lines.append("- 可用事实：" + "；".join(facts[:FACTS_PER_ENTITY]))
+                lines.append("- 可用事实：" + "；".join(fact.rstrip("。") for fact in facts[:FACTS_PER_ENTITY]))
         if not lines:
             return ""
         header = f"以下是{city or '浙江'}的文旅背景资料（已核查）。" if city else "以下是浙江文旅背景资料（已核查）。"
@@ -265,40 +232,65 @@ def build_generation_context(
     )
 
 
+def normalize_city(city: str) -> str:
+    name = str(city or "").strip()
+    if name.startswith("浙江省"):
+        name = name[3:]
+    return name.removesuffix("市")
+
+
+def _city_entities(city: str) -> list[dict]:
+    name = normalize_city(city)
+    return [e for e in _entities() if not name or e["city"] == name]
+
+
+def _ranked(pool: list[dict], landmark: str, theme: str, culture: str, festival: str) -> list[tuple[float, dict]]:
+    scored = []
+    for entity in pool:
+        hits = (
+            weight + min(hit, 8) / 10
+            for value, weight in ((landmark, 4), (culture, 2), (festival, 1.5), (theme, 1))
+            if (hit := _match_text(entity, value))
+        )
+        score = max(hits, default=0)
+        if score:
+            scored.append((score, entity))
+    return sorted(scored, key=lambda item: (-item[0], item[1]["name"]))
+
+
+def topic_entities(city: str, landmark: str = "", theme: str = "", culture: str = "", festival: str = "") -> list[dict]:
+    pool = _city_entities(city)
+    matched = [entity for _, entity in _ranked(pool, landmark, theme, culture, festival)]
+    fallback = next((e for e in pool if e["type"] == "scenic"), None)
+    return matched or ([fallback] if fallback else [])
+
+
+def source_record(entity: dict) -> dict:
+    return {key: entity[key] for key in ("id", "name", "type", "facts", "sources", "imagery") if key in entity}
+
+
+def shot_references(city: str, shot: dict) -> list[dict]:
+    pool = _city_entities(city)
+    evidence = []
+    for field in ("visual_prompt", "title", "narration"):
+        matches = sorted(
+            ((hit, entity) for entity in pool if (hit := _match_text(entity, shot.get(field)))),
+            key=lambda item: -item[0],
+        )
+        for _, entity in matches:
+            if not any(entity["id"] == entry["id"] for entry in evidence):
+                evidence.append(source_record(entity))
+    return evidence[:4]
+
+
 def english_query(*texts: str, city: str = "", landmark: str = "") -> str:
-    """从给定文本中识别知识实体，返回其英文检索词。
-
-    匹配规则：实体名称或别名（>=2 字符）作为子串出现在任一文本中即命中，
-    取命中名称最长（最具体）的实体；同实体多文本命中不叠加。
-    未命中或语料缺失时返回空串，调用方应回退到原有检索词逻辑。
-    """
-    blob = " ".join(str(t) for t in texts if t)
-    if not blob:
-        return ""
-    entities = _entities()
-    if not entities:
-        return ""
-
-    best_entity = None
-    best_needle = ""
-    for entity in entities:
-        needles = [str(entity.get("name") or ""), *(str(a) for a in (entity.get("aliases") or []))]
-        for needle in needles:
-            needle = needle.strip()
-            if len(needle) >= 2 and needle in blob and len(needle) > len(best_needle):
-                best_entity = entity
-                best_needle = needle
-
-    keywords: list[str] = []
-    if best_entity is not None:
-        keywords = [str(k).strip() for k in (best_entity.get("keywords_en") or []) if str(k).strip()]
-
-    # 城市/地标字段是最强信号（用户明确选择了城市与景点），始终附加，
-    # 保证未命中具体实体时至少带上地理限定词。
-    landmark_needle = str(landmark or "").strip()
-    if landmark_needle and landmark_needle in blob and len(landmark_needle) >= 2:
-        keywords.insert(0, landmark_needle)
-
-    if not keywords:
-        return ""
-    return "; ".join(keywords[:3])
+    """Prioritize the first shot-specific text with a known, city-scoped entity."""
+    pool = _city_entities(city)
+    for value in (*texts, landmark):
+        entity = max(pool, key=lambda row: _match_text(row, value), default=None)
+        if entity and _match_text(entity, value):
+            keywords = [k for k in entity.get("keywords_en", []) if k]
+            if value == landmark and landmark:
+                keywords.insert(0, landmark)
+            return "; ".join(keywords[:3])
+    return ""

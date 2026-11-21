@@ -52,9 +52,9 @@ This mode may use a synthetic tone and synthetic scene image only to verify FFmp
 
 ## Real-provider acceptance
 
-1. Revoke and replace the exposed DeepSeek key.
-2. Put the replacement only in `.env`.
-3. Confirm the current network can reach `https://api.deepseek.com`.
+1. Configure the DeepSeek credentials in the local `.env`.
+2. Confirm the network can reach `https://api.deepseek.com`.
+3. Verify the configured model and base URL.
 4. Start the service.
 5. Create a preview in the UI.
 6. Check `trace.provider=openai-compatible`, `trace.model=deepseek-chat` and `trace.fallback_used=false`.
@@ -64,7 +64,6 @@ This mode may use a synthetic tone and synthetic scene image only to verify FFmp
 10. Confirm generation.
 11. Check MP4 with `ffprobe`.
 
-The current environment previously failed the DeepSeek TLS handshake with `SSL: UNEXPECTED_EOF_WHILE_READING`; that is a network/proxy issue until a replacement key and a clean request have been tested.
 
 ## Artifact checks
 
@@ -112,3 +111,11 @@ MPT_PYTHON=C:\path\to\MoneyPrinterTurbo\.venv\Scripts\python.exe
 ```
 
 The adapter uses a subprocess because both projects contain a top-level package named `app`.
+
+## 作品底账与逐镜核验
+
+- 在「作品档案」打开任务，点击「下载任务底账」。JSON 包含创作输入、知识库命中条目、旁白、分镜、素材来源与授权、配音和音乐、渲染信息、核验结果、外部服务费用和调用记录。
+- 「逐镜画面核验」展示成片各镜在避开转场后的前段、中段和后段样本，以及对应旁白、画面目标和知识库来源。抽帧同时检查近黑与缺帧。核验结论对应成片 SHA-256，修改结论时保留旧记录。用于地标发布时，请根据素材原始页、实地资料及画面填写具体观察。
+- 上传与导入的音乐按用户确认的完整授权口径入账。作者、使用范围和授权凭证可以补填。原始图库许可、AI 服务条款和外部上传图片的授权另以其各自记录为依据。
+- 「费用台账」按调用保留可得到的请求号、远端任务号与用量。账单确认金额按币种汇总。收到供应商账单后，可把账单号或凭证链接及金额录入相应条目。没有历史账单或用量的调用保持待对账状态，缓存复用和本地 FFmpeg 步骤记为无新增外部服务费用。
+- 知识库覆盖浙江 11 个设区市，使用 data_zhejiang_kb 中的代表性景区、非遗、饮食、节庆、传说和人物条目。新增条目在实体级保留来源。脚本参考和素材检索按选定城市匹配。

@@ -1,9 +1,10 @@
 import copy
+import subprocess
 import tempfile
 import unittest
 from dataclasses import replace
 from pathlib import Path
-from unittest.mock import patch
+from unittest.mock import Mock, patch
 
 from backend.app.config import settings
 from backend.app.models import Shot, Task, TaskInput
@@ -50,6 +51,59 @@ class VoiceStudioTests(unittest.TestCase):
         value = TaskInput.from_dict({'city':'杭州', 'theme':'漫游', 'voice_engine':'xstudio', 'voice':'洛天依（X Studio 导入）'})
         self.assertEqual(value.voice_engine, 'upload')
         self.assertEqual(value.voice, '上传配音音频')
+
+    def test_historical_input_requires_reselection(self):
+        value = TaskInput.from_dict({'city': '杭州', 'theme': '漫游', 'voice_engine': 'tianyi'})
+        self.assertEqual(value.voice_engine, 'reselect')
+
+    def test_retired_voice_never_substitutes_another_engine(self):
+        with tempfile.TemporaryDirectory() as directory:
+            config = replace(settings, data_dir=Path(directory))
+            builder = PerShotAudioBuilder(config, None)
+            with (
+                patch("backend.app.services.audio_sync.generate_edge_tts") as edge,
+                patch("backend.app.services.audio_sync.generate_system_speech") as system,
+                self.assertRaisesRegex(ValueError, "重新选择"),
+            ):
+                builder._synthesize_cached("你好。", "旧音色", 1, "reselect")
+            edge.assert_not_called()
+            system.assert_not_called()
+
+    def test_configured_bank_id_is_preserved_in_cache_and_request(self):
+        def synthesize(text, path, voice, rate):
+            self.assertEqual(voice, 'guide-02')
+            generate_tone(path, 0.3, 440, 0.1)
+            return Mock(model='local-test')
+        with tempfile.TemporaryDirectory() as directory:
+            cfg = replace(settings, data_dir=Path(directory), tts_base_url='http://localhost/v1',
+                          tts_api_key='test', tts_voice_catalog='{"guide-02":"导览"}')
+            builder = PerShotAudioBuilder(cfg, None)
+            with patch('backend.app.services.audio_sync.OpenAICompatibleTTSProvider.synthesize', side_effect=synthesize) as synth:
+                path, first = builder._synthesize_cached('测试。','guide-02',1,'voicebank')
+                _, cached = builder._synthesize_cached('测试。','guide-02',1,'voicebank')
+                self.assertEqual(synth.call_count,1)
+                self.assertEqual(cached['voice_id'],'guide-02')
+                self.assertTrue(cached['cache_hit'])
+                self.assertFalse(first['cache_hit'])
+                self.assertEqual(probe_audio(path)['sample_rate'],48000)
+
+    def test_existing_mono_tts_cache_is_upgraded_without_resynthesis(self):
+        with tempfile.TemporaryDirectory() as directory:
+            config = replace(settings, data_dir=Path(directory), tts_provider='windows')
+            builder = PerShotAudioBuilder(config, None)
+            key = builder._cache_key('windows-system-speech', 'installed-system-voice', '女声', 1, '测试。', 0)
+            cached = builder.cache_dir / f'{key}.wav'
+            cached.parent.mkdir(parents=True)
+            subprocess.run(
+                ['ffmpeg', '-y', '-hide_banner', '-loglevel', 'error', '-f', 'lavfi',
+                 '-i', 'sine=frequency=440:sample_rate=48000', '-t', '0.3',
+                 '-ac', '1', str(cached)], check=True,
+            )
+            with patch('backend.app.services.audio_sync.generate_system_speech') as synthesize:
+                path, trace = builder._synthesize_cached('测试。', '女声', 1, 'windows')
+            synthesize.assert_not_called()
+            self.assertTrue(trace['cache_hit'])
+            self.assertEqual(probe_audio(path)['channels'], 2)
 
     def test_upload_never_silently_substitutes_voice(self):
         with tempfile.TemporaryDirectory() as directory:

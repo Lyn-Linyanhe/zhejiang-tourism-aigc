@@ -1,0 +1,244 @@
+{
+  "city": "绍兴",
+  "city_meta": {
+    "aliases": [
+      "越城",
+      "会稽"
+    ],
+    "city_dna": "越剧、黄酒、鲁迅文学与古城水巷"
+  },
+  "entities": [
+    {
+      "id": "shaoxing-luxun-home",
+      "type": "scenic",
+      "name": "鲁迅故里",
+      "aliases": [
+        "鲁迅故居",
+        "百草园",
+        "三味书屋"
+      ],
+      "location": "绍兴越城区",
+      "facts": [
+        "鲁迅在绍兴度过青少年时期。",
+        "鲁迅故里保有鲁迅故居、百草园和三味书屋。",
+        "周家新台门是鲁迅故里保留的建筑之一。"
+      ],
+      "keywords_en": [
+        "Lu Xun hometown Shaoxing"
+      ],
+      "imagery": [
+        "百草园",
+        "周家新台门",
+        "三味书屋书桌"
+      ],
+      "scenario_tags": [
+        "研学",
+        "古建"
+      ],
+      "sources": [
+        {
+          "title": "文化和旅游部·鲁迅故里",
+          "url": "https://sjfw.mct.gov.cn/site/dataservice/culdetails?curId=10&id=34887",
+          "checked_on": "2026-11-21"
+        }
+      ]
+    },
+    {
+      "id": "shaoxing-luxun",
+      "type": "person",
+      "name": "鲁迅",
+      "aliases": [
+        "周树人",
+        "鲁迅先生"
+      ],
+      "location": "绍兴越城区",
+      "facts": [
+        "绍兴是鲁迅出生地。",
+        "鲁迅的《故乡》等作品写入了绍兴地方风物和童年见闻。"
+      ],
+      "keywords_en": [
+        "Lu Xun Shaoxing museum"
+      ],
+      "imagery": [
+        "《故乡》书页",
+        "鲁迅纪念馆展陈"
+      ],
+      "scenario_tags": [
+        "历史名人",
+        "人文"
+      ],
+      "sources": [
+        {
+          "title": "浙江省纪委省监委·鲁迅故居",
+          "url": "https://www.zjsjw.gov.cn/zhuantizhuanlan/qinglianwenhua/qingfengzhilv/202111/t20211105_4987528_ext.html",
+          "checked_on": "2026-11-21"
+        }
+      ]
+    },
+    {
+      "id": "shaoxing-yueopera",
+      "type": "intangible",
+      "name": "越剧",
+      "aliases": [
+        "嵊州越剧",
+        "落地唱书",
+        "小歌班"
+      ],
+      "location": "绍兴嵊州市",
+      "facts": [
+        "越剧发源于旧嵊县一带。",
+        "越剧在“落地唱书”的基础上吸收其他曲种及剧种传统，早期称“小歌班”。"
+      ],
+      "keywords_en": [
+        "Shengzhou Yue opera"
+      ],
+      "imagery": [
+        "越剧水袖",
+        "戏台与传统妆造"
+      ],
+      "scenario_tags": [
+        "演艺",
+        "非遗体验"
+      ],
+      "sources": [
+        {
+          "title": "中国非遗网·越剧",
+          "url": "https://www.ihchina.cn/project_details/13267.html",
+          "checked_on": "2026-11-21"
+        }
+      ]
+    },
+    {
+      "id": "shaoxing-wine",
+      "type": "cuisine",
+      "name": "绍兴黄酒",
+      "aliases": [
+        "绍兴酒",
+        "绍兴黄酒酿制技艺",
+        "花雕酒"
+      ],
+      "location": "绍兴绍兴市",
+      "facts": [
+        "绍兴黄酒以糯米等为原料，通过糖化和发酵酿成。",
+        "这一传统工艺以绍兴为核心传承地。"
+      ],
+      "keywords_en": [
+        "Shaoxing yellow rice wine"
+      ],
+      "imagery": [
+        "糯米酒醅",
+        "封坛酒瓮",
+        "琥珀色酒液"
+      ],
+      "scenario_tags": [
+        "美食",
+        "非遗体验"
+      ],
+      "sources": [
+        {
+          "title": "中国非遗网·绍兴黄酒酿制技艺",
+          "url": "https://www.ihchina.cn/project_details/14368.html",
+          "checked_on": "2026-11-21"
+        }
+      ]
+    },
+    {
+      "id": "shaoxing-dayu",
+      "type": "festival",
+      "name": "大禹祭典",
+      "aliases": [
+        "绍兴祭禹",
+        "大禹公祭"
+      ],
+      "location": "绍兴越城区",
+      "facts": [
+        "大禹祭典在绍兴大禹陵一带传承。",
+        "祭典以纪念治水传说中的大禹为主题。"
+      ],
+      "keywords_en": [
+        "Shaoxing Dayu memorial ceremony"
+      ],
+      "imagery": [
+        "大禹陵祭台",
+        "仪仗与礼乐表演"
+      ],
+      "scenario_tags": [
+        "民俗",
+        "历史"
+      ],
+      "sources": [
+        {
+          "title": "中国非遗网·大禹祭典",
+          "url": "https://www.ihchina.cn/project_details/14996.html",
+          "checked_on": "2026-11-21"
+        }
+      ]
+    },
+    {
+      "id": "shaoxing-shenyuan",
+      "type": "scenic",
+      "name": "沈园",
+      "aliases": [
+        "绍兴沈园",
+        "沈氏园"
+      ],
+      "location": "绍兴越城区",
+      "facts": [
+        "沈园是绍兴的宋式园林。",
+        "陆游多次以诗写沈园，追忆旧事。"
+      ],
+      "keywords_en": [
+        "Shen Garden Shaoxing"
+      ],
+      "imagery": [
+        "池水小桥",
+        "园林回廊",
+        "陆游诗词碑刻"
+      ],
+      "scenario_tags": [
+        "诗词",
+        "古建"
+      ],
+      "sources": [
+        {
+          "title": "中国天气网·沈园",
+          "url": "https://zj.weather.com.cn/zt/tqzt/1893621.shtml",
+          "checked_on": "2026-11-21"
+        }
+      ]
+    },
+    {
+      "id": "shaoxing-bazi",
+      "type": "scenic",
+      "name": "八字桥",
+      "aliases": [
+        "绍兴八字桥",
+        "八字桥直街"
+      ],
+      "location": "绍兴越城区",
+      "facts": [
+        "八字桥于南宋宝祐四年重建，即1256年。",
+        "主桥孔西侧石柱留有重建题记。",
+        "八字桥及其历史街区是中国大运河绍兴段遗产相关点段。"
+      ],
+      "keywords_en": [
+        "Bazi Bridge Shaoxing"
+      ],
+      "imagery": [
+        "石梁桥和斜向阶道",
+        "桥边白墙黑瓦"
+      ],
+      "scenario_tags": [
+        "古建",
+        "历史"
+      ],
+      "sources": [
+        {
+          "title": "人民日报·浙江绍兴打造活着的千年古城",
+          "url": "https://society.people.com.cn/n1/2023/0704/c1008-40027304.html",
+          "checked_on": "2026-11-21"
+        }
+      ]
+    }
+  ]
+}

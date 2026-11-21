@@ -1,0 +1,174 @@
+{
+  "city": "温州",
+  "city_meta": {
+    "aliases": [
+      "瓯",
+      "东瓯"
+    ],
+    "city_dna": "雁荡山水、瓯江工艺、温州方言曲艺"
+  },
+  "entities": [
+    {
+      "id": "wenzhou-yandang",
+      "type": "scenic",
+      "name": "雁荡山",
+      "aliases": [
+        "雁荡山世界地质公园",
+        "北雁荡山"
+      ],
+      "location": "温州乐清市",
+      "facts": [
+        "雁荡山于2005年入选世界地质公园。",
+        "主园区包含灵峰、灵岩和大龙湫等景区。",
+        "地貌记录了古火山喷发、塌陷到再隆起的过程。"
+      ],
+      "keywords_en": [
+        "Yandang Mountain Wenzhou"
+      ],
+      "imagery": [
+        "灵峰岩壁",
+        "大龙湫瀑布",
+        "灵岩山谷"
+      ],
+      "scenario_tags": [
+        "自然",
+        "摄影"
+      ],
+      "sources": [
+        {
+          "title": "浙江日报·雁荡山世界地质公园",
+          "url": "https://zjrb.zjol.com.cn/html/2015-09/16/content_2910692.htm?div=-1",
+          "checked_on": "2026-11-21"
+        }
+      ]
+    },
+    {
+      "id": "wenzhou-ousu",
+      "type": "intangible",
+      "name": "瓯塑",
+      "aliases": [
+        "温州瓯塑",
+        "彩色油泥塑"
+      ],
+      "location": "温州温州市",
+      "facts": [
+        "瓯塑由传统漆艺的堆漆工艺演变而来。",
+        "名称中的“瓯”来自技艺发源地瓯江流域。"
+      ],
+      "keywords_en": [
+        "Wenzhou Ou sculpture"
+      ],
+      "imagery": [
+        "彩泥堆塑出凸起的花鸟图案",
+        "工匠压塑细节"
+      ],
+      "scenario_tags": [
+        "非遗体验",
+        "艺术"
+      ],
+      "sources": [
+        {
+          "title": "中国非遗网·瓯塑",
+          "url": "https://www.ihchina.cn/project_details/14202.html",
+          "checked_on": "2026-11-21"
+        }
+      ]
+    },
+    {
+      "id": "wenzhou-drum",
+      "type": "intangible",
+      "name": "温州鼓词",
+      "aliases": [
+        "瑞安鼓词",
+        "唱词"
+      ],
+      "location": "温州瑞安市",
+      "facts": [
+        "温州鼓词用温州方言唱述故事。",
+        "代表性伴奏乐器为牛筋琴。"
+      ],
+      "keywords_en": [
+        "Wenzhou drum ballad"
+      ],
+      "imagery": [
+        "说唱艺人敲击牛筋琴",
+        "弹奏手势特写"
+      ],
+      "scenario_tags": [
+        "演艺",
+        "非遗体验"
+      ],
+      "sources": [
+        {
+          "title": "中国非遗网·温州鼓词",
+          "url": "https://www.ihchina.cn/project_details/13610.html",
+          "checked_on": "2026-11-21"
+        }
+      ]
+    },
+    {
+      "id": "wenzhou-bridge",
+      "type": "scenic",
+      "name": "泰顺廊桥",
+      "aliases": [
+        "泰顺木拱桥",
+        "同乐桥"
+      ],
+      "location": "温州泰顺县",
+      "facts": [
+        "木拱桥营造传承人董直机参与建造泰顺同乐桥。",
+        "同乐桥长36米，采用编梁木拱。"
+      ],
+      "keywords_en": [
+        "Taishun covered bridge"
+      ],
+      "imagery": [
+        "覆瓦廊屋",
+        "溪流和交叠的木拱构件"
+      ],
+      "scenario_tags": [
+        "古建",
+        "研学"
+      ],
+      "sources": [
+        {
+          "title": "中国非遗网·董直机",
+          "url": "https://www.ihchina.cn/ccr_detail/3182",
+          "checked_on": "2026-11-21"
+        }
+      ]
+    },
+    {
+      "id": "wenzhou-fishballs",
+      "type": "cuisine",
+      "name": "温州鱼丸",
+      "aliases": [
+        "鮸鱼丸",
+        "鲜鱼丸"
+      ],
+      "location": "温州温州市",
+      "facts": [
+        "温州鱼丸以新鲜鱼肉拌淀粉和调味料揉制。",
+        "成品呈不规则条状或块状，色泽洁白。"
+      ],
+      "keywords_en": [
+        "Wenzhou fish ball soup"
+      ],
+      "imagery": [
+        "不规则的白色鱼丸落入清汤",
+        "筷子夹起鱼丸"
+      ],
+      "scenario_tags": [
+        "市井",
+        "美食"
+      ],
+      "sources": [
+        {
+          "title": "温州市志·瓯越美食",
+          "url": "https://wzszw.wenzhou.gov.cn/art/2023/2/3/art_1258565_58876686.html",
+          "checked_on": "2026-11-21"
+        }
+      ]
+    }
+  ]
+}

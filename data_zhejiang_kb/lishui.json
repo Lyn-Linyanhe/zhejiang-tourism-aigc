@@ -1,0 +1,211 @@
+{
+  "city": "丽水",
+  "city_meta": {
+    "aliases": [
+      "处州",
+      "浙西南丽水"
+    ],
+    "city_dna": "梯田水系、青瓷与石雕、畲族节俗"
+  },
+  "entities": [
+    {
+      "id": "lishui-terrace",
+      "type": "scenic",
+      "name": "云和梯田",
+      "aliases": [
+        "丽水云和梯田",
+        "云和梯田景区"
+      ],
+      "location": "丽水云和县",
+      "facts": [
+        "云和梯田是中国重要农业文化遗产。",
+        "2024年云和梯田成为国家5A级旅游景区。",
+        "当地保护体系把山林、水土与梯田生产连接起来。"
+      ],
+      "keywords_en": [
+        "Yunhe rice terraces Lishui"
+      ],
+      "imagery": [
+        "层叠水田",
+        "山间云雾",
+        "田埂线条"
+      ],
+      "scenario_tags": [
+        "自然",
+        "摄影"
+      ],
+      "sources": [
+        {
+          "title": "国家林业和草原局·云和梯田生态实践",
+          "url": "https://www.forestry.gov.cn/c/www/dfdt/641824.jhtml",
+          "checked_on": "2026-11-21"
+        }
+      ]
+    },
+    {
+      "id": "lishui-tongji",
+      "type": "scenic",
+      "name": "古堰画乡",
+      "aliases": [
+        "通济堰",
+        "古堰画乡通济堰",
+        "堰头村"
+      ],
+      "location": "丽水莲都区",
+      "facts": [
+        "丽水通济堰始建于南朝梁天监四年，即505年。",
+        "拦水坝呈拱形，通济堰是古堰画乡的水利文化景点。"
+      ],
+      "keywords_en": [
+        "Tongji Weir Guyan Huaxiang Lishui"
+      ],
+      "imagery": [
+        "拱形石坝导水",
+        "堰头村水岸",
+        "古堰渠道"
+      ],
+      "scenario_tags": [
+        "古建",
+        "研学"
+      ],
+      "sources": [
+        {
+          "title": "四川日报·丽水通济堰",
+          "url": "https://sichuan.scol.com.cn/ggxw/202305/58890654.html",
+          "checked_on": "2026-11-21"
+        }
+      ]
+    },
+    {
+      "id": "lishui-celadon",
+      "type": "intangible",
+      "name": "龙泉青瓷",
+      "aliases": [
+        "龙泉窑",
+        "龙泉青瓷烧制技艺"
+      ],
+      "location": "丽水龙泉市",
+      "facts": [
+        "龙泉青瓷使用瓷土、紫金土等当地材料。",
+        "传统制作包括手工拉坯、釉料配制和窑炉高温烧制。"
+      ],
+      "keywords_en": [
+        "Longquan celadon kiln Lishui"
+      ],
+      "imagery": [
+        "手工拉坯",
+        "青釉器皿",
+        "龙窑火光"
+      ],
+      "scenario_tags": [
+        "艺术",
+        "非遗体验"
+      ],
+      "sources": [
+        {
+          "title": "中国非遗网·龙泉青瓷传统烧制技艺",
+          "url": "https://www.ihchina.cn/longquanyao.html",
+          "checked_on": "2026-11-21"
+        }
+      ]
+    },
+    {
+      "id": "lishui-stone",
+      "type": "intangible",
+      "name": "青田石雕",
+      "aliases": [
+        "青田石",
+        "青田传统石雕"
+      ],
+      "location": "丽水青田县",
+      "facts": [
+        "青田石雕取材于青田县所产石材。",
+        "名录将青田石雕列入传统美术类别。"
+      ],
+      "keywords_en": [
+        "Qingtian stone carving Lishui"
+      ],
+      "imagery": [
+        "彩石分色",
+        "石雕师刻出层次"
+      ],
+      "scenario_tags": [
+        "艺术",
+        "非遗体验"
+      ],
+      "sources": [
+        {
+          "title": "中国非遗网·青田石雕",
+          "url": "https://www.ihchina.cn/project_details/14010.html",
+          "checked_on": "2026-11-21"
+        }
+      ]
+    },
+    {
+      "id": "lishui-shaobing",
+      "type": "cuisine",
+      "name": "缙云烧饼",
+      "aliases": [
+        "丽水缙云烧饼",
+        "缙云烧饼制作技艺"
+      ],
+      "location": "丽水缙云县",
+      "facts": [
+        "缙云烧饼制作技艺流传于丽水缙云及周边。",
+        "地方小麦、九头芥菜和猪肉为传统烧饼提供原料。"
+      ],
+      "keywords_en": [
+        "Jinyun shaobing Lishui"
+      ],
+      "imagery": [
+        "面坯包馅",
+        "贴上饼桶内壁",
+        "烤熟后起饼"
+      ],
+      "scenario_tags": [
+        "小吃",
+        "美食"
+      ],
+      "sources": [
+        {
+          "title": "中国非遗网·缙云烧饼制作技艺",
+          "url": "https://www.ihchina.cn/project_details/23791.html",
+          "checked_on": "2026-11-21"
+        }
+      ]
+    },
+    {
+      "id": "lishui-she",
+      "type": "festival",
+      "name": "畲族三月三",
+      "aliases": [
+        "景宁三月三",
+        "畲族乌饭节"
+      ],
+      "location": "丽水景宁畲族自治县",
+      "facts": [
+        "在景宁畲族三月三节俗中，人们会用乌稔叶汁浸米做乌饭。",
+        "关于乌饭由来的故事属于民间传说，每年农历三月初三的乌饭习俗则是当地民俗记录。"
+      ],
+      "keywords_en": [
+        "Jingning She festival"
+      ],
+      "imagery": [
+        "乌饭上桌",
+        "畲族歌会",
+        "村落节庆"
+      ],
+      "scenario_tags": [
+        "民俗",
+        "春季节庆"
+      ],
+      "sources": [
+        {
+          "title": "中国非遗网·畲族三月三",
+          "url": "https://www.ihchina.cn/project_details/15094.html",
+          "checked_on": "2026-11-21"
+        }
+      ]
+    }
+  ]
+}

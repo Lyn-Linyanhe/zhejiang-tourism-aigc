@@ -1,0 +1,210 @@
+{
+  "city": "嘉兴",
+  "city_meta": {
+    "aliases": [
+      "嘉禾",
+      "禾城"
+    ],
+    "city_dna": "江南古镇、南湖红色文化、端午民俗"
+  },
+  "entities": [
+    {
+      "id": "jiaxing-wuzhen",
+      "type": "scenic",
+      "name": "乌镇",
+      "aliases": [
+        "乌镇古镇",
+        "乌镇东栅",
+        "乌镇西栅"
+      ],
+      "location": "嘉兴桐乡市",
+      "facts": [
+        "乌镇位于嘉兴桐乡。",
+        "东栅和西栅是乌镇景区的核心区域。",
+        "乌镇古镇旅游区于2010年确定为国家5A级旅游景区。"
+      ],
+      "keywords_en": [
+        "Wuzhen Jiaxing canal"
+      ],
+      "imagery": [
+        "水巷两侧的临河民居",
+        "石桥和乌篷船"
+      ],
+      "scenario_tags": [
+        "古建",
+        "夜游"
+      ],
+      "sources": [
+        {
+          "title": "文化和旅游部·乌镇古镇旅游区",
+          "url": "https://sjfw.mct.gov.cn/site/dataservice/culdetails?curId=10&id=34882",
+          "checked_on": "2026-11-21"
+        }
+      ]
+    },
+    {
+      "id": "jiaxing-nanhu",
+      "type": "scenic",
+      "name": "嘉兴南湖",
+      "aliases": [
+        "南湖红船",
+        "嘉兴南湖红船"
+      ],
+      "location": "嘉兴南湖区",
+      "facts": [
+        "1921年中共一大的最后一次会议在嘉兴南湖游船上举行。",
+        "1959年，南湖革命纪念馆在湖心岛烟雨楼建成，仿制纪念船在附近停泊。"
+      ],
+      "keywords_en": [
+        "Jiaxing South Lake Red Boat"
+      ],
+      "imagery": [
+        "南湖湖心岛",
+        "烟雨楼水面",
+        "纪念船"
+      ],
+      "scenario_tags": [
+        "历史",
+        "研学"
+      ],
+      "sources": [
+        {
+          "title": "中央党史和文献研究院·南湖革命纪念馆",
+          "url": "https://www.dswxyjy.org.cn/n/2013/0723/c222137-22297546.html",
+          "checked_on": "2026-11-21"
+        }
+      ]
+    },
+    {
+      "id": "jiaxing-duanwu",
+      "type": "festival",
+      "name": "嘉兴端午习俗",
+      "aliases": [
+        "嘉兴端午",
+        "南湖龙舟",
+        "嘉兴龙舟"
+      ],
+      "location": "嘉兴嘉兴市",
+      "facts": [
+        "嘉兴端午习俗包括在南湖赛龙舟和摇快船。",
+        "祭祀伍子胥、挂菖蒲艾叶、佩香袋也是当地端午习俗。"
+      ],
+      "keywords_en": [
+        "Jiaxing Dragon Boat Festival"
+      ],
+      "imagery": [
+        "龙舟齐桨",
+        "制作香囊",
+        "手裹粽叶"
+      ],
+      "scenario_tags": [
+        "民俗",
+        "春季节庆"
+      ],
+      "sources": [
+        {
+          "title": "中国非遗网·嘉兴端午习俗",
+          "url": "https://www.ihchina.cn/project_details/14921.html",
+          "checked_on": "2026-11-21"
+        }
+      ]
+    },
+    {
+      "id": "jiaxing-shadow",
+      "type": "intangible",
+      "name": "海宁皮影戏",
+      "aliases": [
+        "海宁皮影",
+        "蚕花戏"
+      ],
+      "location": "嘉兴海宁市",
+      "facts": [
+        "海宁皮影吸收弋阳腔、海盐腔，也融合当地小调。",
+        "由于过去常演与蚕事祈愿有关的“蚕花戏”，班社也有“蚕花班”之称。"
+      ],
+      "keywords_en": [
+        "Haining shadow puppetry"
+      ],
+      "imagery": [
+        "幕后艺人拨动影偶",
+        "幕布上彩色皮影"
+      ],
+      "scenario_tags": [
+        "非遗体验",
+        "演艺"
+      ],
+      "sources": [
+        {
+          "title": "中国非遗网·海宁皮影戏",
+          "url": "https://www.ihchina.cn/project_details/13397.html",
+          "checked_on": "2026-11-21"
+        }
+      ]
+    },
+    {
+      "id": "jiaxing-zongzi",
+      "type": "cuisine",
+      "name": "嘉兴粽子",
+      "aliases": [
+        "五芳斋粽子",
+        "五芳斋粽子制作技艺"
+      ],
+      "location": "嘉兴嘉兴市",
+      "facts": [
+        "张锦泉1921年在嘉兴城内开设五芳斋粽子店。",
+        "手工制作要经过浸米、煮叶、包裹、扎线等工序。"
+      ],
+      "keywords_en": [
+        "Jiaxing zongzi making"
+      ],
+      "imagery": [
+        "折粽叶",
+        "填糯米和馅料",
+        "棉线扎粽"
+      ],
+      "scenario_tags": [
+        "美食",
+        "老字号"
+      ],
+      "sources": [
+        {
+          "title": "中国非遗网·五芳斋粽子制作技艺",
+          "url": "https://www.ihchina.cn/project_details/14728.html",
+          "checked_on": "2026-11-21"
+        }
+      ]
+    },
+    {
+      "id": "jiaxing-mao",
+      "type": "person",
+      "name": "茅盾",
+      "aliases": [
+        "沈雁冰",
+        "茅盾故居"
+      ],
+      "location": "嘉兴桐乡市乌镇",
+      "facts": [
+        "乌镇东栅保存有作家茅盾的故居。",
+        "乌镇西栅灵水居设有茅盾纪念堂。"
+      ],
+      "keywords_en": [
+        "Mao Dun Wuzhen residence"
+      ],
+      "imagery": [
+        "东栅木构故居",
+        "文稿和旧书展陈"
+      ],
+      "scenario_tags": [
+        "历史名人",
+        "人文"
+      ],
+      "sources": [
+        {
+          "title": "乌镇景区·乌镇七问七答",
+          "url": "https://www.ewuzhen.com/strategy/detail/201909038928151",
+          "checked_on": "2026-11-21"
+        }
+      ]
+    }
+  ]
+}

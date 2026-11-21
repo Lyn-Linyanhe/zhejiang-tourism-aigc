@@ -29,6 +29,7 @@ import time
 import urllib.error
 import urllib.parse
 import urllib.request
+from ..services.cost import provider_call
 from pathlib import Path
 from typing import Any
 
@@ -392,7 +393,10 @@ class CloudVideoProvider:
             seed=seed,
         )
         tasks_url = f"{self.base_url}/contents/generations/tasks"
-        remote_id = submit_task(tasks_url, payload, self.api_key)
+        with provider_call("asset", self.name, self.model) as billing:
+            billing["usage"] = {"requested_video_seconds": duration}
+            remote_id = submit_task(tasks_url, payload, self.api_key)
+            billing["remote_task_id"] = remote_id
         task = poll_task(tasks_url, remote_id, self.api_key)
         target = Path(output_dir)
         shot_id = str(shot.get("id") or f"shot_{shot.get('order', 1)}")
@@ -411,6 +415,8 @@ class CloudVideoProvider:
                 "type": "video",
                 "provider": self.name,
                 "remote_task_id": remote_id,
+                "usage": task.get("usage"),
+                "billing_instrumented": True,
                 "duration": duration,
                 "resolution": resolution,
                 "ratio": ratio,
@@ -455,11 +461,15 @@ class CloudVideoProvider:
             if not isinstance(saved, dict) or not saved.get("remote_task_id") or saved.get("fingerprint") != fingerprint:
                 raise VideoSubmitUnconfirmed("Existing remote task receipt does not match this input; submission was not repeated")
         else:
-            submitted = self._tokendance_request(f"{self.base_url}/video_generation", "POST", body)
-            task_id = str(submitted.get("task_id") or submitted.get("id") or "")
-            if not task_id:
-                raise VideoSubmitUnconfirmed("TokenDance 图生视频提交未返回 task_id")
-            saved = {"remote_task_id": task_id, "provider": self.name, "shot_id": shot_id, "fingerprint": fingerprint, "status": "submitted"}
+            with provider_call("asset", self.name, self.model) as billing:
+                billing["usage"] = {"requested_video_seconds": duration}
+                submitted = self._tokendance_request(f"{self.base_url}/video_generation", "POST", body)
+                task_id = str(submitted.get("task_id") or submitted.get("id") or "")
+                if not task_id:
+                    raise VideoSubmitUnconfirmed("TokenDance 图生视频提交未返回 task_id")
+                billing["remote_task_id"] = task_id
+            saved = {"remote_task_id": task_id, "provider": self.name, "model": self.model, "shot_id": shot_id,
+                     "fingerprint": fingerprint, "status": "submitted", "usage": billing["usage"]}
             receipt.write_text(json.dumps(saved, ensure_ascii=False, indent=2), encoding="utf-8")
         task_id = str(saved["remote_task_id"])
         deadline = time.monotonic() + self.timeout
@@ -486,6 +496,8 @@ class CloudVideoProvider:
             task = payload.get("task") if isinstance(payload.get("task"), dict) else payload
             status = str(task.get("status") or "").lower()
             saved.update(status=status, last_polled_at=time.time(), response_fields=sorted(task))
+            if isinstance(task.get("usage"), dict):
+                saved["usage"] = task["usage"]
             receipt.write_text(json.dumps(saved, ensure_ascii=False, indent=2), encoding="utf-8")
             if status == "succeeded":
                 content = task.get("content")
@@ -565,4 +577,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

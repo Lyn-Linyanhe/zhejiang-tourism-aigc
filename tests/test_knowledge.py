@@ -10,7 +10,7 @@ class KnowledgeContextTests(unittest.TestCase):
     def test_corpus_is_loaded(self):
         stats = knowledge.stats()
         self.assertGreater(stats["entities"], 0)
-        self.assertEqual(stats["cities"], ["杭州"])
+        self.assertCountEqual(stats["cities"], ["杭州", "宁波", "温州", "嘉兴", "湖州", "绍兴", "金华", "衢州", "舟山", "台州", "丽水"])
         self.assertGreater(stats["facts"], 0)
 
     def test_landmark_match_injects_verified_facts(self):
@@ -40,10 +40,12 @@ class KnowledgeContextTests(unittest.TestCase):
         self.assertTrue(len(context) <= knowledge.MAX_CONTEXT_CHARS + 600)
 
     def test_city_filter_excludes_other_cities(self):
-        """语料只有杭州时，宁波选题应退回背景资料而不是注入杭州事实。"""
+        """宁波选题应取本地条目，不串入杭州事实。"""
         context = knowledge.build_generation_context(city="宁波", landmark="天一阁", theme="藏书文化")
         self.assertNotIn("西湖", context)
-        self.assertNotIn("### ", context)
+        self.assertIn("天一阁", context)
+        self.assertIn("1561", context)
+        self.assertIn("故宫博物院", context)
 
     def test_empty_corpus_lookup_returns_fallback_not_error(self):
         context = knowledge.build_generation_context(city="杭州", theme="城市夜景")

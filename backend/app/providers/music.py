@@ -15,22 +15,14 @@ SUPPORTED_MUSIC_SUFFIXES = frozenset(
 )
 
 
-def find_music_file(music_dir: Path) -> Path | None:
-    """从音乐目录里取第一个受支持的音频文件。
-
-    注意：当前实现不看情绪、不看时长、不看版权状态，只是「目录里第一个」。
-    这是已知的降级方案，正式实现见 02_分工/P3_声音线.md。
-    """
-    if not music_dir.exists():
-        return None
-    return next(
-        (
-            path
-            for path in sorted(music_dir.iterdir())
-            if path.is_file() and path.suffix.lower() in SUPPORTED_MUSIC_SUFFIXES
-        ),
-        None,
-    )
+def authorized(record: dict[str, Any]) -> bool:
+    if record.get("approved") is not True:
+        return False
+    fields = [str(record.get(key) or "").strip() for key in ("license", "author", "usage_scope")]
+    uncertain = ("未知", "待确认", "自行确认", "待填写", "未确认", "未授权", "pending", "unknown", "unverified")
+    if record.get("authorization_basis") == "uploader_assertion":
+        return all(fields) and not any(term in fields[0].casefold() for term in uncertain)
+    return all(fields) and not any(term in field.casefold() for field in fields for term in uncertain)
 
 
 def _result_from_record(record: dict[str, Any], path: Path, provider: str) -> MusicResult:
@@ -48,21 +40,27 @@ def _result_from_record(record: dict[str, Any], path: Path, provider: str) -> Mu
         provider=provider,
         model="metadata-exact-match-v1",
         event={"type": "music-match", "provider": provider},
+        title=str(record.get("title") or path.stem),
+        authorization_basis=str(record.get("authorization_basis") or "catalog_metadata"),
+        authorization_ref=str(record.get("authorization_ref") or record.get("source_url") or record.get("license_url") or ""),
     )
     result.validate()
     return result
 
 
-def load_music_catalog(catalog_path: Path, music_dir: Path) -> list[dict[str, Any]]:
-    if not catalog_path.is_file():
-        return []
-    payload = json.loads(catalog_path.read_text(encoding="utf-8"))
-    records = payload.get("tracks", payload) if isinstance(payload, dict) else payload
+def read_music_catalog(catalog_path: Path) -> tuple[dict | list, list]:
+    payload = json.loads(catalog_path.read_text(encoding="utf-8")) if catalog_path.is_file() else {"tracks": []}
+    records = payload.get("tracks") if isinstance(payload, dict) else payload
     if not isinstance(records, list):
         raise ValueError("Music catalog must contain a tracks array")
+    return payload, records
+
+
+def load_music_catalog(catalog_path: Path, music_dir: Path) -> list[dict[str, Any]]:
+    _, records = read_music_catalog(catalog_path)
     usable: list[dict[str, Any]] = []
     for raw in records:
-        if not isinstance(raw, dict) or not raw.get("approved"):
+        if not isinstance(raw, dict) or not authorized(raw):
             continue
         file_value = str(raw.get("file", "")).strip()
         path = Path(file_value)
@@ -96,7 +94,7 @@ def select_music(
         upload_styles = [str(value) for value in uploaded.get("styles", [])]
         if (
             upload_path.is_file()
-            and bool(uploaded.get("approved", False))
+            and authorized(uploaded)
             and mood in upload_moods
             and style in upload_styles
         ):
@@ -127,6 +125,8 @@ def select_music(
             )
         result = cloud_provider.select(mood, style, duration, output_dir or music_dir)
         result.validate()
+        if not authorized(result.to_dict()):
+            raise RuntimeError("音乐许可待确认")
         return result
 
     raise RuntimeError(

@@ -1,0 +1,175 @@
+{
+  "city": "衢州",
+  "city_meta": {
+    "aliases": [
+      "柯城",
+      "三衢"
+    ],
+    "city_dna": "南孔礼乐、江郎山丹霞、衢州古城风物"
+  },
+  "entities": [
+    {
+      "id": "quzhou-jianglang",
+      "type": "scenic",
+      "name": "江郎山",
+      "aliases": [
+        "江郎山三爿石",
+        "江山江郎山"
+      ],
+      "location": "衢州江山市石门镇",
+      "facts": [
+        "江郎山位于江山市石门镇。",
+        "郎峰、亚峰、灵峰组成的三爿石呈川字排列。",
+        "2010年，江郎山作为中国丹霞系列遗产的一部分列入世界遗产名录。"
+      ],
+      "keywords_en": [
+        "Jianglangshan Quzhou Danxia"
+      ],
+      "imagery": [
+        "三爿石并列形成川字",
+        "赤色岩壁与林木"
+      ],
+      "scenario_tags": [
+        "自然",
+        "摄影"
+      ],
+      "sources": [
+        {
+          "title": "浙江省纪委省监委·江郎山",
+          "url": "https://www.zjsjw.gov.cn/zhuantizhuanlan/qinglianwenhua/qingfengzhilv/202012/t20201225_3394810_ext.html",
+          "checked_on": "2026-11-21"
+        }
+      ]
+    },
+    {
+      "id": "quzhou-kong-temple",
+      "type": "scenic",
+      "name": "孔氏南宗家庙",
+      "aliases": [
+        "衢州孔庙",
+        "南孔家庙",
+        "衢州孔氏南宗家庙"
+      ],
+      "location": "衢州柯城区",
+      "facts": [
+        "南宋初年，孔子后裔孔端友随宋高宗南渡。",
+        "衢州孔氏南宗家庙承担南渡孔氏祭奠先祖的职能。"
+      ],
+      "keywords_en": [
+        "Quzhou Southern Confucius Temple"
+      ],
+      "imagery": [
+        "孔庙建筑",
+        "青石院落",
+        "祭典礼乐"
+      ],
+      "scenario_tags": [
+        "古建",
+        "研学"
+      ],
+      "sources": [
+        {
+          "title": "浙江省纪委省监委·孔氏南宗家庙",
+          "url": "https://www.zjsjw.gov.cn/ljdt/qzp/202610/t20261027_7785610.shtml",
+          "checked_on": "2026-11-21"
+        }
+      ]
+    },
+    {
+      "id": "quzhou-kong-ceremony",
+      "type": "festival",
+      "name": "南孔祭典",
+      "aliases": [
+        "南宗祭孔",
+        "祭孔大典"
+      ],
+      "location": "衢州柯城区",
+      "facts": [
+        "南孔祭典是衢州传承的祭孔礼仪。",
+        "历史上除了家庙祭祀，也包括南宗各地书院的相关仪式。"
+      ],
+      "keywords_en": [
+        "Quzhou Confucius ceremony"
+      ],
+      "imagery": [
+        "礼乐表演",
+        "祭典队列",
+        "祭孔读礼"
+      ],
+      "scenario_tags": [
+        "民俗",
+        "研学"
+      ],
+      "sources": [
+        {
+          "title": "中国非遗网·祭孔大典（南孔祭典）",
+          "url": "https://www.ihchina.cn/project_details/14983.html",
+          "checked_on": "2026-11-21"
+        }
+      ]
+    },
+    {
+      "id": "quzhou-mabing",
+      "type": "cuisine",
+      "name": "邵永丰麻饼",
+      "aliases": [
+        "衢州麻饼",
+        "邵永丰"
+      ],
+      "location": "衢州柯城区及周边",
+      "facts": [
+        "邵永丰麻饼制作技艺在衢州柯城区及龙游、江山、开化等地传承。",
+        "这一制作技艺列在国家级非遗项目“传统面食制作技艺”之下。"
+      ],
+      "keywords_en": [
+        "Quzhou Shao Yongfeng sesame cake"
+      ],
+      "imagery": [
+        "芝麻撒在饼面",
+        "烘制麻饼"
+      ],
+      "scenario_tags": [
+        "美食",
+        "老字号"
+      ],
+      "sources": [
+        {
+          "title": "中国非遗网·邵永丰麻饼制作技艺",
+          "url": "https://www.ihchina.cn/project_details/23790.html",
+          "checked_on": "2026-11-21"
+        }
+      ]
+    },
+    {
+      "id": "quzhou-kong",
+      "type": "person",
+      "name": "孔端友",
+      "aliases": [
+        "衍圣公孔端友"
+      ],
+      "location": "衢州衢州市",
+      "facts": [
+        "孔端友是孔子第四十八世嫡长孙。",
+        "南宋初孔端友南渡，孔氏南宗在衢州延续。"
+      ],
+      "keywords_en": [
+        "Kong Duanyou Quzhou"
+      ],
+      "imagery": [
+        "孔氏谱牒",
+        "南宗家庙展陈"
+      ],
+      "scenario_tags": [
+        "历史名人",
+        "历史"
+      ],
+      "sources": [
+        {
+          "title": "浙江省纪委省监委·孔氏南宗家庙",
+          "url": "https://www.zjsjw.gov.cn/ljdt/qzp/202610/t20261027_7785610.shtml",
+          "checked_on": "2026-11-21"
+        }
+      ]
+    }
+  ]
+}

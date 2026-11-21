@@ -83,6 +83,13 @@ class RenderingTests(unittest.TestCase):
             self.assertEqual(render["resolution"], "720x1280")
             self.assertTrue((root / "media" / "task_test" / "final.mp4").exists())
             self.assertTrue((root / "media" / "task_test" / "subtitles.srt").exists())
+            probe = subprocess.run(
+                ["ffprobe", "-v", "error", "-select_streams", "a:0",
+                 "-show_entries", "stream=channels", "-of", "json",
+                 str(root / "media" / "task_test" / "final.mp4")],
+                capture_output=True, text=True, check=True,
+            )
+            self.assertEqual(json.loads(probe.stdout)["streams"][0]["channels"], 2)
 
     def test_renderer_can_render_without_audio_when_user_disables_voice(self):
         with tempfile.TemporaryDirectory() as directory:

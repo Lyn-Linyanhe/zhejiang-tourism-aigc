@@ -17,6 +17,7 @@ import json
 import os
 import urllib.error
 import urllib.request
+from ..services.cost import provider_call, record_response
 from pathlib import Path
 from typing import Any
 
@@ -140,8 +141,12 @@ def request_image(endpoint: str, payload: dict[str, Any], api_key: str) -> bytes
         method="POST",
     )
     try:
-        with urllib.request.urlopen(request, timeout=request_timeout()) as response:
-            body = json.loads(response.read().decode("utf-8"))
+        with provider_call("asset", PROVIDER_NAME, str(payload.get("model") or "")) as billing:
+            with urllib.request.urlopen(request, timeout=request_timeout()) as response:
+                record_response(billing, response)
+                body = json.loads(response.read().decode("utf-8"))
+                if isinstance(body, dict):
+                    record_response(billing, response, body)
     except urllib.error.HTTPError as exc:
         detail = exc.read().decode("utf-8", errors="replace")[:300]
         raise RuntimeError(f"文生图被拒绝：HTTP {exc.code} {detail}") from exc
@@ -223,6 +228,7 @@ class CloudImageProvider:
             cost=float(self.cost_per_call),
             event={
                 "type": "image",
+                "billing_instrumented": True,
                 "provider": self.name,
                 "negative_prompt": negative,
                 "size": payload["size"],

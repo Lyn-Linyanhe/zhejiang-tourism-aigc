@@ -1,0 +1,206 @@
+{
+  "city": "宁波",
+  "city_meta": {
+    "aliases": [
+      "甬",
+      "明州"
+    ],
+    "city_dna": "藏书文化、海丝文化、浙东手工艺"
+  },
+  "entities": [
+    {
+      "id": "ningbo-tianyige",
+      "type": "scenic",
+      "name": "天一阁",
+      "aliases": [
+        "天一阁博物院",
+        "天一阁藏书楼"
+      ],
+      "location": "宁波海曙区",
+      "facts": [
+        "明代藏书家范钦在1561年开始营建天一阁。",
+        "天一阁最初是范钦的私家藏书处。",
+        "天一阁位于浙江宁波。"
+      ],
+      "keywords_en": [
+        "Tianyi Pavilion Ningbo"
+      ],
+      "imagery": [
+        "月湖西畔的藏书楼",
+        "二层木构阁楼",
+        "古籍展柜"
+      ],
+      "scenario_tags": [
+        "古建",
+        "研学"
+      ],
+      "sources": [
+        {
+          "title": "故宫博物院·天一阁",
+          "url": "https://www.dpm.org.cn/lemmas/241810.html",
+          "checked_on": "2026-11-21"
+        }
+      ]
+    },
+    {
+      "id": "ningbo-lacquer",
+      "type": "intangible",
+      "name": "宁波朱金漆木雕",
+      "aliases": [
+        "朱金漆木雕"
+      ],
+      "location": "宁波宁波市",
+      "facts": [
+        "当地木雕把朱漆与金饰结合。",
+        "宁波阿育王寺建筑上可见这一风格的装饰。"
+      ],
+      "keywords_en": [
+        "Ningbo gilt lacquer woodcarving"
+      ],
+      "imagery": [
+        "朱红底漆与贴金纹样",
+        "刻刀划过木胎"
+      ],
+      "scenario_tags": [
+        "非遗体验",
+        "艺术"
+      ],
+      "sources": [
+        {
+          "title": "中国非遗网·宁波朱金漆木雕",
+          "url": "https://www.ihchina.cn/project_details/14023.html",
+          "checked_on": "2026-11-21"
+        }
+      ]
+    },
+    {
+      "id": "ningbo-inlay",
+      "type": "intangible",
+      "name": "骨木镶嵌",
+      "aliases": [
+        "宁波骨木镶嵌"
+      ],
+      "location": "宁波宁波市",
+      "facts": [
+        "宁波骨木镶嵌有平嵌、高嵌及两者混合等形式。",
+        "工匠先在木坯上开槽并嵌入预制纹样，再雕磨、髹漆。"
+      ],
+      "keywords_en": [
+        "Ningbo bone wood inlay"
+      ],
+      "imagery": [
+        "深色木坯嵌入浅色骨片",
+        "镶嵌纹样近景"
+      ],
+      "scenario_tags": [
+        "非遗体验",
+        "艺术"
+      ],
+      "sources": [
+        {
+          "title": "中国非遗网·木骨镶嵌",
+          "url": "https://www.ihchina.cn/project_details/14210.html",
+          "checked_on": "2026-11-21"
+        }
+      ]
+    },
+    {
+      "id": "ningbo-liangzhu",
+      "type": "legend",
+      "name": "梁祝传说",
+      "aliases": [
+        "梁山伯与祝英台",
+        "梁祝故事"
+      ],
+      "location": "宁波宁波等地",
+      "facts": [
+        "梁山伯与祝英台是梁祝故事的两位主角。",
+        "宁波和绍兴上虞等地都流传着梁祝故事。"
+      ],
+      "keywords_en": [
+        "Liang Zhu Ningbo"
+      ],
+      "imagery": [
+        "戏曲唱段",
+        "双蝶意象",
+        "传说主题展陈"
+      ],
+      "scenario_tags": [
+        "传说",
+        "爱情"
+      ],
+      "sources": [
+        {
+          "title": "中国非遗网·梁祝传说",
+          "url": "https://www.ihchina.cn/project_details/12189.html",
+          "checked_on": "2026-11-21"
+        }
+      ]
+    },
+    {
+      "id": "ningbo-tangyuan",
+      "type": "cuisine",
+      "name": "宁波汤团",
+      "aliases": [
+        "宁波汤圆",
+        "缸鸭狗"
+      ],
+      "location": "宁波宁波市",
+      "facts": [
+        "宁波汤团用糯米制成团皮，传统馅料用黑芝麻等。",
+        "老字号缸鸭狗以缸、鸭、狗三个图案组成招牌。"
+      ],
+      "keywords_en": [
+        "Ningbo sesame tangyuan"
+      ],
+      "imagery": [
+        "糯米团在热水中浮起",
+        "剖开的黑芝麻馅"
+      ],
+      "scenario_tags": [
+        "美食",
+        "老字号"
+      ],
+      "sources": [
+        {
+          "title": "宁波市非遗网·宁波汤团制作技艺",
+          "url": "https://www.ihningbo.cn/directory/show/60",
+          "checked_on": "2026-11-21"
+        }
+      ]
+    },
+    {
+      "id": "ningbo-xu-festival",
+      "type": "festival",
+      "name": "宁海徐霞客开游节",
+      "aliases": [
+        "徐霞客开游节",
+        "宁海开游节"
+      ],
+      "location": "宁波宁海县",
+      "facts": [
+        "1613年5月19日，徐霞客从宁海出发。",
+        "2026年第二十四届徐霞客开游节在宁海举行。"
+      ],
+      "keywords_en": [
+        "Xu Xiake Ninghai festival"
+      ],
+      "imagery": [
+        "宁海古城门",
+        "徒步出发",
+        "游记卷页"
+      ],
+      "scenario_tags": [
+        "徒步",
+        "春季节庆"
+      ],
+      "sources": [
+        {
+          "title": "人民网·第二十四届徐霞客开游节",
+          "url": "https://zj.people.com.cn/n2/2026/0519/c186327-41584504.html",
+          "checked_on": "2026-11-21"
+        }
+      ]
+    }
+  ]
+}

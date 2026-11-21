@@ -9,10 +9,11 @@ from typing import Any, Callable
 
 from .contract import AssetResult, FallbackChain
 from .llm import OpenAICompatibleLLMProvider
+from .stock import StockProvider
 from .media import OfflineAssetProvider, PexelsAssetProvider
 from .media_ffmpeg import generate_tone
 from .moneyprinterturbo import MoneyPrinterTurboLLMProvider
-from .music import find_music_file
+from .music import select_music, load_music_catalog
 from .offline import OfflineLLMProvider
 from .tts import OpenAICompatibleTTSProvider, TTSResult, generate_edge_tts, generate_system_speech
 
@@ -269,7 +270,9 @@ class ProviderRegistry:
     # 用户可选的素材来源 → 降级链。名字用本注册表的规范名。
     _SOURCE_CHAINS: dict[str, tuple[str, ...]] = {
         "upload": ("upload",),
-        "pexels": ("pexels", "offline"),
+        "pexels": ("pexels",),
+        "pixabay": ("pixabay",),
+        "stock": ("stock",),
         "offline": ("offline",),
         "library": ("local-library", "offline"),
         "local-library": ("local-library", "offline"),
@@ -546,7 +549,7 @@ class _OpenAITTSAdapter:
 
     def synthesize(self, text: str, output_path: Path, voice: str, rate: float, duration: float) -> TTSResult:
         mapped_voice = {"女声": "alloy", "男声": "onyx"}.get(voice, voice)
-        return self.provider.synthesize(text, output_path, mapped_voice)
+        return self.provider.synthesize(text, output_path, mapped_voice, rate=rate)
 
 
 class _SyntheticTTSAdapter:
@@ -560,14 +563,12 @@ class _SyntheticTTSAdapter:
 class _LocalMusicAdapter:
     name = "local-music-library"
 
-    def __init__(self, music_dir: Path) -> None:
-        self.music_dir = music_dir
+    def __init__(self, settings):
+        self.settings = settings
 
-    def resolve(self, output_path: Path, mood: str, duration: float) -> Path:
-        path = find_music_file(self.music_dir)
-        if not path:
-            raise RuntimeError("No supported audio file exists in MUSIC_DIR")
-        return path
+    def resolve(self, output_path: Path, mood: str, duration: float, style: str = "") -> Path:
+        return Path(select_music(task_audio={}, mood=mood, style=style, duration=duration,
+            catalog_path=self.settings.music_catalog_path, music_dir=self.settings.music_dir).path)
 
 
 class _SyntheticMusicAdapter:
@@ -612,12 +613,20 @@ def build_provider_registry(settings: Any, storage: Any) -> ProviderRegistry:
         "纯文本直接出视频，不走文生图。单镜约 30 秒、1 次付费调用，画面与机位由模型自己组织。",
         ("cloud-t2v",), lambda: _ai_t2v.available,
     ))
+    sources = [("pixabay", settings.pixabay_api_key, ""), ("pexels", settings.pexels_api_key, settings.pexels_base_url.rstrip("/"))]
+    registry.register(ProviderSpec("asset", "pixabay", "Pixabay 视频与照片", lambda: StockProvider(sources[:1]), "优先实拍视频", available=lambda: bool(settings.pixabay_api_key)))
+    registry.register(ProviderSpec("asset", "stock", "在线实拍素材（Pixabay / Pexels）", lambda: StockProvider(sources), "按地点、画幅和时长选片，视频优先", available=lambda: any(s[1] for s in sources)))
     registry.register(ProviderSpec("asset", "pexels", "Pexels 在线素材", lambda: PexelsAssetProvider(settings.pexels_api_key, settings.pexels_base_url), "需 PEXELS_API_KEY", available=lambda: bool(settings.pexels_api_key)))
     registry.register(ProviderSpec("asset", "local-library", "本地素材库", lambda: _LocalLibraryAssetProvider(storage), "从已登记素材中检索", ("library",)))
     registry.register(ProviderSpec("asset", "upload", "逐镜头上传", _RequiredUploadAssetProvider, "要求每个镜头已有上传素材"))
     registry.register(ProviderSpec("asset", "offline", "技术测试场景图", OfflineAssetProvider, "本地生成、需人工审核", ("offline-scene-generator",)))
 
-    registry.register(ProviderSpec("tts", "openai-compatible-tts", "OpenAI 兼容 TTS", lambda: _OpenAITTSAdapter(OpenAICompatibleTTSProvider(settings.tts_base_url, settings.tts_api_key, settings.tts_model)), "外部语音合成服务", ("openai",), lambda: bool(settings.tts_base_url and settings.tts_api_key)))
+    tts_description = "本机 Windows 语音通过兼容接口合成" if settings.local_tts_enabled else "外部语音合成服务"
+    registry.register(ProviderSpec(
+        "tts", "openai-compatible-tts", "OpenAI 兼容 TTS",
+        lambda: _OpenAITTSAdapter(OpenAICompatibleTTSProvider(settings.tts_base_url, settings.tts_api_key, settings.tts_model)),
+        tts_description, ("openai",), lambda: bool(settings.tts_base_url and settings.tts_api_key),
+    ))
     registry.register(ProviderSpec(
         "tts", "edge-tts", "Edge TTS", _EdgeTTSAdapter,
         "需 .venv-audio 隔离运行时（scripts/setup-audio-runtime.ps1）",
@@ -626,7 +635,7 @@ def build_provider_registry(settings: Any, storage: Any) -> ProviderRegistry:
     registry.register(ProviderSpec("tts", "windows-system-speech", "Windows 系统语音", _WindowsTTSAdapter, "使用系统已安装语音"))
     registry.register(ProviderSpec("tts", "offline-synthetic-tone", "合成测试音", _SyntheticTTSAdapter, "仅用于显式开启的技术测试", available=lambda: bool(settings.allow_synthetic_audio_fallback)))
 
-    registry.register(ProviderSpec("music", "local-music-library", "本地音乐库", lambda: _LocalMusicAdapter(settings.music_dir), "读取 MUSIC_DIR 中的授权音乐", available=lambda: find_music_file(settings.music_dir) is not None))
+    registry.register(ProviderSpec("music", "local-music-library", "本地音乐库", lambda: _LocalMusicAdapter(settings), "读取 MUSIC_DIR 中的授权音乐", available=lambda: bool(load_music_catalog(settings.music_catalog_path, settings.music_dir))))
     registry.register(ProviderSpec("music", "offline-synthetic-tone", "合成测试音", _SyntheticMusicAdapter, "仅用于显式开启的技术测试", available=lambda: bool(settings.allow_synthetic_audio_fallback)))
 
     from ..services.renderer import VideoRenderer

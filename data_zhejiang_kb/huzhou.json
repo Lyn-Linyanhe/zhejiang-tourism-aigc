@@ -1,0 +1,145 @@
+{
+  "city": "湖州",
+  "city_meta": {
+    "aliases": [
+      "吴兴",
+      "菰城"
+    ],
+    "city_dna": "湖丝与蚕桑、湖笔工艺、南浔藏书"
+  },
+  "entities": [
+    {
+      "id": "huzhou-nanxun",
+      "type": "scenic",
+      "name": "南浔古镇",
+      "aliases": [
+        "南浔",
+        "小莲庄",
+        "嘉业堂藏书楼"
+      ],
+      "location": "湖州南浔区",
+      "facts": [
+        "小莲庄在南浔万古桥西，与嘉业堂藏书楼隔溪相望。",
+        "小莲庄的东升阁结合了中国塔式形态与西式建筑元素。",
+        "小莲庄刘氏家庙外两座牌坊建于清光绪年间。"
+      ],
+      "keywords_en": [
+        "Nanxun Huzhou Xiaolianzhuang"
+      ],
+      "imagery": [
+        "小莲庄荷池",
+        "万古桥",
+        "隔溪的嘉业堂藏书楼"
+      ],
+      "scenario_tags": [
+        "摄影",
+        "古建"
+      ],
+      "sources": [
+        {
+          "title": "湖州市档案馆·小莲庄",
+          "url": "https://daj.huzhou.gov.cn/dawh/rwls/msp/20081119/i3926542.html",
+          "checked_on": "2026-11-21"
+        }
+      ]
+    },
+    {
+      "id": "huzhou-inkbrush",
+      "type": "intangible",
+      "name": "湖笔制作技艺",
+      "aliases": [
+        "湖笔",
+        "善琏湖笔"
+      ],
+      "location": "湖州南浔区善琏镇",
+      "facts": [
+        "湖笔发源于湖州南浔善琏镇。",
+        "到元代，湖笔已颇有名声，常与徽墨、端砚、宣纸并称。"
+      ],
+      "keywords_en": [
+        "Shanlian Huzhou ink brush"
+      ],
+      "imagery": [
+        "梳理笔毫",
+        "制笔工匠齐锋",
+        "毛笔试墨"
+      ],
+      "scenario_tags": [
+        "艺术",
+        "非遗体验"
+      ],
+      "sources": [
+        {
+          "title": "中国非遗网·湖笔制作技艺",
+          "url": "https://www.ihchina.cn/project_details/14395.html",
+          "checked_on": "2026-11-21"
+        }
+      ]
+    },
+    {
+      "id": "huzhou-silkworm",
+      "type": "festival",
+      "name": "扫蚕花地",
+      "aliases": [
+        "蚕桑习俗",
+        "蚕花地",
+        "湖州蚕俗"
+      ],
+      "location": "湖州德清县",
+      "facts": [
+        "这一蚕桑习俗起源于德清，曾在湖嘉地区流传。",
+        "旧时蚕农会在寒食清明前后请艺人入户表演，以祈蚕桑丰收。"
+      ],
+      "keywords_en": [
+        "Deqing silkworm folk ritual"
+      ],
+      "imagery": [
+        "蚕农家中的民俗表演",
+        "桑叶和蚕匾"
+      ],
+      "scenario_tags": [
+        "民俗",
+        "演艺"
+      ],
+      "sources": [
+        {
+          "title": "中国非遗网·扫蚕花地",
+          "url": "https://www.ihchina.cn/project_details/19986.html",
+          "checked_on": "2026-11-21"
+        }
+      ]
+    },
+    {
+      "id": "huzhou-zhulaoda",
+      "type": "cuisine",
+      "name": "诸老大粽子",
+      "aliases": [
+        "湖州粽子",
+        "诸老大"
+      ],
+      "location": "湖州湖州市",
+      "facts": [
+        "诸老大传承的是嘉湖细点的江南风味。",
+        "粽子、茶食、月饼是诸老大的不同产品类别。"
+      ],
+      "keywords_en": [
+        "Huzhou Zhulaoda rice dumplings"
+      ],
+      "imagery": [
+        "湖州老字号店铺",
+        "粽叶包裹糯米"
+      ],
+      "scenario_tags": [
+        "老字号",
+        "美食"
+      ],
+      "sources": [
+        {
+          "title": "商务部老字号数字博物馆·诸老大",
+          "url": "https://lzhbwg.mofcom.gov.cn/edi_ecms_web_front/thb/detail/ae8b577cae20421fbc1ffa1462b17a97",
+          "checked_on": "2026-11-21"
+        }
+      ]
+    }
+  ]
+}

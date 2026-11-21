@@ -6,6 +6,7 @@ from pathlib import Path
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
+INHERITED_ENV = frozenset(os.environ)
 
 
 def _load_dotenv() -> None:
@@ -18,7 +19,9 @@ def _load_dotenv() -> None:
             continue
         name, value = text.split("=", 1)
         name = name.strip()
-        value = value.strip().strip("\"'")
+        value = value.strip()
+        if len(value) >= 2 and value[0] in {"'", '"'} and value[-1] == value[0]:
+            value = value[1:-1]
         if name and name not in os.environ:
             os.environ[name] = value
 
@@ -56,6 +59,7 @@ class Settings:
     llm_base_url: str = _env("LLM_BASE_URL")
     llm_api_key: str = _env("LLM_API_KEY")
     llm_model: str = _env("LLM_MODEL", "gpt-4o-mini")
+    local_tts_enabled: bool = _env("LOCAL_TTS_ENABLED", "false").lower() in {"1", "true", "yes"}
     tts_base_url: str = _env("TTS_BASE_URL")
     tts_api_key: str = _env("TTS_API_KEY")
     tts_model: str = _env("TTS_MODEL", "default")
@@ -69,6 +73,7 @@ class Settings:
     )
     audio_device: str = _env("AUDIO_DEVICE", "cuda").lower()
     audio_compute_type: str = _env("AUDIO_COMPUTE_TYPE", "float16").lower()
+    subtitle_alignment: str = _env("SUBTITLE_ALIGNMENT", "auto").lower()
     whisper_model: str = _env("WHISPER_MODEL", "small")
     audio_model_cache: Path = _project_path("AUDIO_MODEL_CACHE", r"runtime\models")
     audio_allow_cpu_fallback: bool = _env(
@@ -100,6 +105,8 @@ class Settings:
     video_ratio: str = _env("VIDEO_RATIO", "9:16")
     video_poll_interval: int = int(_env("VIDEO_POLL_INTERVAL", "5"))
     video_timeout: int = int(_env("VIDEO_TIMEOUT", "1800"))
+    pixabay_api_key: str = _env("PIXABAY_API_KEY")
+    tts_voice_catalog: str = _env("TTS_VOICE_CATALOG", "{}")
     pexels_api_key: str = _env("PEXELS_API_KEY")
     pexels_base_url: str = _env("PEXELS_BASE_URL", "https://api.pexels.com/v1")
     music_dir: Path = PROJECT_ROOT / _env("MUSIC_DIR", "runtime/music")

@@ -14,11 +14,8 @@
 from __future__ import annotations
 
 import base64
-import json
 import math
-import time
-import urllib.parse
-import urllib.request
+from .stock import StockProvider
 from pathlib import Path
 from typing import Any
 
@@ -96,86 +93,11 @@ class OfflineAssetProvider(AssetProvider):
         }
 
 
-class PexelsAssetProvider(AssetProvider):
+class PexelsAssetProvider(StockProvider):
     name = "pexels"
 
-    def __init__(self, api_key: str, base_url: str = "https://api.pexels.com/v1") -> None:
-        self.api_key = api_key.strip()
-        self.base_url = base_url.rstrip("/")
-
-    def create_or_find(
-        self,
-        task_id: str,
-        shot: dict[str, Any],
-        output_dir: Path,
-        theme_color: str,
-        accent: str,
-        style_ctx: dict[str, Any] | None = None,
-    ) -> dict[str, Any]:
-        if not self.api_key:
-            raise RuntimeError("PEXELS_API_KEY is required when asset_source=pexels")
-        output_dir.mkdir(parents=True, exist_ok=True)
-        query = " ".join(
-            str(shot.get("search_query") or shot.get("visual_prompt") or shot.get("title") or "Zhejiang tourism")
-            .split()
-        )[:180]
-        # Knowledge queries may contain a Chinese label followed by English
-        # synonyms. Pexels accepts a concise English phrase more reliably.
-        alternatives = [part.strip() for part in query.split(";")]
-        query = next((part for part in alternatives if part.isascii() and any(char.isalpha() for char in part)), alternatives[0])
-        output = (style_ctx or {}).get("output_resolution", "720x1280")
-        try:
-            width, height = (int(part) for part in str(output).split("x", 1))
-        except (ValueError, TypeError):
-            width, height = 720, 1280
-        orientation = "landscape" if width > height else "square" if width == height else "portrait"
-        page = max(1, min(80, int(shot.get("order", 1) or 1)))
-        params = urllib.parse.urlencode(
-            {"query": query, "orientation": orientation, "per_page": 1, "page": page}
-        )
-        request = urllib.request.Request(
-            f"{self.base_url}/search?{params}",
-            headers={"Authorization": self.api_key, "User-Agent": "ZhejiangTourismAIGC/1.0"},
-        )
-        try:
-            with urllib.request.urlopen(request, timeout=30) as response:
-                payload = json.loads(response.read().decode("utf-8"))
-        except Exception as exc:
-            raise RuntimeError(f"Pexels search failed: {exc}") from exc
-        photos = payload.get("photos") or []
-        if not photos:
-            raise RuntimeError(f"Pexels returned no photo for query: {query}")
-        photo = photos[0]
-        image_url = str((photo.get("src") or {}).get("large2x" if orientation == "landscape" else "square" if orientation == "square" else "portrait") or "")
-        if not image_url:
-            raise RuntimeError(f"Pexels response did not contain a {orientation} image URL")
-        image_path = output_dir / f"{shot['id']}.jpg"
-        image_request = urllib.request.Request(
-            image_url,
-            headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/120.0 Safari/537.36"},
-        )
-        for attempt in range(3):
-            try:
-                with urllib.request.urlopen(image_request, timeout=60) as response:
-                    image_path.write_bytes(response.read())
-                break
-            except Exception as exc:
-                if attempt == 2:
-                    raise RuntimeError(f"Pexels image download failed: {exc}") from exc
-                time.sleep(2 * (attempt + 1))
-        if image_path.stat().st_size < 1000:
-            raise RuntimeError("Pexels returned an empty image")
-        return {
-            "id": f"pexels_{photo.get('id', shot['id'])}",
-            "name": f"Pexels photo {photo.get('id', shot['id'])}",
-            "url": f"/media/{task_id}/assets/{image_path.name}",
-            "local_path": str(image_path),
-            "source": self.name,
-            "license": "Pexels license; verify current terms before publication",
-            "author": str((photo.get("photographer") or "Pexels contributor")),
-            "usage_scope": "Subject to the Pexels license and team review",
-            "is_ai_generated": False,
-        }
+    def __init__(self, api_key: str, base_url: str = "https://api.pexels.com/v1"):
+        super().__init__([("pexels", api_key, base_url.rstrip("/"))])
 
 
 class LocalUploadProvider:

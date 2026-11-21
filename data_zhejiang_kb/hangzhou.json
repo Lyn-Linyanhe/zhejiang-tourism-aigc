@@ -56,6 +56,14 @@
         "赏花",
         "夜游",
         "徒步"
+      ],
+      "sources": [
+        {
+          "title": "UNESCO·杭州西湖文化景观",
+          "url": "https://whc.unesco.org/en/list/1334/",
+          "checked_on": "2026-11-21",
+          "scope": "提供实体与画面核对参考"
+        }
       ]
     },
     {
@@ -93,6 +101,14 @@
         "摄影",
         "爱情",
         "雪景"
+      ],
+      "sources": [
+        {
+          "title": "杭州市文化广电旅游局·杭州文旅线路与西湖十景",
+          "url": "https://wgly.hangzhou.gov.cn/attach/538/2307051510367229.pdf",
+          "checked_on": "2026-11-21",
+          "scope": "提供实体与画面核对参考"
+        }
       ]
     },
     {
@@ -132,6 +148,14 @@
         "登高",
         "夜景",
         "传说"
+      ],
+      "sources": [
+        {
+          "title": "杭州市文化广电旅游局·杭州文旅线路与西湖十景",
+          "url": "https://wgly.hangzhou.gov.cn/attach/538/2307051510367229.pdf",
+          "checked_on": "2026-11-21",
+          "scope": "提供实体与画面核对参考"
+        }
       ]
     },
     {
@@ -219,6 +243,14 @@
         "研学",
         "非遗体验",
         "自然"
+      ],
+      "sources": [
+        {
+          "title": "中国非遗网·西湖龙井绿茶制作技艺",
+          "url": "https://www.ihchina.cn/project_details/14605",
+          "checked_on": "2026-11-21",
+          "scope": "提供实体与画面核对参考"
+        }
       ]
     },
     {
@@ -1460,6 +1492,14 @@
         "美食",
         "杭帮菜",
         "茶文化"
+      ],
+      "sources": [
+        {
+          "title": "中国非遗网·西湖龙井绿茶制作技艺",
+          "url": "https://www.ihchina.cn/project_details/14605",
+          "checked_on": "2026-11-21",
+          "scope": "提供实体与画面核对参考"
+        }
       ]
     },
     {

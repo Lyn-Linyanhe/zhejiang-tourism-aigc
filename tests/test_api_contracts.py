@@ -18,7 +18,7 @@ class UploadContractTests(unittest.TestCase):
         )
         self.assertEqual(result["shot_id"], "shot_2")
 
-    def test_music_upload_requires_license_confirmation(self):
+    def test_music_upload_defaults_to_uploader_authorization(self):
         payload = {
             "kind": "music",
             "mood": "舒缓",
@@ -26,10 +26,12 @@ class UploadContractTests(unittest.TestCase):
             "author": "team",
             "usage_scope": "competition",
         }
-        with self.assertRaisesRegex(ValueError, "approved=true"):
-            validate_audio_upload(payload, self.task)
-        payload["approved"] = True
+        with self.assertRaisesRegex(ValueError, "授权"):
+            validate_audio_upload({**payload, "approved": False}, self.task)
         result = validate_audio_upload(payload, self.task)
+        default = validate_audio_upload({"kind": "music", "mood": "舒缓"}, self.task)
+        self.assertTrue(default["approved"])
+        self.assertEqual(default["authorization_basis"], "uploader_assertion")
         self.assertEqual(result["moods"], ["舒缓"])
         self.assertEqual(result["styles"], ["诗意纪实"])
 

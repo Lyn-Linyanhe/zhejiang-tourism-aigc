@@ -134,3 +134,14 @@ Generated files are served below:
 ## `GET /api/library/assets`
 
 Lists reusable local library media. Optional query parameters are `type=image|video|audio` and `q` for metadata search. Assets are content-hash deduplicated and include `license_status` and `usage_scope`; scanned validation artifacts remain `pending-review` and must not be treated as publication-cleared.
+
+## 核验与底账接口
+
+| 方法与路径 | 内容 |
+| --- | --- |
+| GET /api/knowledge | 浙江文旅知识库的城市、实体、事实与来源覆盖统计 |
+| GET /api/tasks/{id}/ledger | 下载任务底账 JSON |
+| GET /api/tasks/{id}/visual-review | 获取成片逐镜抽帧证据、核验结论、核验汇总和实际画幅 |
+| POST /api/tasks/{id}/visual-review | 本机同源写入核验。字段为 shot_id、video_sha256、status、note、reviewer。status 可选 match、partial、mismatch、unverifiable |
+| GET /api/tasks/{id}/cost | 读取原成本摘要及 billing 审计明细 |
+| POST /api/tasks/{id}/cost | 本机同源录入账单。字段为 entry_id、currency、amount、reference。amount 建议传十进制字符串，reference 填账单号或凭证链接 |

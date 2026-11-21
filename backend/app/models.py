@@ -21,7 +21,6 @@ ALLOWED_RESOLUTIONS = {
 ALLOWED_STYLES = ("诗意纪实", "城市漫游", "国风雅韵", "青春活力", "节庆热烈")
 ALLOWED_VOICES = ("女声", "男声", "无配音")
 ALLOWED_MUSIC_MOODS = ("舒缓", "热烈", "雅致", "轻快", "无音乐")
-# 旁白出现时是否压低 BGM。默认不压低：默认配比下 BGM 已比人声低约 15dB。
 ALLOWED_MUSIC_DUCKING = ("不压低", "轻微", "标准")
 
 
@@ -50,8 +49,8 @@ class TaskInput:
     shot_count: int = 0
     include_subtitles: bool = True
     asset_source: str = "configured"
-    output_resolution: str = "720x1280"
-    fps: int = 25
+    output_resolution: str = "1080x1920"
+    fps: int = 30
     voice_rate: float = 1.0
     # edge 的音高偏移（赫兹）。0 = 不变调。
     voice_pitch: float = 0.0
@@ -60,7 +59,7 @@ class TaskInput:
     voice_engine: str = "configured"
     voice_volume: float = 1.0
     music_volume: float = 0.18
-    music_ducking: str = "不压低"
+    music_ducking: str = "轻微"
 
     @classmethod
     def from_dict(cls, raw: dict[str, Any]) -> "TaskInput":
@@ -80,8 +79,8 @@ class TaskInput:
             "shot_count": int(raw.get("shot_count", 0)),
             "include_subtitles": bool(raw.get("include_subtitles", True)),
             "asset_source": str(raw.get("asset_source", "configured")).strip().lower(),
-            "output_resolution": str(raw.get("output_resolution", "720x1280")).strip().lower(),
-            "fps": int(raw.get("fps", 25)),
+            "output_resolution": str(raw.get("output_resolution", cls.output_resolution)).strip().lower(),
+            "fps": int(raw.get("fps", cls.fps)),
             "voice_rate": float(raw.get("voice_rate", 1.0)),
             "voice_pitch": float(raw.get("voice_pitch", 0.0)),
             "voice_style": str(raw.get("voice_style", "natural")),
@@ -89,12 +88,14 @@ class TaskInput:
             "voice_engine": str(raw.get("voice_engine", "configured")),
             "voice_volume": float(raw.get("voice_volume", 1.0)),
             "music_volume": float(raw.get("music_volume", 0.18)),
-            "music_ducking": str(raw.get("music_ducking", "不压低")).strip(),
+            "music_ducking": str(raw.get("music_ducking", cls.music_ducking)).strip(),
         }
         # Retired source: preserve its upload-only behavior for historical drafts.
         if values["voice_engine"] == "xstudio":
             values["voice_engine"] = "upload"
             values["voice"] = "上传配音音频"
+        if values["voice_engine"] == "tianyi":
+            values.update(voice_engine="reselect", voice="请选择新音色")
         if not values["city"]:
             raise ValueError("city 不能为空")
         if not values["theme"]:
@@ -108,7 +109,7 @@ class TaskInput:
         if values["duration"] not in ALLOWED_DURATIONS:
             raise ValueError(f"duration 只能是 {ALLOWED_DURATIONS}")
         if values["asset_source"] not in {
-            "configured", "offline", "upload", "pexels",
+            "configured", "offline", "upload", "pexels", "pixabay", "stock",
             "local-library", "library",
             "ai-image", "ai-video", "ai-t2v",
             # P2 注册表使用的旧名称，作为别名一并接受
@@ -127,7 +128,7 @@ class TaskInput:
             raise ValueError("未知的配音语气")
         if not math.isfinite(values["voice_expressiveness"]) or not 0 <= values["voice_expressiveness"] <= 1:
             raise ValueError("语气强度必须在 0 到 1 之间")
-        if values["voice_engine"] not in {"configured", "edge", "windows", "upload", "tianyi"}:
+        if values["voice_engine"] not in {"configured", "edge", "windows", "upload", "voicebank", "reselect"}:
             raise ValueError("未知的配音来源")
         if not 0.0 <= values["voice_volume"] <= 2.0:
             raise ValueError("voice_volume must be between 0 and 2")
@@ -159,6 +160,8 @@ class Shot:
     asset_local_path: str = ""
     asset_media_type: str = ""
     asset_model: str = ""
+    subject_group: str = ""
+    subject_reference: str = ""
     asset_seed: int = 0
     asset_first_frame_path: str = ""
     audio_url: str = ""
@@ -181,6 +184,13 @@ class AssetRecord:
     author: str
     usage_scope: str
     is_ai_generated: bool
+    grantor: str = ""
+    authorization_ref: str = ""
+    selection_key: str = ""
+    external_id: str = ""
+    page_url: str = ""
+    location_evidence: str = ""
+    search_query: str = ""
     local_path: str = ""
     media_type: str = ""
     model: str = ""
@@ -221,6 +231,7 @@ class Task:
     error: str = ""
     created_at: str = field(default_factory=now_iso)
     updated_at: str = field(default_factory=now_iso)
+    initial_input: dict[str, Any] | None = None
 
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)

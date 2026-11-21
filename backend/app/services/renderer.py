@@ -244,6 +244,8 @@ class VideoRenderer:
                 str(fps),
                 "-c:a",
                 "aac",
+                "-ac",
+                "2",
                 "-b:a",
                 "128k",
                 "-movflags",
@@ -312,6 +314,12 @@ class VideoRenderer:
         for count in base_frames[:-1]:
             elapsed_frames += count
             boundaries.append(elapsed_frames)
+        starts = [0, *boundaries]
+        ends = [*boundaries, locked_frames]
+        shot_timeline = [
+            {"shot_id": shot["id"], "start": start / fps, "end": min(end, locked_frames) / fps}
+            for shot, start, end in zip(active_shots, starts, ends)
+        ]
         focus_records: list[dict[str, Any]] = []
         for index, shot in enumerate(active_shots):
             head = transition_frames[index - 1] // 2 if index else 0
@@ -404,7 +412,7 @@ class VideoRenderer:
             raise RuntimeError(result.stderr.strip() or "Shot concat failed")
 
         srt_path = output_dir / "subtitles.srt"
-        raw_cues = audio.get("cues") if isinstance(audio, dict) else None
+        raw_cues = audio.get("subtitle_cues") or audio.get("cues") if isinstance(audio, dict) else None
         # 字幕用 cue 的绝对时间。画面被 -t 裁到 total_duration 时，
         # 超出画面的那一句必须收进画面内，不能写到画面结束之后。
         create_srt(
@@ -510,10 +518,13 @@ class VideoRenderer:
             "timing_source": audio.get("timing_source", ""),
             "target_duration": audio.get("target_duration", ""),
             "cues": raw_cues if isinstance(raw_cues, list) else [],
+            "subtitle_alignment": audio.get("subtitle_alignment", {}),
+            "music_notice": audio.get("music_notice",""),
             "music_match": audio.get("music_match", None),
             "render_provider": "ffmpeg",
             "focus_points": focus_records,
             "transitions": transition_records,
+            "shot_timeline": shot_timeline,
             "rendered_at": __import__("datetime").datetime.now(
                 __import__("datetime").timezone.utc
             ).isoformat(),

@@ -3,8 +3,7 @@ $projectRoot = Split-Path -Parent $MyInvocation.MyCommand.Path
 Set-Location -LiteralPath $projectRoot
 $ffmpegBin = Join-Path $projectRoot "tools\ffmpeg\bin"
 $env:PATH = "$ffmpegBin;$env:PATH"
-if (-not (Test-Path -LiteralPath (Join-Path $ffmpegBin "ffmpeg.exe")) -or
-    -not (Test-Path -LiteralPath (Join-Path $ffmpegBin "ffprobe.exe"))) {
+if ((-not (Get-Command ffmpeg -CommandType Application -ErrorAction SilentlyContinue)) -or (-not (Get-Command ffprobe -CommandType Application -ErrorAction SilentlyContinue))) {
   # 完整离线包自带 FFmpeg；从 GitHub 源码克隆时这里为空，自动补下载。
   Write-Host "FFmpeg not found; downloading a standalone build..." -ForegroundColor Cyan
   & (Join-Path $projectRoot "scripts\setup-ffmpeg.ps1")

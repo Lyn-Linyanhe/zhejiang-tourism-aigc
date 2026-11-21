@@ -192,6 +192,9 @@ class MusicResult:
     provider: str = "local-catalog"
     model: str = "metadata-match-v1"
     event: dict[str, Any] = field(default_factory=dict)
+    title: str = ""
+    authorization_basis: str = ""
+    authorization_ref: str = ""
 
     def validate(self) -> None:
         if not self.id or not self.path:

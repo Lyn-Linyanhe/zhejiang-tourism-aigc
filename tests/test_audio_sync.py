@@ -1,5 +1,6 @@
 import tempfile
 import unittest
+import subprocess
 from pathlib import Path
 from types import SimpleNamespace
 
@@ -38,8 +39,21 @@ class AudioSyncTests(unittest.TestCase):
             second = root / "second.wav"
             generate_tone(first, 0.73, 440, 0.1)
             generate_tone(second, 0.91, 520, 0.1)
+            mono = root / "first-mono.wav"
+            subprocess.run(
+                ["ffmpeg", "-y", "-hide_banner", "-loglevel", "error", "-i", str(first),
+                 "-ac", "1", str(mono)], check=True,
+            )
+            self.assertEqual(probe_audio(mono)["channels"], 1)
+            old_silence = settings.media_dir / "task_test" / "silence-150ms.wav"
+            old_silence.parent.mkdir(parents=True)
+            subprocess.run(
+                ["ffmpeg", "-y", "-hide_banner", "-loglevel", "error", "-f", "lavfi",
+                 "-i", "anullsrc=r=48000:cl=mono", "-t", "0.150", str(old_silence)],
+                check=True,
+            )
             shots = [
-                Shot("shot_1", 1, 1, "A", "A", "第一句", "字幕一", audio_local_path=str(first)),
+                Shot("shot_1", 1, 1, "A", "A", "第一句", "字幕一", audio_local_path=str(mono)),
                 Shot("shot_2", 2, 1, "B", "B", "第二句", "字幕二", audio_local_path=str(second)),
             ]
             result = PerShotAudioBuilder(settings, None).build(
@@ -51,7 +65,8 @@ class AudioSyncTests(unittest.TestCase):
             self.assertEqual(result.cues[0].text, "字幕一")
             info = probe_audio(Path(result.voice_path))
             self.assertEqual(info["sample_rate"], 48000)
-            self.assertEqual(info["channels"], 1)
+            self.assertEqual(info["channels"], 2)
+            self.assertEqual(probe_audio(old_silence)["channels"], 2)
             self.assertLessEqual(abs(result.total_duration - sum(shot.duration_sec for shot in shots)), 0.001)
 
 

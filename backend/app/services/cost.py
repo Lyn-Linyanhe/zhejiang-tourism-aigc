@@ -9,7 +9,52 @@
 
 from __future__ import annotations
 
+from contextlib import contextmanager
+from contextvars import ContextVar
 from typing import Any, Iterable
+from urllib.error import HTTPError
+
+from ..models import now_iso
+
+
+_billing_sink = ContextVar("billing_sink", default=None)
+
+
+@contextmanager
+def billing_scope(sink):
+    token = _billing_sink.set(sink)
+    try:
+        yield
+    finally:
+        _billing_sink.reset(token)
+
+
+@contextmanager
+def provider_call(slot: str, provider: str, model: str):
+    event = {"type": "billing_call", "slot": slot, "provider": provider, "model": model, "at": now_iso(), "ok": False}
+    try:
+        yield event
+        event["ok"] = True
+    except HTTPError as exc:
+        event["http_status"] = exc.code
+        record_response(event, exc)
+        raise
+    finally:
+        sink = _billing_sink.get()
+        if sink:
+            sink(event)
+
+
+def record_response(event: dict, response, payload: dict | None = None) -> None:
+    headers = getattr(response, "headers", None) or {}
+    data = payload or {}
+    request_id = headers.get("x-request-id") or headers.get("request-id") or data.get("request_id") or data.get("id")
+    if isinstance(request_id, str):
+        event["request_id"] = request_id
+    usage = data.get("usage")
+    if isinstance(usage, dict):
+        event["usage"] = usage
+
 
 
 def _cost_of(item: Any) -> float:

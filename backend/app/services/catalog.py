@@ -5,10 +5,20 @@ from typing import Any
 from ..providers.offline import CITY_KNOWLEDGE
 from ..providers.tts import EDGE_VOICE_CHOICES
 from .voice_studio import STYLES, VOICE_LIBRARY
-from ..providers.tianyi import availability as tianyi_availability
+import json
+from ..config import settings
 
 
-def get_catalog() -> dict[str, Any]:
+def bank_voices(config=settings):
+    try:
+        voices = json.loads(config.tts_voice_catalog)
+    except (TypeError, ValueError):
+        return {}
+    return {key: label for key, label in voices.items()
+            if isinstance(key, str) and 0 < len(key) <= 80 and isinstance(label, str) and label.strip()} if isinstance(voices, dict) else {}
+
+
+def get_catalog(config=settings) -> dict[str, Any]:
     return {
         "cities": [
             {
@@ -26,7 +36,7 @@ def get_catalog() -> dict[str, Any]:
         "voices": [*EDGE_VOICE_CHOICES, "无配音"],
         "voice_library": VOICE_LIBRARY,
         "voice_styles": STYLES,
-        "tianyi": tianyi_availability(),
+        "bank_voices": bank_voices(config),
         "music_moods": ["舒缓", "热烈", "雅致", "轻快", "无音乐"],
         # 旁白出现时 BGM 的处理方式，默认不压低
         "music_ducking": ["不压低", "轻微", "标准"],

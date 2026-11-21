@@ -1,0 +1,207 @@
+{
+  "city": "舟山",
+  "city_meta": {
+    "aliases": [
+      "定海",
+      "舟山群岛"
+    ],
+    "city_dna": "海洋渔俗、海岛景观、普陀观音文化"
+  },
+  "entities": [
+    {
+      "id": "zhoushan-putuo",
+      "type": "scenic",
+      "name": "普陀山",
+      "aliases": [
+        "舟山普陀山",
+        "海天佛国",
+        "不肯去观音院"
+      ],
+      "location": "舟山普陀区",
+      "facts": [
+        "普陀山是舟山群岛的岛屿之一。",
+        "普陀山的传统文化以观音信仰为重要线索。",
+        "岛上山海景观与寺、塔、摩崖石刻相连。"
+      ],
+      "keywords_en": [
+        "Mount Putuo Zhoushan"
+      ],
+      "imagery": [
+        "山海相接的岛岸",
+        "古寺红墙",
+        "潮音洞岩壁"
+      ],
+      "scenario_tags": [
+        "古建",
+        "自然"
+      ],
+      "sources": [
+        {
+          "title": "浙江省政协·探寻普陀山",
+          "url": "https://www.zjzx.gov.cn/zxyw/content_96588",
+          "checked_on": "2026-11-21"
+        }
+      ]
+    },
+    {
+      "id": "zhoushan-guanyin",
+      "type": "legend",
+      "name": "观音传说",
+      "aliases": [
+        "普陀山观音传说",
+        "不肯去观音"
+      ],
+      "location": "舟山普陀区",
+      "facts": [
+        "普陀山流传着以观音为中心的民间故事。",
+        "与当地观音信仰有关的故事通过口头讲述传播。"
+      ],
+      "keywords_en": [
+        "Putuo Guanyin folklore"
+      ],
+      "imagery": [
+        "潮音洞",
+        "面海古院",
+        "白浪拍岸"
+      ],
+      "scenario_tags": [
+        "传说",
+        "祈福"
+      ],
+      "sources": [
+        {
+          "title": "中国非遗网·观音传说",
+          "url": "https://www.ihchina.cn/project_details/12260.html",
+          "checked_on": "2026-11-21"
+        }
+      ]
+    },
+    {
+      "id": "zhoushan-gong",
+      "type": "intangible",
+      "name": "舟山锣鼓",
+      "aliases": [
+        "舟山民间锣鼓"
+      ],
+      "location": "舟山舟山市",
+      "facts": [
+        "舟山锣鼓过去用于庙会、婚丧和渔民祭海。",
+        "《八仙序》《渔家乐》是其传统曲目。"
+      ],
+      "keywords_en": [
+        "Zhoushan gong and drum"
+      ],
+      "imagery": [
+        "海岛庙会上的锣鼓阵",
+        "鼓手敲击特写"
+      ],
+      "scenario_tags": [
+        "演艺",
+        "非遗体验"
+      ],
+      "sources": [
+        {
+          "title": "中国非遗网·舟山锣鼓",
+          "url": "https://www.ihchina.cn/project_details/12534.html",
+          "checked_on": "2026-11-21"
+        }
+      ]
+    },
+    {
+      "id": "zhoushan-fisher",
+      "type": "festival",
+      "name": "岱山谢洋节",
+      "aliases": [
+        "岱山开洋节",
+        "渔民开洋谢洋节",
+        "岱山祭海"
+      ],
+      "location": "舟山岱山县",
+      "facts": [
+        "岱山开洋节祈求渔船出海平安和渔获丰收。",
+        "谢洋节则是归港后向大海致谢的民俗活动。"
+      ],
+      "keywords_en": [
+        "Daishan fishing sea ritual"
+      ],
+      "imagery": [
+        "渔港船队",
+        "面向海面的祭海仪式和鼓乐"
+      ],
+      "scenario_tags": [
+        "民俗",
+        "演艺"
+      ],
+      "sources": [
+        {
+          "title": "中国非遗网·渔民开洋、谢洋节",
+          "url": "https://www.ihchina.cn/project_details/15090.html",
+          "checked_on": "2026-11-21"
+        }
+      ]
+    },
+    {
+      "id": "zhoushan-chant",
+      "type": "intangible",
+      "name": "舟山渔民号子",
+      "aliases": [
+        "舟山海洋号子",
+        "岱山渔民号子"
+      ],
+      "location": "舟山岱山县",
+      "facts": [
+        "舟山渔民号子源于海上渔业劳动。",
+        "国家级项目地方保护单位为岱山县文化馆。"
+      ],
+      "keywords_en": [
+        "Zhoushan fishermen work songs"
+      ],
+      "imagery": [
+        "渔民合力拉缆",
+        "领唱与应和"
+      ],
+      "scenario_tags": [
+        "演艺",
+        "民俗"
+      ],
+      "sources": [
+        {
+          "title": "中国非遗网·舟山渔民号子",
+          "url": "https://www.ihchina.cn/project_details/12628.html",
+          "checked_on": "2026-11-21"
+        }
+      ]
+    },
+    {
+      "id": "zhoushan-hairtail",
+      "type": "cuisine",
+      "name": "舟山带鱼",
+      "aliases": [
+        "舟山海捕带鱼"
+      ],
+      "location": "舟山舟山市",
+      "facts": [
+        "舟山带鱼属于舟山海水产品的地理标志证明商标。",
+        "嵊泗贻贝与舟山带鱼是不同的舟山海产地理标志。"
+      ],
+      "keywords_en": [
+        "Zhoushan hairtail seafood"
+      ],
+      "imagery": [
+        "渔市银色带鱼",
+        "海产摊与鱼船"
+      ],
+      "scenario_tags": [
+        "美食",
+        "市井"
+      ],
+      "sources": [
+        {
+          "title": "商务部中国保护知识产权网·舟山渔业地标",
+          "url": "https://ipr.mofcom.gov.cn/article/gnxw/dlbz/202203/1969250.html",
+          "checked_on": "2026-11-21"
+        }
+      ]
+    }
+  ]
+}

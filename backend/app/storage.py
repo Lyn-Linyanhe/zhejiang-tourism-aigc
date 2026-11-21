@@ -11,6 +11,10 @@ from typing import Any
 from .models import Task, now_iso
 
 
+class TaskBusyError(ValueError):
+    pass
+
+
 class Storage:
     def __init__(self, db_path: Path) -> None:
         self.db_path = db_path
@@ -26,6 +30,7 @@ class Storage:
     def _init_db(self) -> None:
         with closing(self._connect()) as conn:
             with conn:
+                conn.execute("BEGIN IMMEDIATE")
                 conn.execute(
                     """
                     CREATE TABLE IF NOT EXISTS tasks (
@@ -35,10 +40,14 @@ class Storage:
                         progress INTEGER NOT NULL,
                         payload TEXT NOT NULL,
                         created_at TEXT NOT NULL,
-                        updated_at TEXT NOT NULL
+                        updated_at TEXT NOT NULL,
+                        trashed_at TEXT
                     )
                     """
                 )
+                columns = {row["name"] for row in conn.execute("PRAGMA table_info(tasks)")}
+                if "trashed_at" not in columns:
+                    conn.execute("ALTER TABLE tasks ADD COLUMN trashed_at TEXT")
                 conn.execute(
                     """
                     CREATE TABLE IF NOT EXISTS assets (
@@ -94,7 +103,7 @@ class Storage:
         if not media_root.exists():
             return 0
         for path in media_root.rglob("*"):
-            if not path.is_file() or path.suffix.lower() not in supported:
+            if "visual-review" in path.relative_to(media_root).parts or not path.is_file() or path.suffix.lower() not in supported:
                 continue
             kind = "audio" if path.suffix.lower() in audio else ("video" if path.suffix.lower() in video else "image")
             relative = path.relative_to(media_root).as_posix()
@@ -111,7 +120,7 @@ class Storage:
         payload = json.dumps(task.to_dict(), ensure_ascii=False)
         with self._lock, closing(self._connect()) as conn:
             with conn:
-                conn.execute(
+                cursor = conn.execute(
                     """
                     INSERT INTO tasks(id, status, stage, progress, payload, created_at, updated_at)
                     VALUES(?, ?, ?, ?, ?, ?, ?)
@@ -121,9 +130,12 @@ class Storage:
                         progress=excluded.progress,
                         payload=excluded.payload,
                         updated_at=excluded.updated_at
+                    WHERE tasks.trashed_at IS NULL
                     """,
                     (task.id, task.status, task.stage, task.progress, payload, task.created_at, task.updated_at),
                 )
+                if cursor.rowcount != 1:
+                    raise KeyError("该任务已移入回收站")
                 conn.execute("DELETE FROM assets WHERE task_id = ?", (task.id,))
                 for asset in task.assets:
                     data = json.dumps(asset, ensure_ascii=False) if isinstance(asset, dict) else json.dumps(asset.__dict__, ensure_ascii=False)
@@ -135,24 +147,60 @@ class Storage:
 
     def get_task(self, task_id: str) -> dict[str, Any] | None:
         with closing(self._connect()) as conn:
-            row = conn.execute("SELECT payload FROM tasks WHERE id = ?", (task_id,)).fetchone()
+            row = conn.execute("SELECT payload FROM tasks WHERE id = ? AND trashed_at IS NULL", (task_id,)).fetchone()
         return json.loads(row["payload"]) if row else None
 
     def list_tasks(self, limit: int = 50) -> list[dict[str, Any]]:
         with closing(self._connect()) as conn:
             rows = conn.execute(
-                "SELECT payload FROM tasks ORDER BY updated_at DESC LIMIT ?", (max(1, min(limit, 200)),)
+                "SELECT payload FROM tasks WHERE trashed_at IS NULL ORDER BY updated_at DESC LIMIT ?", (max(1, min(limit, 200)),)
             ).fetchall()
         return [json.loads(row["payload"]) for row in rows]
+
+    def list_trashed_tasks(self) -> list[dict[str, Any]]:
+        with closing(self._connect()) as conn:
+            rows = conn.execute(
+                "SELECT payload, trashed_at FROM tasks WHERE trashed_at IS NOT NULL ORDER BY trashed_at DESC"
+            ).fetchall()
+        return [dict(json.loads(row["payload"]), trashed_at=row["trashed_at"]) for row in rows]
+
+    def trash_task(self, task_id: str) -> str:
+        trashed_at = now_iso()
+        with self._lock, closing(self._connect()) as conn, conn:
+            updated = conn.execute(
+                """
+                UPDATE tasks SET trashed_at = ?
+                WHERE id = ? AND trashed_at IS NULL
+                  AND status NOT IN ('queued', 'running')
+                  AND NOT (status = 'draft' AND stage IN ('preview', 'scripting') AND progress < 35)
+                """,
+                (trashed_at, task_id),
+            )
+            if updated.rowcount:
+                return trashed_at
+            row = conn.execute("SELECT trashed_at FROM tasks WHERE id = ?", (task_id,)).fetchone()
+            if row is None:
+                raise KeyError("任务不存在")
+            if row["trashed_at"]:
+                return row["trashed_at"]
+            raise TaskBusyError("任务正在生成，请完成后再删除。")
+
+    def restore_task(self, task_id: str) -> None:
+        with self._lock, closing(self._connect()) as conn, conn:
+            result = conn.execute("UPDATE tasks SET trashed_at = NULL WHERE id = ?", (task_id,))
+            if not result.rowcount:
+                raise KeyError("任务不存在")
 
     def append_asset(self, task_id: str, asset: dict[str, Any]) -> dict[str, Any]:
         with self._lock, closing(self._connect()) as conn:
             with conn:
-                row = conn.execute("SELECT payload FROM tasks WHERE id = ?", (task_id,)).fetchone()
+                conn.execute("BEGIN IMMEDIATE")
+                row = conn.execute("SELECT payload FROM tasks WHERE id = ? AND trashed_at IS NULL", (task_id,)).fetchone()
                 if not row:
                     raise KeyError("任务不存在")
                 payload = json.loads(row["payload"])
-                payload.setdefault("assets", []).append(asset)
+                payload["assets"] = [item for item in payload.get("assets", []) if item["id"] != asset["id"]]
+                payload["assets"].append(asset)
                 shot_id = asset.get("shot_id", "")
                 if shot_id and asset.get("local_path"):
                     for shot in payload.get("shots", []):
@@ -186,7 +234,7 @@ class Storage:
                     """
                     UPDATE tasks
                     SET status = ?, stage = ?, progress = ?, payload = ?, updated_at = ?
-                    WHERE id = ?
+                    WHERE id = ? AND trashed_at IS NULL
                     """,
                     (
                         payload.get("status", "draft"),

@@ -4,6 +4,7 @@ import json
 import os
 import subprocess
 import urllib.request
+from ..services.cost import provider_call, record_response
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
@@ -119,13 +120,17 @@ class OpenAICompatibleTTSProvider(TTSProvider):
             headers={"Content-Type": "application/json", "Authorization": f"Bearer {self.api_key}"},
             method="POST",
         )
-        with urllib.request.urlopen(request, timeout=60) as response:
-            output_path.write_bytes(response.read())
+        with provider_call("audio", self.name, self.model) as billing:
+            billing["usage"] = {"input_characters": len(text)}
+            with urllib.request.urlopen(request, timeout=60) as response:
+                record_response(billing, response)
+                output_path.write_bytes(response.read())
         return TTSResult(
             path=output_path,
             provider=self.name,
             model=self.model,
-            event={"type": "tts", "provider": self.name, "model": self.model, "ok": True},
+            event={"type": "tts", "provider": self.name, "model": self.model, "ok": True,
+                   "request_id": billing.get("request_id"), "billing_instrumented": True},
         )
 
 
@@ -172,6 +177,8 @@ def generate_system_speech(
     output_path: Path,
     voice: str = "女声",
     rate: float = 1.0,
+    *,
+    exact_voice: bool = False,
 ) -> dict[str, Any]:
     """Use an installed Windows speech voice without requiring another API key."""
     if not text.strip():
@@ -190,7 +197,9 @@ $zhVoices = @($voices | Where-Object { $_.VoiceInfo.Culture.Name -like "zh-CN*" 
 $gender = if ($voicePreference -like "*男声*" -or $voicePreference -like "*Yun*") { "Male" } else { "Female" }
 $zh = $zhVoices | Where-Object { $_.VoiceInfo.Gender.ToString() -eq $gender } | Select-Object -First 1
 if ($null -eq $zh) { $zh = $zhVoices | Select-Object -First 1 }
-if ($null -ne $zh) {
+if ($env:ZJ_TTS_EXACT_VOICE -eq "1") {
+  $synth.SelectVoice($voicePreference)
+} elseif ($null -ne $zh) {
   $synth.SelectVoice($zh.VoiceInfo.Name)
 }
 $synth.Rate = [Math]::Max(-10, [Math]::Min(10, $rateValue))
@@ -206,6 +215,7 @@ $selectedVoice
     environment["ZJ_TTS_TEXT_PATH"] = str(text_path.resolve())
     environment["ZJ_TTS_OUTPUT_PATH"] = str(output_path.resolve())
     environment["ZJ_TTS_VOICE"] = voice
+    environment["ZJ_TTS_EXACT_VOICE"] = "1" if exact_voice else "0"
     environment["ZJ_TTS_RATE"] = str(round((float(rate) - 1.0) * 5))
     try:
         result = subprocess.run(

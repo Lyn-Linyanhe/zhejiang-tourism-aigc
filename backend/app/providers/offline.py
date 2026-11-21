@@ -4,6 +4,7 @@ import hashlib
 from typing import Any
 
 from .llm import LLMProvider, LLMResult
+from ..services import knowledge as kb
 
 
 CITY_KNOWLEDGE: dict[str, dict[str, Any]] = {
@@ -103,8 +104,11 @@ class OfflineLLMProvider(LLMProvider):
     model = "zhejiang-editor-v1"
 
     def generate(self, prompt: str, context: dict[str, Any]) -> LLMResult:
-        city = context["city"]
-        knowledge = CITY_KNOWLEDGE.get(city, CITY_KNOWLEDGE["杭州"])
+        city = kb.normalize_city(context["city"])
+        knowledge = CITY_KNOWLEDGE.get(city, {
+            "landmark": city, "culture": "当地文化", "fact": f"走近{city}的山水与人文",
+            "aliases": [], "color": "#2d6c63", "accent": "#d6ad60",
+        })
         landmark = context.get("landmark") or knowledge["landmark"]
         theme = context["theme"]
         culture = context.get("culture") or knowledge["culture"]
@@ -114,6 +118,15 @@ class OfflineLLMProvider(LLMProvider):
         style = context.get("style", "诗意纪实")
         shot_count = int(context.get("shot_count") or (4 if duration <= 15 else 6 if duration <= 30 else 8))
         total_unit = duration / shot_count
+        entries = kb.topic_entities(city, landmark, theme, culture, context.get("festival", ""))
+        evidence = []
+        sentences = []
+        for i in range(kb.FACTS_PER_ENTITY):
+            for entity in entries:
+                facts = entity["facts"]
+                if i < len(facts) and len(evidence) < shot_count - 1:
+                    evidence.append(entity)
+                    sentences.append(facts[i].rstrip("。") + "。")
         hooks = [
             f"如果把一座城市写成一首诗，{city}的第一句，往往从{landmark}开始。",
             f"沿着水脉与山色走进{city}，你会遇见{culture}留下的时间纹理。",
@@ -143,7 +156,20 @@ class OfflineLLMProvider(LLMProvider):
             label, visual = visual_templates[index]
             start = round(index * len(narration) / shot_count)
             end = round((index + 1) * len(narration) / shot_count)
-            text = narration[start:end].strip("，。 ")
+            text = narration[start:end].strip("，。 ") + "。"
+            if evidence:
+                if index < len(evidence):
+                    entity = evidence[index]
+                    label = entity["name"]
+                    imagery = entity.get("imagery") or [label]
+                    visual = f"{city}·{label}，{imagery[index % len(imagery)]}，竖屏构图"
+                    text = sentences[index]
+                else:
+                    entry = entries[0]
+                    label = entry["name"]
+                    imagery = entry.get("imagery") or [label]
+                    visual = f"{city}·{label}，{imagery[index % len(imagery)]}，竖屏构图"
+                    text = f"沿着{label}，读懂{city}。" if index == shot_count - 1 else f"下一站，走进{city}的{label}。"
             shots.append(
                 {
                     "id": f"shot_{index + 1}",
@@ -151,8 +177,8 @@ class OfflineLLMProvider(LLMProvider):
                     "duration_sec": round(total_unit, 2),
                     "title": label,
                     "visual_prompt": visual,
-                    "narration": text + "。",
-                    "subtitle": text + "。",
+                    "narration": text,
+                    "subtitle": text,
                     "transition": "fade" if index == 0 else ("dissolve" if index % 2 else "slideleft"),
                 }
             )
@@ -162,10 +188,10 @@ class OfflineLLMProvider(LLMProvider):
             "summary": summary,
             "cta": f"关注浙里成片，下一站，去{city}。",
             "tags": [tag for tag in tags if tag],
-            "narration": narration,
+            "narration": "".join(shot["narration"] for shot in shots),
             "shots": shots,
             "knowledge": {
-                "fact": knowledge["fact"],
+                "fact": sentences[0] if sentences else knowledge["fact"],
                 "color": knowledge["color"],
                 "accent": knowledge["accent"],
                 "aliases": knowledge["aliases"],
@@ -178,5 +204,6 @@ class OfflineLLMProvider(LLMProvider):
             "prompt_version": "zj-tourism-prompt-v1",
             "prompt_sha256": hashlib.sha256(prompt.encode("utf-8")).hexdigest(),
             "ok": True,
+            "cost_basis": "no_external_charge",
         }
         return LLMResult(data=data, provider=self.name, model=self.model, fallback_used=True, event=event)
