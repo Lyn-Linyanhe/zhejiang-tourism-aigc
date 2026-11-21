@@ -612,7 +612,19 @@ def build_provider_registry(settings: Any, storage: Any) -> ProviderRegistry:
         "纯文本直接出视频，不走文生图。单镜约 30 秒、1 次付费调用，画面与机位由模型自己组织。",
         ("cloud-t2v",), lambda: _ai_t2v.available,
     ))
-    registry.register(ProviderSpec("asset", "pexels", "Pexels 在线素材", lambda: PexelsAssetProvider(settings.pexels_api_key, settings.pexels_base_url), "需 PEXELS_API_KEY", available=lambda: bool(settings.pexels_api_key)))
+    registry.register(ProviderSpec(
+        "asset",
+        "pexels",
+        "Pexels 视频优先素材",
+        lambda: PexelsAssetProvider(
+            settings.pexels_api_key,
+            settings.pexels_base_url,
+            getattr(settings, "pexels_video_base_url", "https://api.pexels.com/videos"),
+            getattr(settings, "pexels_media_mode", "video-first"),
+        ),
+        "优先检索 /videos/search；无视频时才回退照片，并如实记录 media_type",
+        available=lambda: bool(settings.pexels_api_key),
+    ))
     registry.register(ProviderSpec("asset", "local-library", "本地素材库", lambda: _LocalLibraryAssetProvider(storage), "从已登记素材中检索", ("library",)))
     registry.register(ProviderSpec("asset", "upload", "逐镜头上传", _RequiredUploadAssetProvider, "要求每个镜头已有上传素材"))
     registry.register(ProviderSpec("asset", "offline", "技术测试场景图", OfflineAssetProvider, "本地生成、需人工审核", ("offline-scene-generator",)))

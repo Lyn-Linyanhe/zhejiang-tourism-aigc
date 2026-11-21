@@ -21,7 +21,7 @@ from pathlib import Path
 from typing import Any
 
 from .contract import MEDIA_TYPE_IMAGE, AssetResult
-from ..services.consistency import compose_prompt, negative_prompt, seed_for_shot
+from ..services.consistency import compose_prompt, negative_prompt, seed_for_shot, subject_lock
 
 
 PROVIDER_NAME = "cloud-t2i"
@@ -85,6 +85,8 @@ def build_image_payload(
     seed: int,
     negative: str,
     api_style: str = "openai-compatible",
+    reference_image: str = "",
+    reference_field: str = "image",
 ) -> dict[str, Any]:
     """文生图请求体。seed 必带；负向词用两个常见键名，避免网关对不上。
 
@@ -96,11 +98,28 @@ def build_image_payload(
         text = prompt
         if negative.strip():
             text = f"{prompt}\n\n不要出现以下内容：{negative}"
-        return {"model": model, "prompt": text, "size": size, "response_format": "url", "output_format": "png", "watermark": False}
-    return {
+        payload = {"model": model, "prompt": text, "size": size, "response_format": "url", "output_format": "png", "watermark": False}
+        if reference_image and reference_field:
+            payload[reference_field] = reference_image
+        return payload
+    payload = {
         "model": model, "prompt": prompt, "n": 1, "size": size, "seed": int(seed),
         "response_format": "b64_json", "negative_prompt": negative, "negative": negative, "watermark": False,
     }
+    if reference_image and reference_field:
+        payload[reference_field] = reference_image
+    return payload
+
+
+def _image_data_url(path: Path) -> str:
+    """把同一主体参考图以内联 data URL 送给兼容网关。"""
+    mime = {
+        ".png": "image/png",
+        ".jpg": "image/jpeg",
+        ".jpeg": "image/jpeg",
+        ".webp": "image/webp",
+    }.get(path.suffix.lower(), "application/octet-stream")
+    return f"data:{mime};base64,{base64.b64encode(path.read_bytes()).decode('ascii')}"
 
 
 def _decode_image(payload: dict[str, Any]) -> bytes:
@@ -193,10 +212,24 @@ class CloudImageProvider:
         visual = str(shot.get("visual_prompt") or shot.get("prompt") or "").strip()
         if not visual:
             raise RuntimeError("文生图缺少 visual_prompt，拒绝发送空提示词")
-        prompt = compose_prompt(visual, style_ctx)
+        prompt = compose_prompt(visual, style_ctx, shot=shot)
         negative = negative_prompt(style_ctx)
         task_id = str(shot.get("task_id") or style_ctx.get("task_id") or "")
         seed = seed_for_shot(task_id, shot, style_ctx)
+        reference_path = str(
+            shot.get("subject_reference_path")
+            or style_ctx.get("subject_reference_path")
+            or style_ctx.get("reference_image_path")
+            or ""
+        ).strip()
+        reference_image = ""
+        if reference_path:
+            candidate = Path(reference_path)
+            if not candidate.is_file():
+                raise RuntimeError(f"主体参考图不存在：{reference_path}")
+            if candidate.suffix.lower() in {".mp4", ".mov", ".m4v", ".webm"}:
+                raise RuntimeError("主体参考图必须是图片，不能使用视频文件")
+            reference_image = _image_data_url(candidate)
         payload = build_image_payload(
             prompt,
             model=self.model,
@@ -204,6 +237,8 @@ class CloudImageProvider:
             seed=seed,
             negative=negative,
             api_style=self.api_style,
+            reference_image=reference_image,
+            reference_field=str(style_ctx.get("image_reference_field") or "image"),
         )
         raw = request_image(f"{self.base_url}/images/generations", payload, self.api_key)
         target = Path(output_dir)
@@ -226,6 +261,9 @@ class CloudImageProvider:
                 "provider": self.name,
                 "negative_prompt": negative,
                 "size": payload["size"],
+                "subject_id": subject_lock(style_ctx)["id"],
+                "subject_reference_used": bool(reference_image),
+                "subject_reference_path": reference_path,
             },
         )
         result.validate()

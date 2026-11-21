@@ -519,6 +519,12 @@ class VideoRenderer:
             ).isoformat(),
             "aigc_label": "本作品包含 AI 生成或合成内容" if include_ai_label else "",
         }
+        qa_path = output_dir / "visual_qa.json"
+        if qa_path.is_file():
+            try:
+                metadata["visual_qa"] = json.loads(qa_path.read_text(encoding="utf-8"))
+            except (OSError, ValueError):
+                metadata["visual_qa"] = {"passed": False, "error": "visual_qa.json 无法读取"}
         (output_dir / "manifest.json").write_text(
             json.dumps(metadata, ensure_ascii=False, indent=2),
             encoding="utf-8",

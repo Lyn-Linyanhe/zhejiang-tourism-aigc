@@ -32,6 +32,8 @@ Creates a draft and generates only the script/storyboard.
   "include_ai_label": true,
   "include_subtitles": true,
   "custom_brief": "",
+  "subject_lock": "同一座断桥，石栏缺口与青灰石材保持一致",
+  "subject_reference_path": "",
   "asset_source": "configured",
   "output_resolution": "720x1280",
   "fps": 25,
@@ -43,6 +45,8 @@ Creates a draft and generates only the script/storyboard.
 
 The response has `status: "draft"` and contains `title`, `summary`, `cta`, `narration` and `shots`. No `final.mp4` is created by this endpoint.
 
+`subject_lock` is a generation condition, not a style hint. The same canonical subject ID and description are embedded into every shot prompt. `subject_reference_path` is optional; when set to a readable image path, the image adapter sends it as a reference-image condition and records its SHA-256 for objective verification.
+
 ## `GET /api/tasks/{task_id}`
 
 Returns the complete task, including:
@@ -53,6 +57,7 @@ Returns the complete task, including:
 - audio provider, model and URLs;
 - render URLs and `has_audio` / `has_burned_subtitles`;
 - provider trace and failure events.
+- `visual_qa` metrics, including video-shot count, decoded-image quality, cross-shot drift and generation-contract checks.
 
 ## `PATCH /api/tasks/{task_id}`
 

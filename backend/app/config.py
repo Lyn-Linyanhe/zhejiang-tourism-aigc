@@ -91,6 +91,7 @@ class Settings:
     image_seed: int = int(_env("IMAGE_SEED", "0"))
     image_style_prefix: str = _env("IMAGE_STYLE_PREFIX")
     image_negative_prompt: str = _env("IMAGE_NEGATIVE_PROMPT")
+    image_reference_field: str = _env("IMAGE_REFERENCE_FIELD", "image")
     video_provider: str = _env("VIDEO_PROVIDER", "")
     video_api_style: str = _env("VIDEO_API_STYLE", "auto")
     video_base_url: str = _env("VIDEO_BASE_URL", "https://tokendance.space/gateway/minimax/v2")
@@ -102,6 +103,11 @@ class Settings:
     video_timeout: int = int(_env("VIDEO_TIMEOUT", "1800"))
     pexels_api_key: str = _env("PEXELS_API_KEY")
     pexels_base_url: str = _env("PEXELS_BASE_URL", "https://api.pexels.com/v1")
+    pexels_video_base_url: str = _env("PEXELS_VIDEO_BASE_URL", "https://api.pexels.com/videos")
+    pexels_media_mode: str = _env("PEXELS_MEDIA_MODE", "video-first").lower()
+    visual_qa_enabled: bool = _env("VISUAL_QA_ENABLED", "true").lower() in {"1", "true", "yes"}
+    visual_qa_strict: bool = _env("VISUAL_QA_STRICT", "false").lower() in {"1", "true", "yes"}
+    visual_qa_min_video_shots: int = max(0, int(_env("VISUAL_QA_MIN_VIDEO_SHOTS", "4") or 4))
     music_dir: Path = PROJECT_ROOT / _env("MUSIC_DIR", "runtime/music")
     music_catalog_path: Path = _project_path(
         "MUSIC_CATALOG_PATH", r"runtime\music\catalog.json"
