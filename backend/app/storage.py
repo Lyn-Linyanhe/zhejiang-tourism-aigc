@@ -33,8 +33,7 @@ def _publication_ready(item: dict[str, Any], today: date) -> bool:
         or item.get("review_status") != "approved"
         or item.get("license_status") != "approved"
         or not isinstance(usages, list) or "publication" not in usages
-        or not all(str(item.get(key) or "").strip() for key in ("license", "author"))
-        or not any(str(item.get(key) or "").strip() for key in ("source_url", "source_title"))
+        or not all(str(item.get(key) or "").strip() for key in ("license", "author", "source_url"))
         or not any(str(item.get(key) or "").strip() for key in ("license_url", "license_evidence"))
     ):
         return False
@@ -242,7 +241,15 @@ class Storage:
                 if not row:
                     raise KeyError("Library asset does not exist")
                 item = json.loads(row["payload"])
+                evidence_fields = {"entity_id", "city", "district", "place_name", "shot_tags", "source_url", "source_title",
+                                   "source_publisher", "author", "license", "license_url", "license_evidence", "usage_scope", "valid_until"}
+                evidence_changed = any(key in evidence_fields and item.get(key) != value for key, value in patch.items())
                 item.update(patch)
+                if evidence_changed and patch.get("review_status") != "approved":
+                    if item.get("review_status") != "rejected":
+                        item["review_status"] = "pending"
+                    item.update(license_status="pending", allowed_usages=["preview"])
+                    item.pop("checked_at", None)
                 if any(key in patch for key in ("entity_id", "city")):
                     from .services.knowledge import canonical_city, get_entity
                     item["city"] = canonical_city(item.get("city") or "")
