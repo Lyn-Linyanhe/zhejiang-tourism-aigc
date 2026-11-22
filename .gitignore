@@ -78,3 +78,28 @@ runtime/show_task.json
 runtime/show_frames/
 runtime/review_frames/
 runtime/music/_replaced-20261007/
+
+# 小红书只读采集产物：会话 token 与第三方图片版权均不可入库
+runtime/_xhs_collect/
+runtime/_xhs_collect_multi/
+runtime/_xhs_images/
+
+# 环境变量备份（含密钥），绝不入库
+.env.bak*
+.env.*.bak
+
+# 小红书 MCP 会话 cookies（含登录态），绝不入库
+cookies.json
+
+# 本会话临时产物：生成测试图/视频、云端验收结果、引文核验页面缓存
+runtime/_gen_test/
+runtime/_eval_cloud/
+runtime/_kb_page_cache/
+runtime/_xhs_login_qr.png
+
+# 工具缓存与本地临时文件
+.v2c/
+.video_agent/
+.zcode/
+NUL
+tools/
