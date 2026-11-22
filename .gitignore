@@ -82,7 +82,12 @@ runtime/music/_replaced-20261007/
 # 小红书只读采集产物：会话 token 与第三方图片版权均不可入库
 runtime/_xhs_collect/
 runtime/_xhs_collect_multi/
-runtime/_xhs_images/
+# 参考图（322 张 webp / 101MB）随仓库分发，作为图生图的输入。
+# 采集缓存（含会话 token）和拼图预览仍排除。
+# 授权状态见 docs/research/xhs-zhejiang-image-index.csv：全部 reference-only / unreviewed。
+runtime/_xhs_images/*.json
+runtime/_xhs_images/*.csv
+runtime/_xhs_images/contact_sheets/
 
 # 环境变量备份（含密钥），绝不入库
 .env.bak*
