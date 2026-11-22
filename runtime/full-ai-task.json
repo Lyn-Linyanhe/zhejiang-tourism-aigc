@@ -1,0 +1,548 @@
+{
+  "id": "draft_600616cb49ba",
+  "input": {
+    "city": "杭州",
+    "landmark": "西湖",
+    "theme": "西湖春日宋韵游",
+    "culture": "宋韵文化与江南园林",
+    "festival": "春日",
+    "audience": "年轻游客",
+    "duration": 15,
+    "style": "诗意纪实",
+    "voice": "晓伊·活泼女声",
+    "music_mood": "舒缓",
+    "include_ai_label": true,
+    "custom_brief": "用经核查的西湖事实，画面要有镜头运动，不要静态图。",
+    "shot_count": 4,
+    "include_subtitles": true,
+    "asset_source": "ai-t2v",
+    "output_resolution": "720x1280",
+    "fps": 25,
+    "voice_rate": 1.0,
+    "voice_pitch": 0.0,
+    "voice_volume": 1.0,
+    "music_volume": 0.18,
+    "music_ducking": "不压低"
+  },
+  "status": "completed",
+  "stage": "review",
+  "progress": 100,
+  "title": "西湖春日宋韵游",
+  "summary": "15秒竖屏短片，以镜头运动呈现西湖春日，穿插白娘子传说、三潭印月石塔与南宋西湖十景等经核查事实，面向年轻游客传递宋韵江南之美。",
+  "cta": "来西湖，走一趟宋韵春天。",
+  "tags": [
+    "西湖",
+    "杭州",
+    "宋韵文化",
+    "春日",
+    "江南园林"
+  ],
+  "narration": "断桥春雾里 白娘子曾与许仙相逢。苏堤柳枝垂水 摇动千年宋韵。三潭印月石塔 明天启元年补立。南宋西湖十景 题名流传至今。",
+  "shots": [
+    {
+      "id": "shot_1",
+      "order": 1,
+      "duration_sec": 4.326,
+      "title": "断桥春雾相逢",
+      "visual_prompt": "竖屏，清晨薄雾中的西湖断桥，镜头从桥面低角度缓缓向前推进，远处山影朦胧，柳丝轻摆，写实电影感，25fps，自然光。",
+      "narration": "断桥春雾里 白娘子曾与许仙相逢",
+      "subtitle": "断桥春雾里 白娘子曾与许仙相逢",
+      "transition": "fade",
+      "asset_url": "/media/draft_600616cb49ba/assets/shot_1.mp4",
+      "asset_id": "cloud-i2v_shot_1",
+      "asset_local_path": "C:\\Users\\ev041\\Desktop\\人工智能\\zhejiang-tourism-aigc-merged\\runtime\\media\\draft_600616cb49ba\\assets\\shot_1.mp4",
+      "asset_media_type": "video",
+      "asset_model": "minimax-h3",
+      "asset_seed": 1044370204,
+      "asset_first_frame_path": "",
+      "audio_url": "",
+      "audio_local_path": ""
+    },
+    {
+      "id": "shot_2",
+      "order": 2,
+      "duration_sec": 4.11,
+      "title": "苏堤柳浪摇春",
+      "visual_prompt": "竖屏，苏堤岸边嫩绿柳枝垂入湖面，镜头沿堤横向缓慢移动，水波倒影随行，春日阳光穿过柳叶，写实诗意，25fps。",
+      "narration": "苏堤柳枝垂水 摇动千年宋韵",
+      "subtitle": "苏堤柳枝垂水 摇动千年宋韵",
+      "transition": "fade",
+      "asset_url": "/media/draft_600616cb49ba/assets/shot_2.mp4",
+      "asset_id": "cloud-i2v_shot_2",
+      "asset_local_path": "C:\\Users\\ev041\\Desktop\\人工智能\\zhejiang-tourism-aigc-merged\\runtime\\media\\draft_600616cb49ba\\assets\\shot_2.mp4",
+      "asset_media_type": "video",
+      "asset_model": "minimax-h3",
+      "asset_seed": 1044370205,
+      "asset_first_frame_path": "",
+      "audio_url": "",
+      "audio_local_path": ""
+    },
+    {
+      "id": "shot_3",
+      "order": 3,
+      "duration_sec": 4.062,
+      "title": "三潭石塔映波",
+      "visual_prompt": "竖屏，西湖三潭印月水面，镜头围绕石塔缓慢环绕上升，塔影与波光交错，远处游船轻过，写实纪录片风格，25fps。",
+      "narration": "三潭印月石塔 明天启元年补立",
+      "subtitle": "三潭印月石塔 明天启元年补立",
+      "transition": "fade",
+      "asset_url": "/media/draft_600616cb49ba/assets/shot_3.mp4",
+      "asset_id": "cloud-i2v_shot_3",
+      "asset_local_path": "C:\\Users\\ev041\\Desktop\\人工智能\\zhejiang-tourism-aigc-merged\\runtime\\media\\draft_600616cb49ba\\assets\\shot_3.mp4",
+      "asset_media_type": "video",
+      "asset_model": "minimax-h3",
+      "asset_seed": 1044370206,
+      "asset_first_frame_path": "",
+      "audio_url": "",
+      "audio_local_path": ""
+    },
+    {
+      "id": "shot_4",
+      "order": 4,
+      "duration_sec": 3.792,
+      "title": "南宋十景题名",
+      "visual_prompt": "竖屏，西湖十景碑刻与湖山春色叠化，镜头从碑文缓缓拉远，露出苏堤春晓全景，花瓣飘落，写实人文风光，25fps。",
+      "narration": "南宋西湖十景 题名流传至今",
+      "subtitle": "南宋西湖十景 题名流传至今",
+      "transition": "fade",
+      "asset_url": "/media/draft_600616cb49ba/assets/shot_4.mp4",
+      "asset_id": "cloud-i2v_shot_4",
+      "asset_local_path": "C:\\Users\\ev041\\Desktop\\人工智能\\zhejiang-tourism-aigc-merged\\runtime\\media\\draft_600616cb49ba\\assets\\shot_4.mp4",
+      "asset_media_type": "video",
+      "asset_model": "minimax-h3",
+      "asset_seed": 1044370207,
+      "asset_first_frame_path": "",
+      "audio_url": "",
+      "audio_local_path": ""
+    }
+  ],
+  "assets": [
+    {
+      "id": "cloud-i2v_shot_1",
+      "task_id": "draft_600616cb49ba",
+      "shot_id": "shot_1",
+      "name": "断桥春雾相逢",
+      "url": "/media/draft_600616cb49ba/assets/shot_1.mp4",
+      "source": "cloud-i2v",
+      "license": "AI 生成画面，公开发布前需人工审核",
+      "author": "minimax-h3",
+      "usage_scope": "演示、内部评审、待授权替换",
+      "is_ai_generated": true,
+      "local_path": "C:\\Users\\ev041\\Desktop\\人工智能\\zhejiang-tourism-aigc-merged\\runtime\\media\\draft_600616cb49ba\\assets\\shot_1.mp4",
+      "media_type": "video",
+      "model": "minimax-h3",
+      "seed": 1044370204,
+      "prompt": "诗意纪实，主色#24526a，点缀#d6ad60，宋韵水墨，青瓷与淡金，江南烟雨，竖屏短片同一套光色，电影感，写实纹理，镜头稳定。竖屏，清晨薄雾中的西湖断桥，镜头从桥面低角度缓缓向前推进，远处山影朦胧，柳丝轻摆，写实电影感，25fps，自然光。",
+      "first_frame_path": "",
+      "cost": 0.0,
+      "created_at": "2026-10-07T09:15:01.306394+00:00"
+    },
+    {
+      "id": "cloud-i2v_shot_2",
+      "task_id": "draft_600616cb49ba",
+      "shot_id": "shot_2",
+      "name": "苏堤柳浪摇春",
+      "url": "/media/draft_600616cb49ba/assets/shot_2.mp4",
+      "source": "cloud-i2v",
+      "license": "AI 生成画面，公开发布前需人工审核",
+      "author": "minimax-h3",
+      "usage_scope": "演示、内部评审、待授权替换",
+      "is_ai_generated": true,
+      "local_path": "C:\\Users\\ev041\\Desktop\\人工智能\\zhejiang-tourism-aigc-merged\\runtime\\media\\draft_600616cb49ba\\assets\\shot_2.mp4",
+      "media_type": "video",
+      "model": "minimax-h3",
+      "seed": 1044370205,
+      "prompt": "诗意纪实，主色#24526a，点缀#d6ad60，宋韵水墨，青瓷与淡金，江南烟雨，竖屏短片同一套光色，电影感，写实纹理，镜头稳定。竖屏，苏堤岸边嫩绿柳枝垂入湖面，镜头沿堤横向缓慢移动，水波倒影随行，春日阳光穿过柳叶，写实诗意，25fps。",
+      "first_frame_path": "",
+      "cost": 0.0,
+      "created_at": "2026-10-07T09:15:01.306394+00:00"
+    },
+    {
+      "id": "cloud-i2v_shot_3",
+      "task_id": "draft_600616cb49ba",
+      "shot_id": "shot_3",
+      "name": "三潭石塔映波",
+      "url": "/media/draft_600616cb49ba/assets/shot_3.mp4",
+      "source": "cloud-i2v",
+      "license": "AI 生成画面，公开发布前需人工审核",
+      "author": "minimax-h3",
+      "usage_scope": "演示、内部评审、待授权替换",
+      "is_ai_generated": true,
+      "local_path": "C:\\Users\\ev041\\Desktop\\人工智能\\zhejiang-tourism-aigc-merged\\runtime\\media\\draft_600616cb49ba\\assets\\shot_3.mp4",
+      "media_type": "video",
+      "model": "minimax-h3",
+      "seed": 1044370206,
+      "prompt": "诗意纪实，主色#24526a，点缀#d6ad60，宋韵水墨，青瓷与淡金，江南烟雨，竖屏短片同一套光色，电影感，写实纹理，镜头稳定。竖屏，西湖三潭印月水面，镜头围绕石塔缓慢环绕上升，塔影与波光交错，远处游船轻过，写实纪录片风格，25fps。",
+      "first_frame_path": "",
+      "cost": 0.0,
+      "created_at": "2026-10-07T09:15:01.306394+00:00"
+    },
+    {
+      "id": "cloud-i2v_shot_4",
+      "task_id": "draft_600616cb49ba",
+      "shot_id": "shot_4",
+      "name": "南宋十景题名",
+      "url": "/media/draft_600616cb49ba/assets/shot_4.mp4",
+      "source": "cloud-i2v",
+      "license": "AI 生成画面，公开发布前需人工审核",
+      "author": "minimax-h3",
+      "usage_scope": "演示、内部评审、待授权替换",
+      "is_ai_generated": true,
+      "local_path": "C:\\Users\\ev041\\Desktop\\人工智能\\zhejiang-tourism-aigc-merged\\runtime\\media\\draft_600616cb49ba\\assets\\shot_4.mp4",
+      "media_type": "video",
+      "model": "minimax-h3",
+      "seed": 1044370207,
+      "prompt": "诗意纪实，主色#24526a，点缀#d6ad60，宋韵水墨，青瓷与淡金，江南烟雨，竖屏短片同一套光色，电影感，写实纹理，镜头稳定。竖屏，西湖十景碑刻与湖山春色叠化，镜头从碑文缓缓拉远，露出苏堤春晓全景，花瓣飘落，写实人文风光，25fps。",
+      "first_frame_path": "",
+      "cost": 0.0,
+      "created_at": "2026-10-07T09:15:01.306394+00:00"
+    }
+  ],
+  "audio": {
+    "knowledge": {
+      "fact": "西湖是中国首个湖泊类世界文化遗产，2011年列入《世界遗产名录》；西湖十景得名于南宋，经清康熙帝御题碑刻而定型；三潭印月石塔现存为明天启元年（1621年）补立。",
+      "color": "#24526a",
+      "accent": "#d6ad60",
+      "aliases": [
+        "西湖",
+        "杭州西湖"
+      ]
+    },
+    "voice_path": "C:\\Users\\ev041\\Desktop\\人工智能\\zhejiang-tourism-aigc-merged\\runtime\\media\\draft_600616cb49ba\\voice.wav",
+    "music_path": "C:\\Users\\ev041\\Desktop\\人工智能\\zhejiang-tourism-aigc-merged\\runtime\\music\\去有风的地方.mp3",
+    "cues": [
+      {
+        "shot_id": "shot_1",
+        "start": 0.0,
+        "end": 4.176,
+        "text": "断桥春雾里 白娘子曾与许仙相逢"
+      },
+      {
+        "shot_id": "shot_2",
+        "start": 4.326,
+        "end": 8.286,
+        "text": "苏堤柳枝垂水 摇动千年宋韵"
+      },
+      {
+        "shot_id": "shot_3",
+        "start": 8.436,
+        "end": 12.348,
+        "text": "三潭印月石塔 明天启元年补立"
+      },
+      {
+        "shot_id": "shot_4",
+        "start": 12.498,
+        "end": 16.29,
+        "text": "南宋西湖十景 题名流传至今"
+      }
+    ],
+    "total_duration": 16.29,
+    "cost": 0.0,
+    "event": {
+      "type": "audio",
+      "silence_between_shots_ms": 150,
+      "segment_count": 4,
+      "clause_level_cues": true,
+      "voice_provider": "edge-tts",
+      "voice_model": "zh-CN-XiaoyiNeural"
+    },
+    "target_duration": 15.0,
+    "timing_source": "measured-shot-audio",
+    "provider_trace": [
+      {
+        "provider": "edge-tts",
+        "model": "zh-CN-XiaoyiNeural",
+        "cache_key": "bd17971873f5daf72d7c59f45260395b7d3c3ef74fbd53e1c69b79107854aadf",
+        "cache_hit": false,
+        "duration_sec": 4.176,
+        "source_path": "C:\\Users\\ev041\\Desktop\\人工智能\\zhejiang-tourism-aigc-merged\\runtime\\audio-cache\\bd17971873f5daf72d7c59f45260395b7d3c3ef74fbd53e1c69b79107854aadf.wav",
+        "shot_id": "shot_1",
+        "piece": 1,
+        "segment_path": "C:\\Users\\ev041\\Desktop\\人工智能\\zhejiang-tourism-aigc-merged\\runtime\\media\\draft_600616cb49ba\\voice-segments\\shot_1.wav",
+        "segment_duration": 4.176,
+        "sample_rate": 48000,
+        "channels": 1
+      },
+      {
+        "provider": "edge-tts",
+        "model": "zh-CN-XiaoyiNeural",
+        "cache_key": "9ad5454697f9d6dfab8d580bdc69a0978cb8b0be53624257f3794f076a2f9ef1",
+        "cache_hit": false,
+        "duration_sec": 3.96,
+        "source_path": "C:\\Users\\ev041\\Desktop\\人工智能\\zhejiang-tourism-aigc-merged\\runtime\\audio-cache\\9ad5454697f9d6dfab8d580bdc69a0978cb8b0be53624257f3794f076a2f9ef1.wav",
+        "shot_id": "shot_2",
+        "piece": 1,
+        "segment_path": "C:\\Users\\ev041\\Desktop\\人工智能\\zhejiang-tourism-aigc-merged\\runtime\\media\\draft_600616cb49ba\\voice-segments\\shot_2.wav",
+        "segment_duration": 3.96,
+        "sample_rate": 48000,
+        "channels": 1
+      },
+      {
+        "provider": "edge-tts",
+        "model": "zh-CN-XiaoyiNeural",
+        "cache_key": "04d298b9dca395be56246c25a293616196bf8474be524dd044702291c37926bb",
+        "cache_hit": false,
+        "duration_sec": 3.912,
+        "source_path": "C:\\Users\\ev041\\Desktop\\人工智能\\zhejiang-tourism-aigc-merged\\runtime\\audio-cache\\04d298b9dca395be56246c25a293616196bf8474be524dd044702291c37926bb.wav",
+        "shot_id": "shot_3",
+        "piece": 1,
+        "segment_path": "C:\\Users\\ev041\\Desktop\\人工智能\\zhejiang-tourism-aigc-merged\\runtime\\media\\draft_600616cb49ba\\voice-segments\\shot_3.wav",
+        "segment_duration": 3.912,
+        "sample_rate": 48000,
+        "channels": 1
+      },
+      {
+        "provider": "edge-tts",
+        "model": "zh-CN-XiaoyiNeural",
+        "cache_key": "a08bb80cfc09f8aa26c05ccc9c21ff07af991f9873516f6e02d051a064b185e0",
+        "cache_hit": false,
+        "duration_sec": 3.792,
+        "source_path": "C:\\Users\\ev041\\Desktop\\人工智能\\zhejiang-tourism-aigc-merged\\runtime\\audio-cache\\a08bb80cfc09f8aa26c05ccc9c21ff07af991f9873516f6e02d051a064b185e0.wav",
+        "shot_id": "shot_4",
+        "piece": 1,
+        "segment_path": "C:\\Users\\ev041\\Desktop\\人工智能\\zhejiang-tourism-aigc-merged\\runtime\\media\\draft_600616cb49ba\\voice-segments\\shot_4.wav",
+        "segment_duration": 3.792,
+        "sample_rate": 48000,
+        "channels": 1
+      }
+    ],
+    "music_match": {
+      "id": "bgm-去有风的地方",
+      "path": "C:\\Users\\ev041\\Desktop\\人工智能\\zhejiang-tourism-aigc-merged\\runtime\\music\\去有风的地方.mp3",
+      "moods": [
+        "舒缓"
+      ],
+      "styles": [
+        "诗意纪实",
+        "城市漫游",
+        "国风雅韵",
+        "青春活力",
+        "节庆热烈"
+      ],
+      "license": "用户自备素材，授权状态未知，公开传播前需自行确认",
+      "author": "用户提供",
+      "usage_scope": "比赛展示与内部评审；正式对外发布前必须确认授权",
+      "approved": true,
+      "provider": "local-catalog",
+      "model": "metadata-exact-match-v1",
+      "event": {
+        "type": "music-match",
+        "provider": "local-catalog",
+        "candidates": 5,
+        "chosen": "bgm-去有风的地方"
+      }
+    },
+    "voice_provider": "edge-tts",
+    "voice_model": "zh-CN-XiaoyiNeural",
+    "voice_url": "/media/draft_600616cb49ba/voice.wav",
+    "voice_local_path": "C:\\Users\\ev041\\Desktop\\人工智能\\zhejiang-tourism-aigc-merged\\runtime\\media\\draft_600616cb49ba\\voice.wav",
+    "music_provider": "local-catalog",
+    "music_url": "",
+    "music_local_path": "C:\\Users\\ev041\\Desktop\\人工智能\\zhejiang-tourism-aigc-merged\\runtime\\music\\去有风的地方.mp3",
+    "duration_sec": 16.29,
+    "disclosure": "Audio provider and fallback state are recorded in trace.",
+    "cue_source": "provider",
+    "requested_duration": 15.0,
+    "grade": {
+      "saturation": 1.06,
+      "contrast": 1.04,
+      "brightness": 0.01
+    },
+    "duck": {
+      "mode": "不压低",
+      "release_sec": 0.35
+    }
+  },
+  "render": {
+    "video_url": "/media/draft_600616cb49ba/final.mp4",
+    "subtitle_url": "/media/draft_600616cb49ba/subtitles.srt",
+    "cover_url": "/media/draft_600616cb49ba/cover.jpg",
+    "video_local_path": "C:\\Users\\ev041\\Desktop\\人工智能\\zhejiang-tourism-aigc-merged\\runtime\\media\\draft_600616cb49ba\\final.mp4",
+    "format": "MP4/H.264/AAC",
+    "aspect_ratio": "9:16",
+    "resolution": "720x1280",
+    "has_audio": true,
+    "has_burned_subtitles": true,
+    "has_burned_aigc_label": true,
+    "aigc_label_font": "C:\\Windows\\Fonts\\msyh.ttc",
+    "total_duration": 15.0,
+    "mix_strategy": "music-constant",
+    "music_ducking": "不压低",
+    "timing_source": "measured-shot-audio",
+    "target_duration": 15.0,
+    "cues": [
+      {
+        "shot_id": "shot_1",
+        "start": 0.0,
+        "end": 4.176,
+        "text": "断桥春雾里 白娘子曾与许仙相逢"
+      },
+      {
+        "shot_id": "shot_2",
+        "start": 4.326,
+        "end": 8.286,
+        "text": "苏堤柳枝垂水 摇动千年宋韵"
+      },
+      {
+        "shot_id": "shot_3",
+        "start": 8.436,
+        "end": 12.348,
+        "text": "三潭印月石塔 明天启元年补立"
+      },
+      {
+        "shot_id": "shot_4",
+        "start": 12.498,
+        "end": 16.29,
+        "text": "南宋西湖十景 题名流传至今"
+      }
+    ],
+    "music_match": {
+      "id": "bgm-去有风的地方",
+      "path": "C:\\Users\\ev041\\Desktop\\人工智能\\zhejiang-tourism-aigc-merged\\runtime\\music\\去有风的地方.mp3",
+      "moods": [
+        "舒缓"
+      ],
+      "styles": [
+        "诗意纪实",
+        "城市漫游",
+        "国风雅韵",
+        "青春活力",
+        "节庆热烈"
+      ],
+      "license": "用户自备素材，授权状态未知，公开传播前需自行确认",
+      "author": "用户提供",
+      "usage_scope": "比赛展示与内部评审；正式对外发布前必须确认授权",
+      "approved": true,
+      "provider": "local-catalog",
+      "model": "metadata-exact-match-v1",
+      "event": {
+        "type": "music-match",
+        "provider": "local-catalog",
+        "candidates": 5,
+        "chosen": "bgm-去有风的地方"
+      }
+    },
+    "render_provider": "ffmpeg",
+    "rendered_at": "2026-10-07T09:15:14.537720+00:00",
+    "aigc_label": "本作品包含 AI 生成或合成内容"
+  },
+  "trace": {
+    "provider": "openai-compatible",
+    "model": "deepseek-chat",
+    "prompt_version": "zj-tourism-prompt-v1",
+    "fallback_used": false,
+    "created_at": "2026-10-07T09:12:36.738221+00:00",
+    "events": [
+      {
+        "type": "llm",
+        "provider": "openai-compatible",
+        "model": "deepseek-chat",
+        "ok": true,
+        "narration_chars": 55,
+        "narration_target": 55,
+        "narration_rewrite_attempts": 0
+      },
+      {
+        "type": "stage",
+        "stage": "scripting",
+        "status": "completed"
+      },
+      {
+        "type": "preview",
+        "status": "ready",
+        "message": "Script and storyboard are ready for review"
+      },
+      {
+        "type": "stage",
+        "stage": "storyboard",
+        "status": "completed",
+        "shot_count": 4
+      },
+      {
+        "type": "stage",
+        "stage": "audio",
+        "status": "started"
+      },
+      {
+        "type": "audio",
+        "silence_between_shots_ms": 150,
+        "segment_count": 4,
+        "clause_level_cues": true,
+        "voice_provider": "edge-tts",
+        "voice_model": "zh-CN-XiaoyiNeural",
+        "stage": "audio"
+      },
+      {
+        "type": "stage",
+        "stage": "audio",
+        "status": "completed",
+        "duration_sec": 16.29
+      },
+      {
+        "type": "stage",
+        "stage": "assets",
+        "status": "started"
+      },
+      {
+        "type": "shot",
+        "stage": "assets",
+        "shot_id": "shot_2",
+        "status": "completed",
+        "order": 2
+      },
+      {
+        "type": "shot",
+        "stage": "assets",
+        "shot_id": "shot_4",
+        "status": "completed",
+        "order": 4
+      },
+      {
+        "type": "shot",
+        "stage": "assets",
+        "shot_id": "shot_3",
+        "status": "completed",
+        "order": 3
+      },
+      {
+        "type": "shot",
+        "stage": "assets",
+        "shot_id": "shot_1",
+        "status": "completed",
+        "order": 1
+      },
+      {
+        "type": "stage",
+        "stage": "assets",
+        "status": "completed",
+        "asset_count": 4,
+        "source": "ai-t2v"
+      },
+      {
+        "type": "stage",
+        "stage": "rendering",
+        "status": "started"
+      },
+      {
+        "type": "stage",
+        "stage": "rendering",
+        "status": "completed",
+        "video_url": "/media/draft_600616cb49ba/final.mp4"
+      }
+    ]
+  },
+  "error": "",
+  "created_at": "2026-10-07T09:12:32.218945+00:00",
+  "updated_at": "2026-10-07T09:15:14.548247+00:00",
+  "cost": {
+    "total": 0.0,
+    "by_slot": {
+      "llm": 0.0,
+      "asset": 0.0,
+      "audio": 0.0,
+      "render": 0.0
+    },
+    "unit": "provider-reported",
+    "complete": false
+  }
+}

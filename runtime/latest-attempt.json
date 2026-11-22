@@ -1,0 +1,314 @@
+{
+  "id": "draft_1da5669ff82c",
+  "input": {
+    "city": "杭州",
+    "landmark": "西湖",
+    "theme": "西湖春日宋韵游",
+    "culture": "宋韵文化与江南园林",
+    "festival": "春日",
+    "audience": "年轻游客",
+    "duration": 15,
+    "style": "诗意纪实",
+    "voice": "女声",
+    "music_mood": "无音乐",
+    "include_ai_label": true,
+    "custom_brief": "必须使用AI生成首帧并进行图生视频，生成有镜头运动的连续视频；不使用音乐。",
+    "shot_count": 4,
+    "include_subtitles": true,
+    "asset_source": "ai",
+    "output_resolution": "720x1280",
+    "fps": 25,
+    "voice_rate": 1.0,
+    "voice_volume": 1.0,
+    "music_volume": 0.18
+  },
+  "status": "running",
+  "stage": "assets",
+  "progress": 67,
+  "title": "西湖春日·宋韵一瞥",
+  "summary": "十五秒竖屏短片，以AI首帧图生视频串联西湖春日与宋韵遗迹，从断桥传说到三潭石塔，呈现江南山水美学的可考细节。",
+  "cta": "来西湖，走一段被诗词写过的路。",
+  "tags": [
+    "杭州",
+    "西湖",
+    "宋韵",
+    "春日",
+    "AI视频"
+  ],
+  "narration": "断桥相遇，传说千年。苏堤春晓，南宋题名。三潭石塔，苏轼立水。西湖入遗，湖泊首例。",
+  "shots": [
+    {
+      "id": "shot_1",
+      "order": 1,
+      "duration_sec": 3.324,
+      "title": "断桥传说",
+      "visual_prompt": "AI生成首帧：清晨薄雾中的西湖断桥，桥面青石湿润，远山轮廓隐约，一柄油纸伞斜倚桥栏，柳枝垂水，竖屏构图，中心为桥与倒影，光线柔和，色调青灰与淡金。图生视频：镜头缓慢向前推近，雾气微动，水面泛起细纹，柳枝轻摆。",
+      "narration": "断桥相遇，传说千年。",
+      "subtitle": "断桥相遇 传说千年",
+      "transition": "fade",
+      "asset_url": "",
+      "asset_id": "",
+      "asset_local_path": "",
+      "asset_media_type": "",
+      "asset_model": "",
+      "asset_seed": 0,
+      "asset_first_frame_path": "",
+      "audio_url": "",
+      "audio_local_path": ""
+    },
+    {
+      "id": "shot_2",
+      "order": 2,
+      "duration_sec": 3.194,
+      "title": "苏堤春晓",
+      "visual_prompt": "AI生成首帧：苏堤春晓，桃红柳绿夹岸，石板路延伸向远方，湖面如镜映出桥影，晨光从柳枝间透出，竖屏构图，前景柳枝虚化，中景堤岸清晰。图生视频：镜头沿堤岸缓慢横移，柳枝掠过画面，湖面倒影轻轻晃动。",
+      "narration": "苏堤春晓，南宋题名。",
+      "subtitle": "苏堤春晓 南宋题名",
+      "transition": "fade",
+      "asset_url": "",
+      "asset_id": "",
+      "asset_local_path": "",
+      "asset_media_type": "",
+      "asset_model": "",
+      "asset_seed": 0,
+      "asset_first_frame_path": "",
+      "audio_url": "",
+      "audio_local_path": ""
+    },
+    {
+      "id": "shot_3",
+      "order": 3,
+      "duration_sec": 3.239,
+      "title": "三潭石塔",
+      "visual_prompt": "AI生成首帧：三潭印月水面，三座石塔立于湖中，塔身斑驳，水面倒映塔影与云影，远处雷峰塔轮廓隐约，春日新绿环绕，竖屏构图，石塔居中偏下。图生视频：镜头缓慢环绕石塔，水面涟漪扩散，塔影随之轻颤。",
+      "narration": "三潭石塔，苏轼立水。",
+      "subtitle": "三潭石塔 苏轼立水",
+      "transition": "fade",
+      "asset_url": "",
+      "asset_id": "",
+      "asset_local_path": "",
+      "asset_media_type": "",
+      "asset_model": "",
+      "asset_seed": 0,
+      "asset_first_frame_path": "",
+      "audio_url": "",
+      "audio_local_path": ""
+    },
+    {
+      "id": "shot_4",
+      "order": 4,
+      "duration_sec": 3.054,
+      "title": "湖泊入遗",
+      "visual_prompt": "AI生成首帧：西湖全景暮色，雷峰塔夕照剪影，湖面泛金，群山层叠，前景一枝桃花斜出，竖屏构图，天空占上部三分之一。图生视频：镜头缓慢拉远，夕照渐暗，塔影与山影融为一体，桃花枝轻轻摇曳。",
+      "narration": "西湖入遗，湖泊首例。",
+      "subtitle": "西湖入遗 湖泊首例",
+      "transition": "fade",
+      "asset_url": "",
+      "asset_id": "",
+      "asset_local_path": "",
+      "asset_media_type": "",
+      "asset_model": "",
+      "asset_seed": 0,
+      "asset_first_frame_path": "",
+      "audio_url": "",
+      "audio_local_path": ""
+    }
+  ],
+  "assets": [],
+  "audio": {
+    "knowledge": {
+      "fact": "西湖于2011年列入《世界遗产名录》，是中国首个湖泊类世界文化遗产，也是中国唯一一处湖泊类文化景观遗产；西湖十景得名于南宋，经清康熙帝御题碑刻而定型；三潭印月肇始于北宋苏轼元祐四年（1089年）所立的三座量水塔，现存石塔为明天启元年（1621年）补立。",
+      "color": "#24526a",
+      "accent": "#d6ad60",
+      "aliases": [
+        "西湖",
+        "三潭印月",
+        "苏堤春晓",
+        "断桥"
+      ]
+    },
+    "voice_path": "C:\\Users\\ev041\\Desktop\\人工智能\\zhejiang-tourism-aigc-merged\\runtime\\media\\draft_1da5669ff82c\\voice.wav",
+    "music_path": "",
+    "cues": [
+      {
+        "shot_id": "shot_1",
+        "start": 0.0,
+        "end": 3.323729,
+        "text": "断桥相遇 传说千年"
+      },
+      {
+        "shot_id": "shot_2",
+        "start": 3.473729,
+        "end": 6.667479,
+        "text": "苏堤春晓 南宋题名"
+      },
+      {
+        "shot_id": "shot_3",
+        "start": 6.817479,
+        "end": 10.056271,
+        "text": "三潭石塔 苏轼立水"
+      },
+      {
+        "shot_id": "shot_4",
+        "start": 10.206271,
+        "end": 13.259979,
+        "text": "西湖入遗 湖泊首例"
+      }
+    ],
+    "total_duration": 13.259979,
+    "cost": 0.0,
+    "event": {
+      "type": "audio",
+      "silence_between_shots_ms": 150,
+      "segment_count": 4
+    },
+    "target_duration": 15.0,
+    "timing_source": "measured-shot-audio",
+    "provider_trace": [
+      {
+        "provider": "windows-system-speech",
+        "model": "Microsoft Huihui Desktop",
+        "cache_key": "9b9e69f1f42a4472a4413e7361a6aab75f6bbd7f69fc4e4ef305e97896f1fdd5",
+        "cache_hit": false,
+        "duration_sec": 3.323729,
+        "source_path": "C:\\Users\\ev041\\Desktop\\人工智能\\zhejiang-tourism-aigc-merged\\runtime\\audio-cache\\9b9e69f1f42a4472a4413e7361a6aab75f6bbd7f69fc4e4ef305e97896f1fdd5.wav",
+        "shot_id": "shot_1",
+        "segment_path": "C:\\Users\\ev041\\Desktop\\人工智能\\zhejiang-tourism-aigc-merged\\runtime\\media\\draft_1da5669ff82c\\voice-segments\\shot_1.wav",
+        "segment_duration": 3.323729,
+        "sample_rate": 48000,
+        "channels": 1
+      },
+      {
+        "provider": "windows-system-speech",
+        "model": "Microsoft Huihui Desktop",
+        "cache_key": "45f6fa34e335b877c0993749e3f361d4e1fafb4b5c3f1196ef6f15b200f716cb",
+        "cache_hit": false,
+        "duration_sec": 3.19375,
+        "source_path": "C:\\Users\\ev041\\Desktop\\人工智能\\zhejiang-tourism-aigc-merged\\runtime\\audio-cache\\45f6fa34e335b877c0993749e3f361d4e1fafb4b5c3f1196ef6f15b200f716cb.wav",
+        "shot_id": "shot_2",
+        "segment_path": "C:\\Users\\ev041\\Desktop\\人工智能\\zhejiang-tourism-aigc-merged\\runtime\\media\\draft_1da5669ff82c\\voice-segments\\shot_2.wav",
+        "segment_duration": 3.19375,
+        "sample_rate": 48000,
+        "channels": 1
+      },
+      {
+        "provider": "windows-system-speech",
+        "model": "Microsoft Huihui Desktop",
+        "cache_key": "5682aedc0e65e795d2dcf5abbffc9faf7f7e5b9ea8e5c242ed2f0ebf84a24875",
+        "cache_hit": false,
+        "duration_sec": 3.238792,
+        "source_path": "C:\\Users\\ev041\\Desktop\\人工智能\\zhejiang-tourism-aigc-merged\\runtime\\audio-cache\\5682aedc0e65e795d2dcf5abbffc9faf7f7e5b9ea8e5c242ed2f0ebf84a24875.wav",
+        "shot_id": "shot_3",
+        "segment_path": "C:\\Users\\ev041\\Desktop\\人工智能\\zhejiang-tourism-aigc-merged\\runtime\\media\\draft_1da5669ff82c\\voice-segments\\shot_3.wav",
+        "segment_duration": 3.238792,
+        "sample_rate": 48000,
+        "channels": 1
+      },
+      {
+        "provider": "windows-system-speech",
+        "model": "Microsoft Huihui Desktop",
+        "cache_key": "12b3f056450a8a201b2cd22b8bc5a93d6c07b940621eacec14c8a078fa8bc75a",
+        "cache_hit": false,
+        "duration_sec": 3.053708,
+        "source_path": "C:\\Users\\ev041\\Desktop\\人工智能\\zhejiang-tourism-aigc-merged\\runtime\\audio-cache\\12b3f056450a8a201b2cd22b8bc5a93d6c07b940621eacec14c8a078fa8bc75a.wav",
+        "shot_id": "shot_4",
+        "segment_path": "C:\\Users\\ev041\\Desktop\\人工智能\\zhejiang-tourism-aigc-merged\\runtime\\media\\draft_1da5669ff82c\\voice-segments\\shot_4.wav",
+        "segment_duration": 3.053708,
+        "sample_rate": 48000,
+        "channels": 1
+      }
+    ],
+    "music_match": {},
+    "voice_provider": "none",
+    "voice_model": "none",
+    "voice_url": "/media/draft_1da5669ff82c/voice.wav",
+    "voice_local_path": "C:\\Users\\ev041\\Desktop\\人工智能\\zhejiang-tourism-aigc-merged\\runtime\\media\\draft_1da5669ff82c\\voice.wav",
+    "music_provider": "none",
+    "music_url": "",
+    "music_local_path": "",
+    "duration_sec": 13.26,
+    "disclosure": "Audio provider and fallback state are recorded in trace.",
+    "cue_source": "provider",
+    "requested_duration": 15.0,
+    "grade": {
+      "saturation": 1.06,
+      "contrast": 1.04,
+      "brightness": 0.01
+    }
+  },
+  "render": {},
+  "trace": {
+    "provider": "openai-compatible",
+    "model": "deepseek-chat",
+    "prompt_version": "zj-tourism-prompt-v1",
+    "fallback_used": false,
+    "created_at": "2026-10-06T16:14:47.440559+00:00",
+    "events": [
+      {
+        "type": "llm",
+        "provider": "openai-compatible",
+        "model": "deepseek-chat",
+        "ok": true
+      },
+      {
+        "type": "stage",
+        "stage": "scripting",
+        "status": "completed"
+      },
+      {
+        "type": "preview",
+        "status": "ready",
+        "message": "Script and storyboard are ready for review"
+      },
+      {
+        "type": "stage",
+        "stage": "storyboard",
+        "status": "completed",
+        "shot_count": 4
+      },
+      {
+        "type": "stage",
+        "stage": "audio",
+        "status": "started"
+      },
+      {
+        "type": "audio",
+        "silence_between_shots_ms": 150,
+        "segment_count": 4,
+        "stage": "audio"
+      },
+      {
+        "type": "stage",
+        "stage": "audio",
+        "status": "completed",
+        "duration_sec": 13.26
+      },
+      {
+        "type": "stage",
+        "stage": "assets",
+        "status": "started"
+      },
+      {
+        "type": "shot",
+        "stage": "assets",
+        "shot_id": "shot_1",
+        "status": "started",
+        "order": 1
+      }
+    ]
+  },
+  "error": "",
+  "created_at": "2026-10-06T16:14:42.346997+00:00",
+  "updated_at": "2026-10-06T16:14:51.557716+00:00",
+  "cost": {
+    "total": 0.0,
+    "by_slot": {
+      "llm": 0.0,
+      "asset": 0.0,
+      "audio": 0.0,
+      "render": 0.0
+    },
+    "unit": "provider-reported",
+    "complete": false
+  }
+}
