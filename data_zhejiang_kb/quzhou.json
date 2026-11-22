@@ -1,0 +1,1144 @@
+{
+  "city": "衢州",
+  "entities": [
+    {
+      "id": "qz-nianbadu",
+      "type": "scenic",
+      "name": "廿八都古镇",
+      "aliases": [
+        "廿八都"
+      ],
+      "level": "中国历史文化名镇（2007）、江郎山·廿八都5A景区组成部分",
+      "location": "衢州江山市（浙闽赣交界）",
+      "facts": [
+        "廿八都镇是江山市下属的中国历史文化名镇，拥有142种姓氏、13种方言的文化飞地。",
+        "北宋熙宁四年（1071年）江山设都四十四，此地排为廿八，由此得名，至今已有千年历史。",
+        "廿八都地处浙江、福建、江西三省交界处，是仙霞古道的中点；明末徐霞客由此入闽并载于《徐霞客游记》。",
+        "古镇保存2公里长的古街和36幢明清古民居；1997年列浙江省历史文化名镇，2007年列中国历史文化名镇。",
+        "2017年，江郎山·廿八都景区被评为国家5A级旅游景区。"
+      ],
+      "fact_records": [
+        {
+          "text": "廿八都镇是江山市下属的中国历史文化名镇，拥有142种姓氏、13种方言的文化飞地。",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%BB%BF%E5%85%AB%E9%83%BD%E9%95%87",
+          "source_title": "维基百科：廿八都镇",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-廿八都镇",
+          "evidence_quote": "廿八都镇是中国浙江省江山市下属的一个镇，中国历史文化名镇之一。……拥有142种姓氏、13种方言的文化飞地",
+          "fact_type": "geography",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "北宋熙宁四年（1071年）江山设都四十四，此地排为廿八，由此得名，至今已有千年历史。",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%BB%BF%E5%85%AB%E9%83%BD%E9%95%87",
+          "source_title": "维基百科：廿八都镇",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-廿八都镇",
+          "evidence_quote": "北宋熙宁四年（1071年），江山设都四十四，此地排为廿八，由此得名，至今已有千年历史。",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "廿八都地处浙江、福建、江西三省交界处，是仙霞古道的中点；明末徐霞客由此入闽并载于《徐霞客游记》。",
+          "fact_index": 2,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%BB%BF%E5%85%AB%E9%83%BD%E9%95%87",
+          "source_title": "维基百科：廿八都镇",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-廿八都镇",
+          "evidence_quote": "廿八都地处浙江、福建和江西三省交界处，位于仙霞关和枫岭关之间，是仙霞古道的中点。……明末徐霞客曾经由此地入闽，并载于《徐霞客游记》当中。",
+          "fact_type": "geography",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "古镇保存2公里长的古街和36幢明清古民居；1997年列浙江省历史文化名镇，2007年列中国历史文化名镇。",
+          "fact_index": 3,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%BB%BF%E5%85%AB%E9%83%BD%E9%95%87",
+          "source_title": "维基百科：廿八都镇",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-廿八都镇",
+          "evidence_quote": "保存了2公里长的古街和36幢明清古民居的建筑博览园。……1997年被公布为浙江省历史文化名镇，2007年被公布为中国历史文化名镇。",
+          "fact_type": "landscape",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "2017年，江郎山·廿八都景区被评为国家5A级旅游景区。",
+          "fact_index": 4,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%BB%BF%E5%85%AB%E9%83%BD%E9%95%87",
+          "source_title": "维基百科：廿八都镇",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-廿八都镇",
+          "evidence_quote": "2017年，江郎山·廿八都景区被评为国家5A级旅游景区。",
+          "fact_type": "designation",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
+      ],
+      "cultural_significance": "三省交界的一块“方言飞地”，142个姓氏守着一条千年古道。",
+      "keywords_en": [
+        "Nianbadu ancient town",
+        "Jiangshan border town"
+      ],
+      "imagery": [
+        "古街檐廊",
+        "方言门楣",
+        "仙霞古道石阶",
+        "三省界碑意象"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "一条街三种方言，一家店里三省口音。",
+      "scenario_tags": [
+        "古镇",
+        "历史",
+        "人文",
+        "经典必游"
+      ]
+    },
+    {
+      "id": "qz-jianglangshan",
+      "type": "scenic",
+      "name": "江郎山",
+      "aliases": [
+        "三爿石",
+        "江郎山·廿八都景区"
+      ],
+      "level": "世界自然遗产（中国丹霞）、国家5A级旅游景区",
+      "location": "衢州江山市南部石门镇",
+      "facts": [
+        "江郎山为国家级风景名胜区，也是世界自然遗产地，素有“雄奇冠天下，秀丽甲东南”之誉。",
+        "2010年8月2日第34届世界遗产大会将“中国丹霞”列入《世界遗产名录》，江郎山名列其中。",
+        "三峰呈“川”字形排列，人称“三爿石”，主峰郎峰海拔816.8米。",
+        "2017年，江郎山·廿八都景区被评为国家5A级旅游景区。"
+      ],
+      "fact_records": [
+        {
+          "text": "江郎山为国家级风景名胜区，也是世界自然遗产地，素有“雄奇冠天下，秀丽甲东南”之誉。",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E6%B1%9F%E9%83%8E%E5%B1%B1",
+          "source_title": "维基百科：江郎山",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-江郎山",
+          "evidence_quote": "江郎山位于中华人民共和国浙江省江山市南部石门镇，距江山市区25公里；为国家级风景名胜区，也是世界自然遗产地，素有“雄奇冠天下，秀丽甲东南”之誉。",
+          "fact_type": "geography",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "2010年8月2日第34届世界遗产大会将“中国丹霞”列入《世界遗产名录》，江郎山名列其中。",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E6%B1%9F%E9%83%8E%E5%B1%B1",
+          "source_title": "维基百科：江郎山",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-江郎山",
+          "evidence_quote": "2010年8月2日，在巴西利亚举行的第34届世界遗产大会将“中国丹霞”正式列入《世界遗产名录》，联合申报该项目的江郎山名列其中。",
+          "fact_type": "designation",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "三峰呈“川”字形排列，人称“三爿石”，主峰郎峰海拔816.8米。",
+          "fact_index": 2,
+          "source_url": "https://zh.wikipedia.org/wiki/%E6%B1%9F%E9%83%8E%E5%B1%B1",
+          "source_title": "维基百科：江郎山",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-江郎山",
+          "evidence_quote": "三峰自北向南呈“川”字形排列，当地人又称“三爿石”，依次为：郎峰、亚峰、灵峰。其中主峰郎峰海拔816.8米。",
+          "fact_type": "landscape",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "2017年，江郎山·廿八都景区被评为国家5A级旅游景区。",
+          "fact_index": 3,
+          "source_url": "https://zh.wikipedia.org/wiki/%E6%B1%9F%E9%83%8E%E5%B1%B1",
+          "source_title": "维基百科：江郎山",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-江郎山",
+          "evidence_quote": "2017年，江郎山·廿八都景区被评为国家5A级旅游景区。",
+          "fact_type": "designation",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
+      ],
+      "cultural_significance": "三片石头插进天上——浙江唯一的世界自然遗产丹霞。",
+      "keywords_en": [
+        "Jianglang Mountain",
+        "Danxia world heritage"
+      ],
+      "imagery": [
+        "三爿石远景",
+        "郎峰仰视",
+        "云雾穿峰",
+        "霞光映壁"
+      ],
+      "best_season": "春秋两季",
+      "micro_drama_hook": "丹霞劈开天空的那三刀，是浙江最硬的风景。",
+      "scenario_tags": [
+        "自然",
+        "自然奇观",
+        "登山",
+        "经典必游"
+      ]
+    },
+    {
+      "id": "qz-longyoushiku",
+      "type": "scenic",
+      "name": "龙游石窟",
+      "aliases": [
+        "小南海石室"
+      ],
+      "level": "全国重点文物保护单位（第七批）、国家4A级旅游区",
+      "location": "衢州龙游县凤凰山",
+      "facts": [
+        "龙游石窟又名小南海石室，为巨大人工石穴群，推测为春秋至汉朝间开凿，使用何技术建成依然成谜。",
+        "龙游石窟是迄今所发现的世界上最大的古代地下人工建筑群；2013年5月列入第七批全国重点文物保护单位。",
+        "1992年6月9日村民用四台抽水机抽了17天才将积水抽干，露出浩瀚的内部工程结构。",
+        "现存石室超过50座，多数深达十层楼高度；50个石窟挖出的土方量超过200万立方公尺，是不亚于金字塔的大工程。"
+      ],
+      "fact_records": [
+        {
+          "text": "龙游石窟又名小南海石室，为巨大人工石穴群，推测为春秋至汉朝间开凿，使用何技术建成依然成谜。",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E9%BE%99%E6%B8%B8%E7%9F%B3%E7%AA%9F",
+          "source_title": "维基百科：龙游石窟",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-龙游石窟",
+          "evidence_quote": "龍游石窟，又名小南海石室，是位于中华人民共和国浙江省衢州市龙游县的一處古蹟群，為巨大人工石穴群。推測為春秋至漢朝間開鑿，至今使用何技術建成依然成謎。",
+          "fact_type": "archaeology",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "龙游石窟是迄今所发现的世界上最大的古代地下人工建筑群；2013年5月列入第七批全国重点文物保护单位。",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E9%BE%99%E6%B8%B8%E7%9F%B3%E7%AA%9F",
+          "source_title": "维基百科：龙游石窟",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-龙游石窟",
+          "evidence_quote": "龙游石窟是迄今所发现的世界上最大的古代地下人工建筑群。……2013年5月列入第七批全国重点文物保护单位。",
+          "fact_type": "designation",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "1992年6月9日村民用四台抽水机抽了17天才将积水抽干，露出浩瀚的内部工程结构。",
+          "fact_index": 2,
+          "source_url": "https://zh.wikipedia.org/wiki/%E9%BE%99%E6%B8%B8%E7%9F%B3%E7%AA%9F",
+          "source_title": "维基百科：龙游石窟",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-龙游石窟",
+          "evidence_quote": "直到1992年6月9日吴阿奶与其他三个村民抽水撈魚，利用四台抽水機抽了17天將水抽乾，露出了浩瀚的內部工程結構。",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "现存石室超过50座，多数深达十层楼高度；50个石窟挖出的土方量超过200万立方公尺，是不亚于金字塔的大工程。",
+          "fact_index": 3,
+          "source_url": "https://zh.wikipedia.org/wiki/%E9%BE%99%E6%B8%B8%E7%9F%B3%E7%AA%9F",
+          "source_title": "维基百科：龙游石窟",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-龙游石窟",
+          "evidence_quote": "开凿于红砂岩山体中，现存石室超过50座多數深達十層樓高度蔚為壯觀。……計算發現50個石窟挖出的土方量超過200萬立方公尺，在古時代是不亞於金字塔的大工程。",
+          "fact_type": "landscape",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
+      ],
+      "cultural_significance": "地下凿出五十个十层楼高的石厅，年代与用途至今没有答案。",
+      "keywords_en": [
+        "Longyou Grottoes",
+        "ancient underground caves"
+      ],
+      "imagery": [
+        "洞窟穹顶",
+        "凿痕纹理",
+        "石柱大厅",
+        "水下光影"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "走进去你才发现：人类曾摸黑干了一座金字塔。",
+      "scenario_tags": [
+        "考古",
+        "人文",
+        "研学",
+        "探秘"
+      ]
+    },
+    {
+      "id": "qz-city",
+      "type": "scenic",
+      "name": "衢州古城",
+      "aliases": [
+        "姑蔑",
+        "西安",
+        "柯城"
+      ],
+      "level": "国家历史文化名城（1994）",
+      "location": "衢州市（浙皖闽赣四省边际）",
+      "facts": [
+        "衢州简称衢，别称姑蔑，位于浙江西部、钱塘江源头、浙皖闽赣四省边际，素有“四省通衢，五路总头”之称。",
+        "衢州拥有华东地区唯一的国家公园试点——钱江源国家公园和浙江省首个世界自然遗产——江郎山。",
+        "衢州素有“东南阙里，南孔圣地”之称，孔氏南宗家庙是全国仅有的两座孔氏家庙之一。",
+        "烂柯山以“王质烂柯”的传说而闻名，被誉为“围棋仙地”。",
+        "唐武德四年（621年）置衢州为建州之始；1994年衢州被公布为国家历史文化名城。"
+      ],
+      "fact_records": [
+        {
+          "text": "衢州简称衢，别称姑蔑，位于浙江西部、钱塘江源头、浙皖闽赣四省边际，素有“四省通衢，五路总头”之称。",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E8%A1%A2%E5%B7%9E%E5%B8%82",
+          "source_title": "维基百科：衢州市",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-衢州市",
+          "evidence_quote": "衢（qú）州市，简称衢，别称姑蔑，是中华人民共和国浙江省下辖的地级市，位于浙江省西部、钱塘江源头、浙皖闽赣四省边际。……素有“四省通衢，五路总头”之称",
+          "fact_type": "geography",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "衢州拥有华东地区唯一的国家公园试点——钱江源国家公园和浙江省首个世界自然遗产——江郎山。",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E8%A1%A2%E5%B7%9E%E5%B8%82",
+          "source_title": "维基百科：衢州市",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-衢州市",
+          "evidence_quote": "拥有华东地区唯一的国家公园试点——钱江源国家公园和浙江省首个世界自然遗产——江郎山。",
+          "fact_type": "nature",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "衢州素有“东南阙里，南孔圣地”之称，孔氏南宗家庙是全国仅有的两座孔氏家庙之一。",
+          "fact_index": 2,
+          "source_url": "https://zh.wikipedia.org/wiki/%E8%A1%A2%E5%B7%9E%E5%B8%82",
+          "source_title": "维基百科：衢州市",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-衢州市",
+          "evidence_quote": "衢州素有“东南阙里，南孔圣地”之称，孔氏南宗家庙是全国仅有的两座孔氏家庙之一。",
+          "fact_type": "culture",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "烂柯山以“王质烂柯”的传说而闻名，被誉为“围棋仙地”。",
+          "fact_index": 3,
+          "source_url": "https://zh.wikipedia.org/wiki/%E8%A1%A2%E5%B7%9E%E5%B8%82",
+          "source_title": "维基百科：衢州市",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-衢州市",
+          "evidence_quote": "烂柯山则以“王质烂柯”的传说而闻名，被誉为“围棋仙地”。",
+          "fact_type": "culture",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "唐武德四年（621年）置衢州为建州之始；1994年衢州被公布为国家历史文化名城。",
+          "fact_index": 4,
+          "source_url": "https://zh.wikipedia.org/wiki/%E8%A1%A2%E5%B7%9E%E5%B8%82",
+          "source_title": "维基百科：衢州市",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-衢州市",
+          "evidence_quote": "唐武德四年（621）置衢州，并分置定阳、须江二县，为衢州建州之始。……1994年，衢州被公布为国家历史文化名城。",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
+      ],
+      "cultural_significance": "四省通衢的老城，南孔家庙和围棋仙地都把“最”留给了它。",
+      "keywords_en": [
+        "Quzhou",
+        "Quzhou ancient city"
+      ],
+      "imagery": [
+        "水亭门街区",
+        "衢州城墙",
+        "信安湖",
+        "坊门街"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "四省边界的老城，一条街能听见四种乡音。",
+      "scenario_tags": [
+        "城市",
+        "历史",
+        "人文",
+        "美食"
+      ]
+    },
+    {
+      "id": "qz-nankong",
+      "type": "scenic",
+      "name": "孔氏南宗家庙",
+      "aliases": [
+        "南宗孔庙",
+        "衢州孔庙"
+      ],
+      "level": "全国重点文物保护单位（1996）",
+      "location": "衢州市柯城区新桥街",
+      "facts": [
+        "孔氏南宗家庙位于柯城区新桥街，1996年11月20日列为全国重点文物保护单位。",
+        "建炎三年高宗定都临安后赐孔氏家族在衢州建家；绍兴六年权以衢州州学为孔氏家庙。",
+        "孔端友南渡后，衍圣公分立，从此有“南宗”“北宗”之分。",
+        "1282年孔洙以“祖先庐墓在衢州”为由让爵曲阜族弟，孔氏南宗从此在衢州永久定居。",
+        "衢州南宗祭孔大典2011年5月列入第三批国家级非遗名录。"
+      ],
+      "fact_records": [
+        {
+          "text": "孔氏南宗家庙位于柯城区新桥街，1996年11月20日列为全国重点文物保护单位。",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%AD%94%E6%B0%8F%E5%8D%97%E5%AE%97%E5%AE%B6%E5%BA%99",
+          "source_title": "维基百科：孔氏南宗家庙",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-孔氏南宗家庙",
+          "evidence_quote": "孔氏南宗家庙（又称南宗孔庙、衢州孔庙）位于中国浙江省衢州市柯城区新桥街……1996年11月20日被列为全国重点文物保护单位。",
+          "fact_type": "designation",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "建炎三年高宗定都临安后赐孔氏家族在衢州建家；绍兴六年权以衢州州学为孔氏家庙。",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%AD%94%E6%B0%8F%E5%8D%97%E5%AE%97%E5%AE%B6%E5%BA%99",
+          "source_title": "维基百科：孔氏南宗家庙",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-孔氏南宗家庙",
+          "evidence_quote": "建炎三年高宗定都临安后，以衢州无战事侵扰且交通便捷，赐孔氏家族在衢州建家。绍兴六年（1136年），高宗下诏权以衢州州学为孔氏家庙。",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "孔端友南渡后，衍圣公分立，从此有“南宗”“北宗”之分。",
+          "fact_index": 2,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%AD%94%E6%B0%8F%E5%8D%97%E5%AE%97%E5%AE%B6%E5%BA%99",
+          "source_title": "维基百科：孔氏南宗家庙",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-孔氏南宗家庙",
+          "evidence_quote": "孔端友南渡后，金太宗立孔端友的胞弟孔端操为衍圣公，从此遂有“南宗”、“北宗”之分。",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "1282年孔洙以“祖先庐墓在衢州”为由让爵曲阜族弟，孔氏南宗从此在衢州永久定居。",
+          "fact_index": 3,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%AD%94%E6%B0%8F%E5%8D%97%E5%AE%97%E5%AE%B6%E5%BA%99",
+          "source_title": "维基百科：孔氏南宗家庙",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-孔氏南宗家庙",
+          "evidence_quote": "至元十九年（1282年），元世祖忽必烈敕孔洙返曲阜奉祀，孔洙以“祖先庐墓在衢州，且衢州已建家庙，不忍举家北上”为由，让爵给曲阜族弟孔治。从此孔氏南宗在衢州永久定居。",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "衢州南宗祭孔大典2011年5月列入第三批国家级非遗名录。",
+          "fact_index": 4,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%AD%94%E6%B0%8F%E5%8D%97%E5%AE%97%E5%AE%B6%E5%BA%99",
+          "source_title": "维基百科：孔氏南宗家庙",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-孔氏南宗家庙",
+          "evidence_quote": "衢州南宗祭孔大典已于2005年5月被列为浙江省非物质文化遗产，2011年5月被列入第三批国家级非物质文化遗产名录。",
+          "fact_type": "designation",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
+      ],
+      "cultural_significance": "北孔曲阜、南孔衢州——一支圣裔让爵不北归，守了江南八百年。",
+      "keywords_en": [
+        "Southern Confucius Temple",
+        "Quzhou Confucius temple"
+      ],
+      "imagery": [
+        "家庙大门",
+        "思鲁阁",
+        "祭孔大典",
+        "古柏庭院"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "爵位可以还回去，家庙留在了江南。",
+      "scenario_tags": [
+        "人文",
+        "历史",
+        "研学",
+        "经典必游"
+      ]
+    },
+    {
+      "id": "qz-lankeshan",
+      "type": "legend",
+      "name": "烂柯山",
+      "aliases": [
+        "石室山",
+        "石桥山"
+      ],
+      "level": "浙江省级风景名胜区、古“第卅福地”",
+      "location": "衢州市柯城区城东南约10公里",
+      "facts": [
+        "烂柯山又名石室山、石桥山，山巅天生石梁如一座巨大的石桥，属丹霞地貌。",
+        "石梁下青霞洞是传说中王质遇仙之处；古时在“洞天福地”中列为第卅福地。",
+        "晋代《志林》载：王质入石室观二童子对棋，局未终而斧柯已烂朽。",
+        "后来“烂柯”便成为围棋的别称。"
+      ],
+      "fact_records": [
+        {
+          "text": "烂柯山又名石室山、石桥山，山巅天生石梁如一座巨大的石桥，属丹霞地貌。",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E7%83%82%E6%9F%AF%E5%B1%B1",
+          "source_title": "维基百科：烂柯山",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-烂柯山",
+          "evidence_quote": "烂柯山又名石室山、石桥山，位于中国浙江省衢州市城东南约10公里处，毗邻乌溪江。……山巅的天生石梁如一座巨大的石桥，属丹霞地貌",
+          "fact_type": "landscape",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "石梁下青霞洞是传说中王质遇仙之处；古时在“洞天福地”中列为第卅福地。",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E7%83%82%E6%9F%AF%E5%B1%B1",
+          "source_title": "维基百科：烂柯山",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-烂柯山",
+          "evidence_quote": "石梁下为青霞洞，即是传说中王质遇仙之处。……古时在「洞天福地」中被列为「第卅福地」。",
+          "fact_type": "legend",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "晋代《志林》载：王质入石室观二童子对棋，局未终而斧柯已烂朽。",
+          "fact_index": 2,
+          "source_url": "https://zh.wikipedia.org/wiki/%E7%83%82%E6%9F%AF%E5%B1%B1",
+          "source_title": "维基百科：烂柯山",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-烂柯山",
+          "evidence_quote": "晋·虞喜《志林》：“信安山有石室，王质入其室，见二童子对棋，看之，局未终，视其所执伐薪柯已烂朽",
+          "fact_type": "legend",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "后来“烂柯”便成为围棋的别称。",
+          "fact_index": 3,
+          "source_url": "https://zh.wikipedia.org/wiki/%E7%83%82%E6%9F%AF%E5%B1%B1",
+          "source_title": "维基百科：烂柯山",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-烂柯山",
+          "evidence_quote": "於是後來烂柯便作为围棋的别称。",
+          "fact_type": "legend",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
+      ],
+      "cultural_significance": "看一局棋的时间山下换了个朝代——围棋的别名从这里来。",
+      "keywords_en": [
+        "Lanke Mountain",
+        "Go legend mountain"
+      ],
+      "imagery": [
+        "天生石梁",
+        "青霞洞",
+        "棋盘石刻",
+        "山间古亭"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "斧头烂了，棋还没下完——山下的时间过得更快。",
+      "scenario_tags": [
+        "传说",
+        "人文",
+        "研学",
+        "登高"
+      ]
+    },
+    {
+      "id": "qz-qingyang",
+      "type": "scenic",
+      "name": "清漾村",
+      "aliases": [
+        "清漾毛氏文化村"
+      ],
+      "level": "中国历史文化名村（2019第七批）、江南毛氏祖源地",
+      "location": "衢州江山市石门镇",
+      "facts": [
+        "清漾村为江南毛氏的祖源地，自始迁祖清漾公毛元琼迁居此地已有1500年历史。",
+        "2019年1月21日，清漾村公布为第七批中国历史文化名村。"
+      ],
+      "fact_records": [
+        {
+          "text": "清漾村为江南毛氏的祖源地，自始迁祖清漾公毛元琼迁居此地已有1500年历史。",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E6%B8%85%E6%BC%BE%E6%9D%91",
+          "source_title": "维基百科：清漾村",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-清漾村",
+          "evidence_quote": "清漾村为江南毛氏的祖源地，自始迁祖清漾公毛元琼迁居此地已有1500年历史。",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "2019年1月21日，清漾村公布为第七批中国历史文化名村。",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E6%B8%85%E6%BC%BE%E6%9D%91",
+          "source_title": "维基百科：清漾村",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-清漾村",
+          "evidence_quote": "2019年1月21日，清漾村公布为第七批中国历史文化名村。",
+          "fact_type": "designation",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
+      ],
+      "cultural_significance": "一千五百年的毛氏祖地，族谱就是它的城墙。",
+      "keywords_en": [
+        "Qingyang village",
+        "Mao clan origin"
+      ],
+      "imagery": [
+        "毛氏宗祠",
+        "古樟村口",
+        "文脉石碑",
+        "粉墙黛瓦"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "这个村的镇宅之宝，是一千五百年的族谱。",
+      "scenario_tags": [
+        "古村",
+        "人文",
+        "历史",
+        "研学"
+      ]
+    },
+    {
+      "id": "qz-xian-gaoqiang",
+      "type": "intangible",
+      "name": "西安高腔",
+      "aliases": [
+        "衢州高腔"
+      ],
+      "level": "国家级非遗（2006年第一批·传统戏剧）",
+      "location": "衢州市",
+      "facts": [
+        "西安高腔2006年列入第一批国家级非遗名录（传统戏剧，项目编号Ⅳ-7）。",
+        "西安高腔形成于浙江衢州，因衢州古称西安而得名，最迟形成于明代嘉靖年间。",
+        "其唱腔“大吼大叫”、表演“大蹦大跳”、舞美“大红大绿”，基本原汁原味地保留了古南戏的风貌。",
+        "传统剧目有《槐荫树》《合珠记》《芦花絮》等。"
+      ],
+      "fact_records": [
+        {
+          "text": "西安高腔2006年列入第一批国家级非遗名录（传统戏剧，项目编号Ⅳ-7）。",
+          "fact_index": 0,
+          "source_url": "https://www.ihchina.cn/project_details/13149.html",
+          "source_title": "中国非物质文化遗产网·高腔（西安高腔）",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-13149",
+          "evidence_quote": "高腔（西安高腔）项目序号：151项目编号：Ⅳ-7公布时间：2006(第一批)类别：传统戏剧……申报地区或单位：浙江省衢州市",
+          "fact_type": "designation",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "西安高腔形成于浙江衢州，因衢州古称西安而得名，最迟形成于明代嘉靖年间。",
+          "fact_index": 1,
+          "source_url": "https://www.ihchina.cn/project_details/13149.html",
+          "source_title": "中国非物质文化遗产网·高腔（西安高腔）",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-13149",
+          "evidence_quote": "西安高腔形成于浙江衢州，因衢州古称西安而得名。它是在弋阳腔影响下形成的地方戏，最迟形成于明代嘉靖年间",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "其唱腔“大吼大叫”、表演“大蹦大跳”、舞美“大红大绿”，基本原汁原味地保留了古南戏的风貌。",
+          "fact_index": 2,
+          "source_url": "https://www.ihchina.cn/project_details/13149.html",
+          "source_title": "中国非物质文化遗产网·高腔（西安高腔）",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-13149",
+          "evidence_quote": "现存的西安高腔唱腔上“大吼大叫”，表演上“大蹦大跳”，舞美上“大红大绿”，乐器上“大鼓大号”，乡土气息浓厚……基本上原汁原味地保留了古南戏的风貌",
+          "fact_type": "craft",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "传统剧目有《槐荫树》《合珠记》《芦花絮》等。",
+          "fact_index": 3,
+          "source_url": "https://www.ihchina.cn/project_details/13149.html",
+          "source_title": "中国非物质文化遗产网·高腔（西安高腔）",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-13149",
+          "evidence_quote": "西安高腔起源于民间，流行于民间，有《槐荫树》、《合珠记》、《芦花絮》等一批传统剧目。",
+          "fact_type": "culture",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        }
+      ],
+      "cultural_significance": "比昆曲更野的古南戏活化石——衢州人嗓门一开就是六百年。",
+      "keywords_en": [
+        "Xi'an Gaoqiang opera",
+        "Quzhou high-pitch opera"
+      ],
+      "imagery": [
+        "高腔戏台",
+        "大红戏服",
+        "锣鼓场面",
+        "老艺人开腔"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "不插电的六百年——一声吼就是古南戏。",
+      "scenario_tags": [
+        "非遗体验",
+        "戏曲",
+        "人文",
+        "民俗"
+      ]
+    },
+    {
+      "id": "qz-hecai",
+      "type": "intangible",
+      "name": "常山喝彩歌谣",
+      "aliases": [
+        "喝彩歌谣"
+      ],
+      "level": "国家级非遗（2014年第四批·民间文学）",
+      "location": "衢州常山县",
+      "facts": [
+        "常山喝彩歌谣2014年列入第四批国家级非遗名录（民间文学，项目编号Ⅰ-155）。",
+        "它是在结婚、上梁、祝寿、春种、秋收、开业时表演的热闹喜庆的民间歌谣。"
+      ],
+      "fact_records": [
+        {
+          "text": "常山喝彩歌谣2014年列入第四批国家级非遗名录（民间文学，项目编号Ⅰ-155）。",
+          "fact_index": 0,
+          "source_url": "https://www.ihchina.cn/project_details/12407.html",
+          "source_title": "中国非物质文化遗产网·常山喝彩歌谣",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-12407",
+          "evidence_quote": "常山喝彩歌谣项目序号：1249项目编号：Ⅰ-155公布时间：2014(第四批)类别：民间文学……申报地区或单位：浙江省常山县",
+          "fact_type": "designation",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "它是在结婚、上梁、祝寿、春种、秋收、开业时表演的热闹喜庆的民间歌谣。",
+          "fact_index": 1,
+          "source_url": "https://www.ihchina.cn/project_details/12407.html",
+          "source_title": "中国非物质文化遗产网·常山喝彩歌谣",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-12407",
+          "evidence_quote": "常山喝彩歌谣是流传于浙江省衢州市常山县境内的一种在结婚、上梁、祝寿、春种、秋收、开业时表演的热闹、喜庆的民间歌谣。",
+          "fact_type": "culture",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        }
+      ],
+      "cultural_significance": "上梁要喝彩、开业要喝彩——常山人把好日子喊出声。",
+      "keywords_en": [
+        "Changshan cheering ballads",
+        "Hecai songs"
+      ],
+      "imagery": [
+        "喝彩场面",
+        "上梁仪式",
+        "新房红联",
+        "围观众人"
+      ],
+      "best_season": "民俗活动期",
+      "micro_drama_hook": "好日子是喊出来的——这句彩头很有年头。",
+      "scenario_tags": [
+        "非遗体验",
+        "民俗",
+        "人文",
+        "节庆"
+      ]
+    },
+    {
+      "id": "qz-wuzhouyao",
+      "type": "intangible",
+      "name": "婺州窑陶瓷烧制技艺",
+      "aliases": [
+        "衢州白瓷"
+      ],
+      "level": "国家级非遗（2021年第五批扩展·传统技艺）",
+      "location": "衢州柯城区（婺州窑系）",
+      "facts": [
+        "衢州白瓷烧制技艺是婺州窑陶瓷烧制技艺的代表之一，2021年列入第五批国家级非遗扩展项目名录（传统技艺，项目编号Ⅷ-214）。",
+        "衢州自古为浙闽赣皖水陆集散地，丘陵河谷粉砂岩土层瓷土矿埋藏不深，开采粉碎容易。"
+      ],
+      "fact_records": [
+        {
+          "text": "衢州白瓷烧制技艺是婺州窑陶瓷烧制技艺的代表之一，2021年列入第五批国家级非遗扩展项目名录（传统技艺，项目编号Ⅷ-214）。",
+          "fact_index": 0,
+          "source_url": "https://www.ihchina.cn/project_details/23808.html",
+          "source_title": "中国非物质文化遗产网·婺州窑陶瓷烧制技艺（婺州窑衢州白瓷烧制技艺）",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-23808",
+          "evidence_quote": "婺州窑陶瓷烧制技艺（婺州窑衢州白瓷烧制技艺）项目序号：1328项目编号：Ⅷ-214公布时间：2021(第五批)类别：传统技艺……申报地区或单位：浙江省衢州市柯城区",
+          "fact_type": "designation",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "衢州自古为浙闽赣皖水陆集散地，丘陵河谷粉砂岩土层瓷土矿埋藏不深，开采粉碎容易。",
+          "fact_index": 1,
+          "source_url": "https://www.ihchina.cn/project_details/23808.html",
+          "source_title": "中国非物质文化遗产网·婺州窑陶瓷烧制技艺（婺州窑衢州白瓷烧制技艺）",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-23808",
+          "evidence_quote": "衢州自古即为浙闽赣皖水陆集散地，植被、矿产资源丰富，丘陵河谷均为粉砂岩土层，瓷土矿埋藏不深，开采粉碎容易。",
+          "fact_type": "craft",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        }
+      ],
+      "cultural_significance": "婺州窑系在衢州的白瓷一支，把四省边界的土烧成了器。",
+      "keywords_en": [
+        "Wuzhou kiln",
+        "Quzhou white porcelain"
+      ],
+      "imagery": [
+        "拉坯瞬间",
+        "白瓷釉面",
+        "窑火",
+        "瓷器陈列"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "四省交界的瓷土，烧出了婺州窑的白。",
+      "scenario_tags": [
+        "非遗体验",
+        "手工艺",
+        "艺术",
+        "研学"
+      ]
+    },
+    {
+      "id": "qz-mabing",
+      "type": "cuisine",
+      "name": "邵永丰麻饼",
+      "aliases": [
+        "衢州麻饼"
+      ],
+      "level": "国家级非遗（2021年第五批扩展·邵永丰麻饼制作技艺）",
+      "location": "衢州柯城区",
+      "facts": [
+        "邵永丰麻饼制作技艺2021年列入第五批国家级非遗扩展项目名录（传统面食制作技艺，项目编号Ⅷ-160）。",
+        "该技艺流布于衢州市柯城区及周边龙游县、江山市、开化县等县市。"
+      ],
+      "fact_records": [
+        {
+          "text": "邵永丰麻饼制作技艺2021年列入第五批国家级非遗扩展项目名录（传统面食制作技艺，项目编号Ⅷ-160）。",
+          "fact_index": 0,
+          "source_url": "https://www.ihchina.cn/project_details/23790.html",
+          "source_title": "中国非物质文化遗产网·传统面食制作技艺（邵永丰麻饼制作技艺）",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-23790",
+          "evidence_quote": "传统面食制作技艺（邵永丰麻饼制作技艺）项目序号：943项目编号：Ⅷ-160公布时间：2021(第五批)类别：传统技艺……申报地区或单位：浙江省衢州市柯城区",
+          "fact_type": "designation",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "该技艺流布于衢州市柯城区及周边龙游县、江山市、开化县等县市。",
+          "fact_index": 1,
+          "source_url": "https://www.ihchina.cn/project_details/23790.html",
+          "source_title": "中国非物质文化遗产网·传统面食制作技艺（邵永丰麻饼制作技艺）",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-23790",
+          "evidence_quote": "邵永丰麻饼制作技艺是我国传统面食制作技艺的代表之一，流布于浙江省衢州市柯城区及周边龙游县、江山市、开化县等县市",
+          "fact_type": "cuisine",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        }
+      ],
+      "cultural_significance": "一枚麻饼上百颗芝麻不歪不斜——衢州人的手上功夫进了国家级名录。",
+      "keywords_en": [
+        "Shaoyongfeng sesame pancake",
+        "Quzhou mabing"
+      ],
+      "imagery": [
+        "撒麻子翻饼",
+        "烤炉火光",
+        "成摞麻饼",
+        "老铺门面"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "芝麻会排队——这门手艺看看就觉得解压。",
+      "scenario_tags": [
+        "美食",
+        "非遗体验",
+        "伴手礼",
+        "小吃"
+      ]
+    },
+    {
+      "id": "qz-huyou",
+      "type": "cuisine",
+      "name": "常山胡柚",
+      "aliases": [
+        "胡柚"
+      ],
+      "level": "中国地理标志产品",
+      "location": "衢州常山县",
+      "facts": [
+        "胡柚是常山县特产的柑橘类水果，已有上百年栽培历史，由柚子与其他柑橘天然杂交而成，起源于常山青石镇澄潭村胡家自然村。",
+        "常山胡柚已列入中国地理标志产品。"
+      ],
+      "fact_records": [
+        {
+          "text": "胡柚是常山县特产的柑橘类水果，已有上百年栽培历史，由柚子与其他柑橘天然杂交而成，起源于常山青石镇澄潭村胡家自然村。",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%B8%B8%E5%B1%B1%E8%83%A1%E6%9F%9A",
+          "source_title": "维基百科：常山胡柚",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-常山胡柚",
+          "evidence_quote": "胡柚（通常特指常山胡柚）是中國浙江省衢州市常山县特產的一種柑橘類水果，至今已有上百年的栽培歷史，由柚子与其他柑橘天然杂交而成，起源于常山青石鎮澄潭村胡家自然村，故名“胡柚”。",
+          "fact_type": "cuisine",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "常山胡柚已列入中国地理标志产品。",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%B8%B8%E5%B1%B1%E8%83%A1%E6%9F%9A",
+          "source_title": "维基百科：常山胡柚",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-常山胡柚",
+          "evidence_quote": "目前已列入中國地理標誌產品。",
+          "fact_type": "designation",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
+      ],
+      "cultural_significance": "微苦回甘的胡柚，是衢州人秋冬的整箱储备。",
+      "keywords_en": [
+        "Changshan pommelo",
+        "Huyou citrus"
+      ],
+      "imagery": [
+        "柚果挂枝",
+        "剥皮果肉",
+        "装箱发货",
+        "果园梯田"
+      ],
+      "best_season": "秋冬",
+      "micro_drama_hook": "甜里带一点倔——像衢州的山水。",
+      "scenario_tags": [
+        "美食",
+        "伴手礼",
+        "自然",
+        "农业遗产"
+      ]
+    },
+    {
+      "id": "qz-zhaobian",
+      "type": "person",
+      "name": "赵抃",
+      "aliases": [
+        "赵清献",
+        "铁面御史"
+      ],
+      "level": "北宋参知政事、御史",
+      "location": "衢州西安（今柯城区）人",
+      "facts": [
+        "赵抃（1008—1084），字阅道，号知非子，衢州西安（今浙江衢县）人，北宋官僚。",
+        "至和元年（1054年）召为殿中侍御史，弹劾不避权势，时称“铁面御史”；平时以一琴一鹤相随。",
+        "官至参知政事；谥清献，后人称赵清献。"
+      ],
+      "fact_records": [
+        {
+          "text": "赵抃（1008—1084），字阅道，号知非子，衢州西安（今浙江衢县）人，北宋官僚。",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E8%B5%B5%E6%8A%83",
+          "source_title": "维基百科：赵抃",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-赵抃",
+          "evidence_quote": "趙抃（1008年—1084年），字閱道（一作悅道），號知非子，衢州西安（今浙江衢縣）人，北宋时期官僚。",
+          "fact_type": "person",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "至和元年（1054年）召为殿中侍御史，弹劾不避权势，时称“铁面御史”；平时以一琴一鹤相随。",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E8%B5%B5%E6%8A%83",
+          "source_title": "维基百科：赵抃",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-赵抃",
+          "evidence_quote": "至和元年（1054年），召爲殿中侍御史，弹劾不避权势，时称“铁面御史”。平时以一琴一鹤相随。",
+          "fact_type": "person",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "官至参知政事；谥清献，后人称赵清献。",
+          "fact_index": 2,
+          "source_url": "https://zh.wikipedia.org/wiki/%E8%B5%B5%E6%8A%83",
+          "source_title": "维基百科：赵抃",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-赵抃",
+          "evidence_quote": "官至参知政事。……謚曰清獻。後人多稱為趙清獻。",
+          "fact_type": "person",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
+      ],
+      "cultural_significance": "一琴一鹤入蜀的“铁面御史”，从衢州走进北宋朝堂。",
+      "keywords_en": [
+        "Zhao Bian",
+        "Song dynasty official"
+      ],
+      "imagery": [
+        "清献旧居意象",
+        "一琴一鹤",
+        "古碑刻",
+        "衢江夜色"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "上朝只带一琴一鹤——史上最简朴的行李。",
+      "scenario_tags": [
+        "历史名人",
+        "人文",
+        "历史",
+        "研学"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,1114 @@
+{
+  "city": "金华",
+  "entities": [
+    {
+      "id": "jh-shuanglongdong",
+      "type": "scenic",
+      "name": "双龙洞",
+      "aliases": [
+        "双龙风景名胜区",
+        "金华双龙洞"
+      ],
+      "level": "国家级风景名胜区、国家5A级旅游景区（2024）",
+      "location": "金华市婺城区北部金华山南麓",
+      "facts": [
+        "双龙风景名胜区位于婺城区北部金华山南麓，距金华市区约8公里，2024年评为国家5A级旅游景区。",
+        "双龙洞由外洞和内洞组成：外洞面积1200平方米，内洞岩壁皱褶似两条龙，故而得名。",
+        "冰壶洞内瀑布是中国最大的溶洞瀑布；仙瀑洞瀑布落差73米为世界洞瀑之最。",
+        "叶圣陶《记金华的双龙洞》入选人民教育出版社小学语文教材。"
+      ],
+      "fact_records": [
+        {
+          "text": "双龙风景名胜区位于婺城区北部金华山南麓，距金华市区约8公里，2024年评为国家5A级旅游景区。",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%8F%8C%E9%BE%99%E6%B4%9E",
+          "source_title": "维基百科：双龙洞",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-双龙洞",
+          "evidence_quote": "双龙风景名胜区位于中华人民共和国浙江省金华市婺城区北部，金华山南麓，距金华市区约8公里……是国家级风景名胜区，2024年评为国家5A级旅游景区。",
+          "fact_type": "geography",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "双龙洞由外洞和内洞组成：外洞面积1200平方米，内洞岩壁皱褶似两条龙，故而得名。",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%8F%8C%E9%BE%99%E6%B4%9E",
+          "source_title": "维基百科：双龙洞",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-双龙洞",
+          "evidence_quote": "双龙洞由外洞和内洞两个部分组成，外洞面积达1200平方米，有古代的摩崖石刻，内洞面积约2000平方米，洞中岩壁有天然形成的皱褶，类似两条龙，故而得名。",
+          "fact_type": "landscape",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "冰壶洞内瀑布是中国最大的溶洞瀑布；仙瀑洞瀑布落差73米为世界洞瀑之最。",
+          "fact_index": 2,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%8F%8C%E9%BE%99%E6%B4%9E",
+          "source_title": "维基百科：双龙洞",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-双龙洞",
+          "evidence_quote": "冰壶洞内瀑布是中国最大的溶洞瀑布。仙瀑洞内的瀑布落差高达73米，为世界洞瀑之最。",
+          "fact_type": "landscape",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "叶圣陶《记金华的双龙洞》入选人民教育出版社小学语文教材。",
+          "fact_index": 3,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%8F%8C%E9%BE%99%E6%B4%9E",
+          "source_title": "维基百科：双龙洞",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-双龙洞",
+          "evidence_quote": "叶圣陶曾经游历过双龙洞，并写下了《记金华的两个岩洞》，經刪節以《记金华的双龙洞》為題成為人民教育出版社小学語文教材課文。",
+          "fact_type": "culture",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
+      ],
+      "cultural_significance": "一洞卧双龙，一条课文让几代人在课本里先“游”过了金华。",
+      "keywords_en": [
+        "Shuanglong cave",
+        "Jinhua karst cave"
+      ],
+      "imagery": [
+        "双龙洞口",
+        "内洞龙纹岩壁",
+        "地下暗河",
+        "洞内灯光"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "躺在小船上贴着水面进洞——课本里的那趟，今天补上。",
+      "scenario_tags": [
+        "自然",
+        "自然奇观",
+        "研学",
+        "避暑"
+      ]
+    },
+    {
+      "id": "jh-hengdian",
+      "type": "scenic",
+      "name": "横店影视城",
+      "aliases": [
+        "横店影视基地",
+        "中国好莱坞"
+      ],
+      "level": "中国面积最大的影视拍摄基地、首个国家级影视产业实验区",
+      "location": "金华东阳市横店镇",
+      "facts": [
+        "横店影视城是中国目前面积最大的影视拍摄基地，也是中国首个国家级影视产业实验区，位于东阳市横店镇。",
+        "有30多座大型影视实景拍摄基地、130多个室内摄影棚，被美国《好莱坞报道》称为“中国好莱坞”。",
+        "1996年为拍摄《鸦片战争》修建了第一座影视基地广州街；1997年为《荆轲刺秦王》修建秦王宫。",
+        "2004年横店被国家广电总局确立为中国首个国家级影视产业实验区。"
+      ],
+      "fact_records": [
+        {
+          "text": "横店影视城是中国目前面积最大的影视拍摄基地，也是中国首个国家级影视产业实验区，位于东阳市横店镇。",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E6%A8%AA%E5%BA%97%E5%BD%B1%E8%A7%86%E5%9F%8E",
+          "source_title": "维基百科：横店影视城",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-横店影视城",
+          "evidence_quote": "横店影视城，又稱橫店影視基地，是中国目前面積最大的影视拍摄基地，也是中国首个国家级影视产业实验区，位于浙江省金華市东阳市横店镇",
+          "fact_type": "geography",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "有30多座大型影视实景拍摄基地、130多个室内摄影棚，被美国《好莱坞报道》称为“中国好莱坞”。",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E6%A8%AA%E5%BA%97%E5%BD%B1%E8%A7%86%E5%9F%8E",
+          "source_title": "维基百科：横店影视城",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-横店影视城",
+          "evidence_quote": "並且有30多座大型影视实景拍摄基地130多个室内摄影棚……被美国《好莱坞报道》杂志称为“中国好莱坞”。",
+          "fact_type": "landscape",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "1996年为拍摄《鸦片战争》修建了第一座影视基地广州街；1997年为《荆轲刺秦王》修建秦王宫。",
+          "fact_index": 2,
+          "source_url": "https://zh.wikipedia.org/wiki/%E6%A8%AA%E5%BA%97%E5%BD%B1%E8%A7%86%E5%9F%8E",
+          "source_title": "维基百科：横店影视城",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-横店影视城",
+          "evidence_quote": "1996年8月，为了拍摄电影《鸦片战争》，横店修建了第一座影视基地：广州街。……1997年，因为拍摄电影《荆轲刺秦王》，横店修建了秦王宫。",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "2004年横店被国家广电总局确立为中国首个国家级影视产业实验区。",
+          "fact_index": 3,
+          "source_url": "https://zh.wikipedia.org/wiki/%E6%A8%AA%E5%BA%97%E5%BD%B1%E8%A7%86%E5%9F%8E",
+          "source_title": "维基百科：横店影视城",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-横店影视城",
+          "evidence_quote": "2004年初，横店被国家广电总局确立为中国首个国家级影视产业实验区。",
+          "fact_type": "designation",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
+      ],
+      "cultural_significance": "一镇拍尽秦汉唐宋明清，群演的盒饭和明星的通告单在同一条街上。",
+      "keywords_en": [
+        "Hengdian World Studios",
+        "Chinese Hollywood"
+      ],
+      "imagery": [
+        "秦王宫",
+        "明清宫苑",
+        "广州街",
+        "梦幻谷夜景"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "一天之内穿越五个朝代——这里的“穿越”是通勤。",
+      "scenario_tags": [
+        "经典必游",
+        "人文",
+        "演艺",
+        "亲子"
+      ]
+    },
+    {
+      "id": "jh-zhugecun",
+      "type": "scenic",
+      "name": "诸葛八卦村",
+      "aliases": [
+        "诸葛村",
+        "高隆"
+      ],
+      "level": "全国重点文物保护单位（第四批）、国家4A级旅游景区",
+      "location": "金华兰溪市诸葛镇",
+      "facts": [
+        "诸葛村位于兰溪市，1996年与长乐村民居建筑群联合列为第四批全国重点文物保护单位，为国家4A级旅游景区。",
+        "诸葛村始建于元代，原名高隆，居民多为诸葛姓，自称诸葛亮之孙诸葛京的后裔，明代中期改称诸葛村。",
+        "明代起村民以经营中药材为主要副业，明清时期建有许多精致的宗祠和住宅；现有约350幢房子、人口约2500。"
+      ],
+      "fact_records": [
+        {
+          "text": "诸葛村位于兰溪市，1996年与长乐村民居建筑群联合列为第四批全国重点文物保护单位，为国家4A级旅游景区。",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E8%AF%B8%E8%91%9B%E5%85%AB%E5%8D%A6%E6%9D%91",
+          "source_title": "维基百科：诸葛八卦村",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-诸葛八卦村",
+          "evidence_quote": "诸葛村位于中国浙江省兰溪市诸葛镇，毗邻建德市和龙游县，距长乐村约2千米，1996年两村的民居建筑群联合列为第四批全国重点文物保护单位。诸葛村是国家4A级旅游景区。",
+          "fact_type": "designation",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "诸葛村始建于元代，原名高隆，居民多为诸葛姓，自称诸葛亮之孙诸葛京的后裔，明代中期改称诸葛村。",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E8%AF%B8%E8%91%9B%E5%85%AB%E5%8D%A6%E6%9D%91",
+          "source_title": "维基百科：诸葛八卦村",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-诸葛八卦村",
+          "evidence_quote": "诸葛村始建于元代，原名高隆，居民多为诸葛姓，自称是诸葛亮孙子诸葛京的后裔，因诸葛姓的兴旺于明代中期改称诸葛村。",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "明代起村民以经营中药材为主要副业，明清时期建有许多精致的宗祠和住宅；现有约350幢房子、人口约2500。",
+          "fact_index": 2,
+          "source_url": "https://zh.wikipedia.org/wiki/%E8%AF%B8%E8%91%9B%E5%85%AB%E5%8D%A6%E6%9D%91",
+          "source_title": "维基百科：诸葛八卦村",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-诸葛八卦村",
+          "evidence_quote": "也是从明代开始，村民以经营中药材为主要副业，经济上较为富裕，明清时期建造了许多精致的宗祠和住宅。现在诸葛村内大约有350幢房子，人口约2500。",
+          "fact_type": "culture",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
+      ],
+      "cultural_significance": "全村按八卦布局的丞相后裔聚落，药香里住着一个家族的七百年。",
+      "keywords_en": [
+        "Zhuge Bagua Village",
+        "Zhuge Liang descendants"
+      ],
+      "imagery": [
+        "八卦巷陌",
+        "丞相祠堂",
+        "药铺老街",
+        "屋顶俯瞰"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "迷路是这里的礼节——按八卦建的村子，本来就该转着走。",
+      "scenario_tags": [
+        "古村",
+        "人文",
+        "历史",
+        "摄影"
+      ]
+    },
+    {
+      "id": "jh-city",
+      "type": "scenic",
+      "name": "金华古城",
+      "aliases": [
+        "婺州",
+        "婺城",
+        "小邹鲁"
+      ],
+      "level": "国家历史文化名城",
+      "location": "金华市（金衢盆地东部）",
+      "facts": [
+        "金华简称婺、金，古称婺州，是国家历史文化名城，因“地处金星与婺女两星争华之处”得名，自266年始设东阳郡建置以来有1800多年历史。",
+        "金华史称“小邹鲁”，素有“历史文化之邦、名人荟萃之地、文风鼎盛之城、山清水秀之乡”的美誉。",
+        "金华古城位于东阳江、武义江汇合成金华江的三江交汇处北岸，分府城和子城；城墙大部在抗战中被拆除，存“古子城”地名。",
+        "金华是著名的金华火腿原产地。"
+      ],
+      "fact_records": [
+        {
+          "text": "金华简称婺、金，古称婺州，是国家历史文化名城，因“地处金星与婺女两星争华之处”得名，自266年始设东阳郡建置以来有1800多年历史。",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E9%87%91%E5%8D%8E%E5%B8%82",
+          "source_title": "维基百科：金华市",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-金华市",
+          "evidence_quote": "金华是国家历史文化名城，因其“地处金星与婺女两星争华之处”得名，自三国吴元宝鼎元年（266年）始设东阳郡建置以来，具有1800多年的历史和灿烂文化。",
+          "fact_type": "geography",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "金华史称“小邹鲁”，素有“历史文化之邦、名人荟萃之地、文风鼎盛之城、山清水秀之乡”的美誉。",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E9%87%91%E5%8D%8E%E5%B8%82",
+          "source_title": "维基百科：金华市",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-金华市",
+          "evidence_quote": "金华史称“小邹鲁”，素有“历史文化之邦、名人荟萃之地、文风鼎盛之城、山清水秀之乡”的美誉。",
+          "fact_type": "culture",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "金华古城位于东阳江、武义江汇合成金华江的三江交汇处北岸，分府城和子城；城墙大部在抗战中被拆除，存“古子城”地名。",
+          "fact_index": 2,
+          "source_url": "https://zh.wikipedia.org/wiki/%E9%87%91%E5%8D%8E%E5%B8%82",
+          "source_title": "维基百科：金华市",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-金华市",
+          "evidence_quote": "金华古城位于东阳江、武义江汇合为金华江的三江交汇处北岸，分为府城和子城。曾经建有城墙，后大部分在抗日战争中被拆除，并存留“古子城”地名。",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "金华是著名的金华火腿原产地。",
+          "fact_index": 3,
+          "source_url": "https://zh.wikipedia.org/wiki/%E9%87%91%E5%8D%8E%E5%B8%82",
+          "source_title": "维基百科：金华市",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-金华市",
+          "evidence_quote": "著名的金华火腿原产地。",
+          "fact_type": "cuisine",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
+      ],
+      "cultural_significance": "两星争华得名、三江汇流建城的“小邹鲁”，火腿与诗一样出名。",
+      "keywords_en": [
+        "Jinhua ancient city",
+        "Wuzhou"
+      ],
+      "imagery": [
+        "古子城",
+        "万佛塔",
+        "婺江两岸",
+        "老街巷"
+      ],
+      "best_season": "春秋两季",
+      "micro_drama_hook": "金星和婺女星争辉的地方，人间在炖一锅火腿。",
+      "scenario_tags": [
+        "城市",
+        "历史",
+        "人文",
+        "美食"
+      ]
+    },
+    {
+      "id": "jh-bayonglou",
+      "type": "scenic",
+      "name": "八咏楼",
+      "aliases": [
+        "玄畅楼",
+        "元畅楼"
+      ],
+      "level": "浙江省文物保护单位（1981）",
+      "location": "金华市婺城区八咏路",
+      "facts": [
+        "八咏楼始建于南齐隆昌元年（494年），原名玄畅楼，为东阳郡太守沈约所建。",
+        "沈约写八首诗合称《八咏诗》，唐代起改玄畅楼为八咏楼。",
+        "李清照避居金华时写下《题八咏楼》：“千古风流八咏楼，江山留与后人愁。水通南国三千里，气压江城十四州。”",
+        "现存八咏楼为清嘉庆年间重建；艾青曾亲笔题写“八咏楼”三字。"
+      ],
+      "fact_records": [
+        {
+          "text": "八咏楼始建于南齐隆昌元年（494年），原名玄畅楼，为东阳郡太守沈约所建。",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%85%AB%E5%92%8F%E6%A5%BC",
+          "source_title": "维基百科：八咏楼",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-八咏楼",
+          "evidence_quote": "八咏楼原名玄畅楼，又稱元暢樓，始建于南齐隆昌元年（494年），为当时东阳郡太守沈约建造。",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "沈约写八首诗合称《八咏诗》，唐代起改玄畅楼为八咏楼。",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%85%AB%E5%92%8F%E6%A5%BC",
+          "source_title": "维基百科：八咏楼",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-八咏楼",
+          "evidence_quote": "沈约共为玄畅楼写了八首诗，合称《八咏诗》。从唐代起改玄畅楼为八咏楼。",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "李清照避居金华时写下《题八咏楼》：“千古风流八咏楼，江山留与后人愁。水通南国三千里，气压江城十四州。”",
+          "fact_index": 2,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%85%AB%E5%92%8F%E6%A5%BC",
+          "source_title": "维基百科：八咏楼",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-八咏楼",
+          "evidence_quote": "南宋词人李清照避居金华时，曾写下《题八咏楼》诗：\"千古风流八咏楼，江山留与后人愁。水通南国三千里，气压江城十四州。\"",
+          "fact_type": "culture",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "现存八咏楼为清嘉庆年间重建；艾青曾亲笔题写“八咏楼”三字。",
+          "fact_index": 3,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%85%AB%E5%92%8F%E6%A5%BC",
+          "source_title": "维基百科：八咏楼",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-八咏楼",
+          "evidence_quote": "现存八咏楼为清嘉庆年间重建，1984年曾大修……艾青曾亲笔题写\"八咏楼\"三字。",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
+      ],
+      "cultural_significance": "沈约咏诗、李清照题壁的一座楼，压住半座金华城的文气。",
+      "keywords_en": [
+        "Bayong Tower",
+        "Shen Yue tower"
+      ],
+      "imagery": [
+        "八咏楼飞檐",
+        "婺江远景",
+        "碑刻诗廊",
+        "石砌台基"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "登楼一句诗，气压江城十四州。",
+      "scenario_tags": [
+        "人文",
+        "诗词",
+        "历史",
+        "经典必游"
+      ]
+    },
+    {
+      "id": "jh-huotui",
+      "type": "cuisine",
+      "name": "金华火腿",
+      "aliases": [
+        "两头乌火腿",
+        "Jinhua ham"
+      ],
+      "level": "中国三大火腿之一",
+      "location": "金华",
+      "facts": [
+        "金华火腿是盐腌后风干发酵的猪腿，原产浙江金华，宋朝被列为贡品，与宣威火腿、如皋火腿并称中国三大火腿。",
+        "腌制而成的猪腿色红似火，称为火腿；唐朝已有制作。",
+        "原料是金华出产的“两头乌”猪，传统制作需经腌渍、洗腿、风干、上架及发酵等工序，需8—10个月。"
+      ],
+      "fact_records": [
+        {
+          "text": "金华火腿是盐腌后风干发酵的猪腿，原产浙江金华，宋朝被列为贡品，与宣威火腿、如皋火腿并称中国三大火腿。",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E9%87%91%E5%8D%8E%E7%81%AB%E8%85%BF",
+          "source_title": "维基百科：金华火腿",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-金华火腿",
+          "evidence_quote": "金華火腿是鹽醃過後，再風乾、发酵的豬腿，原產於浙江金華，宋朝被列為貢品。和宣威火腿、如皋火腿并称中国三大火腿。",
+          "fact_type": "cuisine",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "腌制而成的猪腿色红似火，称为火腿；唐朝已有制作。",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E9%87%91%E5%8D%8E%E7%81%AB%E8%85%BF",
+          "source_title": "维基百科：金华火腿",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-金华火腿",
+          "evidence_quote": "因腌制而成的猪腿色红似火，称为火腿。在唐朝已经有制作，宋朝被列為貢品。",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "原料是金华出产的“两头乌”猪，传统制作需经腌渍、洗腿、风干、上架及发酵等工序，需8—10个月。",
+          "fact_index": 2,
+          "source_url": "https://zh.wikipedia.org/wiki/%E9%87%91%E5%8D%8E%E7%81%AB%E8%85%BF",
+          "source_title": "维基百科：金华火腿",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-金华火腿",
+          "evidence_quote": "原料是金华出产的“两头乌”，后腿经过上盐、整形、翻腿、洗晒、风干等程序，数月乃成。……經過醃漬、洗腿、風乾、上架及發酵等工序，传统方法需要8－10个月。",
+          "fact_type": "craft",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
+      ],
+      "cultural_significance": "一腿腌八个月——金华人的时间，是可以切片卖的。",
+      "keywords_en": [
+        "Jinhua ham",
+        "Two ends black pig"
+      ],
+      "imagery": [
+        "整腿悬挂",
+        "切片粉红纹理",
+        "两头乌猪",
+        "腌制木架"
+      ],
+      "best_season": "冬季制作佳",
+      "micro_drama_hook": "琵琶形的腿挂满作坊，金华的味道是用月份腌出来的。",
+      "scenario_tags": [
+        "美食",
+        "老字号",
+        "伴手礼",
+        "研学"
+      ]
+    },
+    {
+      "id": "jh-wuju",
+      "type": "intangible",
+      "name": "婺剧",
+      "aliases": [
+        "金华戏"
+      ],
+      "level": "国家级非遗（2008年第二批·传统戏剧）",
+      "location": "金华及周边",
+      "facts": [
+        "婺剧2008年列入第二批国家级非遗名录（传统戏剧，项目编号Ⅳ-110）。",
+        "婺剧俗称“金华戏”，至今约有四百多年历史，有传统剧目五百多种。",
+        "唱腔包括高腔、昆曲、乱弹、徽调、滩簧和时调等多种声腔。",
+        "“文戏武做、武戏文做”是婺剧表演的主要特色。"
+      ],
+      "fact_records": [
+        {
+          "text": "婺剧2008年列入第二批国家级非遗名录（传统戏剧，项目编号Ⅳ-110）。",
+          "fact_index": 0,
+          "source_url": "https://www.ihchina.cn/project_details/13491.html",
+          "source_title": "中国非物质文化遗产网·婺剧",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-13491",
+          "evidence_quote": "婺剧项目序号：711项目编号：Ⅳ-110公布时间：2008(第二批)类别：传统戏剧……申报地区或单位：浙江省金华市",
+          "fact_type": "designation",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "婺剧俗称“金华戏”，至今约有四百多年历史，有传统剧目五百多种。",
+          "fact_index": 1,
+          "source_url": "https://www.ihchina.cn/project_details/13491.html",
+          "source_title": "中国非物质文化遗产网·婺剧",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-13491",
+          "evidence_quote": "婺剧是我国古老的戏曲剧种，俗称“金华戏”，至今约有四百多年的历史。婺剧有传统剧目五百多种",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "唱腔包括高腔、昆曲、乱弹、徽调、滩簧和时调等多种声腔。",
+          "fact_index": 2,
+          "source_url": "https://www.ihchina.cn/project_details/13491.html",
+          "source_title": "中国非物质文化遗产网·婺剧",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-13491",
+          "evidence_quote": "其唱腔音乐体系具有综合性的特点，其中包括高腔、昆曲、乱弹、徽调、滩簧和时调等多种声腔。",
+          "fact_type": "craft",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "“文戏武做、武戏文做”是婺剧表演的主要特色。",
+          "fact_index": 3,
+          "source_url": "https://www.ihchina.cn/project_details/13491.html",
+          "source_title": "中国非物质文化遗产网·婺剧",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-13491",
+          "evidence_quote": "文戏武做、武戏文做是婺剧表演的主要特色，堪称一绝。",
+          "fact_type": "craft",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        }
+      ],
+      "cultural_significance": "六种声腔同台的四百年老戏，武戏文做是它的一绝。",
+      "keywords_en": [
+        "Wuju Opera",
+        "Jinhua opera"
+      ],
+      "imagery": [
+        "婺剧脸谱",
+        "武戏翻打",
+        "戏台锣鼓",
+        "后台勾脸"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "六种腔调一台戏——金华人的耳朵从小就吃百家饭。",
+      "scenario_tags": [
+        "非遗体验",
+        "戏曲",
+        "人文",
+        "民俗"
+      ]
+    },
+    {
+      "id": "jh-dongyangmudiao",
+      "type": "intangible",
+      "name": "东阳木雕",
+      "aliases": [
+        "白木雕"
+      ],
+      "level": "国家级非遗（2006年第一批·传统美术）",
+      "location": "金华东阳市",
+      "facts": [
+        "东阳木雕2006年列入第一批国家级非遗名录（传统美术，项目编号Ⅶ-43）。",
+        "东阳木雕系因地缘关系得名，以平面浮雕为主，不施深色漆、保留原木纹理，被称为“白木雕”。",
+        "现存宋代建隆二年所雕的善才童子和观音菩萨像造型古雅端庄，可见当时水准。",
+        "明清时期东阳木雕广泛应用于建筑和家具装饰，现存卢宅“肃雍堂”等明清古建筑。"
+      ],
+      "fact_records": [
+        {
+          "text": "东阳木雕2006年列入第一批国家级非遗名录（传统美术，项目编号Ⅶ-43）。",
+          "fact_index": 0,
+          "source_url": "https://www.ihchina.cn/project_details/14026.html",
+          "source_title": "中国非物质文化遗产网·东阳木雕",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-14026",
+          "evidence_quote": "东阳木雕项目序号：342项目编号：Ⅶ-43公布时间：2006(第一批)类别：传统美术……申报地区或单位：浙江省东阳市",
+          "fact_type": "designation",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "东阳木雕系因地缘关系得名，以平面浮雕为主，不施深色漆、保留原木纹理，被称为“白木雕”。",
+          "fact_index": 1,
+          "source_url": "https://www.ihchina.cn/project_details/14026.html",
+          "source_title": "中国非物质文化遗产网·东阳木雕",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-14026",
+          "evidence_quote": "东阳木雕系因地缘关系而得名。……传统的东阳木雕属于装饰性雕刻，以平面浮雕为主……且色泽清淡，不施深色漆，保留原木天然纹理色泽，格调高雅，被称为“白木雕”。",
+          "fact_type": "craft",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "现存宋代建隆二年所雕的善才童子和观音菩萨像造型古雅端庄，可见当时水准。",
+          "fact_index": 2,
+          "source_url": "https://www.ihchina.cn/project_details/14026.html",
+          "source_title": "中国非物质文化遗产网·东阳木雕",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-14026",
+          "evidence_quote": "现存宋代建隆二年所雕的善才童子和观音菩萨像造型古雅端庄，足以说明东阳木雕当时的水平与风格。",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "明清时期东阳木雕广泛应用于建筑和家具装饰，现存卢宅“肃雍堂”等明清古建筑。",
+          "fact_index": 3,
+          "source_url": "https://www.ihchina.cn/project_details/14026.html",
+          "source_title": "中国非物质文化遗产网·东阳木雕",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-14026",
+          "evidence_quote": "明清时期，东阳木雕广泛应用于建筑和家具装饰，形成整套的技艺和完善的风格，现存有卢宅“肃雍堂”和白坦“务本堂”、马上桥“一经堂”等明清古建筑",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        }
+      ],
+      "cultural_significance": "一刀一刀把房子和家具刻成史的“白木雕”，东阳人的木头上会开花。",
+      "keywords_en": [
+        "Dongyang wood carving",
+        "White wood carving"
+      ],
+      "imagery": [
+        "木雕梁枋",
+        "多层叠雕特写",
+        "匠人运刀",
+        "卢宅肃雍堂"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "木头上的工笔画——一层一层刻进梁里。",
+      "scenario_tags": [
+        "非遗体验",
+        "手工艺",
+        "古建",
+        "人文"
+      ]
+    },
+    {
+      "id": "jh-pujiangjianzhi",
+      "type": "intangible",
+      "name": "浦江剪纸",
+      "aliases": [
+        "浦江戏曲人物剪纸"
+      ],
+      "level": "国家级非遗（2008年第二批扩展·传统美术）",
+      "location": "金华浦江县",
+      "facts": [
+        "浦江剪纸2008年列入第二批国家级非遗扩展项目名录（传统美术，项目编号Ⅶ-16）。",
+        "浦江是浙江乃至中国最早流行剪纸的地区之一，因浦江乱弹的影响形成戏曲人物剪纸。",
+        "题材以戏曲人物最为突出，作品多取材于婺剧、越剧等地方戏曲。",
+        "1993年文化部命名浦江县为“中国民间（剪纸）艺术之乡”。"
+      ],
+      "fact_records": [
+        {
+          "text": "浦江剪纸2008年列入第二批国家级非遗扩展项目名录（传统美术，项目编号Ⅶ-16）。",
+          "fact_index": 0,
+          "source_url": "https://www.ihchina.cn/project_details/20160.html",
+          "source_title": "中国非物质文化遗产网·剪纸（浦江剪纸）",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-20160",
+          "evidence_quote": "剪纸（浦江剪纸）项目序号：315项目编号：Ⅶ-16公布时间：2008(第二批)类别：传统美术……申报地区或单位：浙江省浦江县",
+          "fact_type": "designation",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "浦江是浙江乃至中国最早流行剪纸的地区之一，因浦江乱弹的影响形成戏曲人物剪纸。",
+          "fact_index": 1,
+          "source_url": "https://www.ihchina.cn/project_details/20160.html",
+          "source_title": "中国非物质文化遗产网·剪纸（浦江剪纸）",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-20160",
+          "evidence_quote": "浦江是浙江乃至中国最早流行剪纸的地区之一，进入清代以后，地方戏曲在浦江空前发展，形成了独具特色的浦江乱弹，受其影响，出现了带有浓厚地方色彩的浦江戏曲人物剪纸",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "题材以戏曲人物最为突出，作品多取材于婺剧、越剧等地方戏曲。",
+          "fact_index": 2,
+          "source_url": "https://www.ihchina.cn/project_details/20160.html",
+          "source_title": "中国非物质文化遗产网·剪纸（浦江剪纸）",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-20160",
+          "evidence_quote": "浦江传统剪纸题材广泛，其中以戏曲人物最为突出，作品多取材于婺剧、越剧等地方戏曲和历史故事。",
+          "fact_type": "craft",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "1993年文化部命名浦江县为“中国民间（剪纸）艺术之乡”。",
+          "fact_index": 3,
+          "source_url": "https://www.ihchina.cn/project_details/20160.html",
+          "source_title": "中国非物质文化遗产网·剪纸（浦江剪纸）",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-20160",
+          "evidence_quote": "1993年，文化部命名浦江县为“中国民间（剪纸）艺术之乡”。",
+          "fact_type": "designation",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        }
+      ],
+      "cultural_significance": "一张红纸剪出台上的武生——浦江人把戏曲剪进了窗花。",
+      "keywords_en": [
+        "Pujiang papercutting",
+        "opera paper cuts"
+      ],
+      "imagery": [
+        "戏曲人物剪纸",
+        "剪纸过程",
+        "窗花贴窗",
+        "剪纸长卷"
+      ],
+      "best_season": "春节前后佳",
+      "micro_drama_hook": "剪刀走到哪，戏就唱到哪。",
+      "scenario_tags": [
+        "非遗体验",
+        "手工艺",
+        "民俗",
+        "艺术"
+      ]
+    },
+    {
+      "id": "jh-huangdaxian",
+      "type": "legend",
+      "name": "黄大仙传说",
+      "aliases": [
+        "黄初平",
+        "黄大仙"
+      ],
+      "level": "国家级非遗（2008年第二批·民间文学）",
+      "location": "金华（金华山一带）",
+      "facts": [
+        "黄初平（黄大仙）传说2008年列入第二批国家级非遗名录（民间文学，项目编号Ⅰ-39）。",
+        "传说由黄初平修炼得道、惩恶除害、为民造福的一系列传奇故事构成。",
+        "从可考材料看，传说大约出现于东西晋之交，并流传至港台、东南亚、欧洲和北美等地。"
+      ],
+      "fact_records": [
+        {
+          "text": "黄初平（黄大仙）传说2008年列入第二批国家级非遗名录（民间文学，项目编号Ⅰ-39）。",
+          "fact_index": 0,
+          "source_url": "https://www.ihchina.cn/project_details/12259.html",
+          "source_title": "中国非物质文化遗产网·黄初平（黄大仙）传说",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-12259",
+          "evidence_quote": "黄初平（黄大仙）传说项目序号：526项目编号：Ⅰ-39公布时间：2008(第二批)类别：民间文学……申报地区或单位：浙江省金华市",
+          "fact_type": "designation",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "传说由黄初平修炼得道、惩恶除害、为民造福的一系列传奇故事构成。",
+          "fact_index": 1,
+          "source_url": "https://www.ihchina.cn/project_details/12259.html",
+          "source_title": "中国非物质文化遗产网·黄初平（黄大仙）传说",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-12259",
+          "evidence_quote": "黄初平（黄大仙）传说流传于浙江省金华市一带，由有关黄初平修炼得道和惩恶除害、为民造福的一系列传奇性故事构成。",
+          "fact_type": "legend",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "从可考材料看，传说大约出现于东西晋之交，并流传至港台、东南亚、欧洲和北美等地。",
+          "fact_index": 2,
+          "source_url": "https://www.ihchina.cn/project_details/12259.html",
+          "source_title": "中国非物质文化遗产网·黄初平（黄大仙）传说",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-12259",
+          "evidence_quote": "黄初平（黄大仙）传说历史悠久，从目前可考材料看，它大约出现于东西晋之交。……并流传至港台、东南亚、欧洲和北美等地",
+          "fact_type": "legend",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        }
+      ],
+      "cultural_significance": "叱石成羊的黄大仙从金华山走了出去，成了全球华人的共同记忆。",
+      "keywords_en": [
+        "Wong Tai Sin legend",
+        "Huang Chuping"
+      ],
+      "imagery": [
+        "金华山黄大仙祖宫",
+        "叱石成羊意象",
+        "道观香火",
+        "山间云雾"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "石头变羊的传说，让金华山成了港澳朋友的心愿清单。",
+      "scenario_tags": [
+        "传说",
+        "祈福",
+        "人文",
+        "研学"
+      ]
+    },
+    {
+      "id": "jh-aiqing",
+      "type": "person",
+      "name": "艾青",
+      "aliases": [
+        "蒋正涵",
+        "海澄"
+      ],
+      "level": "中国现代诗代表诗人之一",
+      "location": "金华金东区畈田蒋村人",
+      "facts": [
+        "艾青（1910—1996），原名蒋正涵，浙江金华人，被认为是中国现代诗的代表诗人之一。",
+        "《大堰河——我的保姆》是其成名作；1934年发表时据“蒋海澄”谐音第一次用“艾青”作笔名。",
+        "1929至1932年留学法国学习绘画。"
+      ],
+      "fact_records": [
+        {
+          "text": "艾青（1910—1996），原名蒋正涵，浙江金华人，被认为是中国现代诗的代表诗人之一。",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E8%89%BE%E9%9D%92",
+          "source_title": "维基百科：艾青",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-艾青",
+          "evidence_quote": "艾青（1910年3月27日—1996年5月5日），原名蔣正涵，号海澄……男，浙江金华人，中国现代诗人。被认为是中国现代诗的代表诗人之一。",
+          "fact_type": "person",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "《大堰河——我的保姆》是其成名作；1934年发表时据“蒋海澄”谐音第一次用“艾青”作笔名。",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E8%89%BE%E9%9D%92",
+          "source_title": "维基百科：艾青",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-艾青",
+          "evidence_quote": "其中《大堰河——我的保姆》一诗为艾青的成名作。1934年發表《大堰河——我的保姆》等詩作時，根據“蔣海澄”的諧音第一次用“艾青”作筆名。",
+          "fact_type": "person",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "1929至1932年留学法国学习绘画。",
+          "fact_index": 2,
+          "source_url": "https://zh.wikipedia.org/wiki/%E8%89%BE%E9%9D%92",
+          "source_title": "维基百科：艾青",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-艾青",
+          "evidence_quote": "1929年至1932年留学法国。学习过皮耶-奧古斯特·雷諾瓦和文森特·梵谷的绘画",
+          "fact_type": "person",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
+      ],
+      "cultural_significance": "写“为什么我的眼里常含泪水”的诗人，根在金华的畈田蒋村。",
+      "keywords_en": [
+        "Ai Qing",
+        "Ai Qing poet"
+      ],
+      "imagery": [
+        "畈田蒋村故居",
+        "诗歌手稿",
+        "大堰河意象",
+        "老宅天井"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "深情的土地和深情的诗，都在这个村口。",
+      "scenario_tags": [
+        "历史名人",
+        "人文",
+        "研学",
+        "文学"
+      ]
+    },
+    {
+      "id": "jh-luobinwang",
+      "type": "person",
+      "name": "骆宾王",
+      "aliases": [
+        "骆临海"
+      ],
+      "level": "初唐四杰之一",
+      "location": "义乌（今金华义乌市）人",
+      "facts": [
+        "骆宾王（约640—684），字观光，义乌人，七岁能诗号称神童，《咏鹅》相传即此时所作。",
+        "他与王勃、杨炯、卢照邻合称初唐四杰。",
+        "684年徐敬业起兵讨伐武则天，骆宾王起草了著名的《为徐敬业讨武曌檄》；兵败后不知所终。",
+        "曾任临海县丞，后人称他骆临海。"
+      ],
+      "fact_records": [
+        {
+          "text": "骆宾王（约640—684），字观光，义乌人，七岁能诗号称神童，《咏鹅》相传即此时所作。",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E9%AA%86%E5%AE%BE%E7%8E%8B",
+          "source_title": "维基百科：骆宾王",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-骆宾王",
+          "evidence_quote": "骆宾王（640年？—684年？），字观光，义乌（今中国浙江义乌）人。骆宾王出身寒门，七岁能诗，号称神童。据说《咏鹅诗》就是此时所作。",
+          "fact_type": "person",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "他与王勃、杨炯、卢照邻合称初唐四杰。",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E9%AA%86%E5%AE%BE%E7%8E%8B",
+          "source_title": "维基百科：骆宾王",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-骆宾王",
+          "evidence_quote": "唐朝初期的著名诗人，与王勃、杨炯、卢照邻合称初唐四杰。",
+          "fact_type": "person",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "684年徐敬业起兵讨伐武则天，骆宾王起草了著名的《为徐敬业讨武曌檄》；兵败后不知所终。",
+          "fact_index": 2,
+          "source_url": "https://zh.wikipedia.org/wiki/%E9%AA%86%E5%AE%BE%E7%8E%8B",
+          "source_title": "维基百科：骆宾王",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-骆宾王",
+          "evidence_quote": "684年徐敬业起兵讨伐武则天，骆宾王起草了著名的《為徐敬業讨武曌檄》……敬业败后，宾王不知所终",
+          "fact_type": "person",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "曾任临海县丞，后人称他骆临海。",
+          "fact_index": 3,
+          "source_url": "https://zh.wikipedia.org/wiki/%E9%AA%86%E5%AE%BE%E7%8E%8B",
+          "source_title": "维基百科：骆宾王",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-骆宾王",
+          "evidence_quote": "被赦免后出任地方官临海县丞，所以后人也称他骆临海。",
+          "fact_type": "person",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
+      ],
+      "cultural_significance": "七岁写出“鹅鹅鹅”的神童，长大后写檄文骂武则天。",
+      "keywords_en": [
+        "Luo Binwang",
+        "Luo Binwang poet"
+      ],
+      "imagery": [
+        "骆家塘故里",
+        "咏鹅意象",
+        "古井石碑",
+        "初唐书卷"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "一首《咏鹅》开了蒙，一篇檄文动了天下。",
+      "scenario_tags": [
+        "历史名人",
+        "人文",
+        "研学",
+        "诗词"
+      ]
+    }
+  ]
+}

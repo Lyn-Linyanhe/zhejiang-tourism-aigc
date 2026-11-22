@@ -1,0 +1,1285 @@
+{
+  "city": "温州",
+  "entities": [
+    {
+      "id": "wz-yandangshan",
+      "type": "scenic",
+      "name": "雁荡山",
+      "aliases": [
+        "北雁荡山",
+        "Yandang Mountain"
+      ],
+      "level": "世界地质公园、国家5A级旅游景区",
+      "location": "温州乐清市境内",
+      "facts": [
+        "雁荡山位于乐清市境内，主峰百岗尖西峰海拔1108米，为世界地质公园、首批国家重点风景名胜区和国家5A级旅游景区。",
+        "灵峰、灵岩、大龙湫并称“雁荡三绝”。",
+        "明代徐霞客曾三游雁荡山，写下两篇《游雁荡山日记》。",
+        "风景区面积约450平方千米，分灵峰、三折瀑、灵岩、大龙湫等9个景区共380多处景点。"
+      ],
+      "fact_records": [
+        {
+          "text": "雁荡山位于乐清市境内，主峰百岗尖西峰海拔1108米，为世界地质公园、首批国家重点风景名胜区和国家5A级旅游景区。",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E9%9B%81%E8%8D%A1%E5%B1%B1",
+          "source_title": "维基百科：雁荡山",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-雁荡山",
+          "evidence_quote": "雁荡山，是中国浙江省温州市北部乐清市境内的一座山峰。……主峰百岗尖西峰海拔1108米。……为世界地质公园、首批中国国家重点风景名胜区和国家5A级旅游景区。",
+          "fact_type": "geography",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "灵峰、灵岩、大龙湫并称“雁荡三绝”。",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E9%9B%81%E8%8D%A1%E5%B1%B1",
+          "source_title": "维基百科：雁荡山",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-雁荡山",
+          "evidence_quote": "其中灵峰、灵岩和大龙湫被称为“雁荡三绝”。",
+          "fact_type": "landscape",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "明代徐霞客曾三游雁荡山，写下两篇《游雁荡山日记》。",
+          "fact_index": 2,
+          "source_url": "https://zh.wikipedia.org/wiki/%E9%9B%81%E8%8D%A1%E5%B1%B1",
+          "source_title": "维基百科：雁荡山",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-雁荡山",
+          "evidence_quote": "明代地理学家徐霞客曾三游雁荡山，写下两篇《游雁荡山日记》。",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "风景区面积约450平方千米，分灵峰、三折瀑、灵岩、大龙湫等9个景区共380多处景点。",
+          "fact_index": 3,
+          "source_url": "https://zh.wikipedia.org/wiki/%E9%9B%81%E8%8D%A1%E5%B1%B1",
+          "source_title": "维基百科：雁荡山",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-雁荡山",
+          "evidence_quote": "面积约450平方千米，分为灵峰、三折瀑、灵岩、大龙湫、小龙湫、雁湖、显圣门、仙人桥、羊角洞9个景区共380多处景点",
+          "fact_type": "landscape",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
+      ],
+      "cultural_significance": "亿年火山留下的流纹岩峰林，“雁荡三绝”是它最锋利的名片。",
+      "keywords_en": [
+        "Yandang Mountain",
+        "Wenzhou geopark"
+      ],
+      "imagery": [
+        "灵峰夜景",
+        "大龙湫瀑布",
+        "灵岩飞渡",
+        "百岗尖云海"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "白天看山，夜里看峰——雁荡山的夜是一场变脸。",
+      "scenario_tags": [
+        "自然",
+        "自然奇观",
+        "登山",
+        "摄影"
+      ]
+    },
+    {
+      "id": "wz-nanxijiang",
+      "type": "scenic",
+      "name": "楠溪江",
+      "aliases": [
+        "瓯水",
+        "Nanxi River"
+      ],
+      "level": "国家重点风景名胜区",
+      "location": "温州永嘉县境内",
+      "facts": [
+        "楠溪江古称瓯水，位于永嘉县境内，是瓯江支流，流域面积2420平方千米，干流长139.8千米。",
+        "1988年被国务院批准为国家重点风景名胜区。",
+        "2001年被列入中国世界遗产预备名单。",
+        "2005年成为雁荡山世界地质公园的西园区。",
+        "中游两岸古村落群是温州古民居的突出代表，尚存相当完整的宋代村貌及文化习俗。"
+      ],
+      "fact_records": [
+        {
+          "text": "楠溪江古称瓯水，位于永嘉县境内，是瓯江支流，流域面积2420平方千米，干流长139.8千米。",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E6%A5%A0%E6%BA%AA%E6%B1%9F",
+          "source_title": "维基百科：楠溪江",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-楠溪江",
+          "evidence_quote": "楠溪江古称瓯水，位于中国浙江省雁荡山与括苍山之间，温州市区以北，永嘉县境内，是瓯江（蜃水）支流。……流域面积2420平方千米……干流长139.8千米",
+          "fact_type": "geography",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "1988年被国务院批准为国家重点风景名胜区。",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E6%A5%A0%E6%BA%AA%E6%B1%9F",
+          "source_title": "维基百科：楠溪江",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-楠溪江",
+          "evidence_quote": "1988年被中国国务院批准为国家重点风景名胜区。",
+          "fact_type": "designation",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "2001年被列入中国世界遗产预备名单。",
+          "fact_index": 2,
+          "source_url": "https://zh.wikipedia.org/wiki/%E6%A5%A0%E6%BA%AA%E6%B1%9F",
+          "source_title": "维基百科：楠溪江",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-楠溪江",
+          "evidence_quote": "2001年被联合国教科文组织世界遗产中心列入中国世界遗产预备名单。",
+          "fact_type": "designation",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "2005年成为雁荡山世界地质公园的西园区。",
+          "fact_index": 3,
+          "source_url": "https://zh.wikipedia.org/wiki/%E6%A5%A0%E6%BA%AA%E6%B1%9F",
+          "source_title": "维基百科：楠溪江",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-楠溪江",
+          "evidence_quote": "2005年成为雁荡山世界地质公园的西园区。",
+          "fact_type": "designation",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "中游两岸古村落群是温州古民居的突出代表，尚存相当完整的宋代村貌及文化习俗。",
+          "fact_index": 4,
+          "source_url": "https://zh.wikipedia.org/wiki/%E6%A5%A0%E6%BA%AA%E6%B1%9F",
+          "source_title": "维基百科：楠溪江",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-楠溪江",
+          "evidence_quote": "楠溪江中游两岸的古村落群是温州古民居的突出代表，目前尚存留相当完整的宋代村貌及文化习俗",
+          "fact_type": "culture",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
+      ],
+      "cultural_significance": "水清滩美的山水诗源流，江畔还留着宋代村落的日常。",
+      "keywords_en": [
+        "Nanxi River",
+        "Wenzhou scenery"
+      ],
+      "imagery": [
+        "卵石滩浅水",
+        "竹筏漂流",
+        "古村炊烟",
+        "江畔枫林"
+      ],
+      "best_season": "春秋两季",
+      "micro_drama_hook": "坐一叶竹筏，把山水诗漂成慢镜头。",
+      "scenario_tags": [
+        "自然",
+        "水乡",
+        "古村",
+        "漂流"
+      ]
+    },
+    {
+      "id": "wz-jiangxinyu",
+      "type": "scenic",
+      "name": "江心屿",
+      "aliases": [
+        "江心孤屿",
+        "孤屿",
+        "诗之岛"
+      ],
+      "level": "国家4A级风景旅游区",
+      "location": "温州市区北面瓯江之中",
+      "facts": [
+        "江心屿位于温州市区北面瓯江之中，是中国四大孤屿之一，也是温州城市的象征和标志。",
+        "谢灵运、孟浩然等文人墨客留下近千首相关诗词，江心屿因此被称为“诗之岛”。",
+        "2002年，江心屿景区获批4A级风景旅游区。",
+        "岛上有东西双塔、江心寺、文信国公祠、浩然楼、谢公亭等诸多人文景观。",
+        "1137年僧人青了率众填塞两岛之间的中川，两屿连成一体，并建中川寺俗称江心寺。"
+      ],
+      "fact_records": [
+        {
+          "text": "江心屿位于温州市区北面瓯江之中，是中国四大孤屿之一，也是温州城市的象征和标志。",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E6%B1%9F%E5%BF%83%E5%B1%BF",
+          "source_title": "维基百科：江心屿",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-江心屿",
+          "evidence_quote": "江心屿为中国四大孤屿之一，也是温州城市的象征和标志",
+          "fact_type": "geography",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "谢灵运、孟浩然等文人墨客留下近千首相关诗词，江心屿因此被称为“诗之岛”。",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E6%B1%9F%E5%BF%83%E5%B1%BF",
+          "source_title": "维基百科：江心屿",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-江心屿",
+          "evidence_quote": "因历史上谢灵运、孟浩然等文人墨客留下近千首相关诗词被称为“诗之岛”",
+          "fact_type": "culture",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "2002年，江心屿景区获批4A级风景旅游区。",
+          "fact_index": 2,
+          "source_url": "https://zh.wikipedia.org/wiki/%E6%B1%9F%E5%BF%83%E5%B1%BF",
+          "source_title": "维基百科：江心屿",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-江心屿",
+          "evidence_quote": "2002年，江心屿景区获批AAAA级风景旅游区。",
+          "fact_type": "designation",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "岛上有东西双塔、江心寺、文信国公祠、浩然楼、谢公亭等诸多人文景观。",
+          "fact_index": 3,
+          "source_url": "https://zh.wikipedia.org/wiki/%E6%B1%9F%E5%BF%83%E5%B1%BF",
+          "source_title": "维基百科：江心屿",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-江心屿",
+          "evidence_quote": "有东西双塔、江心寺、文信国公祠、浩然楼、谢公亭等诸多人文景观",
+          "fact_type": "landscape",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "1137年僧人青了率众填塞两岛之间的中川，两屿连成一体，并建中川寺俗称江心寺。",
+          "fact_index": 4,
+          "source_url": "https://zh.wikipedia.org/wiki/%E6%B1%9F%E5%BF%83%E5%B1%BF",
+          "source_title": "维基百科：江心屿",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-江心屿",
+          "evidence_quote": "绍兴七年（1137年），僧人青了率众填塞两岛之间的中川，两屿由此连成一体，并在填塞处建中川寺，俗称江心寺。",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
+      ],
+      "cultural_significance": "瓯江中的“诗之岛”，双塔锁江，一千首诗落在70万平方米的岛上。",
+      "keywords_en": [
+        "Jiangxin Islet",
+        "Wenzhou island"
+      ],
+      "imagery": [
+        "东西双塔",
+        "江心寺",
+        "瓯江夜渡",
+        "谢公亭"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "过江上岛，风把唐朝的诗念给你听。",
+      "scenario_tags": [
+        "人文",
+        "诗词",
+        "夜景",
+        "城市"
+      ]
+    },
+    {
+      "id": "wz-city",
+      "type": "scenic",
+      "name": "温州古城",
+      "aliases": [
+        "东瓯",
+        "永嘉",
+        "斗城",
+        "白鹿城"
+      ],
+      "level": "国家历史文化名城",
+      "location": "温州市鹿城区（瓯江下游南岸）",
+      "facts": [
+        "温州简称“瓯”，旧称永嘉，是国务院确立的历史文化名城。",
+        "东晋郭璞据风水思想建城，“山如北斗城似锁”，别称斗城；相传建城时白鹿衔花，故又名白鹿城。",
+        "先秦时期瓯越人曾两度在此建立东瓯国；晋置永嘉郡、唐始称温州。",
+        "南宋以经世致用的永嘉学派闻名，现代以“温州模式”著称，是中国民营经济的发祥地。"
+      ],
+      "fact_records": [
+        {
+          "text": "温州简称“瓯”，旧称永嘉，是国务院确立的历史文化名城。",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E6%B8%A9%E5%B7%9E%E5%B8%82",
+          "source_title": "维基百科：温州市",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-温州市",
+          "evidence_quote": "温州市，简称温或瓯，旧称永嘉，是中华人民共和国浙江省下辖的地级市……温州是国务院确立的历史文化名城之一。",
+          "fact_type": "geography",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "东晋郭璞据风水思想建城，“山如北斗城似锁”，别称斗城；相传建城时白鹿衔花，故又名白鹿城。",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E6%B8%A9%E5%B7%9E%E5%B8%82",
+          "source_title": "维基百科：温州市",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-温州市",
+          "evidence_quote": "故而溫州有“山如北斗城似锁”之美称，別稱“斗城”。……相传建城时有白鹿衔花之景象，故名“白鹿城”或“鹿城”。",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "先秦时期瓯越人曾两度在此建立东瓯国；晋置永嘉郡、唐始称温州。",
+          "fact_index": 2,
+          "source_url": "https://zh.wikipedia.org/wiki/%E6%B8%A9%E5%B7%9E%E5%B8%82",
+          "source_title": "维基百科：温州市",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-温州市",
+          "evidence_quote": "先秦时期，温州是瓯越人聚居地，瓯越人历史上曾经两度在此建立东瓯国。……汉时设永宁县，晋时设永嘉郡，唐时设温州",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "南宋以经世致用的永嘉学派闻名，现代以“温州模式”著称，是中国民营经济的发祥地。",
+          "fact_index": 3,
+          "source_url": "https://zh.wikipedia.org/wiki/%E6%B8%A9%E5%B7%9E%E5%B8%82",
+          "source_title": "维基百科：温州市",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-温州市",
+          "evidence_quote": "南宋时曾以经世致用的永嘉学派闻名，现代又以“温州模式”著称。温州是中国民营经济的发祥地。",
+          "fact_type": "culture",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
+      ],
+      "cultural_significance": "一座按北斗排布的古城，山水诗从这里开篇，民营经济从这里起步。",
+      "keywords_en": [
+        "Wenzhou ancient city",
+        "Dou city"
+      ],
+      "imagery": [
+        "五马街骑楼",
+        "瓯江两岸",
+        "朔门老街",
+        "江心双塔远眺"
+      ],
+      "best_season": "春秋两季",
+      "micro_drama_hook": "北斗形状的城里，每一排骑楼都做过生意。",
+      "scenario_tags": [
+        "城市",
+        "历史",
+        "人文",
+        "市井"
+      ]
+    },
+    {
+      "id": "wz-taishun-langqiao",
+      "type": "scenic",
+      "name": "泰顺廊桥",
+      "aliases": [
+        "蜈蚣桥",
+        "Taishun Louqiao"
+      ],
+      "level": "全国重点文物保护单位（溪东桥等十五座）",
+      "location": "温州泰顺县",
+      "facts": [
+        "泰顺留存至今的古廊桥有30多座，被称作“廊桥王国”“中国廊桥之乡”。",
+        "2006年5月25日，溪东桥等十五座泰顺廊桥被列为第六批全国重点文物保护单位。",
+        "2008年，泰顺木拱桥传统营造技艺列入中国国家级非物质文化遗产名录。",
+        "2009年，“中国木拱桥传统营造技艺”含泰顺廊桥在内的技艺列入UNESCO急需保护的非物质文化遗产名录。",
+        "泰顺廊桥结构与《清明上河图》中的汴水虹桥近似，当地人几百年来一直称廊桥为“蜈蚣桥”。"
+      ],
+      "fact_records": [
+        {
+          "text": "泰顺留存至今的古廊桥有30多座，被称作“廊桥王国”“中国廊桥之乡”。",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E6%B3%B0%E9%A1%BA%E5%BB%8A%E6%A1%A5",
+          "source_title": "维基百科：泰顺廊桥",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-泰顺廊桥",
+          "evidence_quote": "留存至今的古廊桥有30多座，集中分布于三魁镇、罗阳镇、泗溪镇、筱村镇。……泰顺被称作“廊桥王国”“中国廊桥之乡”。",
+          "fact_type": "landscape",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "2006年5月25日，溪东桥等十五座泰顺廊桥被列为第六批全国重点文物保护单位。",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E6%B3%B0%E9%A1%BA%E5%BB%8A%E6%A1%A5",
+          "source_title": "维基百科：泰顺廊桥",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-泰顺廊桥",
+          "evidence_quote": "2006年5月25日，溪东桥等十五座泰顺廊桥被列为第六批全国重点文物保护单位。",
+          "fact_type": "designation",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "2008年，泰顺木拱桥传统营造技艺列入中国国家级非物质文化遗产名录。",
+          "fact_index": 2,
+          "source_url": "https://zh.wikipedia.org/wiki/%E6%B3%B0%E9%A1%BA%E5%BB%8A%E6%A1%A5",
+          "source_title": "维基百科：泰顺廊桥",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-泰顺廊桥",
+          "evidence_quote": "2008年，泰顺木拱桥传统营造技艺列入中国国家级非物质文化遗产名录。",
+          "fact_type": "designation",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "2009年，“中国木拱桥传统营造技艺”含泰顺廊桥在内的技艺列入UNESCO急需保护的非物质文化遗产名录。",
+          "fact_index": 3,
+          "source_url": "https://zh.wikipedia.org/wiki/%E6%B3%B0%E9%A1%BA%E5%BB%8A%E6%A1%A5",
+          "source_title": "维基百科：泰顺廊桥",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-泰顺廊桥",
+          "evidence_quote": "含泰顺木拱桥传统营造技艺在内的“中国木拱桥传统营造技艺”列入联合国教科文组织《急需保护的非物质文化遗产名录》",
+          "fact_type": "designation",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "泰顺廊桥结构与《清明上河图》中的汴水虹桥近似，当地人几百年来一直称廊桥为“蜈蚣桥”。",
+          "fact_index": 4,
+          "source_url": "https://zh.wikipedia.org/wiki/%E6%B3%B0%E9%A1%BA%E5%BB%8A%E6%A1%A5",
+          "source_title": "维基百科：泰顺廊桥",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-泰顺廊桥",
+          "evidence_quote": "其桥粱结构与北宋名画清明上河图中的汴水虹桥近似。泰顺人几百年来一直称廊桥为“蜈蚣桥”。",
+          "fact_type": "craft",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
+      ],
+      "cultural_significance": "不用一根钉的木拱桥在山溪上架了近千年，是活着的《清明上河图》。",
+      "keywords_en": [
+        "Taishun covered bridges",
+        "Timber arch lounge bridge"
+      ],
+      "imagery": [
+        "北涧桥溪东桥",
+        "廊桥屋檐",
+        "溪水与石蹬",
+        "桥内木构"
+      ],
+      "best_season": "春秋两季",
+      "micro_drama_hook": "桥下过水，桥上过人间——一肩挑来的工艺还在使用。",
+      "scenario_tags": [
+        "古建",
+        "人文",
+        "历史",
+        "摄影"
+      ]
+    },
+    {
+      "id": "wz-nanji",
+      "type": "scenic",
+      "name": "南麂列岛",
+      "aliases": [
+        "南麂岛",
+        "贝藻王国"
+      ],
+      "level": "国家级海洋自然保护区、UNESCO世界生物圈保护区",
+      "location": "温州平阳县鳌江口外东海海域",
+      "facts": [
+        "南麂列岛由52个面积500平方米以上的岛屿组成，主岛南麂岛面积7.64平方公里，因形似麂而得名。",
+        "1990年9月经国务院批准设立国家级海洋自然保护区，是我国首批5个国家级海洋自然保护区之一。",
+        "1998年12月纳入联合国教科文组织世界生物圈保护区网络。",
+        "周边海域已记录海洋生物1876种，贝类与藻类资源尤为突出，被称为“贝藻王国”。",
+        "列岛内的稻挑山是中国大陆领海基点之一。"
+      ],
+      "fact_records": [
+        {
+          "text": "南麂列岛由52个面积500平方米以上的岛屿组成，主岛南麂岛面积7.64平方公里，因形似麂而得名。",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%8D%97%E9%BA%82%E5%88%97%E5%B2%9B",
+          "source_title": "维基百科：南麂列岛",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-南麂列岛",
+          "evidence_quote": "南麂列岛由52个面积在500平方米以上的岛屿组成，其中最大的岛屿为南麂岛，面积7.64平方公里，因形似麂而得名。",
+          "fact_type": "geography",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "1990年9月经国务院批准设立国家级海洋自然保护区，是我国首批5个国家级海洋自然保护区之一。",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%8D%97%E9%BA%82%E5%88%97%E5%B2%9B",
+          "source_title": "维基百科：南麂列岛",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-南麂列岛",
+          "evidence_quote": "1990年9月经国务院批准设立为国家级海洋自然保护区，属我国首批5个国家级海洋自然保护区之一。",
+          "fact_type": "designation",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "1998年12月纳入联合国教科文组织世界生物圈保护区网络。",
+          "fact_index": 2,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%8D%97%E9%BA%82%E5%88%97%E5%B2%9B",
+          "source_title": "维基百科：南麂列岛",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-南麂列岛",
+          "evidence_quote": "1998年12月纳入联合国教科文组织世界生物圈保护区网络",
+          "fact_type": "designation",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "周边海域已记录海洋生物1876种，贝类与藻类资源尤为突出，被称为“贝藻王国”。",
+          "fact_index": 3,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%8D%97%E9%BA%82%E5%88%97%E5%B2%9B",
+          "source_title": "维基百科：南麂列岛",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-南麂列岛",
+          "evidence_quote": "南麂列岛周边海域已记录海洋生物1876种……被称为“贝藻王国”",
+          "fact_type": "nature",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "列岛内的稻挑山是中国大陆领海基点之一。",
+          "fact_index": 4,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%8D%97%E9%BA%82%E5%88%97%E5%B2%9B",
+          "source_title": "维基百科：南麂列岛",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-南麂列岛",
+          "evidence_quote": "南麂列岛内的稻挑山，为中国大陸领海基点之一，也是温州市唯一的领海基点。",
+          "fact_type": "geography",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
+      ],
+      "cultural_significance": "东海上的“贝藻王国”，一半是海岛，一半是国家级自然保护区。",
+      "keywords_en": [
+        "Nanji Islands",
+        "Nanji reserve"
+      ],
+      "imagery": [
+        "大沙岙沙滩",
+        "环岛礁石",
+        "渔港灯火",
+        "山顶草甸"
+      ],
+      "best_season": "夏秋两季",
+      "micro_drama_hook": "到中国领海基点看海——这里的蓝是保护区认证过的。",
+      "scenario_tags": [
+        "自然",
+        "海岛",
+        "摄影",
+        "避暑"
+      ]
+    },
+    {
+      "id": "wz-guci",
+      "type": "intangible",
+      "name": "温州鼓词",
+      "aliases": [
+        "唱词",
+        "瞽词",
+        "盲词"
+      ],
+      "level": "国家级非遗（2006年第一批·曲艺）",
+      "location": "温州及毗邻地区（申报地：瑞安市）",
+      "facts": [
+        "温州鼓词2006年列入第一批国家级非遗名录（曲艺，项目编号Ⅴ-13），申报地为瑞安市。",
+        "温州鼓词俗称“唱词”，因过去艺人多为盲人，又称“瞽词”或“盲词”，用温州方言表演。",
+        "演出以一人“单档”为主，演员自弹牛筋琴伴奏说唱。",
+        "传统节目众多，包括神话题材的《南游》《封神》与公案题材的《包公案》等。"
+      ],
+      "fact_records": [
+        {
+          "text": "温州鼓词2006年列入第一批国家级非遗名录（曲艺，项目编号Ⅴ-13），申报地为瑞安市。",
+          "fact_index": 0,
+          "source_url": "https://www.ihchina.cn/project_details/13609.html",
+          "source_title": "中国非物质文化遗产网·温州鼓词",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-13609",
+          "evidence_quote": "温州鼓词项目序号：249项目编号：Ⅴ-13公布时间：2006(第一批)类别：曲艺……申报地区或单位：浙江省瑞安市",
+          "fact_type": "designation",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "温州鼓词俗称“唱词”，因过去艺人多为盲人，又称“瞽词”或“盲词”，用温州方言表演。",
+          "fact_index": 1,
+          "source_url": "https://www.ihchina.cn/project_details/13609.html",
+          "source_title": "中国非物质文化遗产网·温州鼓词",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-13609",
+          "evidence_quote": "温州鼓词是流行于浙江温州及其毗邻地区的一个曲艺品种，俗称“唱词”。因过去的艺人多为盲人，故又称为“瞽词”或“盲词”。它用温州方言表演",
+          "fact_type": "craft",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "演出以一人“单档”为主，演员自弹牛筋琴伴奏说唱。",
+          "fact_index": 2,
+          "source_url": "https://www.ihchina.cn/project_details/13609.html",
+          "source_title": "中国非物质文化遗产网·温州鼓词",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-13609",
+          "evidence_quote": "其演出以一人“单档”为主（也有夫妻、兄妹、师徒等双档形式），演员自弹牛筋琴伴奏说唱。",
+          "fact_type": "craft",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "传统节目众多，包括神话题材的《南游》《封神》与公案题材的《包公案》等。",
+          "fact_index": 3,
+          "source_url": "https://www.ihchina.cn/project_details/13609.html",
+          "source_title": "中国非物质文化遗产网·温州鼓词",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-13609",
+          "evidence_quote": "温州鼓词艺术积累十分深厚，传统节目众多，其中包括神话题材的《南游》和《封神》，公案题材的《包公案》",
+          "fact_type": "culture",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        }
+      ],
+      "cultural_significance": "一把牛筋琴、一个人，把温州话唱成了国家级曲艺。",
+      "keywords_en": [
+        "Wenzhou Guci",
+        "Wenzhou storytelling"
+      ],
+      "imagery": [
+        "牛筋琴说唱",
+        "盲艺人形象",
+        "书场听众",
+        "方言唱段"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "听不懂词也听得懂江湖——温州话的说书现场。",
+      "scenario_tags": [
+        "非遗体验",
+        "曲艺",
+        "市井",
+        "人文"
+      ]
+    },
+    {
+      "id": "wz-ouxiu",
+      "type": "intangible",
+      "name": "瓯绣",
+      "aliases": [
+        "温州刺绣",
+        "Ou embroidery"
+      ],
+      "level": "国家级非遗（2008年第二批·传统美术）",
+      "location": "温州市",
+      "facts": [
+        "瓯绣2008年列入第二批国家级非遗名录（传统美术，项目编号Ⅶ-73）。",
+        "瓯绣是流行于温州一带的传统民间刺绣艺术，最初起源于民间妇女的绣房习作。",
+        "清代道光末年瓯绣在温州已十分流行，并形成以绣花罗裙作为定情礼物的风俗。",
+        "瓯绣融诗文、书画、刺绣之美为一体，构图简练，色彩绚丽。"
+      ],
+      "fact_records": [
+        {
+          "text": "瓯绣2008年列入第二批国家级非遗名录（传统美术，项目编号Ⅶ-73）。",
+          "fact_index": 0,
+          "source_url": "https://www.ihchina.cn/project_details/14178.html",
+          "source_title": "中国非物质文化遗产网·瓯绣",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-14178",
+          "evidence_quote": "瓯绣项目序号：849项目编号：Ⅶ-73公布时间：2008(第二批)类别：传统美术……申报地区或单位：浙江省温州市",
+          "fact_type": "designation",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "瓯绣是流行于温州一带的传统民间刺绣艺术，最初起源于民间妇女的绣房习作。",
+          "fact_index": 1,
+          "source_url": "https://www.ihchina.cn/project_details/14178.html",
+          "source_title": "中国非物质文化遗产网·瓯绣",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-14178",
+          "evidence_quote": "瓯绣是流行于浙江省温州一带的传统民间刺绣艺术，它历史悠久，最初起源于民间妇女的绣房习作。",
+          "fact_type": "craft",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "清代道光末年瓯绣在温州已十分流行，并形成以绣花罗裙作为定情礼物的风俗。",
+          "fact_index": 2,
+          "source_url": "https://www.ihchina.cn/project_details/14178.html",
+          "source_title": "中国非物质文化遗产网·瓯绣",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-14178",
+          "evidence_quote": "清代道光末年，瓯绣在温州已十分流行，民间形成了“十一十二娘梳头，十二十三娘教绣”的传统和以绣花罗裙作为青年男女定情礼物的风俗。",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "瓯绣融诗文、书画、刺绣之美为一体，构图简练，色彩绚丽。",
+          "fact_index": 3,
+          "source_url": "https://www.ihchina.cn/project_details/14178.html",
+          "source_title": "中国非物质文化遗产网·瓯绣",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-14178",
+          "evidence_quote": "瓯绣构图简练，色彩绚丽，针法严谨……融诗文、书画、刺绣之美为一体的瓯绣讲究针法、笔法和物象理法的统一",
+          "fact_type": "craft",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        }
+      ],
+      "cultural_significance": "一针一线把诗文绣进罗裙——温州姑娘的定情物是件艺术品。",
+      "keywords_en": [
+        "Ou embroidery",
+        "Wenzhou stitch art"
+      ],
+      "imagery": [
+        "绣绷特写",
+        "罗裙纹样",
+        "绣娘运针",
+        "绣房光线"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "丝线里藏着一封没寄出的情书。",
+      "scenario_tags": [
+        "非遗体验",
+        "艺术",
+        "人文",
+        "手工艺"
+      ]
+    },
+    {
+      "id": "wz-huangyangmudiao",
+      "type": "intangible",
+      "name": "乐清黄杨木雕",
+      "aliases": [
+        "黄杨木雕",
+        "Yueqing boxwood carving"
+      ],
+      "level": "国家级非遗（2006年第一批·传统美术）",
+      "location": "温州乐清市（翁洋、象阳、柳市一带）",
+      "facts": [
+        "乐清黄杨木雕2006年列入第一批国家级非遗名录（传统美术，项目编号Ⅶ-42）。",
+        "乐清黄杨木雕是以黄杨木为材料的一种观赏性的圆雕艺术。",
+        "1909年温州人朱子常的黄杨木雕《济癫和尚》参加南洋劝业会获优秀奖，1915年《捉迷藏》获国际巴拿马赛会二等奖。",
+        "黄杨木质地坚韧、生长周期慢，有“千年黄杨难成柏”之说。"
+      ],
+      "fact_records": [
+        {
+          "text": "乐清黄杨木雕2006年列入第一批国家级非遗名录（传统美术，项目编号Ⅶ-42）。",
+          "fact_index": 0,
+          "source_url": "https://www.ihchina.cn/project_details/14024.html",
+          "source_title": "中国非物质文化遗产网·乐清黄杨木雕",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-14024",
+          "evidence_quote": "乐清黄杨木雕项目序号：341项目编号：Ⅶ-42公布时间：2006(第一批)类别：传统美术……申报地区或单位：浙江省乐清市",
+          "fact_type": "designation",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "乐清黄杨木雕是以黄杨木为材料的一种观赏性的圆雕艺术。",
+          "fact_index": 1,
+          "source_url": "https://www.ihchina.cn/project_details/14024.html",
+          "source_title": "中国非物质文化遗产网·乐清黄杨木雕",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-14024",
+          "evidence_quote": "乐清黄杨木雕是以黄杨木为材料的一种观赏性的圆雕艺术",
+          "fact_type": "craft",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "1909年温州人朱子常的黄杨木雕《济癫和尚》参加南洋劝业会获优秀奖，1915年《捉迷藏》获国际巴拿马赛会二等奖。",
+          "fact_index": 2,
+          "source_url": "https://www.ihchina.cn/project_details/14024.html",
+          "source_title": "中国非物质文化遗产网·乐清黄杨木雕",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-14024",
+          "evidence_quote": "1909年，温州人朱子常的黄杨木雕作品《济癫和尚》参加南洋劝业会获优秀奖，1915年其作品《捉迷藏》又在国际巴拿马赛会上获二等奖。",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "黄杨木质地坚韧、生长周期慢，有“千年黄杨难成柏”之说。",
+          "fact_index": 3,
+          "source_url": "https://www.ihchina.cn/project_details/14024.html",
+          "source_title": "中国非物质文化遗产网·乐清黄杨木雕",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-14024",
+          "evidence_quote": "黄杨木是珍贵树材，质地坚韧，纹理细腻，生长周期慢，有“千年黄杨难成柏”之说。",
+          "fact_type": "nature",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        }
+      ],
+      "cultural_significance": "千年才长成的木头，被刻成了会笑的罗汉。",
+      "keywords_en": [
+        "Boxwood carving",
+        "Yueqing craft"
+      ],
+      "imagery": [
+        "木雕罗汉",
+        "刻刀细节",
+        "木纹理特写",
+        "作坊匠人"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "一截木头等了一千年，就为这一刀。",
+      "scenario_tags": [
+        "非遗体验",
+        "手工艺",
+        "艺术",
+        "人文"
+      ]
+    },
+    {
+      "id": "wz-dengzhangao",
+      "type": "cuisine",
+      "name": "灯盏糕",
+      "aliases": [
+        "温州灯盏糕"
+      ],
+      "level": "温州特色名点",
+      "location": "温州市区街巷",
+      "facts": [
+        "灯盏糕是浙江温州的特色名点，是一种油炸食品，因外形酷似古代扁圆形的菜油灯盏而得名。",
+        "外皮原料为大米与黄豆浸泡后磨成的米浆，馅料以葱白或萝卜丝为主料，再加猪肉或鸡蛋。"
+      ],
+      "fact_records": [
+        {
+          "text": "灯盏糕是浙江温州的特色名点，是一种油炸食品，因外形酷似古代扁圆形的菜油灯盏而得名。",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E7%81%AF%E7%9B%8F%E7%B3%95",
+          "source_title": "维基百科：灯盏糕",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-灯盏糕",
+          "evidence_quote": "也是浙江温州的特色名点，是一种油炸食品。因其外形酷似古代扁圆形的菜油灯盏，而得名“灯盏糕”。",
+          "fact_type": "cuisine",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "外皮原料为大米与黄豆浸泡后磨成的米浆，馅料以葱白或萝卜丝为主料，再加猪肉或鸡蛋。",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E7%81%AF%E7%9B%8F%E7%B3%95",
+          "source_title": "维基百科：灯盏糕",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-灯盏糕",
+          "evidence_quote": "外皮原料为大米与黄豆浸泡后磨成的米浆，馅料以小段的葱白或刨成细丝的萝卜等作主料，再加上猪肉或鸡蛋",
+          "fact_type": "cuisine",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
+      ],
+      "cultural_significance": "一只形似灯盏的油炸圆饼，是温州街头滚烫的黄昏。",
+      "keywords_en": [
+        "Dengzhan gao",
+        "Wenzhou fried snack"
+      ],
+      "imagery": [
+        "油锅金黄圆饼",
+        "咬开萝卜丝馅",
+        "街边摊位",
+        "纸质包装"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "刚出锅的那一声脆响，就是温州的夜市开场。",
+      "scenario_tags": [
+        "美食",
+        "小吃",
+        "市井",
+        "早餐"
+      ]
+    },
+    {
+      "id": "wz-ougan",
+      "type": "cuisine",
+      "name": "瓯柑",
+      "aliases": [
+        "海红柑",
+        "Ou tangerine"
+      ],
+      "level": "国家地理标志产品（瓯海区）",
+      "location": "温州瓯海区为主产区",
+      "facts": [
+        "瓯柑古称海红柑，是温州特有的宽皮柑橘品种，口感甜中带苦。",
+        "瓯柑是温州市瓯海区的地理标志产品，2006年国家质检总局公告对其实施地理标志产品保护。",
+        "清代瓯柑是皇家贡品，用于正月十五“传柑”之用。"
+      ],
+      "fact_records": [
+        {
+          "text": "瓯柑古称海红柑，是温州特有的宽皮柑橘品种，口感甜中带苦。",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E7%93%AF%E6%9F%91",
+          "source_title": "维基百科：瓯柑",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-瓯柑",
+          "evidence_quote": "这种品种古称海红柑，在温州称柑，属宽皮柑橘类的一种栽培品种。……口感特点是甜中带苦。",
+          "fact_type": "cuisine",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "瓯柑是温州市瓯海区的地理标志产品，2006年国家质检总局公告对其实施地理标志产品保护。",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E7%93%AF%E6%9F%91",
+          "source_title": "维基百科：瓯柑",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-瓯柑",
+          "evidence_quote": "瓯柑作为温州市瓯海区的地理标志产品，其主要产区在温州市瓯海区……2006年，国家质量监督检验检疫总局公告对瓯柑进行地理标志产品保护",
+          "fact_type": "designation",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "清代瓯柑是皇家贡品，用于正月十五“传柑”之用。",
+          "fact_index": 2,
+          "source_url": "https://zh.wikipedia.org/wiki/%E7%93%AF%E6%9F%91",
+          "source_title": "维基百科：瓯柑",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-瓯柑",
+          "evidence_quote": "瓯柑明确是清代温州的一种特殊柑橘品种，并且还是皇家贡品。",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
+      ],
+      "cultural_significance": "先苦后甘的一颗柑，温州人把它吃成了贡品。",
+      "keywords_en": [
+        "Ou tangerine",
+        "Wenzhou citrus"
+      ],
+      "imagery": [
+        "柑果特写",
+        "剥皮瞬间",
+        "果园枝头",
+        "贡柑礼盒"
+      ],
+      "best_season": "冬季",
+      "micro_drama_hook": "苦一口，回甘一辈子——像极了温州人的脾气。",
+      "scenario_tags": [
+        "美食",
+        "伴手礼",
+        "自然",
+        "农业遗产"
+      ]
+    },
+    {
+      "id": "wz-xie-lingyun",
+      "type": "person",
+      "name": "谢灵运",
+      "aliases": [
+        "谢客",
+        "谢康乐",
+        "大谢"
+      ],
+      "level": "南北朝诗人、山水诗派开创者",
+      "location": "曾任永嘉太守（今温州）",
+      "facts": [
+        "谢灵运（385—433），南北朝诗人，主要成就在于山水诗；自他始，山水诗成为中国文学的一大流派。",
+        "422年出京任永嘉太守，在职一年即称病返乡隐居。",
+        "十八岁袭封康乐公，世称谢康乐。"
+      ],
+      "fact_records": [
+        {
+          "text": "谢灵运（385—433），南北朝诗人，主要成就在于山水诗；自他始，山水诗成为中国文学的一大流派。",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E8%B0%A2%E7%81%B5%E8%BF%90",
+          "source_title": "维基百科：谢灵运",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-谢灵运",
+          "evidence_quote": "谢灵运（385年—433年）……南北朝诗人、官員，主要成就在于山水诗。由謝灵运始，山水诗乃成中国文学的一大流派。",
+          "fact_type": "person",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "422年出京任永嘉太守，在职一年即称病返乡隐居。",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E8%B0%A2%E7%81%B5%E8%BF%90",
+          "source_title": "维基百科：谢灵运",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-谢灵运",
+          "evidence_quote": "永初三年（422年），刘裕死，少帝继位，谢灵运出京任永嘉太守，在职一年，即称病返乡隐居。",
+          "fact_type": "person",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "十八岁袭封康乐公，世称谢康乐。",
+          "fact_index": 2,
+          "source_url": "https://zh.wikipedia.org/wiki/%E8%B0%A2%E7%81%B5%E8%BF%90",
+          "source_title": "维基百科：谢灵运",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-谢灵运",
+          "evidence_quote": "十八岁襲封康樂公，世稱謝康公、謝康樂。",
+          "fact_type": "person",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
+      ],
+      "cultural_significance": "中国第一位把山水写成诗的人，把永嘉当成了他的诗稿。",
+      "keywords_en": [
+        "Xie Lingyun",
+        "Landscape poetry founder"
+      ],
+      "imagery": [
+        "江畔行吟",
+        "山水诗意境",
+        "古亭匾额",
+        "楠溪江畔"
+      ],
+      "best_season": "春夏两季",
+      "micro_drama_hook": "中国山水诗的第一行，写在温州的江上。",
+      "scenario_tags": [
+        "历史名人",
+        "诗词",
+        "人文",
+        "研学"
+      ]
+    },
+    {
+      "id": "wz-liuji",
+      "type": "person",
+      "name": "刘伯温",
+      "aliases": [
+        "刘基",
+        "诚意伯",
+        "文成"
+      ],
+      "level": "明初政治家、军事家、文学家",
+      "location": "处州青田南田（今温州文成县）人",
+      "facts": [
+        "刘伯温（1311—1375），名基，字伯温，青田县（今文成县）人，元末明初军事家、政治家、文学家。",
+        "他以辅佐朱元璋完成帝业、开创明朝而驰名天下，被后人比作诸葛武侯，朱元璋称其为“吾之子房”。",
+        "他生于处州路青田县南田武阳村（今属温州文成）。",
+        "正德时追赠太师，谥文成；与宋濂、高启合称“明初诗文三大家”。"
+      ],
+      "fact_records": [
+        {
+          "text": "刘伯温（1311—1375），名基，字伯温，青田县（今文成县）人，元末明初军事家、政治家、文学家。",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%88%98%E4%BC%AF%E6%B8%A9",
+          "source_title": "维基百科：刘伯温",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-刘伯温",
+          "evidence_quote": "刘伯温（1311年7月1日—1375年5月16日），名基，字伯温，以字行，浙江省青田縣（今文成縣）人……元末明初軍事家、政治家，文学家及詩人，通经史、晓天文、精兵法。",
+          "fact_type": "person",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "他以辅佐朱元璋完成帝业、开创明朝而驰名天下，被后人比作诸葛武侯，朱元璋称其为“吾之子房”。",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%88%98%E4%BC%AF%E6%B8%A9",
+          "source_title": "维基百科：刘伯温",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-刘伯温",
+          "evidence_quote": "他以辅佐明太祖朱元璋完成帝业、开创明朝並保持國家安定，因而驰名天下，被後人比作为諸葛武侯。朱元璋多次稱劉基為：「吾之子房也。」",
+          "fact_type": "person",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "他生于处州路青田县南田武阳村（今属温州文成）。",
+          "fact_index": 2,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%88%98%E4%BC%AF%E6%B8%A9",
+          "source_title": "维基百科：刘伯温",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-刘伯温",
+          "evidence_quote": "劉伯溫生於元武宗至大四年六月十五日（1311年7月1日）浙江行省处州路青田县南田武阳村",
+          "fact_type": "person",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution",
+          "notes": "青田县今属丽水辖市域外的说明：南田武阳村今属温州市文成县，故本实体归温州；文成县名即源于其谥号“文成”"
+        },
+        {
+          "text": "正德时追赠太师，谥文成；与宋濂、高启合称“明初诗文三大家”。",
+          "fact_index": 3,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%88%98%E4%BC%AF%E6%B8%A9",
+          "source_title": "维基百科：刘伯温",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-刘伯温",
+          "evidence_quote": "正德時追贈太師，諡文成。和宋濂、方孝孺合稱「明初散文三大家」，亦和宋濂、高啓合稱「明初詩文三大家」。",
+          "fact_type": "person",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
+      ],
+      "cultural_significance": "民间说他能掐会算，正史说他帮朱元璋定了天下——故里在温州文成。",
+      "keywords_en": [
+        "Liu Bowen",
+        "Liu Ji Ming dynasty"
+      ],
+      "imagery": [
+        "武阳村故里",
+        "诚意伯匾",
+        "古宅天井",
+        "山间云雾"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "一个算得出王朝的人，算不出自己的归途。",
+      "scenario_tags": [
+        "历史名人",
+        "传说",
+        "人文",
+        "研学"
+      ]
+    }
+  ]
+}

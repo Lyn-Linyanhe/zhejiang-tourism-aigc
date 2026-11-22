@@ -1,0 +1,1034 @@
+{
+  "city": "舟山",
+  "entities": [
+    {
+      "id": "zs-putuoshan",
+      "type": "scenic",
+      "name": "普陀山",
+      "aliases": [
+        "梅岑山",
+        "海天佛国",
+        "补怛洛迦山"
+      ],
+      "level": "中国四大佛教名山之一、观音道场",
+      "location": "舟山市普陀区（舟山群岛东部）",
+      "facts": [
+        "普陀山是中国四大佛教名山之一、观音菩萨道场，被誉为“海天佛国”“南海圣境”。",
+        "普陀山原名梅岑山，是四大佛教名山中唯一坐落于海上的佛教圣地。",
+        "全岛面积12.5平方公里，最高处佛顶山海拔约300米。",
+        "岛上有南海观音立像、不肯去观音院及普济禅寺、法雨禅寺、慧济禅寺等数十所禅寺。",
+        "公元858年日僧慧锷请观音像回国三度受阻，留像于山，“不肯去观音”由此流传。",
+        "普陀山上有全世界唯一一棵野生普陀鹅耳枥。"
+      ],
+      "fact_records": [
+        {
+          "text": "普陀山是中国四大佛教名山之一、观音菩萨道场，被誉为“海天佛国”“南海圣境”。",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E6%99%AE%E9%99%80%E5%B1%B1",
+          "source_title": "维基百科：普陀山",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-普陀山",
+          "evidence_quote": "普陀山，是中华人民共和国浙江省舟山群岛中的一个岛屿，也是中国四大佛教名山之一，是观音菩萨的道场，被誉为“海天佛国”、“南海圣境”。",
+          "fact_type": "geography",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "普陀山原名梅岑山，是四大佛教名山中唯一坐落于海上的佛教圣地。",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E6%99%AE%E9%99%80%E5%B1%B1",
+          "source_title": "维基百科：普陀山",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-普陀山",
+          "evidence_quote": "普陀山原名梅岑山……是中国四大佛教名山中唯一坐落于海上的佛教圣地。",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "全岛面积12.5平方公里，最高处佛顶山海拔约300米。",
+          "fact_index": 2,
+          "source_url": "https://zh.wikipedia.org/wiki/%E6%99%AE%E9%99%80%E5%B1%B1",
+          "source_title": "维基百科：普陀山",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-普陀山",
+          "evidence_quote": "全岛面积仅12.5平方公里（其中陆地面积11.85平方公里，余为潮间带），呈狭长形。最高处为佛顶山，海拔约300米。",
+          "fact_type": "geography",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "岛上有南海观音立像、不肯去观音院及普济禅寺、法雨禅寺、慧济禅寺等数十所禅寺。",
+          "fact_index": 3,
+          "source_url": "https://zh.wikipedia.org/wiki/%E6%99%AE%E9%99%80%E5%B1%B1",
+          "source_title": "维基百科：普陀山",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-普陀山",
+          "evidence_quote": "普陀山建有普陀山南海观音立像、不肯去观音院，以及普济禅寺、法雨禅寺、慧济禅寺等数十所禅寺和禅院。",
+          "fact_type": "landscape",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "公元858年日僧慧锷请观音像回国三度受阻，留像于山，“不肯去观音”由此流传。",
+          "fact_index": 4,
+          "source_url": "https://zh.wikipedia.org/wiki/%E6%99%AE%E9%99%80%E5%B1%B1",
+          "source_title": "维基百科：普陀山",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-普陀山",
+          "evidence_quote": "傳說，公元858年，唐朝大中十二年，日本臨濟宗高僧慧锷参访五臺山，并请得一尊观音菩萨像准备回国……此後，慧锷感歎“觀音菩薩不肯離去此地”",
+          "fact_type": "legend",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "普陀山上有全世界唯一一棵野生普陀鹅耳枥。",
+          "fact_index": 5,
+          "source_url": "https://zh.wikipedia.org/wiki/%E6%99%AE%E9%99%80%E5%B1%B1",
+          "source_title": "维基百科：普陀山",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-普陀山",
+          "evidence_quote": "普陀山上有全世界唯一一棵野生普陀鹅耳枥。",
+          "fact_type": "nature",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
+      ],
+      "cultural_significance": "海上的第一座佛教名山——不肯去的观音，留成了千年的道场。",
+      "keywords_en": [
+        "Mount Putuo",
+        "Putuoshan"
+      ],
+      "imagery": [
+        "南海观音立像",
+        "普济禅寺",
+        "潮音洞海浪",
+        "佛顶山云雾"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "观音不肯去，人就来了——海上佛国烧第一炷香。",
+      "scenario_tags": [
+        "祈福",
+        "经典必游",
+        "人文",
+        "海岛"
+      ]
+    },
+    {
+      "id": "zs-dongjidao",
+      "type": "scenic",
+      "name": "东极岛",
+      "aliases": [
+        "中街山列岛",
+        "庙子湖岛",
+        "东福山"
+      ],
+      "level": "中国有人居住的最东端边境岛屿",
+      "location": "舟山市普陀区东极镇",
+      "facts": [
+        "中街山列岛即东极岛，是中国有人居住的最东端边境岛屿，大部分隶属普陀区东极镇，镇政府驻地庙子湖岛。",
+        "列岛有大小岛屿45个，黄兴、庙子湖、青浜、东福山4岛有常住居民；东福山海拔324.3米为最高点。",
+        "2006年批准建立国家级中街山列岛海洋特别保护区。",
+        "渔民性格豪爽好客，海上遇险必救、遇浮尸必捞，称“拾元宝”。"
+      ],
+      "fact_records": [
+        {
+          "text": "中街山列岛即东极岛，是中国有人居住的最东端边境岛屿，大部分隶属普陀区东极镇，镇政府驻地庙子湖岛。",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E4%B8%9C%E6%9E%81%E5%B2%9B",
+          "source_title": "维基百科：东极岛",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-东极岛",
+          "evidence_quote": "中街山列岛为地理名，这是中国有人居住的最东端的边境岛屿，故又名东极岛。大部分隶属于浙江省舟山市普陀区东极镇，镇政府驻地庙子湖岛。",
+          "fact_type": "geography",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "列岛有大小岛屿45个，黄兴、庙子湖、青浜、东福山4岛有常住居民；东福山海拔324.3米为最高点。",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E4%B8%9C%E6%9E%81%E5%B2%9B",
+          "source_title": "维基百科：东极岛",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-东极岛",
+          "evidence_quote": "共有大西寨、东寨、菜花、治治、小龟山、小板、黄兴、庙子湖、青浜、西福山、东福山、四姐妹、两兄弟等大小岛屿45个，其中黄兴岛、庙子湖岛、青浜岛、东福山等4个岛屿有常住居民。……东福山海拔324.3米为全列岛最高点。",
+          "fact_type": "geography",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "2006年批准建立国家级中街山列岛海洋特别保护区。",
+          "fact_index": 2,
+          "source_url": "https://zh.wikipedia.org/wiki/%E4%B8%9C%E6%9E%81%E5%B2%9B",
+          "source_title": "维基百科：东极岛",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-东极岛",
+          "evidence_quote": "2006年国家海洋局(国海环字〔2006〕247号)批准建立国家级中街山列岛海洋特别保护区",
+          "fact_type": "designation",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "渔民性格豪爽好客，海上遇险必救、遇浮尸必捞，称“拾元宝”。",
+          "fact_index": 3,
+          "source_url": "https://zh.wikipedia.org/wiki/%E4%B8%9C%E6%9E%81%E5%B2%9B",
+          "source_title": "维基百科：东极岛",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-东极岛",
+          "evidence_quote": "渔民常与风浪搏斗，性格豪爽强悍、好客大方……海上遇险必救，遇浮尸必捞，叫“拾元宝”。",
+          "fact_type": "culture",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
+      ],
+      "cultural_significance": "祖国最东端有人住的岛——中国的第一缕阳光先落到这里。",
+      "keywords_en": [
+        "Dongji Island",
+        "Zhoushan eastmost island"
+      ],
+      "imagery": [
+        "庙子湖码头",
+        "东福山日出",
+        "石头房子",
+        "环岛公路"
+      ],
+      "best_season": "夏秋两季",
+      "micro_drama_hook": "在中国最早看到太阳的地方住一晚，值回船票。",
+      "scenario_tags": [
+        "海岛",
+        "自然",
+        "摄影",
+        "徒步"
+      ]
+    },
+    {
+      "id": "zs-zhujiajian",
+      "type": "scenic",
+      "name": "朱家尖",
+      "aliases": [
+        "朱家尖岛",
+        "十里金沙"
+      ],
+      "level": "普陀山风景名胜区组成部分",
+      "location": "舟山市普陀区",
+      "facts": [
+        "朱家尖岛陆地面积61.82平方公里，属普陀区管辖，是普陀山风景名胜区的组成部分，距普陀山岛2.5公里。",
+        "舟山普陀山机场位于该岛；朱家尖跨海大桥1999年5月建成通车。",
+        "南沙、东沙、千沙、里沙、青沙五大沙滩湾湾相连绵延5公里，堪称“十里金沙”。",
+        "白山景区干丈崖观音彩绘壁画高69米，被誉为“海上莫高窟”。"
+      ],
+      "fact_records": [
+        {
+          "text": "朱家尖岛陆地面积61.82平方公里，属普陀区管辖，是普陀山风景名胜区的组成部分，距普陀山岛2.5公里。",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E6%9C%B1%E5%AE%B6%E5%B0%96%E5%B2%9B",
+          "source_title": "维基百科：朱家尖岛",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-朱家尖岛",
+          "evidence_quote": "朱家尖岛是浙江省舟山群岛的一个岛屿，陆地面积61.82平方公里……属于舟山市普陀区管辖，上设朱家尖街道。是普陀山风景名胜区的组成部分，距普陀山岛2.5公里。",
+          "fact_type": "geography",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "舟山普陀山机场位于该岛；朱家尖跨海大桥1999年5月建成通车。",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E6%9C%B1%E5%AE%B6%E5%B0%96%E5%B2%9B",
+          "source_title": "维基百科：朱家尖岛",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-朱家尖岛",
+          "evidence_quote": "舟山普陀山机场位于该岛，舟山岛与该岛有朱家尖跨海大桥相连，大桥于1999年5月建成通车。",
+          "fact_type": "transport",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "南沙、东沙、千沙、里沙、青沙五大沙滩湾湾相连绵延5公里，堪称“十里金沙”。",
+          "fact_index": 2,
+          "source_url": "https://zh.wikipedia.org/wiki/%E6%9C%B1%E5%AE%B6%E5%B0%96%E5%B2%9B",
+          "source_title": "维基百科：朱家尖岛",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-朱家尖岛",
+          "evidence_quote": "五连沙景区：南沙、东沙、千沙、里沙、青沙，五大沙滩湾湾相连，绵延5公里，堪称“十里金沙”。",
+          "fact_type": "landscape",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "白山景区干丈崖观音彩绘壁画高69米，被誉为“海上莫高窟”。",
+          "fact_index": 3,
+          "source_url": "https://zh.wikipedia.org/wiki/%E6%9C%B1%E5%AE%B6%E5%B0%96%E5%B2%9B",
+          "source_title": "维基百科：朱家尖岛",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-朱家尖岛",
+          "evidence_quote": "一座高114.9米的干丈崖上彩绘的一尊观音大立像壁画高69米，面积达2000平米，被誉为“海上莫高窟”。",
+          "fact_type": "landscape",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
+      ],
+      "cultural_significance": "十里金沙配海上莫高窟——去普陀山的路上，别错过这半程。",
+      "keywords_en": [
+        "Zhujiajian",
+        "Zhoushan beaches"
+      ],
+      "imagery": [
+        "南沙沙滩",
+        "干丈崖壁画",
+        "跨海大桥",
+        "沙雕节场景"
+      ],
+      "best_season": "夏秋两季",
+      "micro_drama_hook": "沙雕、大海和观音壁画——朱家尖把休闲和震撼拼在一起。",
+      "scenario_tags": [
+        "海岛",
+        "水上活动",
+        "亲子",
+        "摄影"
+      ]
+    },
+    {
+      "id": "zs-city",
+      "type": "scenic",
+      "name": "定海古城",
+      "aliases": [
+        "城关镇",
+        "定海城"
+      ],
+      "level": "浙江省级历史文化名城",
+      "location": "舟山本岛中南部海滨",
+      "facts": [
+        "定海城位于舟山本岛中南部海滨，是浙江省级历史文化名城，长期是整个舟山群岛的政治、经济、文化中心。",
+        "定海有多处鸦片战争时期的历史遗迹，三总兵曾在此抵抗英军入侵。",
+        "清末英军两次攻占定海城；1847年钦差大臣裕谦奏请全面重修，民间遗存城砖多以“丁未年置”为主。",
+        "舟山市名来源于群岛第一大岛舟山岛——中国第三大岛（实际控制）；中国最大的海洋渔场舟山渔场在其海域。"
+      ],
+      "fact_records": [
+        {
+          "text": "定海城位于舟山本岛中南部海滨，是浙江省级历史文化名城，长期是整个舟山群岛的政治、经济、文化中心。",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%AE%9A%E6%B5%B7%E5%8F%A4%E5%9F%8E",
+          "source_title": "维基百科：定海古城",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-定海古城",
+          "evidence_quote": "定海城，位于舟山本岛中南部海滨，是定海区政府所在地，浙江省级历史文化名城。……是整个舟山群岛的政治、经济、文化中心。",
+          "fact_type": "geography",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "定海有多处鸦片战争时期的历史遗迹，三总兵曾在此抵抗英军入侵。",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%AE%9A%E6%B5%B7%E5%8F%A4%E5%9F%8E",
+          "source_title": "维基百科：定海古城",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-定海古城",
+          "evidence_quote": "有多处鸦片战争时期的历史遗迹，三总兵在此处抵抗英军入侵",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "清末英军两次攻占定海城；1847年钦差大臣裕谦奏请全面重修，民间遗存城砖多以“丁未年置”为主。",
+          "fact_index": 2,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%AE%9A%E6%B5%B7%E5%8F%A4%E5%9F%8E",
+          "source_title": "维基百科：定海古城",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-定海古城",
+          "evidence_quote": "第一次是在清末鸦片战争期间，英军两次攻占定海城，城墙损坏严重。到1847年（丁未年），由钦差大臣裕谦奏请朝廷批准对定海古城进行全面重修……目前民间遗存的城砖，即多以“丁未年置”的城砖为主。",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "舟山市名来源于群岛第一大岛舟山岛——中国第三大岛（实际控制）；中国最大的海洋渔场舟山渔场在其海域。",
+          "fact_index": 3,
+          "source_url": "https://zh.wikipedia.org/wiki/%E8%88%9F%E5%B1%B1%E5%B8%82",
+          "source_title": "维基百科：舟山市",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-舟山市",
+          "evidence_quote": "市名与群岛名均來源於歷代行政中心所在地、群岛第一大島——舟山島，該島也是中國第三大岛（實際控制，宣稱為第四大島）。……中国最大的海洋渔场舟山渔场处于其中。",
+          "fact_type": "geography",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
+      ],
+      "cultural_significance": "鸦片战争的烽火和千帆渔港，都写在这座海岛名城的城砖上。",
+      "keywords_en": [
+        "Dinghai ancient city",
+        "Zhoushan"
+      ],
+      "imagery": [
+        "定海古城墙",
+        "鸦片战争遗址",
+        "老街骑楼",
+        "渔港桅杆"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "城墙砖上有年份——1847年那批还在民间传着。",
+      "scenario_tags": [
+        "城市",
+        "历史",
+        "人文",
+        "近代史"
+      ]
+    },
+    {
+      "id": "zs-shenjiamen",
+      "type": "scenic",
+      "name": "沈家门渔港",
+      "aliases": [
+        "沈家门街道"
+      ],
+      "level": "中国国家级中心渔港",
+      "location": "舟山市普陀区舟山本岛东南部",
+      "facts": [
+        "沈家门位于舟山本岛东南部，民国21年（1932年）始建镇，2001年撤镇建街道。",
+        "沈家门是全国渔产品的重要批发市场，沈家门渔港是中国国家级中心渔港。"
+      ],
+      "fact_records": [
+        {
+          "text": "沈家门位于舟山本岛东南部，民国21年（1932年）始建镇，2001年撤镇建街道。",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E6%B2%88%E5%AE%B6%E9%97%A8",
+          "source_title": "维基百科：沈家门",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-沈家门",
+          "evidence_quote": "沈家门街道是中华人民共和国浙江省舟山市普陀区下辖的一个街道办事处。位于舟山本岛东南部……沈家门于民国21年（1932年）始建镇，2001年6月27日撤镇建立沈家门街道。",
+          "fact_type": "geography",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "沈家门是全国渔产品的重要批发市场，沈家门渔港是中国国家级中心渔港。",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E6%B2%88%E5%AE%B6%E9%97%A8",
+          "source_title": "维基百科：沈家门",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-沈家门",
+          "evidence_quote": "沈家门在中国海洋渔业中占有相当重要的地位，这里是全国渔产品的重要批发市场。沈家门渔港是中国国家级中心渔港。",
+          "fact_type": "industry",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
+      ],
+      "cultural_significance": "千帆入港的国家级中心渔港，海风里全是鱼获的鲜气。",
+      "keywords_en": [
+        "Shenjiamen fishing port",
+        "Zhoushan harbor"
+      ],
+      "imagery": [
+        "渔港千帆",
+        "夜排档灯火",
+        "鱼市卸货",
+        "海鲜大排档"
+      ],
+      "best_season": "夏秋两季",
+      "micro_drama_hook": "傍晚的渔港亮灯那一刻，整条街都闻得到海。",
+      "scenario_tags": [
+        "美食",
+        "市井",
+        "摄影",
+        "人文"
+      ]
+    },
+    {
+      "id": "zs-guanyin-chuanshuo",
+      "type": "legend",
+      "name": "观音传说",
+      "aliases": [
+        "普陀山观音传说"
+      ],
+      "level": "国家级非遗（2008年第二批·民间文学）",
+      "location": "舟山（普陀洛迦山一带）",
+      "facts": [
+        "观音传说2008年列入第二批国家级非遗名录（民间文学，项目编号Ⅰ-40）。",
+        "舟山群岛东隅的普陀洛迦山是观音道场所在地；舟山各地流传的观音传说已有上千年历史，多从普陀山生发出来。",
+        "南宋宝庆年间《昌国县志》已有“梅岑山（今普陀山）观音宝陀寺”的记载。",
+        "民国十二年（1923）编《普陀洛迦新志》专设“灵异门”，记录各类观音灵异传说68则。"
+      ],
+      "fact_records": [
+        {
+          "text": "观音传说2008年列入第二批国家级非遗名录（民间文学，项目编号Ⅰ-40）。",
+          "fact_index": 0,
+          "source_url": "https://www.ihchina.cn/project_details/12260.html",
+          "source_title": "中国非物质文化遗产网·观音传说",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-12260",
+          "evidence_quote": "观音传说项目序号：527项目编号：Ⅰ-40公布时间：2008(第二批)类别：民间文学……申报地区或单位：浙江省舟山市",
+          "fact_type": "designation",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "舟山群岛东隅的普陀洛迦山是观音道场所在地；舟山各地流传的观音传说已有上千年历史，多从普陀山生发出来。",
+          "fact_index": 1,
+          "source_url": "https://www.ihchina.cn/project_details/12260.html",
+          "source_title": "中国非物质文化遗产网·观音传说",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-12260",
+          "evidence_quote": "浙江省舟山群岛东隅的普陀洛迦山是中国四大佛教名山之一，为闻名海内外的观音道场所在地。舟山各地流传的观音传说已有上千年历史，多从普陀山生发出来。",
+          "fact_type": "legend",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "南宋宝庆年间《昌国县志》已有“梅岑山（今普陀山）观音宝陀寺”的记载。",
+          "fact_index": 2,
+          "source_url": "https://www.ihchina.cn/project_details/12260.html",
+          "source_title": "中国非物质文化遗产网·观音传说",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-12260",
+          "evidence_quote": "早在南宋宝庆年间（1225—1227）的《昌国县志》中，就有“梅岑山（今普陀山）观音宝陀寺”的记载。",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "民国十二年（1923）编《普陀洛迦新志》专设“灵异门”，记录各类观音灵异传说68则。",
+          "fact_index": 3,
+          "source_url": "https://www.ihchina.cn/project_details/12260.html",
+          "source_title": "中国非物质文化遗产网·观音传说",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-12260",
+          "evidence_quote": "民国十二年（1923）编的《普陀洛迦新志》专设“灵异门”，记录各类观音灵异传说68则。",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        }
+      ],
+      "cultural_significance": "千年的观音传说从这座海岛长出来，成了国家级的民间文学。",
+      "keywords_en": [
+        "Guanyin legends",
+        "Putuo legends"
+      ],
+      "imagery": [
+        "潮音洞",
+        "梵音石窟",
+        "香客虔诚",
+        "海天佛国牌坊"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "海浪讲了一千年——普陀山的传说永远讲不完。",
+      "scenario_tags": [
+        "传说",
+        "祈福",
+        "人文",
+        "非遗体验"
+      ]
+    },
+    {
+      "id": "zs-luogu",
+      "type": "intangible",
+      "name": "舟山锣鼓",
+      "aliases": [
+        "排锣排鼓"
+      ],
+      "level": "国家级非遗（2006年第一批·传统音乐）",
+      "location": "舟山市",
+      "facts": [
+        "舟山锣鼓2006年列入第一批国家级非遗名录（传统音乐，项目编号Ⅱ-43）。",
+        "旧时的舟山锣鼓大多出现在民间乡里的红白喜事、庙会庆典及渔民祭海等活动中。",
+        "1957年莫斯科世界青年联欢节上，舟山锣鼓荣获世界民间音乐比赛金质奖章。",
+        "两大主奏乐器是由十三面锣组成的排锣和由五面鼓组成的排鼓。"
+      ],
+      "fact_records": [
+        {
+          "text": "舟山锣鼓2006年列入第一批国家级非遗名录（传统音乐，项目编号Ⅱ-43）。",
+          "fact_index": 0,
+          "source_url": "https://www.ihchina.cn/project_details/12534.html",
+          "source_title": "中国非物质文化遗产网·舟山锣鼓",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-12534",
+          "evidence_quote": "舟山锣鼓项目序号：74项目编号：Ⅱ-43公布时间：2006(第一批)类别：传统音乐……申报地区或单位：浙江省舟山市",
+          "fact_type": "designation",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "旧时的舟山锣鼓大多出现在民间乡里的红白喜事、庙会庆典及渔民祭海等活动中。",
+          "fact_index": 1,
+          "source_url": "https://www.ihchina.cn/project_details/12534.html",
+          "source_title": "中国非物质文化遗产网·舟山锣鼓",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-12534",
+          "evidence_quote": "旧时的舟山锣鼓大多出现在民间乡里的红白喜事、庙会庆典及渔民祭海等活动中。",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "1957年莫斯科世界青年联欢节上，舟山锣鼓荣获世界民间音乐比赛金质奖章。",
+          "fact_index": 2,
+          "source_url": "https://www.ihchina.cn/project_details/12534.html",
+          "source_title": "中国非物质文化遗产网·舟山锣鼓",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-12534",
+          "evidence_quote": "在1957年莫斯科举办的世界青年联欢节上，舟山锣鼓曾荣获世界民家音乐比赛金质奖章。",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "两大主奏乐器是由十三面锣组成的排锣和由五面鼓组成的排鼓。",
+          "fact_index": 3,
+          "source_url": "https://www.ihchina.cn/project_details/12534.html",
+          "source_title": "中国非物质文化遗产网·舟山锣鼓",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-12534",
+          "evidence_quote": "其中的两大主奏乐器分别是由十三面锣组成的排锣和由五面鼓组成的排鼓",
+          "fact_type": "craft",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        }
+      ],
+      "cultural_significance": "十三面排锣五面排鼓一起响——渔民的鼓点拿到莫斯科拿过金奖。",
+      "keywords_en": [
+        "Zhoushan gongs and drums",
+        "Zhoushan luogu"
+      ],
+      "imagery": [
+        "排锣排鼓阵",
+        "祭海仪式",
+        "庙会表演",
+        "鼓手挥槌"
+      ],
+      "best_season": "庙会/祭海期",
+      "micro_drama_hook": "海浪是节拍器——这套锣鼓天生带着咸味。",
+      "scenario_tags": [
+        "非遗体验",
+        "演艺",
+        "民俗",
+        "人文"
+      ]
+    },
+    {
+      "id": "zs-haozi",
+      "type": "intangible",
+      "name": "舟山渔民号子",
+      "aliases": [
+        "海洋号子"
+      ],
+      "level": "国家级非遗（2008年第二批·传统音乐）",
+      "location": "舟山群岛（申报地：岱山县）",
+      "facts": [
+        "舟山渔民号子2008年列入第二批国家级非遗名录（传统音乐，项目编号Ⅱ-97），申报地为岱山县。",
+        "舟山渔民号子是浙江舟山群岛渔民船工号子的总称，约形成于唐宋时期，清代康熙朝至民国两百多年间趋于兴盛。",
+        "按渔业劳动程序可分为起锚号子、拔篷号子、摇橹号子、起网号子等二十多种。"
+      ],
+      "fact_records": [
+        {
+          "text": "舟山渔民号子2008年列入第二批国家级非遗名录（传统音乐，项目编号Ⅱ-97），申报地为岱山县。",
+          "fact_index": 0,
+          "source_url": "https://www.ihchina.cn/project_details/12628.html",
+          "source_title": "中国非物质文化遗产网·海洋号子（舟山渔民号子）",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-12628",
+          "evidence_quote": "海洋号子（舟山渔民号子）项目序号：596项目编号：Ⅱ-97公布时间：2008(第二批)类别：传统音乐……申报地区或单位：浙江省岱山县",
+          "fact_type": "designation",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "舟山渔民号子是浙江舟山群岛渔民船工号子的总称，约形成于唐宋时期，清代康熙朝至民国两百多年间趋于兴盛。",
+          "fact_index": 1,
+          "source_url": "https://www.ihchina.cn/project_details/12628.html",
+          "source_title": "中国非物质文化遗产网·海洋号子（舟山渔民号子）",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-12628",
+          "evidence_quote": "舟山渔民号子是浙江舟山群岛渔民船工号子的总称……据考证，舟山渔民号子约形成于唐宋时期，清代康熙朝至民国的两百多年间趋于兴盛。",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "按渔业劳动程序可分为起锚号子、拔篷号子、摇橹号子、起网号子等二十多种。",
+          "fact_index": 2,
+          "source_url": "https://www.ihchina.cn/project_details/12628.html",
+          "source_title": "中国非物质文化遗产网·海洋号子（舟山渔民号子）",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-12628",
+          "evidence_quote": "舟山渔民号子按照渔业劳动的程序可分为起锚号子、拔篷号子、摇橹号子、起网号子等二十多种",
+          "fact_type": "craft",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        }
+      ],
+      "cultural_significance": "起锚拔篷全靠喊——二十多种号子，是舟山渔民的工作语言。",
+      "keywords_en": [
+        "Zhoushan fishermen work songs",
+        "sea shanties"
+      ],
+      "imagery": [
+        "拉网号子",
+        "摇橹场面",
+        "帆影人声",
+        "码头齐心"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "一个人喊，一船人齐——机器取代不了的节奏感。",
+      "scenario_tags": [
+        "非遗体验",
+        "曲艺",
+        "人文",
+        "民俗"
+      ]
+    },
+    {
+      "id": "zs-daiyu",
+      "type": "cuisine",
+      "name": "带鱼",
+      "aliases": [
+        "鱽鱼",
+        "刀鱼"
+      ],
+      "level": "东海渔场代表水产",
+      "location": "舟山渔场",
+      "facts": [
+        "带鱼科俗称“鱽鱼”或“鐮刀魚”，遍布太平洋、大西洋至印度洋的热带至温带海域。",
+        "带鱼体特别细长、侧扁如带，无鳞片但有明显侧线。",
+        "夜间成群上浮至中表层水域追食小鱼，常在港内及河口附近出现。"
+      ],
+      "fact_records": [
+        {
+          "text": "带鱼科俗称“鱽鱼”或“鐮刀魚”，遍布太平洋、大西洋至印度洋的热带至温带海域。",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%B8%A6%E9%B1%BC",
+          "source_title": "维基百科：带鱼",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-带鱼",
+          "evidence_quote": "帶魚科（學名：Trichiuridae）為輻鰭魚綱鱸形總目鲭形目的一個科，俗稱“鱽鱼”或“鐮刀魚”。本科遍布於太平洋、大西洋至印度洋的熱帶至溫帶海域",
+          "fact_type": "nature",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "带鱼体特别细长、侧扁如带，无鳞片但有明显侧线。",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%B8%A6%E9%B1%BC",
+          "source_title": "维基百科：带鱼",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-带鱼",
+          "evidence_quote": "本科魚體特別細長，側扁如帶，向後逐漸纖細，尾鰭小或缺。無鱗片，但有明顯側線。",
+          "fact_type": "nature",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "夜间成群上浮至中表层水域追食小鱼，常在港内及河口附近出现。",
+          "fact_index": 2,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%B8%A6%E9%B1%BC",
+          "source_title": "维基百科：带鱼",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-带鱼",
+          "evidence_quote": "到了夜間成群上浮至中表層水域追食小魚，常在港內及河口附近出現",
+          "fact_type": "nature",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
+      ],
+      "cultural_significance": "银亮如刀的东海主力鱼种——舟山夜捕带鱼是海上名场面。",
+      "keywords_en": [
+        "Hairtail fish",
+        "Trichiuridae"
+      ],
+      "imagery": [
+        "银色带鱼",
+        "夜捕灯光",
+        "渔市码放",
+        "红烧带鱼"
+      ],
+      "best_season": "冬春季佳",
+      "micro_drama_hook": "银刀出水的瞬间，舟山人的年夜饭定了。",
+      "scenario_tags": [
+        "美食",
+        "水产",
+        "市井",
+        "自然"
+      ]
+    },
+    {
+      "id": "zs-dahuangyu",
+      "type": "cuisine",
+      "name": "大黄鱼",
+      "aliases": [
+        "黄花鱼",
+        "黄鱼"
+      ],
+      "level": "东海传统名产",
+      "location": "舟山渔场",
+      "facts": [
+        "大黄鱼学名Larimichthys crocea，另名黄花鱼，主要分布于中国东海及黄海南部。",
+        "端午前后大黄鱼发育达顶点，最具食用价值；名菜有松子黄鱼、糖醋黄鱼、红烧黄鱼等。",
+        "由于滥捕，野生大黄鱼已不多见，现今市售黄花鱼皆为沿海箱网养殖。",
+        "大黄鱼在黑暗中呈金黄色，光照下迅速变为银白色，一些业者专门选择夜晚捕捞。"
+      ],
+      "fact_records": [
+        {
+          "text": "大黄鱼学名Larimichthys crocea，另名黄花鱼，主要分布于中国东海及黄海南部。",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%A4%A7%E9%BB%84%E9%B1%BC",
+          "source_title": "维基百科：大黄鱼",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-大黄鱼",
+          "evidence_quote": "大黄鱼（学名：Larimichthyscrocea，另名黄花鱼）是石首鱼科黄鱼屬的鱼種。……大黄鱼主要分布于中国大陸沿海，包括東海及黃海南部",
+          "fact_type": "nature",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "端午前后大黄鱼发育达顶点，最具食用价值；名菜有松子黄鱼、糖醋黄鱼、红烧黄鱼等。",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%A4%A7%E9%BB%84%E9%B1%BC",
+          "source_title": "维基百科：大黄鱼",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-大黄鱼",
+          "evidence_quote": "大黃魚在端午節前後發育達到頂點，最具食用價值。以黃魚烹煮的名菜包括松子黃魚，糖醋黃魚，紅燒黃魚等。",
+          "fact_type": "cuisine",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "由于滥捕，野生大黄鱼已不多见，现今市售黄花鱼皆为沿海箱网养殖。",
+          "fact_index": 2,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%A4%A7%E9%BB%84%E9%B1%BC",
+          "source_title": "维基百科：大黄鱼",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-大黄鱼",
+          "evidence_quote": "由於黃花魚市價高，濫捕問題嚴重，野生種已經不多見。……現今市售黃花魚皆為中國沿海利用箱網養殖",
+          "fact_type": "nature",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "大黄鱼在黑暗中呈金黄色，光照下迅速变为银白色，一些业者专门选择夜晚捕捞。",
+          "fact_index": 3,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%A4%A7%E9%BB%84%E9%B1%BC",
+          "source_title": "维基百科：大黄鱼",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-大黄鱼",
+          "evidence_quote": "大黄鱼在黑暗环境中呈金黄色，在光照环境下会迅速变为银白色……一些业者会专门选择在夜晚捕捞大黄鱼。",
+          "fact_type": "nature",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
+      ],
+      "cultural_significance": "会变色的金色鱼——黑夜捕捞的大黄鱼，是东海最贵的金色。",
+      "keywords_en": [
+        "Large yellow croaker",
+        "huanghua fish"
+      ],
+      "imagery": [
+        "金色黄鱼",
+        "灯光夜捕",
+        "黄鱼鲞",
+        "全鱼宴"
+      ],
+      "best_season": "端午前后佳",
+      "micro_drama_hook": "通体金黄的大黄鱼只在夜里捞——光一照就不金了。",
+      "scenario_tags": [
+        "美食",
+        "水产",
+        "自然",
+        "伴手礼"
+      ]
+    },
+    {
+      "id": "zs-sanmao",
+      "type": "person",
+      "name": "三毛",
+      "aliases": [
+        "陈平",
+        "陈懋平",
+        "Echo"
+      ],
+      "level": "台湾作家",
+      "location": "籍贯舟山定海",
+      "facts": [
+        "陈平（1943—1991），本名陈懋平，笔名三毛，籍贯浙江省定海县，台湾作家。",
+        "1974年起以三毛为笔名发表以西属撒哈拉沙漠日常生活为题材的作品，在华语坛获得广泛关注。",
+        "笔名“三毛”来自她自嘲“只值三毛钱”。"
+      ],
+      "fact_records": [
+        {
+          "text": "陈平（1943—1991），本名陈懋平，笔名三毛，籍贯浙江省定海县，台湾作家。",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E4%B8%89%E6%AF%9B_%28%E4%BD%9C%E5%AE%B6%29",
+          "source_title": "维基百科：三毛 (作家)",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-三毛 (作家)",
+          "evidence_quote": "陳平（1943年3月26日—1991年1月4日），本名陳懋平，筆名三毛，籍貫浙江省定海縣，生于重慶，臺灣作家。",
+          "fact_type": "person",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "1974年起以三毛为笔名发表以西属撒哈拉沙漠日常生活为题材的作品，在华语坛获得广泛关注。",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E4%B8%89%E6%AF%9B_%28%E4%BD%9C%E5%AE%B6%29",
+          "source_title": "维基百科：三毛 (作家)",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-三毛 (作家)",
+          "evidence_quote": "1974年，她開始以三毛為筆名，發表在西屬撒哈拉沙漠日常生活為題材的作品，在華語文壇獲得廣泛關注。",
+          "fact_type": "person",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "笔名“三毛”来自她自嘲“只值三毛钱”。",
+          "fact_index": 2,
+          "source_url": "https://zh.wikipedia.org/wiki/%E4%B8%89%E6%AF%9B_%28%E4%BD%9C%E5%AE%B6%29",
+          "source_title": "维基百科：三毛 (作家)",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-三毛 (作家)",
+          "evidence_quote": "三毛是後期在撒哈拉時開始用的筆名，因为陈平谐谑地认为自己“只值三毛钱”。",
+          "fact_type": "person",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
+      ],
+      "cultural_significance": "从撒哈拉讲故事的三毛，根在舟山定海。",
+      "keywords_en": [
+        "Sanmao writer",
+        "Sanmao"
+      ],
+      "imagery": [
+        "定海祖居",
+        "沙漠意象",
+        "书页手稿",
+        "海岛乡愁"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "她把全世界写成了故事，故事的第一页在定海。",
+      "scenario_tags": [
+        "历史名人",
+        "人文",
+        "文学",
+        "研学"
+      ]
+    }
+  ]
+}

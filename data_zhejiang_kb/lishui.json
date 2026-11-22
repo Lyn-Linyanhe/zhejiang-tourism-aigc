@@ -1,0 +1,1264 @@
+{
+  "city": "丽水",
+  "entities": [
+    {
+      "id": "ls-yunhetitian",
+      "type": "scenic",
+      "name": "云和梯田",
+      "aliases": [
+        "九曲云环",
+        "梅源梯田"
+      ],
+      "level": "国家5A级旅游景区（2024）、国家湿地公园",
+      "location": "丽水云和县崇头镇",
+      "facts": [
+        "云和梯田位于云和县崇头镇，总面积约50平方公里，最多处达700余层，为华东地区最大的梯田群。",
+        "云和梯田始开发于唐，兴于元、明；明洪武年间的梯田水稻种植与当地银矿开采、冶炼活动有较大关联。",
+        "2011年云和梯田景区获评国家4A级旅游景区；2024年2月6日升格为国家5A级旅游景区。",
+        "2017年浙江云和梯田农业系统入选农业部第三批中国重要农业文化遗产名单。",
+        "梅源芒种开犁节2021年入选第五批（扩展）国家级非遗代表性项目。"
+      ],
+      "fact_records": [
+        {
+          "text": "云和梯田位于云和县崇头镇，总面积约50平方公里，最多处达700余层，为华东地区最大的梯田群。",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E4%BA%91%E5%92%8C%E6%A2%AF%E7%94%B0",
+          "source_title": "维基百科：云和梯田",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-云和梯田",
+          "evidence_quote": "云和梯田位于中华人民共和国浙江省丽水市云和县崇头镇境内……总面积约50平方公里，最多处达700余层，为华东地区最大的梯田群。",
+          "fact_type": "geography",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "云和梯田始开发于唐，兴于元、明；明洪武年间的梯田水稻种植与当地银矿开采、冶炼活动有较大关联。",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E4%BA%91%E5%92%8C%E6%A2%AF%E7%94%B0",
+          "source_title": "维基百科：云和梯田",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-云和梯田",
+          "evidence_quote": "云和梯田始开发于唐，兴于元、明。在明洪武年间，大规模的梯田水稻种植业同当地的银矿开采、冶炼活动有较大关联。",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "2011年云和梯田景区获评国家4A级旅游景区；2024年2月6日升格为国家5A级旅游景区。",
+          "fact_index": 2,
+          "source_url": "https://zh.wikipedia.org/wiki/%E4%BA%91%E5%92%8C%E6%A2%AF%E7%94%B0",
+          "source_title": "维基百科：云和梯田",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-云和梯田",
+          "evidence_quote": "2011年，云和梯田景区获评国家4A级旅游景区。……2024年2月6日，云和梯田升格为国家5A级旅游景区。",
+          "fact_type": "designation",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "2017年浙江云和梯田农业系统入选农业部第三批中国重要农业文化遗产名单。",
+          "fact_index": 3,
+          "source_url": "https://zh.wikipedia.org/wiki/%E4%BA%91%E5%92%8C%E6%A2%AF%E7%94%B0",
+          "source_title": "维基百科：云和梯田",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-云和梯田",
+          "evidence_quote": "2017年，浙江云和梯田农业系统入选农业部第三批中国重要农业文化遗产名单。",
+          "fact_type": "designation",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "梅源芒种开犁节2021年入选第五批（扩展）国家级非遗代表性项目。",
+          "fact_index": 4,
+          "source_url": "https://zh.wikipedia.org/wiki/%E4%BA%91%E5%92%8C%E6%A2%AF%E7%94%B0",
+          "source_title": "维基百科：云和梯田",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-云和梯田",
+          "evidence_quote": "2021年，梅源芒种开犁节作为农历二十四节气中芒种的民俗活动代表，入选第五批（扩展）国家级非物质文化遗产代表性项目。",
+          "fact_type": "designation",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
+      ],
+      "cultural_significance": "700多层梯田从唐朝垒到今天——灌水季是天空的镜子，收割季是大地的金浪。",
+      "keywords_en": [
+        "Yunhe rice terraces",
+        "Yunhetitian"
+      ],
+      "imagery": [
+        "九曲云环日出",
+        "稻浪金秋",
+        "灌水镜面",
+        "云海梯屋"
+      ],
+      "best_season": "5-6月灌水/10-11月金浪",
+      "micro_drama_hook": "山把天空切成七百层——每一层都装着云。",
+      "scenario_tags": [
+        "自然",
+        "农业遗产",
+        "摄影",
+        "经典必游"
+      ]
+    },
+    {
+      "id": "ls-xiandu",
+      "type": "scenic",
+      "name": "仙都",
+      "aliases": [
+        "鼎湖峰",
+        "仙都风景名胜区"
+      ],
+      "level": "国家5A级旅游景区（2020，丽水首个）",
+      "location": "丽水缙云县仙都街道",
+      "facts": [
+        "仙都位于缙云县仙都街道，2020年1月申报5A成功，为丽水市首个5A级景区。",
+        "仙都与黄山、庐山并列为轩辕黄帝的“三大行宫”。",
+        "鼎湖峰古称缙云山，形如春笋，高170.8米，本地人称石笋，被誉为“天下第一笋”。",
+        "截至2020年3月31日共有500部作品在此拍摄，代表作有《道士下山》《花千骨》等。",
+        "自1998年起每年清明节、重阳节举办共祭轩辕黄帝典礼，该活动2011年列入国家级非遗名录。",
+        "缙云县名流传源于黄帝在仙都鼎湖峰炼丹升天、黄帝又名缙云氏。"
+      ],
+      "fact_records": [
+        {
+          "text": "仙都位于缙云县仙都街道，2020年1月申报5A成功，为丽水市首个5A级景区。",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E4%BB%99%E9%83%BD",
+          "source_title": "维基百科：仙都",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-仙都",
+          "evidence_quote": "是位于中国浙江省丽水市缙云县仙都街道的一处国家5A级旅游景区……后于2020年1月申报5A级旅游景区成功，为丽水市首个5A级景区。",
+          "fact_type": "designation",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "仙都与黄山、庐山并列为轩辕黄帝的“三大行宫”。",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E4%BB%99%E9%83%BD",
+          "source_title": "维基百科：仙都",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-仙都",
+          "evidence_quote": "仙都，与黄山、庐山并列为轩辕黄帝的“三大行宫”",
+          "fact_type": "legend",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "鼎湖峰古称缙云山，形如春笋，高170.8米，本地人称石笋，被誉为“天下第一笋”。",
+          "fact_index": 2,
+          "source_url": "https://zh.wikipedia.org/wiki/%E4%BB%99%E9%83%BD",
+          "source_title": "维基百科：仙都",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-仙都",
+          "evidence_quote": "鼎湖峰，古称“缙云山”，是仙都景区的中心景点，因其形如春笋，体积50万平方米，高170.8米，重达100万吨。……被成为“天下第一笋”“天下第一石”。",
+          "fact_type": "landscape",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "截至2020年3月31日共有500部作品在此拍摄，代表作有《道士下山》《花千骨》等。",
+          "fact_index": 3,
+          "source_url": "https://zh.wikipedia.org/wiki/%E4%BB%99%E9%83%BD",
+          "source_title": "维基百科：仙都",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-仙都",
+          "evidence_quote": "截至2020年3月31日，共有500部作品在此拍摄。著名的有《道士下山》《新笑傲江湖》《汉武大帝》《花千骨》等等。",
+          "fact_type": "culture",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "自1998年起每年清明节、重阳节举办共祭轩辕黄帝典礼，该活动2011年列入国家级非遗名录。",
+          "fact_index": 4,
+          "source_url": "https://zh.wikipedia.org/wiki/%E4%BB%99%E9%83%BD",
+          "source_title": "维基百科：仙都",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-仙都",
+          "evidence_quote": "自1998起，在每年的清明节及重阳节，仙都均会举办共祭轩辕黄帝典礼。……该活动于2011年列入全国非物质文化遗产名录",
+          "fact_type": "designation",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "缙云县名流传源于黄帝在仙都鼎湖峰炼丹升天、黄帝又名缙云氏。",
+          "fact_index": 5,
+          "source_url": "https://zh.wikipedia.org/wiki/%E7%BC%99%E4%BA%91%E5%8E%BF",
+          "source_title": "维基百科：缙云县",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-缙云县",
+          "evidence_quote": "当地流传黄帝在仙都鼎湖峰炼丹升天，因黄帝又名缙云氏，固由此得名。",
+          "fact_type": "legend",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
+      ],
+      "cultural_significance": "一根170米的石笋立在好溪边——仙侠剧最爱来的地方是有道理的。",
+      "keywords_en": [
+        "Xiandu scenic area",
+        "Dinghu Peak"
+      ],
+      "imagery": [
+        "鼎湖峰石笋",
+        "朱潭山老牛",
+        "倪翁洞摩崖",
+        "轩辕祭典"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "石笋当背景，牛当前景——仙都的镜头五百年没换过主角。",
+      "scenario_tags": [
+        "自然",
+        "自然奇观",
+        "摄影",
+        "祈福"
+      ]
+    },
+    {
+      "id": "ls-songyang",
+      "type": "scenic",
+      "name": "松阳古村落",
+      "aliases": [
+        "松阳县",
+        "杨家堂",
+        "陈家铺"
+      ],
+      "level": "丽水地区建置最早的县份（东汉建安四年）",
+      "location": "丽水松阳县",
+      "facts": [
+        "松阳县始建于东汉建安四年（199年），是丽水地区建置最早的县份。",
+        "松阳县区域总面积为1400.7平方公里。"
+      ],
+      "fact_records": [
+        {
+          "text": "松阳县始建于东汉建安四年（199年），是丽水地区建置最早的县份。",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E6%9D%BE%E9%98%B3%E5%8E%BF",
+          "source_title": "维基百科：松阳县",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-松阳县",
+          "evidence_quote": "始建于东汉建安四年(199年)，分章安县南乡置松阳县，属会稽郡，是丽水地区建置最早的县份。",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "松阳县区域总面积为1400.7平方公里。",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E6%9D%BE%E9%98%B3%E5%8E%BF",
+          "source_title": "维基百科：松阳县",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-松阳县",
+          "evidence_quote": "区域总面积为1,400.7平方公里。",
+          "fact_type": "geography",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution",
+          "notes": "松阳古村落群（杨家堂/陈家铺等）无独立条目，此处以松阳县条目作县域来源；点位细节由镜头映射与实拍参考图承载"
+        }
+      ],
+      "cultural_significance": "华东保存最完整的传统村落群之一——夯土墙在夕阳里是金色的。",
+      "keywords_en": [
+        "Songyang ancient villages",
+        "Songyang county"
+      ],
+      "imagery": [
+        "杨家堂金色夯土墙",
+        "陈家铺悬崖书店",
+        "古村晒秋",
+        "山坳炊烟"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "一百多个老村子散在山坳里，每个都值得半天。",
+      "scenario_tags": [
+        "古村",
+        "人文",
+        "摄影",
+        "徒步"
+      ]
+    },
+    {
+      "id": "ls-city",
+      "type": "scenic",
+      "name": "处州古城",
+      "aliases": [
+        "丽水",
+        "括州",
+        "莲城"
+      ],
+      "level": "中国优秀旅游城市、国家级生态示范区",
+      "location": "丽水市（浙江西南部）",
+      "facts": [
+        "丽水古称处州，位于浙江省西南部。",
+        "隋开皇九年（589年）置处州，为丽水地区最初的行政建制；明景泰三年起处州府辖10县，与今丽水行政区划基本一致。",
+        "丽水是全国文明城市、国家级生态示范区、中国优秀旅游城市。",
+        "西北有仙霞岭，南部有洞宫山，东北有括苍山；主要河流有瓯江上游的大溪、小溪、龙泉溪等。"
+      ],
+      "fact_records": [
+        {
+          "text": "丽水古称处州，位于浙江省西南部。",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E4%B8%BD%E6%B0%B4%E5%B8%82",
+          "source_title": "维基百科：丽水市",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-丽水市",
+          "evidence_quote": "古称处州，是中华人民共和国浙江省下辖的地级市，位于浙江省西南部",
+          "fact_type": "geography",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "隋开皇九年（589年）置处州，为丽水地区最初的行政建制；明景泰三年起处州府辖10县，与今丽水行政区划基本一致。",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E4%B8%BD%E6%B0%B4%E5%B8%82",
+          "source_title": "维基百科：丽水市",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-丽水市",
+          "evidence_quote": "隋朝开皇九年（589年）以括苍、松阳、永嘉、临海四县置处（Chǔ）州。这是丽水地区最初的行政建制。……明朝景泰三年（1452年）起，处州府辖丽水、松阳、缙云、青田、遂昌、庆元、宣平、云和、景宁10县，与如今丽水市行政区划基本一致。",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "丽水是全国文明城市、国家级生态示范区、中国优秀旅游城市。",
+          "fact_index": 2,
+          "source_url": "https://zh.wikipedia.org/wiki/%E4%B8%BD%E6%B0%B4%E5%B8%82",
+          "source_title": "维基百科：丽水市",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-丽水市",
+          "evidence_quote": "丽水市是全國文明城市、国家级生态示范区、国家级生态保护与建设示范区、中国优秀旅游城市、中国优秀生态旅游城市",
+          "fact_type": "designation",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "西北有仙霞岭，南部有洞宫山，东北有括苍山；主要河流有瓯江上游的大溪、小溪、龙泉溪等。",
+          "fact_index": 3,
+          "source_url": "https://zh.wikipedia.org/wiki/%E4%B8%BD%E6%B0%B4%E5%B8%82",
+          "source_title": "维基百科：丽水市",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-丽水市",
+          "evidence_quote": "西北有仙霞岭，南部有洞宫山，东北有括苍山。主要河流有属瓯江上游的大溪、小溪、龙泉溪等",
+          "fact_type": "geography",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
+      ],
+      "cultural_significance": "古称处州的“浙江绿谷”——秀山丽水四个字就是它的名片。",
+      "keywords_en": [
+        "Lishui",
+        "Chuzhou ancient city"
+      ],
+      "imagery": [
+        "瓯江帆影",
+        "古堰画乡",
+        "莲都老城",
+        "群山云雾"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "山是绿谷，水是瓯江——丽水把“生态”两个字活成了日常。",
+      "scenario_tags": [
+        "城市",
+        "自然",
+        "人文",
+        "生态"
+      ]
+    },
+    {
+      "id": "ls-tongjiyan",
+      "type": "scenic",
+      "name": "通济堰",
+      "aliases": [
+        "堰头村古堰"
+      ],
+      "level": "全国重点文物保护单位（2001第五批）、世界灌溉工程遗产",
+      "location": "丽水莲都区碧湖镇堰头村",
+      "facts": [
+        "通济堰位于莲都区碧湖镇堰头村，2001年被列为第五批全国重点文物保护单位。",
+        "通济堰始建于南朝梁天监年间；初建时为木坝，南宋开禧元年（1205年）改为石坝。",
+        "现存拱坝长275米，是世界上最早的拱坝。",
+        "下游通过22.5千米干渠以及48条支渠、321条毛渠灌溉碧湖平原。"
+      ],
+      "fact_records": [
+        {
+          "text": "通济堰位于莲都区碧湖镇堰头村，2001年被列为第五批全国重点文物保护单位。",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E9%80%9A%E6%B5%8E%E5%A0%B0",
+          "source_title": "维基百科：通济堰",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-通济堰",
+          "evidence_quote": "通济堰位于中国浙江省丽水市莲都区碧湖镇堰头村，2001年被列为第五批全国重点文物保护单位。",
+          "fact_type": "designation",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "通济堰始建于南朝梁天监年间；初建时为木坝，南宋开禧元年（1205年）改为石坝。",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E9%80%9A%E6%B5%8E%E5%A0%B0",
+          "source_title": "维基百科：通济堰",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-通济堰",
+          "evidence_quote": "通济堰始建于南朝梁天监年间，由拱形溢流坝、通济闸、石函、渠道、叶穴、概闸、湖塘等组成。初建时为木坝，南宋开禧元年（1205年）改为石坝。",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "现存拱坝长275米，是世界上最早的拱坝。",
+          "fact_index": 2,
+          "source_url": "https://zh.wikipedia.org/wiki/%E9%80%9A%E6%B5%8E%E5%A0%B0",
+          "source_title": "维基百科：通济堰",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-通济堰",
+          "evidence_quote": "现存拱坝长275米，底宽25米，顶宽0.2米，高2.5米，是世界上最早的拱坝。",
+          "fact_type": "engineering",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "下游通过22.5千米干渠以及48条支渠、321条毛渠灌溉碧湖平原。",
+          "fact_index": 3,
+          "source_url": "https://zh.wikipedia.org/wiki/%E9%80%9A%E6%B5%8E%E5%A0%B0",
+          "source_title": "维基百科：通济堰",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-通济堰",
+          "evidence_quote": "下游通过22.5千米长的干渠以及48条支渠、321条毛渠灌溉碧湖平原。",
+          "fact_type": "engineering",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
+      ],
+      "cultural_significance": "1500年前的拱坝还在放水灌田——世界最早拱坝是个活着的文物。",
+      "keywords_en": [
+        "Tongji weir",
+        "ancient dam"
+      ],
+      "imagery": [
+        "拱坝弧线",
+        "堰头村樟树",
+        "干渠水声",
+        "古堰画乡"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "水从南朝流到现在——这个堰比大多数王朝活得久。",
+      "scenario_tags": [
+        "人文",
+        "历史",
+        "研学",
+        "摄影"
+      ]
+    },
+    {
+      "id": "ls-qingtianshidiao",
+      "type": "intangible",
+      "name": "青田石雕",
+      "aliases": [
+        "青田石雕技艺"
+      ],
+      "level": "国家级非遗（2006年第一批·传统美术）",
+      "location": "丽水青田县",
+      "facts": [
+        "青田石雕2006年列入第一批国家级非遗名录（传统美术，项目编号Ⅶ-33）。",
+        "青田石雕因取材于青田县所产优质叶腊石而得名，工艺发端于六朝时期，讲究因材施艺、因色取巧。",
+        "青田石雕曾在1899年巴黎赛会、1915年美国太平洋万国博览会上展出并获奖。",
+        "青田石与寿山石、昌化石、巴林石并称中国“四大名石”（青田县条目表述）。"
+      ],
+      "fact_records": [
+        {
+          "text": "青田石雕2006年列入第一批国家级非遗名录（传统美术，项目编号Ⅶ-33）。",
+          "fact_index": 0,
+          "source_url": "https://www.ihchina.cn/project_details/14010.html",
+          "source_title": "中国非物质文化遗产网·青田石雕",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-14010",
+          "evidence_quote": "青田石雕项目序号：332项目编号：Ⅶ-33公布时间：2006(第一批)类别：传统美术……申报地区或单位：浙江省青田县",
+          "fact_type": "designation",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "青田石雕因取材于青田县所产优质叶腊石而得名，工艺发端于六朝时期，讲究因材施艺、因色取巧。",
+          "fact_index": 1,
+          "source_url": "https://www.ihchina.cn/project_details/14010.html",
+          "source_title": "中国非物质文化遗产网·青田石雕",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-14010",
+          "evidence_quote": "青田石雕是以青田石为材料的传统石雕艺术，因取材于浙江青田县所产优质叶腊石而得名。……据史料记载，青田石雕工艺发端于六朝时期，讲究因材施艺，因色取巧",
+          "fact_type": "craft",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "青田石雕曾在1899年巴黎赛会、1915年美国太平洋万国博览会上展出并获奖。",
+          "fact_index": 2,
+          "source_url": "https://www.ihchina.cn/project_details/14010.html",
+          "source_title": "中国非物质文化遗产网·青田石雕",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-14010",
+          "evidence_quote": "青田石雕曾在1899年巴黎赛会、1905年比利时赛会、1915年美国太平洋万国博览会上展出并获奖",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "青田石与寿山石、昌化石、巴林石并称中国“四大名石”。",
+          "fact_index": 3,
+          "source_url": "https://zh.wikipedia.org/wiki/%E9%9D%92%E7%94%B0%E5%8E%BF",
+          "source_title": "维基百科：青田县",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-青田县",
+          "evidence_quote": "中国“四大名石”。",
+          "fact_type": "nature",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution",
+          "notes": "青田县条目中该表述出现在石雕相关段落；此处截取短语，上下文为青田石位列四大名石"
+        }
+      ],
+      "cultural_significance": "一块会“开花”的石头——青田人把六朝的手艺刻到了巴黎。",
+      "keywords_en": [
+        "Qingtian stone carving",
+        "stone sculpture"
+      ],
+      "imagery": [
+        "石雕镂空特写",
+        "刻刀起稿",
+        "石料原石",
+        "大师工作台"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "石头里藏着鸟的羽毛——镂空雕是青田的魔法。",
+      "scenario_tags": [
+        "非遗体验",
+        "手工艺",
+        "艺术",
+        "伴手礼"
+      ]
+    },
+    {
+      "id": "ls-longquanciqi",
+      "type": "intangible",
+      "name": "龙泉青瓷",
+      "aliases": [
+        "龙泉窑",
+        "哥窑"
+      ],
+      "level": "国家级非遗（2006年第一批·传统技艺）；人类非遗“龙泉青瓷传统烧制技艺”",
+      "location": "丽水龙泉市",
+      "facts": [
+        "龙泉青瓷烧制技艺2006年列入第一批国家级非遗名录（传统技艺，项目编号Ⅷ-9）。",
+        "龙泉烧制青瓷的古代窑址有五百多处，仅龙泉市境内就有三百六十多处，这个瓷窑体系史称龙泉窑。",
+        "梅子青、粉青釉达到青瓷釉色的最高境界；传统龙泉窑中的哥窑与官、汝、定、钧并称宋代五大名窑。",
+        "龙泉青瓷工艺流程由配料、成型、修坯、装饰、施釉和素烧、装匣、装窑、烧成八个环节组成。"
+      ],
+      "fact_records": [
+        {
+          "text": "龙泉青瓷烧制技艺2006年列入第一批国家级非遗名录（传统技艺，项目编号Ⅷ-9）。",
+          "fact_index": 0,
+          "source_url": "https://www.ihchina.cn/project_details/20103.html",
+          "source_title": "中国非物质文化遗产网·龙泉青瓷烧制技艺",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-20103",
+          "evidence_quote": "龙泉青瓷烧制技艺项目序号：359项目编号：Ⅷ-9公布时间：2006(第一批)类别：传统技艺……申报地区或单位：浙江省龙泉市",
+          "fact_type": "designation",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "龙泉烧制青瓷的古代窑址有五百多处，仅龙泉市境内就有三百六十多处，这个瓷窑体系史称龙泉窑。",
+          "fact_index": 1,
+          "source_url": "https://www.ihchina.cn/project_details/20103.html",
+          "source_title": "中国非物质文化遗产网·龙泉青瓷烧制技艺",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-20103",
+          "evidence_quote": "文物普查发现，这里烧制青瓷的古代窑址有五百多处，仅龙泉市境内就有三百六十多处，这个庞大的瓷窑体系史称龙泉窑。",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "梅子青、粉青釉达到青瓷釉色的最高境界；传统龙泉窑中的哥窑与官、汝、定、钧并称宋代五大名窑。",
+          "fact_index": 2,
+          "source_url": "https://www.ihchina.cn/project_details/20103.html",
+          "source_title": "中国非物质文化遗产网·龙泉青瓷烧制技艺",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-20103",
+          "evidence_quote": "梅子青、粉青釉达到了青瓷釉色的最高境界，传统龙泉窑中的哥窑与官、汝、定、钧等窑并称为宋代五大名窑。",
+          "fact_type": "craft",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "龙泉青瓷工艺流程由配料、成型、修坯、装饰、施釉和素烧、装匣、装窑、烧成八个环节组成。",
+          "fact_index": 3,
+          "source_url": "https://www.ihchina.cn/project_details/20103.html",
+          "source_title": "中国非物质文化遗产网·龙泉青瓷烧制技艺",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-20103",
+          "evidence_quote": "龙泉青瓷工艺流程由配料、成型、修坯、装饰、施釉和素烧、装匣、装窑、烧成八个环节组成",
+          "fact_type": "craft",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        }
+      ],
+      "cultural_significance": "一片“类玉”的青色，从宋元的海船上一直铺到波斯湾。",
+      "keywords_en": [
+        "Longquan celadon",
+        "Longquan kiln"
+      ],
+      "imagery": [
+        "梅子青釉面",
+        "拉坯成型",
+        "龙窑烧成",
+        "青瓷出海意象"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "雨过天青的颜色，只有龙窑烧得出来。",
+      "scenario_tags": [
+        "非遗体验",
+        "手工艺",
+        "艺术",
+        "伴手礼"
+      ]
+    },
+    {
+      "id": "ls-longquanbaojian",
+      "type": "intangible",
+      "name": "龙泉宝剑",
+      "aliases": [
+        "龙渊剑",
+        "宝剑锻制技艺"
+      ],
+      "level": "国家级非遗（2006年第一批·传统技艺）",
+      "location": "丽水龙泉市",
+      "facts": [
+        "龙泉宝剑锻制技艺2006年列入第一批国家级非遗名录（传统技艺，项目编号Ⅷ-37）。",
+        "龙泉宝剑迄今已有二千五百多年历史；相传春秋末期越国铸剑大师欧冶子在龙泉秦溪山铸成龙渊、泰阿、工布三把名剑。",
+        "龙泉宝剑以锋刃锐利、寒光逼人、刚柔并济、纹饰精致四大特色而著称。",
+        "后因避唐高祖李渊讳以“泉”代“渊”，龙渊改称龙泉，龙泉即以出产宝剑而闻名。"
+      ],
+      "fact_records": [
+        {
+          "text": "龙泉宝剑锻制技艺2006年列入第一批国家级非遗名录（传统技艺，项目编号Ⅷ-37）。",
+          "fact_index": 0,
+          "source_url": "https://www.ihchina.cn/project_details/14325.html",
+          "source_title": "中国非物质文化遗产网·龙泉宝剑锻制技艺",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-14325",
+          "evidence_quote": "龙泉宝剑锻制技艺项目序号：387项目编号：Ⅷ-37公布时间：2006(第一批)类别：传统技艺……申报地区或单位：浙江省龙泉市",
+          "fact_type": "designation",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "龙泉宝剑迄今已有二千五百多年历史；相传春秋末期越国铸剑大师欧冶子在龙泉秦溪山铸成龙渊、泰阿、工布三把名剑。",
+          "fact_index": 1,
+          "source_url": "https://www.ihchina.cn/project_details/14325.html",
+          "source_title": "中国非物质文化遗产网·龙泉宝剑锻制技艺",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-14325",
+          "evidence_quote": "龙泉宝剑是中华古兵器的代表,也是我国著名的传统工艺品,迄今已有二千五百多年的历史。相传春秋末期，越国铸剑大师欧冶子在龙泉秦溪山铸成龙渊、泰阿、工布三把名剑",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "龙泉宝剑以锋刃锐利、寒光逼人、刚柔并济、纹饰精致四大特色而著称。",
+          "fact_index": 2,
+          "source_url": "https://www.ihchina.cn/project_details/14325.html",
+          "source_title": "中国非物质文化遗产网·龙泉宝剑锻制技艺",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-14325",
+          "evidence_quote": "龙泉宝剑以锋刃锐利、寒光逼人、刚柔并济、纹饰精致四大特色而著称",
+          "fact_type": "craft",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "后因避唐高祖李渊讳以“泉”代“渊”，龙渊改称龙泉，龙泉即以出产宝剑而闻名。",
+          "fact_index": 3,
+          "source_url": "https://www.ihchina.cn/project_details/14325.html",
+          "source_title": "中国非物质文化遗产网·龙泉宝剑锻制技艺",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-14325",
+          "evidence_quote": "后因避唐高祖李渊讳，以“泉”代“渊”，龙渊改称龙泉，现在的浙江龙泉即以出产宝剑而闻名。",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        }
+      ],
+      "cultural_significance": "欧冶子两千五百年前开的炉火，至今还在龙泉淬剑。",
+      "keywords_en": [
+        "Longquan sword",
+        "Longquan baojian"
+      ],
+      "imagery": [
+        "淬火瞬间",
+        "剑身纹路",
+        "锻打火花",
+        "试剑劈竹"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "一把剑的硬度，是用两千五百年淬出来的。",
+      "scenario_tags": [
+        "非遗体验",
+        "手工艺",
+        "人文",
+        "伴手礼"
+      ]
+    },
+    {
+      "id": "ls-songyanggaoqiang",
+      "type": "intangible",
+      "name": "松阳高腔",
+      "aliases": [
+        "白沙岗之土调"
+      ],
+      "level": "国家级非遗（2006年第一批·传统戏剧）",
+      "location": "丽水松阳县",
+      "facts": [
+        "高腔（松阳高腔）2006年列入第一批国家级非遗名录（传统戏剧，项目编号Ⅳ-7）。",
+        "松阳高腔是浙江省现存最古老的剧种之一，是浙江八大高腔系统中的独立分支。",
+        "松阳高腔起始于明代，在清代乾隆至光绪年间达到鼎盛；艺人代代相传至今已传承23代。",
+        "现存剧目四十多个，《夫人戏》《三状元》《八仙桥》等是其代表作。"
+      ],
+      "fact_records": [
+        {
+          "text": "高腔（松阳高腔）2006年列入第一批国家级非遗名录（传统戏剧，项目编号Ⅳ-7）。",
+          "fact_index": 0,
+          "source_url": "https://www.ihchina.cn/project_details/13150.html",
+          "source_title": "中国非物质文化遗产网·高腔（松阳高腔）",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-13150",
+          "evidence_quote": "高腔（松阳高腔）项目序号：151项目编号：Ⅳ-7公布时间：2006(第一批)类别：传统戏剧……申报地区或单位：浙江省松阳县",
+          "fact_type": "designation",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "松阳高腔是浙江省现存最古老的剧种之一，是浙江八大高腔系统中的独立分支。",
+          "fact_index": 1,
+          "source_url": "https://www.ihchina.cn/project_details/13150.html",
+          "source_title": "中国非物质文化遗产网·高腔（松阳高腔）",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-13150",
+          "evidence_quote": "松阳高腔是浙江省现存最古老的剧种之一，是浙江八大高腔系统中的独立分支，属单声腔剧种。",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "松阳高腔起始于明代，在清代乾隆至光绪年间达到鼎盛；艺人代代相传至今已传承23代。",
+          "fact_index": 2,
+          "source_url": "https://www.ihchina.cn/project_details/13150.html",
+          "source_title": "中国非物质文化遗产网·高腔（松阳高腔）",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-13150",
+          "evidence_quote": "它起始于明代，以松阳地方杂剧为主，吸收昆腔等外来声腔的艺术因素而最终成型，在清代乾隆至光绪年间达到鼎盛时期。……至今已传承23代",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "现存剧目四十多个，《夫人戏》《三状元》《八仙桥》等是其代表作。",
+          "fact_index": 3,
+          "source_url": "https://www.ihchina.cn/project_details/13150.html",
+          "source_title": "中国非物质文化遗产网·高腔（松阳高腔）",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-13150",
+          "evidence_quote": "松阳高腔现存剧目四十多个，《夫人戏》、《三状元》、《八仙桥》、《买水记》、《鲤鱼记》、《火珠记》、《酒楼杀家》等是其代表作。",
+          "fact_type": "culture",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        }
+      ],
+      "cultural_significance": "浙江最古老的戏腔在山村里唱了23代——高八度的帮腔一开口就是明朝。",
+      "keywords_en": [
+        "Songyang Gaoqiang opera",
+        "high-pitch opera"
+      ],
+      "imagery": [
+        "古戏台开唱",
+        "帮腔众人",
+        "戏服行头",
+        "白沙岗高腔班"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "村子有多老，戏就有多老——这是活的明代声腔。",
+      "scenario_tags": [
+        "非遗体验",
+        "戏曲",
+        "人文",
+        "民俗"
+      ]
+    },
+    {
+      "id": "ls-shezumingge",
+      "type": "intangible",
+      "name": "畲族民歌",
+      "aliases": [
+        "畲族山歌"
+      ],
+      "level": "国家级非遗（2008年第二批扩展·传统音乐）",
+      "location": "丽水景宁畲族自治县",
+      "facts": [
+        "畲族民歌（浙江景宁畲族自治县申报）2008年列入第二批国家级非遗扩展项目名录（传统音乐，项目编号Ⅱ-7）。",
+        "唱山歌是畲族民众传授历史、文化、生产、生活等知识和进行文化娱乐活动的重要方式。"
+      ],
+      "fact_records": [
+        {
+          "text": "畲族民歌（浙江景宁畲族自治县申报）2008年列入第二批国家级非遗扩展项目名录（传统音乐，项目编号Ⅱ-7）。",
+          "fact_index": 0,
+          "source_url": "https://www.ihchina.cn/project_details/12419.html",
+          "source_title": "中国非物质文化遗产网·畲族民歌",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-12419",
+          "evidence_quote": "畲族民歌项目序号：38项目编号：Ⅱ-7公布时间：2008(第二批)类别：传统音乐……申报地区或单位：浙江省景宁畲族自治县",
+          "fact_type": "designation",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "唱山歌是畲族民众传授历史、文化、生产、生活等知识和进行文化娱乐活动的重要方式。",
+          "fact_index": 1,
+          "source_url": "https://www.ihchina.cn/project_details/12419.html",
+          "source_title": "中国非物质文化遗产网·畲族民歌",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-12419",
+          "evidence_quote": "唱山歌是畲族民众传授历史、文化、生产、生活等知识和进行文化娱乐活动的重要方式。",
+          "fact_type": "culture",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        }
+      ],
+      "cultural_significance": "华东唯一的畲族自治县——山歌一开口，历史就有人接。",
+      "keywords_en": [
+        "She ethnic folk songs",
+        "Jingning"
+      ],
+      "imagery": [
+        "对歌场面",
+        "畲族服饰",
+        "三月三节庆",
+        "山间歌声"
+      ],
+      "best_season": "三月三前后",
+      "micro_drama_hook": "不会唱山歌，进不了畲家的门。",
+      "scenario_tags": [
+        "非遗体验",
+        "民俗",
+        "人文",
+        "节庆"
+      ]
+    },
+    {
+      "id": "ls-daoyu",
+      "type": "cuisine",
+      "name": "青田稻鱼共生（田鱼）",
+      "aliases": [
+        "瓯江彩鲤",
+        "田鱼",
+        "青田田鱼"
+      ],
+      "level": "全球重要农业文化遗产（2005，中国首个）、国家地理标志产品",
+      "location": "丽水青田县",
+      "facts": [
+        "瓯江彩鲤俗称“田鱼”，以青田境内的种群为佳；史料考证青田稻田养鱼已有2000余年养殖历史。",
+        "2005年5月16日，青田稻田养鱼项目（青田稻鱼共生系统）被联合国粮农组织认定为世界农业文化遗产保护项目。",
+        "青田被赋予“中国田鱼之乡”的称号；自南宋以来田鱼干与龙泉青瓷、宝剑均为朝中贡品。",
+        "青田是中国著名的华侨之乡、石雕之乡、田鱼之乡。"
+      ],
+      "fact_records": [
+        {
+          "text": "瓯江彩鲤俗称“田鱼”，以青田境内的种群为佳；史料考证青田稻田养鱼已有2000余年养殖历史。",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E9%9D%92%E7%94%B0%E5%8E%BF",
+          "source_title": "维基百科：青田县",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-青田县",
+          "evidence_quote": "瓯江彩鲤俗称\"田鱼\"，是瓯江流域的地方性养殖对象，以青田境内的种群为佳。史料考证青田的稻田养鱼至今已有2000余年的养殖历史。",
+          "fact_type": "cuisine",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "2005年5月16日，青田稻田养鱼项目（青田稻鱼共生系统）被联合国粮农组织认定为世界农业文化遗产保护项目。",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E9%9D%92%E7%94%B0%E5%8E%BF",
+          "source_title": "维基百科：青田县",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-青田县",
+          "evidence_quote": "2005年5月16日，青田稻田养鱼项目（青田稻鱼共生系统）被联合国联农组织认定为世界农业文化遗产保护项目。",
+          "fact_type": "designation",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "青田被赋予“中国田鱼之乡”的称号；自南宋以来田鱼干与龙泉青瓷、宝剑均为朝中贡品。",
+          "fact_index": 2,
+          "source_url": "https://zh.wikipedia.org/wiki/%E9%9D%92%E7%94%B0%E5%8E%BF",
+          "source_title": "维基百科：青田县",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-青田县",
+          "evidence_quote": "青田被赋予“中国田鱼之乡”的称号。……自南宋以来，该鱼制成的鱼干，与龙泉青瓷、宝剑均为朝中贡品。",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "青田是中国著名的华侨之乡、石雕之乡、田鱼之乡。",
+          "fact_index": 3,
+          "source_url": "https://zh.wikipedia.org/wiki/%E9%9D%92%E7%94%B0%E5%8E%BF",
+          "source_title": "维基百科：青田县",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-青田县",
+          "evidence_quote": "青田是中国著名的华侨之乡、石雕之乡、田鱼之乡，素有“九山半水半分田”的説法。",
+          "fact_type": "culture",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
+      ],
+      "cultural_significance": "稻田里养鱼、鱼给稻施肥——青田人两千年前就搞懂了共生。",
+      "keywords_en": [
+        "Qingtian rice fish",
+        "GIAHS rice-fish system"
+      ],
+      "imagery": [
+        "田鱼游稻田",
+        "稻鱼双收",
+        "晒田鱼干",
+        "梯田水光"
+      ],
+      "best_season": "秋季",
+      "micro_drama_hook": "一块田两份收成——这是老祖宗的生态学。",
+      "scenario_tags": [
+        "美食",
+        "农业遗产",
+        "自然",
+        "伴手礼"
+      ]
+    },
+    {
+      "id": "ls-jinyunshaobing",
+      "type": "cuisine",
+      "name": "缙云烧饼",
+      "aliases": [
+        "梅干菜烧饼"
+      ],
+      "level": "国家级非遗（2021年第五批扩展·缙云烧饼制作技艺）",
+      "location": "丽水缙云县",
+      "facts": [
+        "缙云烧饼制作技艺2021年列入第五批国家级非遗扩展项目名录（传统面食制作技艺，项目编号Ⅷ-160），申报地为丽水市缙云县。",
+        "缙云县地貌可用“九山半水半分田”概括，本地小麦、土猪与腌菜为烧饼提供了优质原材料。",
+        "缙云烧饼以猪肉拌缙云菜干为馅料，菜干选用本地细叶九头芥腌制、经三蒸三晒而成。"
+      ],
+      "fact_records": [
+        {
+          "text": "缙云烧饼制作技艺2021年列入第五批国家级非遗扩展项目名录（传统面食制作技艺，项目编号Ⅷ-160），申报地为丽水市缙云县。",
+          "fact_index": 0,
+          "source_url": "https://www.ihchina.cn/project_details/23791.html",
+          "source_title": "中国非物质文化遗产网·传统面食制作技艺（缙云烧饼制作技艺）",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-23791",
+          "evidence_quote": "传统面食制作技艺（缙云烧饼制作技艺）项目序号：943项目编号：Ⅷ-160公布时间：2021(第五批)类别：传统技艺……申报地区或单位：浙江省丽水市缙云县",
+          "fact_type": "designation",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "缙云县地貌可用“九山半水半分田”概括，本地小麦、土猪与腌菜为烧饼提供了优质原材料。",
+          "fact_index": 1,
+          "source_url": "https://www.ihchina.cn/project_details/23791.html",
+          "source_title": "中国非物质文化遗产网·传统面食制作技艺（缙云烧饼制作技艺）",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-23791",
+          "evidence_quote": "缙云县位于浙中南丘陵山区，地貌可以用“九山半水半分田”来概括，该地气候湿润，四季分明，适合种植小麦、水稻、九头芥菜等，再加上本地饲养的土猪，为缙云烧饼制作技艺提供了充足的优质原材料。",
+          "fact_type": "cuisine",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "缙云烧饼以猪肉拌缙云菜干为馅料，菜干选用本地细叶九头芥腌制、经三蒸三晒而成。",
+          "fact_index": 2,
+          "source_url": "https://www.ihchina.cn/project_details/23791.html",
+          "source_title": "中国非物质文化遗产网·传统面食制作技艺（缙云烧饼制作技艺）",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-23791",
+          "evidence_quote": "二是馅料制作独特。缙云烧饼以猪肉拌缙云菜干为馅料，缙云菜干选用本地细叶九头芥腌制，经三蒸三晒而成",
+          "fact_type": "cuisine",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        }
+      ],
+      "cultural_significance": "一只烧饼桶烤出了全国门店——梅干菜和肉在炉壁上完成合奏。",
+      "keywords_en": [
+        "Jinyun shaobing",
+        "Jinyun pancake"
+      ],
+      "imagery": [
+        "烧饼桶炉火",
+        "贴饼瞬间",
+        "梅干菜馅",
+        "饼香街口"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "全国有烧饼的地方，多半写着“缙云”两个字。",
+      "scenario_tags": [
+        "美食",
+        "小吃",
+        "非遗体验",
+        "早餐"
+      ]
+    },
+    {
+      "id": "ls-tangxianzu",
+      "type": "person",
+      "name": "汤显祖",
+      "aliases": [
+        "若士",
+        "玉茗堂",
+        "东方莎士比亚"
+      ],
+      "level": "明代戏曲家、文学家，曾任遂昌知县",
+      "location": "江西临川人；万历年间任浙江遂昌县知县",
+      "facts": [
+        "汤显祖（1550—1616），明代政治家、文学家、戏曲家，与莎士比亚同期且影响力相若，有“东方的莎士比亚”之称。",
+        "万历年间他谪广东徐闻典史、后任浙江遂昌县知县。",
+        "遂昌县志载：明代文学家、戏剧家汤显祖曾于此担任五年县令。",
+        "《牡丹亭》《紫钗记》《南柯记》《邯郸记》合称“临川四梦”。",
+        "万历二十六年（1598年）弃官回乡，建玉茗堂专事戏剧与文学创作。"
+      ],
+      "fact_records": [
+        {
+          "text": "汤显祖（1550—1616），明代政治家、文学家、戏曲家，与莎士比亚同期且影响力相若，有“东方的莎士比亚”之称。",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E6%B1%A4%E6%98%BE%E7%A5%96",
+          "source_title": "维基百科：汤显祖",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-汤显祖",
+          "evidence_quote": "汤显祖（1550年9月24日—1616年7月29日）……其戲曲非常知名，乃與莎士比亚同期及影響力相若的偉大劇作家，也有“东方的莎士比亚”之称。",
+          "fact_type": "person",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "万历年间他谪广东徐闻典史、后任浙江遂昌县知县。",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E6%B1%A4%E6%98%BE%E7%A5%96",
+          "source_title": "维基百科：汤显祖",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-汤显祖",
+          "evidence_quote": "謫廣東徐聞縣典史、浙江遂昌縣知縣。",
+          "fact_type": "person",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "遂昌县志载：明代文学家、戏剧家汤显祖曾于此担任五年县令。",
+          "fact_index": 2,
+          "source_url": "https://zh.wikipedia.org/wiki/%E9%81%82%E6%98%8C%E5%8E%BF",
+          "source_title": "维基百科：遂昌县",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-遂昌县",
+          "evidence_quote": "明代著名的文学家、戏剧家汤显祖曾于此担任五年县令。",
+          "fact_type": "person",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "《牡丹亭》《紫钗记》《南柯记》《邯郸记》合称“临川四梦”。",
+          "fact_index": 3,
+          "source_url": "https://zh.wikipedia.org/wiki/%E6%B1%A4%E6%98%BE%E7%A5%96",
+          "source_title": "维基百科：汤显祖",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-汤显祖",
+          "evidence_quote": "因《牡丹亭》、《紫钗记》、《南柯记》、《邯郸记》这四部戏都与“梦”有关，所以被合称为“临川四梦”",
+          "fact_type": "person",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "万历二十六年（1598年）弃官回乡，建玉茗堂专事戏剧与文学创作。",
+          "fact_index": 4,
+          "source_url": "https://zh.wikipedia.org/wiki/%E6%B1%A4%E6%98%BE%E7%A5%96",
+          "source_title": "维基百科：汤显祖",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-汤显祖",
+          "evidence_quote": "于万历二十六年（1598年）弃官回乡，在临川建了一座闲居，号玉茗堂，从此致力于戏剧和文学创作活动",
+          "fact_type": "person",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
+      ],
+      "cultural_significance": "写下《牡丹亭》的人，在遂昌当了五年县令——好戏和好官都是他。",
+      "keywords_en": [
+        "Tang Xianzu",
+        "Ming dynasty playwright"
+      ],
+      "imagery": [
+        "遂昌汤显祖纪念馆",
+        "牡丹亭意象",
+        "汤公园",
+        "临川四梦书影"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "《牡丹亭》的那场梦，有一部分是在遂昌做的。",
+      "scenario_tags": [
+        "历史名人",
+        "人文",
+        "研学",
+        "文学"
+      ]
+    }
+  ]
+}

@@ -5,7 +5,9 @@
       "id": "nb-intangible-ninghai-red-dowry",
       "type": "intangible",
       "name": "宁海十里红妆婚俗",
-      "aliases": ["十里红妆"],
+      "aliases": [
+        "十里红妆"
+      ],
       "level": "国家级非遗",
       "location": "宁海县",
       "facts": [
@@ -26,14 +28,23 @@
           "reuse_status": "fact-only-pending-license-review"
         }
       ],
-      "keywords_en": ["Ninghai red dowry custom", "Ningbo intangible heritage"],
-      "scenario_tags": ["非遗体验", "民俗", "宁海"]
+      "keywords_en": [
+        "Ninghai red dowry custom",
+        "Ningbo intangible heritage"
+      ],
+      "scenario_tags": [
+        "非遗体验",
+        "民俗",
+        "宁海"
+      ]
     },
     {
       "id": "nb-intangible-ninghai-pingdiao",
       "type": "intangible",
       "name": "宁海平调",
-      "aliases": ["平调"],
+      "aliases": [
+        "平调"
+      ],
       "level": "国家级非遗",
       "location": "宁海县",
       "facts": [
@@ -54,14 +65,23 @@
           "reuse_status": "fact-only-pending-license-review"
         }
       ],
-      "keywords_en": ["Ninghai opera", "Ningbo intangible heritage"],
-      "scenario_tags": ["非遗体验", "传统戏剧", "宁海"]
+      "keywords_en": [
+        "Ninghai opera",
+        "Ningbo intangible heritage"
+      ],
+      "scenario_tags": [
+        "非遗体验",
+        "传统戏剧",
+        "宁海"
+      ]
     },
     {
       "id": "nb-intangible-ningbo-storytelling",
       "type": "intangible",
       "name": "宁波走书",
-      "aliases": ["走书"],
+      "aliases": [
+        "走书"
+      ],
       "level": "国家级非遗",
       "location": "鄞州区",
       "facts": [
@@ -82,14 +102,23 @@
           "reuse_status": "fact-only-pending-license-review"
         }
       ],
-      "keywords_en": ["Ningbo storytelling", "Yinzhou intangible heritage"],
-      "scenario_tags": ["非遗体验", "曲艺", "鄞州"]
+      "keywords_en": [
+        "Ningbo storytelling",
+        "Yinzhou intangible heritage"
+      ],
+      "scenario_tags": [
+        "非遗体验",
+        "曲艺",
+        "鄞州"
+      ]
     },
     {
       "id": "nb-intangible-hongbang-tailoring",
       "type": "intangible",
       "name": "红帮裁缝技艺",
-      "aliases": ["红帮裁缝"],
+      "aliases": [
+        "红帮裁缝"
+      ],
       "level": "国家级非遗",
       "location": "宁波市",
       "facts": [
@@ -110,14 +139,23 @@
           "reuse_status": "fact-only-pending-license-review"
         }
       ],
-      "keywords_en": ["Hongbang tailoring", "Ningbo craftsmanship"],
-      "scenario_tags": ["非遗体验", "传统技艺", "城市文化"]
+      "keywords_en": [
+        "Hongbang tailoring",
+        "Ningbo craftsmanship"
+      ],
+      "scenario_tags": [
+        "非遗体验",
+        "传统技艺",
+        "城市文化"
+      ]
     },
     {
       "id": "nb-intangible-xiangshan-bamboo-root-carving",
       "type": "intangible",
       "name": "象山竹根雕",
-      "aliases": ["竹根雕"],
+      "aliases": [
+        "竹根雕"
+      ],
       "level": "国家级非遗",
       "location": "象山县",
       "facts": [
@@ -138,14 +176,24 @@
           "reuse_status": "fact-only-pending-license-review"
         }
       ],
-      "keywords_en": ["Xiangshan bamboo root carving", "Ningbo traditional art"],
-      "scenario_tags": ["非遗体验", "传统美术", "象山"]
+      "keywords_en": [
+        "Xiangshan bamboo root carving",
+        "Ningbo traditional art"
+      ],
+      "scenario_tags": [
+        "非遗体验",
+        "传统美术",
+        "象山"
+      ]
     },
     {
       "id": "nb-intangible-liangzhu-legend",
       "type": "intangible",
       "name": "梁祝传说",
-      "aliases": ["梁山伯与祝英台传说", "梁祝"],
+      "aliases": [
+        "梁山伯与祝英台传说",
+        "梁祝"
+      ],
       "level": "国家级非遗",
       "location": "海曙区",
       "facts": [
@@ -166,14 +214,24 @@
           "reuse_status": "fact-only-pending-license-review"
         }
       ],
-      "keywords_en": ["Liang Zhu legend Ningbo", "Ningbo folk literature"],
-      "scenario_tags": ["非遗体验", "民间文学", "爱情", "海曙"]
+      "keywords_en": [
+        "Liang Zhu legend Ningbo",
+        "Ningbo folk literature"
+      ],
+      "scenario_tags": [
+        "非遗体验",
+        "民间文学",
+        "爱情",
+        "海曙"
+      ]
     },
     {
       "id": "nb-intangible-yuyao-homespun",
       "type": "intangible",
       "name": "余姚土布",
-      "aliases": ["余姚土布织造"],
+      "aliases": [
+        "余姚土布织造"
+      ],
       "level": "国家级非遗",
       "location": "余姚市",
       "facts": [
@@ -194,14 +252,23 @@
           "reuse_status": "fact-only-pending-license-review"
         }
       ],
-      "keywords_en": ["Yuyao homespun", "Ningbo traditional craft"],
-      "scenario_tags": ["非遗体验", "传统技艺", "余姚"]
+      "keywords_en": [
+        "Yuyao homespun",
+        "Ningbo traditional craft"
+      ],
+      "scenario_tags": [
+        "非遗体验",
+        "传统技艺",
+        "余姚"
+      ]
     },
     {
       "id": "nb-intangible-yao-opera",
       "type": "intangible",
       "name": "姚剧",
-      "aliases": ["余姚姚剧"],
+      "aliases": [
+        "余姚姚剧"
+      ],
       "level": "国家级非遗",
       "location": "余姚市",
       "facts": [
@@ -222,14 +289,23 @@
           "reuse_status": "fact-only-pending-license-review"
         }
       ],
-      "keywords_en": ["Yuyao opera", "Ningbo traditional opera"],
-      "scenario_tags": ["非遗体验", "传统戏剧", "余姚"]
+      "keywords_en": [
+        "Yuyao opera",
+        "Ningbo traditional opera"
+      ],
+      "scenario_tags": [
+        "非遗体验",
+        "传统戏剧",
+        "余姚"
+      ]
     },
     {
       "id": "nb-intangible-ningbo-gold-silver-embroidery",
       "type": "intangible",
       "name": "宁波金银彩绣",
-      "aliases": ["金银彩绣"],
+      "aliases": [
+        "金银彩绣"
+      ],
       "level": "国家级非遗",
       "location": "鄞州区",
       "facts": [
@@ -250,8 +326,328 @@
           "reuse_status": "fact-only-pending-license-review"
         }
       ],
-      "keywords_en": ["Ningbo gold silver embroidery", "Yinzhou traditional art"],
-      "scenario_tags": ["非遗体验", "传统美术", "鄞州"]
+      "keywords_en": [
+        "Ningbo gold silver embroidery",
+        "Yinzhou traditional art"
+      ],
+      "scenario_tags": [
+        "非遗体验",
+        "传统美术",
+        "鄞州"
+      ]
+    },
+    {
+      "id": "nb-tianyige",
+      "type": "scenic",
+      "name": "天一阁·月湖",
+      "aliases": [
+        "天一阁",
+        "天一阁博物院",
+        "月湖",
+        "月湖公园"
+      ],
+      "level": "全国重点文物保护单位（天一阁）",
+      "location": "宁波市海曙区天一街 10 号（天一阁）、月湖西侧",
+      "facts": [
+        "天一阁是我国现存历史最悠久的私家藏书楼，也是世界上最古老的三大家族图书馆之一。",
+        "天一阁建于明嘉靖四十至四十五年（1561—1566 年）之间，原为明兵部右侍郎范钦的藏书处。",
+        "天一阁现藏各类古籍近 30 万卷，其中珍椠善本 8 万余卷。",
+        "月湖又名西湖，位于宁波市海曙区，有“浙东邹鲁”之称；开凿于唐代，原为蓄水池，宋代经曾巩任上修整后形成月湖十洲。"
+      ],
+      "fact_records": [
+        {
+          "text": "天一阁是我国现存历史最悠久的私家藏书楼，也是世界上最古老的三大家族图书馆之一。",
+          "source_url": "https://www.tianyige.com.cn/",
+          "source_title": "天一阁博物院官网",
+          "source_publisher": "宁波市天一阁博物院",
+          "source_id": "tianyige-home-meta",
+          "evidence_quote": "天一阁是我国现存历史最悠久的私家藏书楼，也是世界上最古老的三大家族图书馆之一。",
+          "fact_type": "designation",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "官网未发现开放数据许可；仅保留短事实引用并标注来源，正式发布前需确认复用范围",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "天一阁建于明嘉靖四十至四十五年（1561—1566 年）之间，原为明兵部右侍郎范钦的藏书处。",
+          "source_url": "https://www.tianyige.com.cn/",
+          "source_title": "天一阁博物院官网",
+          "source_publisher": "宁波市天一阁博物院",
+          "source_id": "tianyige-home-meta",
+          "evidence_quote": "天一阁建于明嘉靖四十至四十五年（公元1561—1566年）之间，原为明兵部右侍郎范钦的藏书处。",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "官网未发现开放数据许可；仅保留短事实引用并标注来源，正式发布前需确认复用范围",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "天一阁现藏各类古籍近 30 万卷，其中珍椠善本 8 万余卷。",
+          "source_url": "https://www.tianyige.com.cn/",
+          "source_title": "天一阁博物院官网",
+          "source_publisher": "宁波市天一阁博物院",
+          "source_id": "tianyige-home-meta",
+          "evidence_quote": "现藏各类古籍近30万卷，其中珍椠善本8万余卷。",
+          "fact_type": "collection",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "官网未发现开放数据许可；仅保留短事实引用并标注来源，正式发布前需确认复用范围",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "月湖又名西湖，位于宁波市海曙区，有“浙东邹鲁”之称；开凿于唐代，原为蓄水池，宋代经曾巩任上修整后形成月湖十洲。",
+          "source_url": "https://zh.wikipedia.org/wiki/%E6%9C%88%E6%B9%96_(%E5%AE%81%E6%B3%A2)",
+          "source_title": "月湖（宁波）",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-yuehu",
+          "evidence_quote": "月湖又名西湖，是中华人民共和国浙江省宁波市海曙区的一片人造湖泊，有“浙东邹鲁”之称。月湖开凿于唐代，原为蓄水池，宋代经曾巩任上修整，形成月湖十洲",
+          "fact_type": "geography",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
+      ],
+      "cultural_significance": "中国现存最古老的私家藏书楼与宁波城的学术中心，藏书制度与园林格局并称。",
+      "keywords_en": [
+        "Tianyige Museum Ningbo",
+        "Tianyi Pavilion library",
+        "Moon Lake Ningbo"
+      ],
+      "imagery": [
+        "宝书楼与天一池",
+        "假山与廊道",
+        "秦氏支祠戏台",
+        "月湖十洲与湖心东桥",
+        "红墙园林"
+      ],
+      "best_season": "四季皆宜，春夏绿意最足",
+      "micro_drama_hook": "一座楼护住三十万卷书，一片湖养出浙东文脉。",
+      "scenario_tags": [
+        "人文",
+        "藏书文化",
+        "园林",
+        "古建",
+        "研学",
+        "城市漫步"
+      ]
+    },
+    {
+      "id": "nb-laowaitan",
+      "type": "scenic",
+      "name": "老外滩",
+      "aliases": [
+        "宁波老外滩",
+        "江北岸",
+        "三江口"
+      ],
+      "level": "历史文化街区（含全国重点文物保护单位江北天主教堂）",
+      "location": "宁波市江北区中马路一带、三江口北岸",
+      "facts": [
+        "江北岸位于宁波市江北区，为宁波港旧码头所在地，商业开发后被称为“宁波老外滩”。",
+        "1842 年《南京条约》将宁波辟为通商口岸，1844 年宁波正式开埠，江北岸成为外国商人聚居地。",
+        "江北岸外人聚居的历史早于上海外滩 20 多年，因而得名“老外滩”。",
+        "老外滩现存 54 处历史建筑，其中江北天主教堂为全国重点文物保护单位。"
+      ],
+      "fact_records": [
+        {
+          "text": "江北岸位于宁波市江北区，为宁波港旧码头所在地，商业开发后被称为“宁波老外滩”。",
+          "source_url": "https://zh.wikipedia.org/wiki/%E6%B1%9F%E5%8C%97%E5%B2%B8",
+          "source_title": "江北岸",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-jiangbeian",
+          "evidence_quote": "江北岸是中华人民共和国浙江省宁波市一处近代历史文化街区，商业开发后又被称为宁波老外滩。江北岸位于江北区，为宁波港旧码头所在地",
+          "fact_type": "geography",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "1842 年《南京条约》将宁波辟为通商口岸，1844 年宁波正式开埠，江北岸成为外国商人聚居地。",
+          "source_url": "https://zh.wikipedia.org/wiki/%E6%B1%9F%E5%8C%97%E5%B2%B8",
+          "source_title": "江北岸",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-jiangbeian",
+          "evidence_quote": "1842年，中英南京条约将宁波划为通商口岸。从此，西方人开始涌入宁波……1844年，宁波正式开埠，从此，江北岸成为外国商人聚居的场所",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "江北岸外人聚居的历史早于上海外滩 20 多年，因而得名“老外滩”。",
+          "source_url": "https://zh.wikipedia.org/wiki/%E6%B1%9F%E5%8C%97%E5%B2%B8",
+          "source_title": "江北岸",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-jiangbeian",
+          "evidence_quote": "由于江北岸外人聚居的历史早于上海外滩20多年，因而称为老外滩。",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "老外滩现存 54 处历史建筑，其中江北天主教堂为全国重点文物保护单位。",
+          "source_url": "https://zh.wikipedia.org/wiki/%E6%B1%9F%E5%8C%97%E5%B2%B8",
+          "source_title": "江北岸",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-jiangbeian",
+          "evidence_quote": "据统计，老外滩共包括54处历史建筑，其中，1座（江北天主教堂）为全国重点文物保护单位",
+          "fact_type": "heritage",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
+      ],
+      "cultural_significance": "宁波近代化的起点与宁波帮发祥地之一，中国最早的外滩之一。",
+      "keywords_en": [
+        "Ningbo Old Bund",
+        "Laowaitan Ningbo",
+        "Ningbo Jiangbei old town"
+      ],
+      "imagery": [
+        "江北天主教堂",
+        "欧式建筑立面",
+        "三江口夜景",
+        "老码头与江面",
+        "酒吧街灯光"
+      ],
+      "best_season": "四季皆宜，傍晚至夜间最佳",
+      "micro_drama_hook": "比上海外滩早二十多年，这里的钟声先响。",
+      "scenario_tags": [
+        "人文",
+        "近代史",
+        "历史街区",
+        "夜景",
+        "建筑",
+        "城市漫步"
+      ]
+    },
+    {
+      "id": "nb-dongqianhu",
+      "type": "scenic",
+      "name": "东钱湖",
+      "aliases": [
+        "钱湖",
+        "万金湖",
+        "东钱湖旅游度假区"
+      ],
+      "level": "省级旅游度假区（湖区内含全国重点文物保护单位）",
+      "location": "宁波市鄞州区东钱湖镇",
+      "facts": [
+        "东钱湖位于宁波市鄞州区，南北长 8.5 公里、东西宽 4.5 公里，水域面积 19.14 平方公里。",
+        "东钱湖是浙江省最大的天然湖泊，也是宁波市区饮水和灌溉的主要水源。",
+        "东钱湖属海迹湖泊，由远古地质运动与潮汐淤积形成。",
+        "北宋天禧元年（1017 年）王安石任鄞县令时大举整修东钱湖水利。",
+        "湖畔庙沟后石牌坊为中国年代最久的石牌坊之一，属全国重点文物保护单位。"
+      ],
+      "fact_records": [
+        {
+          "text": "东钱湖位于宁波市鄞州区，南北长 8.5 公里、东西宽 4.5 公里，水域面积 19.14 平方公里。",
+          "source_url": "https://zh.wikipedia.org/wiki/%E4%B8%9C%E9%92%B1%E6%B9%96",
+          "source_title": "东钱湖",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-dongqianhu",
+          "evidence_quote": "东钱湖位于鄞州区东钱湖镇境内，南北长8.5公里，东西宽4.5公里，水域面积19.14平方公里",
+          "fact_type": "geography",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "东钱湖是浙江省最大的天然湖泊，也是宁波市区饮水和灌溉的主要水源。",
+          "source_url": "https://zh.wikipedia.org/wiki/%E4%B8%9C%E9%92%B1%E6%B9%96",
+          "source_title": "东钱湖",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-dongqianhu",
+          "evidence_quote": "是浙江省最大的天然湖泊，也是宁波市区饮水和灌溉的主要水源。",
+          "fact_type": "geography",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "东钱湖属海迹湖泊，由远古地质运动与潮汐淤积形成。",
+          "source_url": "https://zh.wikipedia.org/wiki/%E4%B8%9C%E9%92%B1%E6%B9%96",
+          "source_title": "东钱湖",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-dongqianhu",
+          "evidence_quote": "东钱湖属于闽浙地质，是远古时期地质运动形成的潟湖……由于潮汐和沿海岸流作用造成周边淤积，因而形成海迹湖泊。",
+          "fact_type": "geology",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "北宋天禧元年（1017 年）王安石任鄞县令时大举整修东钱湖水利。",
+          "source_url": "https://zh.wikipedia.org/wiki/%E4%B8%9C%E9%92%B1%E6%B9%96",
+          "source_title": "东钱湖",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-dongqianhu",
+          "evidence_quote": "北宋天禧元年，王安石为鄞县令，大举整修东钱湖水利，为农业生产提供淡水保证。",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "湖畔庙沟后石牌坊为中国年代最久的石牌坊之一，属全国重点文物保护单位。",
+          "source_url": "https://zh.wikipedia.org/wiki/%E4%B8%9C%E9%92%B1%E6%B9%96",
+          "source_title": "东钱湖",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-dongqianhu",
+          "evidence_quote": "庙沟后石牌坊 中国年代最久的石牌坊之一，目前为全国重点文物保护单位。",
+          "fact_type": "heritage",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
+      ],
+      "cultural_significance": "浙江最大天然湖泊，王安石治水与南宋石刻、石牌坊构成的水利与人文叠层。",
+      "keywords_en": [
+        "Dongqian Lake Ningbo",
+        "Dongqianhu scenic area",
+        "Ningbo lake"
+      ],
+      "imagery": [
+        "湖面日出与环湖公路",
+        "庙沟后石牌坊",
+        "南宋石刻",
+        "小普陀",
+        "湖畔茶园"
+      ],
+      "best_season": "春秋两季，清晨日出与傍晚日落",
+      "micro_drama_hook": "一湖清水，王安石修过，南宋的石人石马守着。",
+      "scenario_tags": [
+        "自然",
+        "湖泊",
+        "水利",
+        "石刻",
+        "骑行",
+        "日出日落"
+      ]
     }
   ]
 }

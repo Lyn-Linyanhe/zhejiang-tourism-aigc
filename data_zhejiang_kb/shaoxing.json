@@ -1,0 +1,824 @@
+{
+  "city": "绍兴",
+  "city_meta": {
+    "aliases": [
+      "越城",
+      "会稽",
+      "山阴",
+      "越州"
+    ],
+    "city_dna": "越文化、水乡古城、黄酒、书法、戏曲、师爷文化",
+    "slogan": "鉴湖越台名士乡",
+    "best_season": "春秋两季（3–5 月、9–11 月）",
+    "positioning": "国家历史文化名城、越文化发源地、江南水乡代表城市"
+  },
+  "entities": [
+    {
+      "id": "sx-lanting",
+      "type": "scenic",
+      "name": "兰亭",
+      "aliases": [
+        "兰亭景区",
+        "兰亭书法博物馆",
+        "会稽山阴之兰亭"
+      ],
+      "level": "书法圣地",
+      "location": "绍兴市柯桥区兰亭街道兰渚山麓",
+      "facts": [
+        "兰亭位于绍兴城西南 13 公里的兰渚山麓，占地二百五十亩；春秋时越王勾践种兰于此，汉代建有驿亭，兰亭由此得名。",
+        "东晋永和九年（353 年），王羲之邀请 41 位文人雅士在此举行曲水流觞盛会，并写下《兰亭集序》，兰亭因此成为书法圣地。",
+        "现兰亭为清代康熙年间郡守沈启根据明嘉靖时旧址重建。"
+      ],
+      "cultural_significance": "《兰亭集序》诞生地，中国书法史上的圣地。",
+      "fact_records": [
+        {
+          "text": "兰亭位于绍兴城西南 13 公里的兰渚山麓，占地二百五十亩；春秋时越王勾践种兰于此，汉代建有驿亭，兰亭由此得名。",
+          "source_url": "https://www.sxlanting.com/",
+          "source_title": "兰亭景区官网首页",
+          "source_publisher": "绍兴兰亭景区（兰亭景区管理有限公司）",
+          "source_id": "sxlanting-home",
+          "evidence_quote": "兰亭，位于绍兴城西南13公里的兰渚山麓，占地二百五十亩。春秋时越王勾践种兰于此，汉代建有驿亭，兰亭由此得名。",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-21",
+          "checked_at": "2026-11-21",
+          "valid_until": null,
+          "license_status": "官网未发现开放数据许可；仅保留短事实引用并标注来源，正式发布前需确认复用范围",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "东晋永和九年（353 年），王羲之邀请 41 位文人雅士在此举行曲水流觞盛会，并写下《兰亭集序》，兰亭因此成为书法圣地。",
+          "source_url": "https://www.sxlanting.com/",
+          "source_title": "兰亭景区官网首页",
+          "source_publisher": "绍兴兰亭景区（兰亭景区管理有限公司）",
+          "source_id": "sxlanting-home",
+          "evidence_quote": "东晋永和九年，大书法家王羲之邀请了41位文人雅士在此举行了曲水流觞的盛会，并写下了“天下第一行书”——《兰亭集序》",
+          "fact_type": "cultural_history",
+          "retrieved_at": "2026-11-21",
+          "checked_at": "2026-11-21",
+          "valid_until": null,
+          "license_status": "官网未发现开放数据许可；仅保留短事实引用并标注来源，正式发布前需确认复用范围",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "现兰亭为清代康熙年间郡守沈启根据明嘉靖时旧址重建。",
+          "source_url": "https://www.sxlanting.com/",
+          "source_title": "兰亭景区官网首页",
+          "source_publisher": "绍兴兰亭景区（兰亭景区管理有限公司）",
+          "source_id": "sxlanting-home",
+          "evidence_quote": "现兰亭为康熙年间郡守沈启根据明嘉靖时的旧址重建。",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-21",
+          "checked_at": "2026-11-21",
+          "valid_until": null,
+          "license_status": "官网未发现开放数据许可；仅保留短事实引用并标注来源，正式发布前需确认复用范围",
+          "reuse_status": "fact-only-pending-license-review"
+        }
+      ],
+      "keywords_en": [
+        "Lanting Pavilion Shaoxing",
+        "Orchid Pavilion",
+        "Lanting calligraphy"
+      ],
+      "imagery": [
+        "兰渚山麓竹林",
+        "鹅池碑亭",
+        "曲水流觞池",
+        "御碑亭"
+      ],
+      "best_season": "春季、秋季",
+      "micro_drama_hook": "一支笔、一池水，写尽东晋文人的风雅。",
+      "scenario_tags": [
+        "人文",
+        "历史",
+        "古建",
+        "诗词",
+        "书法",
+        "研学"
+      ]
+    },
+    {
+      "id": "sx-luxun-guli",
+      "type": "scenic",
+      "name": "鲁迅故里·沈园",
+      "aliases": [
+        "鲁迅故里",
+        "鲁迅纪念馆",
+        "沈园",
+        "鲁迅故里·沈园景区"
+      ],
+      "level": "国家 AAAAA 级旅游景区",
+      "location": "绍兴市越城区鲁迅中路 235 号（景区地址）",
+      "facts": [
+        "鲁迅故里是鲁迅诞生和青少年时期生活过的故土，现为国家 AAAAA 级景区、全国重点文物保护单位。",
+        "沈园位于绍兴市区鲁迅路和延安路之间，本系沈氏私家花园，占地 57 亩，为宋代江南著名园林，浙江省文物保护单位。"
+      ],
+      "cultural_significance": "鲁迅少年生活地与陆游、唐琬《钗头凤》故事发生地，文学与爱情叙事叠加。",
+      "fact_records": [
+        {
+          "text": "鲁迅故里是鲁迅诞生和青少年时期生活过的故土，现为国家 AAAAA 级景区、全国重点文物保护单位。",
+          "source_url": "http://sxlxmuseum.com/jqjs.htm",
+          "source_title": "景区介绍",
+          "source_publisher": "绍兴鲁迅故里·沈园景区",
+          "source_id": "sxlxmuseum-jqjs",
+          "evidence_quote": "鲁迅故里是鲁迅先生诞生和青少年时期生活过的故土，现为全国百个红色旅游经典景区、全国重点文物保护单位、全国百个爱国主义教育示范基地、国家AAAAA级景区、首批20家“全国研学旅游示范基地”之一。",
+          "fact_type": "designation",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "官网未发现开放数据许可；仅保留短事实引用并标注来源，正式发布前需确认复用范围",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "沈园位于绍兴市区鲁迅路和延安路之间，本系沈氏私家花园，占地 57 亩，为宋代江南著名园林，浙江省文物保护单位。",
+          "source_url": "http://sxlxmuseum.com/jqjs.htm",
+          "source_title": "景区介绍",
+          "source_publisher": "绍兴鲁迅故里·沈园景区",
+          "source_id": "sxlxmuseum-jqjs",
+          "evidence_quote": "沈园，位于绍兴市区鲁迅路和延安路之间，本系沈氏私家花园，占地57亩，为宋代江南著名园林。浙江省文物保护单位。",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "官网未发现开放数据许可；仅保留短事实引用并标注来源，正式发布前需确认复用范围",
+          "reuse_status": "fact-only-pending-license-review"
+        }
+      ],
+      "keywords_en": [
+        "Lu Xun Native Place Shaoxing",
+        "Lu Xun Hometown",
+        "Shen Garden Shaoxing"
+      ],
+      "imagery": [
+        "鲁迅中路老街",
+        "百草园",
+        "三味书屋",
+        "沈园宋代园林",
+        "雨中入口照壁"
+      ],
+      "best_season": "四季皆宜，春季和秋季较舒适",
+      "micro_drama_hook": "从百草园到三味书屋，再走进沈园的《钗头凤》。",
+      "scenario_tags": [
+        "人文",
+        "历史名人",
+        "近代史",
+        "爱情",
+        "研学",
+        "古建"
+      ]
+    },
+    {
+      "id": "sx-dayuling",
+      "type": "scenic",
+      "name": "大禹陵",
+      "aliases": [
+        "禹陵",
+        "大禹陵景区",
+        "会稽山禹陵"
+      ],
+      "level": "全国重点文物保护单位、国家 AAAA 级旅游景区",
+      "location": "绍兴市越城区会稽山麓",
+      "facts": [
+        "大禹陵位于会稽山麓，前临禹池，由神道、祭禹广场、禹陵、享殿、禹祠、禹庙、大禹纪念馆等组成，为全国重点文物保护单位、国家 AAAA 级旅游景区。",
+        "大禹陵祭典于 2006 年被国务院列入国家级非物质文化遗产名录，次年升格为国家级祭祀活动，按惯例于每年农历谷雨时节举行。",
+        "会稽山因大禹在此“会诸侯，计功绩”得“会计”二字，又因古代“计”“稽”相通而得名。"
+      ],
+      "cultural_significance": "华夏立国始祖大禹的陵寝之地，祭禹传统延续至今。",
+      "fact_records": [
+        {
+          "text": "大禹陵位于会稽山麓，前临禹池，由神道、祭禹广场、禹陵、享殿、禹祠、禹庙、大禹纪念馆等组成，为全国重点文物保护单位、国家 AAAA 级旅游景区。",
+          "source_url": "https://www.sxdayuling.com/",
+          "source_title": "大禹陵景区官网首页",
+          "source_publisher": "绍兴大禹开发投资有限公司",
+          "source_id": "sxdayuling-home",
+          "evidence_quote": "大禹陵主要由神道、祭禹广场、禹陵、享殿、禹祠、禹庙、大禹纪念馆、大禹研究院等几部分组成，为全国重点文物保护单位。",
+          "fact_type": "designation",
+          "retrieved_at": "2026-11-21",
+          "checked_at": "2026-11-21",
+          "valid_until": null,
+          "license_status": "官网未发现开放数据许可；仅保留短事实引用并标注来源，正式发布前需确认复用范围",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "大禹陵祭典于 2006 年被国务院列入国家级非物质文化遗产名录，次年升格为国家级祭祀活动，按惯例于每年农历谷雨时节举行。",
+          "source_url": "https://www.sxdayuling.com/",
+          "source_title": "大禹陵景区官网首页",
+          "source_publisher": "绍兴大禹开发投资有限公司",
+          "source_id": "sxdayuling-home",
+          "evidence_quote": "大禹陵祭典于2006年被国务院列入国家级非物质文化遗产名录，次年升格为国家级祭祀活动，并定于每年的农历谷雨时节举行。",
+          "fact_type": "intangible_heritage",
+          "retrieved_at": "2026-11-21",
+          "checked_at": "2026-11-21",
+          "valid_until": null,
+          "license_status": "官网未发现开放数据许可；仅保留短事实引用并标注来源，正式发布前需确认复用范围",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "会稽山因大禹在此“会诸侯，计功绩”得“会计”二字，又因古代“计”“稽”相通而得名。",
+          "source_url": "https://www.sxdayuling.com/",
+          "source_title": "大禹陵景区官网首页",
+          "source_publisher": "绍兴大禹开发投资有限公司",
+          "source_id": "sxdayuling-home",
+          "evidence_quote": "会稽山也因大禹在此“会诸侯，计功绩”得“会计”二字，又因古代“计”、“稽”相通而得名。",
+          "fact_type": "cultural_history",
+          "retrieved_at": "2026-11-21",
+          "checked_at": "2026-11-21",
+          "valid_until": null,
+          "license_status": "官网未发现开放数据许可；仅保留短事实引用并标注来源，正式发布前需确认复用范围",
+          "reuse_status": "fact-only-pending-license-review"
+        }
+      ],
+      "keywords_en": [
+        "Tomb of Yu Shaoxing",
+        "Dayu Mausoleum",
+        "Kuaiji Mountain"
+      ],
+      "imagery": [
+        "会稽山麓神道",
+        "禹庙飞檐",
+        "祭禹广场",
+        "禹池"
+      ],
+      "best_season": "春季（谷雨祭禹）、秋季",
+      "micro_drama_hook": "治水英雄的最后归处，谷雨时节的钟声。",
+      "scenario_tags": [
+        "人文",
+        "历史",
+        "传说",
+        "祈福",
+        "研学",
+        "古建"
+      ]
+    },
+    {
+      "id": "sx-anchang",
+      "type": "scenic",
+      "name": "安昌古镇",
+      "aliases": [
+        "安昌古镇",
+        "安昌镇",
+        "安昌街道"
+      ],
+      "level": "中国历史文化名镇、国家 AAAA 级旅游景区",
+      "location": "绍兴市柯桥区安昌街道",
+      "facts": [
+        "安昌古镇始建于北宋，后因战乱焚毁，于明清时期重建，是绍兴四大古镇之一。",
+        "安昌老街依河而建，长达 1700 多米，河之南为民居，河之北是商市，两岸之间有古桥相连。",
+        "安昌镇于 1991 年 10 月成为浙江省首批历史文化名镇，2005 年 9 月被评为全国第二批历史文化名镇。"
+      ],
+      "cultural_significance": "绍兴四大古镇之一，保存水乡街市、师爷文化与腊味民俗。",
+      "fact_records": [
+        {
+          "text": "安昌古镇始建于北宋，后因战乱焚毁，于明清时期重建，是绍兴四大古镇之一。",
+          "source_url": "http://paper.people.com.cn/rmrbhwb/html/2024-08/28/content_26077325.htm",
+          "source_title": "安昌古镇的味道（行天下）",
+          "source_publisher": "人民日报海外版",
+          "source_id": "rmrbhwb-20240828-12",
+          "evidence_quote": "安昌古镇始建于北宋时期，后因战乱焚毁，于明清时期重建。……作为绍兴四大古镇之一，安昌古镇素有“碧水贯街千万居，彩虹跨河十七桥”的美誉。",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-21",
+          "checked_at": "2026-11-21",
+          "valid_until": null,
+          "license_status": "媒体网页未提供开放数据许可；仅保留短事实引用并标注来源",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "安昌老街依河而建，长达 1700 多米，河之南为民居，河之北是商市，两岸之间有古桥相连。",
+          "source_url": "http://paper.people.com.cn/rmrbhwb/html/2024-08/28/content_26077325.htm",
+          "source_title": "安昌古镇的味道（行天下）",
+          "source_publisher": "人民日报海外版",
+          "source_id": "rmrbhwb-20240828-12",
+          "evidence_quote": "老街依河而建，长达1700多米，河之南为民居，河之北是商市，两岸之间有古桥相连。",
+          "fact_type": "geography",
+          "retrieved_at": "2026-11-21",
+          "checked_at": "2026-11-21",
+          "valid_until": null,
+          "license_status": "媒体网页未提供开放数据许可；仅保留短事实引用并标注来源",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "安昌镇于 1991 年 10 月成为浙江省首批历史文化名镇，2005 年 9 月被评为全国第二批历史文化名镇。",
+          "source_url": "https://skzx.zjol.com.cn/ch133/system/2022/08/22/033795209.shtml",
+          "source_title": "【地情风物】中国历史文化名镇——安昌镇",
+          "source_publisher": "社科在线（浙江在线）",
+          "source_id": "skzx-20220909",
+          "evidence_quote": "1991年10月，安昌镇成为浙江省首批历史文化名镇，2005年9月被评为全国第二批历史文化名镇，境内文化古迹众多。",
+          "fact_type": "designation",
+          "retrieved_at": "2026-11-21",
+          "checked_at": "2026-11-21",
+          "valid_until": null,
+          "license_status": "社科在线网页未提供开放数据许可；仅保留短事实引用并标注来源",
+          "reuse_status": "fact-only-pending-license-review"
+        }
+      ],
+      "keywords_en": [
+        "Anchang Ancient Town Shaoxing",
+        "Anchang water town"
+      ],
+      "imagery": [
+        "沿河长廊",
+        "红灯笼与腊味",
+        "乌篷船",
+        "古石桥",
+        "师爷馆"
+      ],
+      "best_season": "冬季（腊味）、春季",
+      "micro_drama_hook": "一条老街，半部绍兴师爷史。",
+      "scenario_tags": [
+        "人文",
+        "古镇",
+        "水乡",
+        "市井",
+        "美食",
+        "摄影"
+      ]
+    },
+    {
+      "id": "sx-cangqiao",
+      "type": "scenic",
+      "name": "仓桥直街",
+      "aliases": [
+        "仓桥直街",
+        "仓桥历史街区",
+        "越子城历史文化街区"
+      ],
+      "level": "联合国教科文组织亚太地区文化遗产保护优秀奖（2003）",
+      "location": "绍兴市越城区府山东南侧",
+      "facts": [
+        "仓桥直街位于绍兴市中心，全长 1.5 公里，街区总面积 6.4 公顷，历史最早可追溯至宋代。",
+        "2003 年，仓桥直街获联合国教科文组织亚太地区文化遗产保护优秀奖，被称为“中国遗产活生生的展示地”。",
+        "上世纪 90 年代起，绍兴对仓桥直街周边实施保护，修缮塌旧建筑、疏浚河道，保持街景、河道、古树、小桥、院墙、驳岸的和谐统一。"
+      ],
+      "cultural_significance": "绍兴古城保存较完整的历史街区，以原住民生活和台门建筑见长。",
+      "fact_records": [
+        {
+          "text": "仓桥直街位于绍兴市中心，全长 1.5 公里，街区总面积 6.4 公顷，历史最早可追溯至宋代。",
+          "source_url": "https://www.news.cn/culture/20240426/b0122356585a4a7ab4aa2bc73a23c93f/c.html",
+          "source_title": "文化中国行丨仓桥直街：中国遗产活生生的展示地",
+          "source_publisher": "新华网",
+          "source_id": "xinhua-20240426-cangqiao",
+          "evidence_quote": "仓桥直街位于浙江绍兴市中心，全长1.5公里，街区总面积6.4公顷，是以古城风貌为特色、传统城市人居文化为内涵的历史街区。仓桥直街的历史最早可追溯至宋代。",
+          "fact_type": "geography",
+          "retrieved_at": "2026-11-21",
+          "checked_at": "2026-11-21",
+          "valid_until": null,
+          "license_status": "媒体网页未提供开放数据许可；仅保留短事实引用并标注来源",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "2003 年，仓桥直街获联合国教科文组织亚太地区文化遗产保护优秀奖，被称为“中国遗产活生生的展示地”。",
+          "source_url": "https://www.news.cn/culture/20240426/b0122356585a4a7ab4aa2bc73a23c93f/c.html",
+          "source_title": "文化中国行丨仓桥直街：中国遗产活生生的展示地",
+          "source_publisher": "新华网",
+          "source_id": "xinhua-20240426-cangqiao",
+          "evidence_quote": "2003年，仓桥直街荣获联合国教科文组织亚太地区文化遗产保护优秀奖，被称为“中国遗产活生生的展示地”。",
+          "fact_type": "conservation_award",
+          "retrieved_at": "2026-11-21",
+          "checked_at": "2026-11-21",
+          "valid_until": null,
+          "license_status": "媒体网页未提供开放数据许可；仅保留短事实引用并标注来源",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "上世纪 90 年代起，绍兴对仓桥直街周边实施保护，修缮塌旧建筑、疏浚河道，保持街景、河道、古树、小桥、院墙、驳岸的和谐统一。",
+          "source_url": "https://www.news.cn/culture/20240426/b0122356585a4a7ab4aa2bc73a23c93f/c.html",
+          "source_title": "文化中国行丨仓桥直街：中国遗产活生生的展示地",
+          "source_publisher": "新华网",
+          "source_id": "xinhua-20240426-cangqiao",
+          "evidence_quote": "上世纪90年代起，绍兴开始对仓桥直街周边实行保护，还原修缮塌旧建筑，疏浚整治河道，尽可能保持道路街景、河道水系、古树、小桥、院墙、驳岸等的和谐统一。",
+          "fact_type": "conservation",
+          "retrieved_at": "2026-11-21",
+          "checked_at": "2026-11-21",
+          "valid_until": null,
+          "license_status": "媒体网页未提供开放数据许可；仅保留短事实引用并标注来源",
+          "reuse_status": "fact-only-pending-license-review"
+        }
+      ],
+      "keywords_en": [
+        "Cangqiao Straight Street Shaoxing",
+        "Cangqiao historic street"
+      ],
+      "imagery": [
+        "青石板巷",
+        "台门民居",
+        "环山河",
+        "街角老字号"
+      ],
+      "best_season": "四季皆宜，傍晚",
+      "micro_drama_hook": "一河五街，台门里还住着老绍兴。",
+      "scenario_tags": [
+        "人文",
+        "古建",
+        "市井",
+        "夜游",
+        "摄影",
+        "水乡"
+      ]
+    },
+    {
+      "id": "sx-huangjiu",
+      "type": "intangible",
+      "name": "绍兴黄酒酿制技艺",
+      "aliases": [
+        "绍兴黄酒",
+        "绍兴酒",
+        "绍兴黄酒酿制技艺"
+      ],
+      "level": "国家级非物质文化遗产（第一批，2006）",
+      "location": "绍兴市（鉴湖水系）",
+      "facts": [
+        "绍兴黄酒酿制技艺于 2006 年列入第一批国家级非物质文化遗产名录，项目编号Ⅷ-60，申报地区为浙江省绍兴市。",
+        "绍兴酒以糯米为原料，经筛米、浸米、蒸饭、摊冷、落作、主发酵、开耙、灌罐后酵、榨酒、澄清、勾兑、煎酒、灌罐陈酿（3 年以上）等步骤；主要品种有元红酒、加饭酒、善酿酒、香雪酒。",
+        "绍兴黄酒产地主要分布在鉴湖水系区域，包括今绍兴市越城区、柯桥区（原绍兴县）和上虞区东关镇等地。"
+      ],
+      "cultural_significance": "中国黄酒杰出代表，鉴湖水系与糯米工艺共同塑造风味。",
+      "fact_records": [
+        {
+          "text": "绍兴黄酒酿制技艺于 2006 年列入第一批国家级非物质文化遗产名录，项目编号Ⅷ-60，申报地区为浙江省绍兴市。",
+          "source_url": "https://www.ihchina.cn/project_details/14368.html",
+          "source_title": "绍兴黄酒酿制技艺",
+          "source_publisher": "中国非物质文化遗产网·中国非物质文化遗产数字博物馆",
+          "source_id": "ihchina-14368",
+          "evidence_quote": "项目序号：410项目编号：Ⅷ-60公布时间：2006(第一批)类别：传统技艺所属地区：浙江省类型：新增项目申报地区或单位：浙江省绍兴市",
+          "fact_type": "intangible_heritage",
+          "retrieved_at": "2026-11-21",
+          "checked_at": "2026-11-21",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网版权声明限制未获书面许可的商业使用/改写；仅保留目录字段与短事实引用",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "绍兴酒以糯米为原料，经筛米、浸米、蒸饭、摊冷、落作、主发酵、开耙、灌罐后酵、榨酒、澄清、勾兑、煎酒、灌罐陈酿（3 年以上）等步骤；主要品种有元红酒、加饭酒、善酿酒、香雪酒。",
+          "source_url": "https://www.ihchina.cn/project_details/14368.html",
+          "source_title": "绍兴黄酒酿制技艺",
+          "source_publisher": "中国非物质文化遗产网·中国非物质文化遗产数字博物馆",
+          "source_id": "ihchina-14368",
+          "evidence_quote": "酿酒以糯米为原料，经过筛米、浸米、蒸饭、摊冷、落作（加麦曲、淋饭、鉴湖水）、主发酵、开耙、灌罐后酵、榨酒、澄清、勾兑、煎酒、灌罐陈酿（3年以上）等步骤造出成品酒。绍兴酒的主要品种有元红酒、加饭酒、善酿酒、香雪酒四大类型。",
+          "fact_type": "craft_process",
+          "retrieved_at": "2026-11-21",
+          "checked_at": "2026-11-21",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网版权声明限制未获书面许可的商业使用/改写；仅保留目录字段与短事实引用",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "绍兴黄酒产地主要分布在鉴湖水系区域，包括今绍兴市越城区、柯桥区（原绍兴县）和上虞区东关镇等地。",
+          "source_url": "https://www.ihchina.cn/project_details/14368.html",
+          "source_title": "绍兴黄酒酿制技艺",
+          "source_publisher": "中国非物质文化遗产网·中国非物质文化遗产数字博物馆",
+          "source_id": "ihchina-14368",
+          "evidence_quote": "绍兴黄酒产地主要分布在鉴湖水系区域，包括绍兴市越城区、绍兴县和上虞市东关镇等地。",
+          "fact_type": "geography",
+          "retrieved_at": "2026-11-21",
+          "checked_at": "2026-11-21",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网版权声明限制未获书面许可的商业使用/改写；仅保留目录字段与短事实引用",
+          "reuse_status": "fact-only-pending-license-review"
+        }
+      ],
+      "keywords_en": [
+        "Shaoxing wine",
+        "Shaoxing rice wine",
+        "Yellow wine"
+      ],
+      "imagery": [
+        "陶坛陈酿",
+        "琥珀色酒液",
+        "酒坊木榨",
+        "鉴湖水"
+      ],
+      "best_season": "冬季酿季、秋季",
+      "micro_drama_hook": "一坛酒，从鉴湖水的冬天酿到第二年立春。",
+      "scenario_tags": [
+        "美食",
+        "老字号",
+        "非遗体验",
+        "伴手礼",
+        "黄酒"
+      ]
+    },
+    {
+      "id": "sx-yueju",
+      "type": "intangible",
+      "name": "越剧",
+      "aliases": [
+        "越剧",
+        "绍兴戏",
+        "的笃班"
+      ],
+      "level": "国家级非物质文化遗产（第一批，2006）",
+      "location": "绍兴市嵊州市",
+      "facts": [
+        "越剧发源于浙江省绍兴地区嵊县（今嵊州市）一带，清末在“落地唱书”基础上吸收余姚滩簧、绍剧等形成，初称“小歌班”或“的笃班”。",
+        "1938 年改称越剧；2006 年列入第一批国家级非物质文化遗产名录，项目编号Ⅳ-53，申报地区为浙江省。",
+        "越剧代表剧目有《梁山伯与祝英台》《红楼梦》《祥林嫂》《西厢记》《追鱼》等。"
+      ],
+      "cultural_significance": "中国第二大剧种，以抒情唱腔和女性演员传统著称。",
+      "fact_records": [
+        {
+          "text": "越剧发源于浙江省绍兴地区嵊县（今嵊州市）一带，清末在“落地唱书”基础上吸收余姚滩簧、绍剧等形成，初称“小歌班”或“的笃班”。",
+          "source_url": "https://www.ihchina.cn/Article/Index/detail?id=13267",
+          "source_title": "越剧",
+          "source_publisher": "中国非物质文化遗产网·中国非物质文化遗产数字博物馆",
+          "source_id": "ihchina-yueju-13267",
+          "evidence_quote": "越剧流行于浙江、上海、江苏等许多省、市、地区，它发源于浙江省绍兴地区嵊县一带，清末在曲艺“落地唱书”的基础上吸收余姚滩簧、绍剧等曲种、剧种的剧目、曲调、表演艺术而初步成型，当时称为“小歌班”或“的笃班”。",
+          "fact_type": "intangible_heritage",
+          "retrieved_at": "2026-11-21",
+          "checked_at": "2026-11-21",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网版权声明限制未获书面许可的商业使用/改写；仅保留目录字段与短事实引用",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "1938 年改称越剧；2006 年列入第一批国家级非物质文化遗产名录，项目编号Ⅳ-53，申报地区为浙江省。",
+          "source_url": "https://www.ihchina.cn/Article/Index/detail?id=13267",
+          "source_title": "越剧",
+          "source_publisher": "中国非物质文化遗产网·中国非物质文化遗产数字博物馆",
+          "source_id": "ihchina-yueju-13267",
+          "evidence_quote": "项目序号：197项目编号：Ⅳ-53公布时间：2006(第一批)类别：传统戏剧所属地区：浙江省类型：新增项目申报地区或单位：浙江省",
+          "fact_type": "designation",
+          "retrieved_at": "2026-11-21",
+          "checked_at": "2026-11-21",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网版权声明限制未获书面许可的商业使用/改写；仅保留目录字段与短事实引用",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "越剧代表剧目有《梁山伯与祝英台》《红楼梦》《祥林嫂》《西厢记》《追鱼》等。",
+          "source_url": "https://www.ihchina.cn/Article/Index/detail?id=13267",
+          "source_title": "越剧",
+          "source_publisher": "中国非物质文化遗产网·中国非物质文化遗产数字博物馆",
+          "source_id": "ihchina-yueju-13267",
+          "evidence_quote": "越剧有不少为人熟知的优秀剧目，其中较具代表性的有《梁山伯与祝英台》、《红楼梦》、《祥林嫂》、《西厢记》、《追鱼》、《情探》、《盘夫索夫》、《柳毅传书》、《碧玉簪》、《三看御妹》、《打金枝》、《玉堂春》、《琵琶记》、《孔雀东南飞》等。",
+          "fact_type": "performance",
+          "retrieved_at": "2026-11-21",
+          "checked_at": "2026-11-21",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网版权声明限制未获书面许可的商业使用/改写；仅保留目录字段与短事实引用",
+          "reuse_status": "fact-only-pending-license-review"
+        }
+      ],
+      "keywords_en": [
+        "Yue opera",
+        "Shaoxing opera",
+        "Yueju performance"
+      ],
+      "imagery": [
+        "水袖",
+        "旦角妆扮",
+        "戏台",
+        "丝竹乐队"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "从嵊县田头的落地唱书，唱到上海滩的舞台。",
+      "scenario_tags": [
+        "演艺",
+        "戏曲",
+        "非遗体验",
+        "艺术",
+        "人文"
+      ]
+    },
+    {
+      "id": "sx-lianhualuo",
+      "type": "intangible",
+      "name": "绍兴莲花落",
+      "aliases": [
+        "绍兴莲花落",
+        "莲花落"
+      ],
+      "level": "国家级非物质文化遗产（第一批，2006）",
+      "location": "绍兴市（柯桥区/绍兴县）",
+      "facts": [
+        "绍兴莲花落是流行于绍兴一带的曲艺说书形式，形成于清代道光、咸丰年间。",
+        "绍兴莲花落于 2006 年列入第一批国家级非物质文化遗产名录，项目编号Ⅴ-23，申报地区为浙江省绍兴县。",
+        "绍兴莲花落唱腔早期为“哩工尺”，20 世纪 20 年代后以四胡伴奏，逐步形成传承至今的“基本调”。"
+      ],
+      "cultural_significance": "绍兴方言说唱代表，滑稽幽默，贴近市井生活。",
+      "fact_records": [
+        {
+          "text": "绍兴莲花落是流行于绍兴一带的曲艺说书形式，形成于清代道光、咸丰年间。",
+          "source_url": "https://www.ihchina.cn/project_details/13627/",
+          "source_title": "绍兴莲花落",
+          "source_publisher": "中国非物质文化遗产网·中国非物质文化遗产数字博物馆",
+          "source_id": "ihchina-13627",
+          "evidence_quote": "绍兴莲花落是流行于浙江绍兴一带的曲艺说书形式，它形成于清代道光和咸丰年间。",
+          "fact_type": "intangible_heritage",
+          "retrieved_at": "2026-11-21",
+          "checked_at": "2026-11-21",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网版权声明限制未获书面许可的商业使用/改写；仅保留目录字段与短事实引用",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "绍兴莲花落于 2006 年列入第一批国家级非物质文化遗产名录，项目编号Ⅴ-23，申报地区为浙江省绍兴县。",
+          "source_url": "https://www.ihchina.cn/project_details/13627/",
+          "source_title": "绍兴莲花落",
+          "source_publisher": "中国非物质文化遗产网·中国非物质文化遗产数字博物馆",
+          "source_id": "ihchina-13627",
+          "evidence_quote": "项目序号：259项目编号：Ⅴ-23公布时间：2006(第一批)类别：曲艺所属地区：浙江省类型：新增项目申报地区或单位：浙江省绍兴县",
+          "fact_type": "designation",
+          "retrieved_at": "2026-11-21",
+          "checked_at": "2026-11-21",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网版权声明限制未获书面许可的商业使用/改写；仅保留目录字段与短事实引用",
+          "reuse_status": "fact-only-pending-license-review",
+          "notes": "申报地区“浙江省绍兴县”为中国非遗网名录原文，2013 年绍兴县撤县设柯桥区；引用时应说明这是申报时的行政区名"
+        },
+        {
+          "text": "绍兴莲花落唱腔早期为“哩工尺”，20 世纪 20 年代后以四胡伴奏，逐步形成传承至今的“基本调”。",
+          "source_url": "https://www.ihchina.cn/project_details/13627/",
+          "source_title": "绍兴莲花落",
+          "source_publisher": "中国非物质文化遗产网·中国非物质文化遗产数字博物馆",
+          "source_id": "ihchina-13627",
+          "evidence_quote": "绍兴莲花落的唱腔曲调早期为“哩工尺”，由一人主唱，旁有一二人以“工尺”为辞帮和。20世纪20年代后，开始以四胡伴奏，逐步形成传承至今的“基本调”。",
+          "fact_type": "performance",
+          "retrieved_at": "2026-11-21",
+          "checked_at": "2026-11-21",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网版权声明限制未获书面许可的商业使用/改写；仅保留目录字段与短事实引用",
+          "reuse_status": "fact-only-pending-license-review"
+        }
+      ],
+      "keywords_en": [
+        "Shaoxing Lianhualuo",
+        "Lianhualuo storytelling"
+      ],
+      "imagery": [
+        "一人主唱",
+        "四胡伴奏",
+        "茶馆书场",
+        "绍兴方言说唱"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "一把四胡，一口绍兴话，唱尽市井人情。",
+      "scenario_tags": [
+        "曲艺",
+        "非遗体验",
+        "市井",
+        "人文"
+      ]
+    },
+    {
+      "id": "sx-wupengchuan",
+      "type": "intangible",
+      "name": "乌篷船制作技艺",
+      "aliases": [
+        "乌篷船",
+        "乌篷船制作技艺",
+        "黑篷船"
+      ],
+      "level": "浙江省级非物质文化遗产（2009）",
+      "location": "绍兴市水乡",
+      "facts": [
+        "“乌篷船制作技艺”于 2009 年列入浙江省非物质文化遗产名录。",
+        "乌篷船一般长 7 米、内径宽 1 米，划船时手脚并用，可在水上轻快穿梭。",
+        "钱寿堂是绍兴市“乌篷船制作技艺”代表性传承人，从 14 岁开始跟随父辈学习造船技艺，至 2026 年已从业 50 余年。"
+      ],
+      "cultural_significance": "绍兴水乡标志性交通工具，竹篷涂黑、手脚并用划行。",
+      "fact_records": [
+        {
+          "text": "“乌篷船制作技艺”于 2009 年列入浙江省非物质文化遗产名录。",
+          "source_url": "http://www.news.cn/photo/20250612/425b807578bf40a3b14f0c0649269839/c.html",
+          "source_title": "乌篷船匠师钱寿堂：留住水乡魅影",
+          "source_publisher": "新华网",
+          "source_id": "xinhua-20250612-wupeng",
+          "evidence_quote": "“乌篷船制作技艺”在2009年被列入浙江省非物质文化遗产名录。",
+          "fact_type": "intangible_heritage",
+          "retrieved_at": "2026-11-21",
+          "checked_at": "2026-11-21",
+          "valid_until": null,
+          "license_status": "媒体网页未提供开放数据许可；仅保留短事实引用并标注来源",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "乌篷船一般长 7 米、内径宽 1 米，划船时手脚并用，可在水上轻快穿梭。",
+          "source_url": "http://www.news.cn/photo/20250612/425b807578bf40a3b14f0c0649269839/c.html",
+          "source_title": "乌篷船匠师钱寿堂：留住水乡魅影",
+          "source_publisher": "新华网",
+          "source_id": "xinhua-20250612-wupeng",
+          "evidence_quote": "乌篷船一般长7米，内径宽1米，划船时手脚并用，可以在水上轻快穿梭。",
+          "fact_type": "craft_process",
+          "retrieved_at": "2026-11-21",
+          "checked_at": "2026-11-21",
+          "valid_until": null,
+          "license_status": "媒体网页未提供开放数据许可；仅保留短事实引用并标注来源",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "钱寿堂是绍兴市“乌篷船制作技艺”代表性传承人，从 14 岁开始跟随父辈学习造船技艺，至 2026 年已从业 50 余年。",
+          "source_url": "http://www.news.cn/photo/20250612/425b807578bf40a3b14f0c0649269839/c.html",
+          "source_title": "乌篷船匠师钱寿堂：留住水乡魅影",
+          "source_publisher": "新华网",
+          "source_id": "xinhua-20250612-wupeng",
+          "evidence_quote": "今年68岁的钱寿堂是绍兴市“乌篷船制作技艺”的代表性传承人，从14岁开始跟随父辈学习造船技艺，至今已有50多年的从业经验。",
+          "fact_type": "person",
+          "retrieved_at": "2026-11-21",
+          "checked_at": "2026-11-21",
+          "valid_until": "2027-12-31",
+          "license_status": "媒体网页未提供开放数据许可；仅保留短事实引用并标注来源",
+          "reuse_status": "fact-only-pending-license-review"
+        }
+      ],
+      "keywords_en": [
+        "Wupeng boat Shaoxing",
+        "black awning boat"
+      ],
+      "imagery": [
+        "黑色竹篷",
+        "船夫手脚并用",
+        "水巷穿行",
+        "石桥倒影"
+      ],
+      "best_season": "春季、秋季",
+      "micro_drama_hook": "手脚并用，穿过桥洞，划进水乡的慢时光。",
+      "scenario_tags": [
+        "水上活动",
+        "非遗体验",
+        "水乡",
+        "摄影"
+      ]
+    },
+    {
+      "id": "sx-kuaijishan-fei",
+      "type": "scenic",
+      "name": "会稽山古香榧群",
+      "aliases": [
+        "会稽山古香榧群",
+        "绍兴古香榧群",
+        "香榧"
+      ],
+      "level": "全球重要农业文化遗产（GIAHS，2013）",
+      "location": "绍兴市会稽山脉（柯桥区、诸暨市等）",
+      "facts": [
+        "会稽山古香榧群于 2013 年被联合国粮农组织认定为全球重要农业文化遗产（GIAHS），项目状态为已认定。",
+        "中国香榧树有些有一千多年树龄，是会稽山社区采用古老的嫁接和人工选育技术发展而成。",
+        "这一系统能够防止水土流失，提供各种“高价值”经济产品，集果用、药用、油用和装饰用于一身。"
+      ],
+      "cultural_significance": "会稽山传统农林复合系统，古树、嫁接与村落生计的结合。",
+      "fact_records": [
+        {
+          "text": "会稽山古香榧群于 2013 年被联合国粮农组织认定为全球重要农业文化遗产（GIAHS），项目状态为已认定。",
+          "source_url": "https://www.fao.org/giahs/around-the-world/detail/china-kuaijishan/zh",
+          "source_title": "会稽山古香榧群",
+          "source_publisher": "联合国粮农组织（FAO）全球重要农业文化遗产系统",
+          "source_id": "fao-giahs-kuaijishan",
+          "evidence_quote": "国家中国开始日期2013项目状态已认定主题传统系统农林业",
+          "fact_type": "agriculture_heritage",
+          "retrieved_at": "2026-11-21",
+          "checked_at": "2026-11-21",
+          "valid_until": null,
+          "license_status": "FAO网页未提供开放数据再分发许可；仅保留短事实引用并标注来源",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "中国香榧树有些有一千多年树龄，是会稽山社区采用古老的嫁接和人工选育技术发展而成。",
+          "source_url": "https://www.fao.org/giahs/around-the-world/detail/china-kuaijishan/zh",
+          "source_title": "会稽山古香榧群",
+          "source_publisher": "联合国粮农组织（FAO）全球重要农业文化遗产系统",
+          "source_id": "fao-giahs-kuaijishan",
+          "evidence_quote": "中国香榧树，有些有一千多年树龄，是会稽山社区采用古老的嫁接和人工选育技术发展而成。",
+          "fact_type": "agriculture_heritage",
+          "retrieved_at": "2026-11-21",
+          "checked_at": "2026-11-21",
+          "valid_until": null,
+          "license_status": "FAO网页未提供开放数据再分发许可；仅保留短事实引用并标注来源",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "这一系统能够防止水土流失，提供各种“高价值”经济产品，集果用、药用、油用和装饰用于一身。",
+          "source_url": "https://www.fao.org/giahs/around-the-world/detail/china-kuaijishan/zh",
+          "source_title": "会稽山古香榧群",
+          "source_publisher": "联合国粮农组织（FAO）全球重要农业文化遗产系统",
+          "source_id": "fao-giahs-kuaijishan",
+          "evidence_quote": "这一和谐的系统能够防止水土流失，提供各种“高价值”经济产品，集果用、药用、油用和装饰用于一身。",
+          "fact_type": "agriculture_heritage",
+          "retrieved_at": "2026-11-21",
+          "checked_at": "2026-11-21",
+          "valid_until": null,
+          "license_status": "FAO网页未提供开放数据再分发许可；仅保留短事实引用并标注来源",
+          "reuse_status": "fact-only-pending-license-review"
+        }
+      ],
+      "keywords_en": [
+        "Torreya grandis",
+        "Kuaijishan ancient torreya",
+        "Chinese torreya"
+      ],
+      "imagery": [
+        "千年香榧古树",
+        "嫁接枝条",
+        "香榧果",
+        "会稽山梯田"
+      ],
+      "best_season": "秋季（果实成熟）",
+      "micro_drama_hook": "千年古树上的果实，靠一代代嫁接延续。",
+      "scenario_tags": [
+        "自然",
+        "农业遗产",
+        "美食",
+        "研学",
+        "秋日"
+      ]
+    }
+  ]
+}

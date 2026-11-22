@@ -1,0 +1,1072 @@
+{
+  "city": "嘉兴",
+  "entities": [
+    {
+      "id": "jx-wuzhen",
+      "type": "scenic",
+      "name": "乌镇",
+      "aliases": [
+        "乌青二镇",
+        "Wuzhen"
+      ],
+      "level": "国家5A级景区",
+      "location": "嘉兴桐乡市",
+      "facts": [
+        "乌镇位于桐乡市，是江南著名古镇之一，乌镇景区为国家5A级景区。",
+        "乌镇原以市河（车溪）为界分为乌青二镇：河西为乌镇属湖州府乌程县，河东为青镇属嘉兴府桐乡县。",
+        "民居以清代建筑为主，全镇以河成街、桥街相连，是江南典型的“小桥流水人家”。",
+        "历史上乌镇曾出过64名进士、161名举人，茅盾、木心都是乌镇人。",
+        "2014年首届世界互联网大会在乌镇举办，乌镇成为其永久会址。"
+      ],
+      "fact_records": [
+        {
+          "text": "乌镇位于桐乡市，是江南著名古镇之一，乌镇景区为国家5A级景区。",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E4%B9%8C%E9%95%87",
+          "source_title": "维基百科：乌镇",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-乌镇",
+          "evidence_quote": "乌镇镇位于中华人民共和国浙江省桐乡市，是江南著名古镇之一。……乌镇景区已被评为中国国家5A级景区",
+          "fact_type": "geography",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "乌镇原以市河（车溪）为界分为乌青二镇：河西为乌镇属湖州府乌程县，河东为青镇属嘉兴府桐乡县。",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E4%B9%8C%E9%95%87",
+          "source_title": "维基百科：乌镇",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-乌镇",
+          "evidence_quote": "乌镇原以市河（车溪）为界，分为乌青二镇，河西为乌镇，属湖州府乌程县；河东为青镇，属嘉兴府桐乡县。",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "民居以清代建筑为主，全镇以河成街、桥街相连，是江南典型的“小桥流水人家”。",
+          "fact_index": 2,
+          "source_url": "https://zh.wikipedia.org/wiki/%E4%B9%8C%E9%95%87",
+          "source_title": "维基百科：乌镇",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-乌镇",
+          "evidence_quote": "乌镇街道上民居以清代建筑为主，保存完好。全镇以河成街，桥街相连。……是江南典型的“小桥流水人家”。",
+          "fact_type": "landscape",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "历史上乌镇曾出过64名进士、161名举人，茅盾、木心都是乌镇人。",
+          "fact_index": 3,
+          "source_url": "https://zh.wikipedia.org/wiki/%E4%B9%8C%E9%95%87",
+          "source_title": "维基百科：乌镇",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-乌镇",
+          "evidence_quote": "在历史上小镇曾出过64名进士、161名举人。茅盾、沈泽民、严独鹤、木心等都为乌镇人。",
+          "fact_type": "culture",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "2014年首届世界互联网大会在乌镇举办，乌镇成为其永久会址。",
+          "fact_index": 4,
+          "source_url": "https://zh.wikipedia.org/wiki/%E4%B9%8C%E9%95%87",
+          "source_title": "维基百科：乌镇",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-乌镇",
+          "evidence_quote": "2014年11月19日到21日，首届“世界互聯網大會”在乌镇举办，该地也成为世界互联网大会的永久会址。",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
+      ],
+      "cultural_significance": "一河隔开两个县的水乡古镇，如今是全球互联网大佬打卡的地方。",
+      "keywords_en": [
+        "Wuzhen",
+        "Wuzhen water town"
+      ],
+      "imagery": [
+        "西栅夜景",
+        "水上戏台",
+        "蓝印花布",
+        "乌篷船河道"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "白天是水乡，夜里灯一亮，整个镇子成了舞台。",
+      "scenario_tags": [
+        "古镇",
+        "水乡",
+        "夜景",
+        "人文"
+      ]
+    },
+    {
+      "id": "jx-nanhu",
+      "type": "scenic",
+      "name": "南湖",
+      "aliases": [
+        "鸳鸯湖",
+        "鸳湖",
+        "南湖红船"
+      ],
+      "level": "江南三大名湖之一（5A级景区南湖旅游区）",
+      "location": "嘉兴市城南",
+      "facts": [
+        "南湖旧称鸳鸯湖，水域面积约41.6万平方米，与南京玄武湖、杭州西湖并称江南三大名湖。",
+        "湖心小岛上有烟雨楼，是赏湖观景的绝佳去处。",
+        "1921年8月中共一大在南湖的一艘丝网船上完成议程并宣布中国共产党成立，南湖被视为中国革命发祥地。"
+      ],
+      "fact_records": [
+        {
+          "text": "南湖旧称鸳鸯湖，水域面积约41.6万平方米，与南京玄武湖、杭州西湖并称江南三大名湖。",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%8D%97%E6%B9%96_%28%E5%98%89%E5%85%B4%29",
+          "source_title": "维基百科：南湖 (嘉兴)",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-南湖 (嘉兴)",
+          "evidence_quote": "南湖旧称鸳鸯湖，简称鸳湖，又称马场湖、滮湖，位于浙江省嘉兴市城南，水域面积约41.6万平方米……与南京玄武湖、杭州西湖并称江南三大名湖。",
+          "fact_type": "geography",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "湖心小岛上有烟雨楼，是赏湖观景的绝佳去处。",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%8D%97%E6%B9%96_%28%E5%98%89%E5%85%B4%29",
+          "source_title": "维基百科：南湖 (嘉兴)",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-南湖 (嘉兴)",
+          "evidence_quote": "湖中有一湖心小岛，岛上有一烟雨楼，是赏湖观景的绝佳去处。",
+          "fact_type": "landscape",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "1921年8月中共一大在南湖的一艘丝网船上完成议程并宣布中国共产党成立，南湖被视为中国革命发祥地。",
+          "fact_index": 2,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%8D%97%E6%B9%96_%28%E5%98%89%E5%85%B4%29",
+          "source_title": "维基百科：南湖 (嘉兴)",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-南湖 (嘉兴)",
+          "evidence_quote": "1921年8月2日，中国共产党第一次全国代表大会在南湖的一艘丝网船上完成了大会的议程，并宣布中国共产党成立。此后，南湖被中共视为中国的革命发祥地。",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
+      ],
+      "cultural_significance": "烟雨楼下的南湖，一条船改变了二十世纪的中国。",
+      "keywords_en": [
+        "Nanhu Lake Jiaxing",
+        "Red Boat"
+      ],
+      "imagery": [
+        "红船",
+        "烟雨楼",
+        "湖心岛",
+        "雨雾湖面"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "一条不起眼的丝网船，载着一个政党的开始。",
+      "scenario_tags": [
+        "爱国教育",
+        "人文",
+        "水乡",
+        "经典必游"
+      ]
+    },
+    {
+      "id": "jx-xitang",
+      "type": "scenic",
+      "name": "西塘",
+      "aliases": [
+        "胥塘",
+        "斜塘",
+        "平川"
+      ],
+      "level": "国家5A级旅游景区、第一批中国历史文化名镇",
+      "location": "嘉兴嘉善县城北10公里",
+      "facts": [
+        "西塘古称胥塘、斜塘，是一座千年古镇，春秋时为吴越相交之地，有“吴根越角”之称。",
+        "临河街道的廊棚沿河而建连为一体，总长近千米；镇中9条水道纵横交织，27座石桥架于其上。",
+        "2003年列入第一批中国历史文化名镇；2017年西塘古镇景区评为国家5A级旅游景区。",
+        "电影《谍中谍3》曾在此取景；2013年起西塘每年举办汉服文化周。"
+      ],
+      "fact_records": [
+        {
+          "text": "西塘古称胥塘、斜塘，是一座千年古镇，春秋时为吴越相交之地，有“吴根越角”之称。",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E8%A5%BF%E5%A1%98%E9%95%87_%28%E5%98%89%E5%96%84%E5%8E%BF%29",
+          "source_title": "维基百科：西塘镇 (嘉善县)",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-西塘镇 (嘉善县)",
+          "evidence_quote": "西塘，古称胥塘、斜塘，又名平川，位于浙江省嘉善县，在嘉善县城北10公里处，是一座已有千年历史文化的古镇。……故有“吴根越角”和“越角人家”之称。",
+          "fact_type": "geography",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "临河街道的廊棚沿河而建连为一体，总长近千米；镇中9条水道纵横交织，27座石桥架于其上。",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E8%A5%BF%E5%A1%98%E9%95%87_%28%E5%98%89%E5%96%84%E5%8E%BF%29",
+          "source_title": "维基百科：西塘镇 (嘉善县)",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-西塘镇 (嘉善县)",
+          "evidence_quote": "古镇中临河的街道都有廊棚，廊棚沿河而建，连为一体，绵延不断，总长近千米，类似北京颐和园的长廊。9条水道在镇中纵横交织，27座石桥架于其上。",
+          "fact_type": "landscape",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "2003年列入第一批中国历史文化名镇；2017年西塘古镇景区评为国家5A级旅游景区。",
+          "fact_index": 2,
+          "source_url": "https://zh.wikipedia.org/wiki/%E8%A5%BF%E5%A1%98%E9%95%87_%28%E5%98%89%E5%96%84%E5%8E%BF%29",
+          "source_title": "维基百科：西塘镇 (嘉善县)",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-西塘镇 (嘉善县)",
+          "evidence_quote": "2003年10月8日被列入中华人民共和国建设部和国家文物局共同评定的第一批中国历史文化名镇……2017年，西塘古镇景区被评为国家5A级旅游景区。",
+          "fact_type": "designation",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "电影《谍中谍3》曾在此取景；2013年起西塘每年举办汉服文化周。",
+          "fact_index": 3,
+          "source_url": "https://zh.wikipedia.org/wiki/%E8%A5%BF%E5%A1%98%E9%95%87_%28%E5%98%89%E5%96%84%E5%8E%BF%29",
+          "source_title": "维基百科：西塘镇 (嘉善县)",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-西塘镇 (嘉善县)",
+          "evidence_quote": "电影《谍中谍3》曾在此处取景。……2013年11月，台灣詞人方文山在此發起漢服文化周",
+          "fact_type": "culture",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
+      ],
+      "cultural_significance": "千米廊棚遮住雨，也遮出江南最出片的水乡夜色。",
+      "keywords_en": [
+        "Xitang",
+        "Xitang water town"
+      ],
+      "imagery": [
+        "烟雨长廊",
+        "石皮弄",
+        "夜灯倒影",
+        "送子来凤桥"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "廊棚下一站，古装剧和真实生活只隔一层灯笼光。",
+      "scenario_tags": [
+        "古镇",
+        "水乡",
+        "夜景",
+        "摄影"
+      ]
+    },
+    {
+      "id": "jx-city",
+      "type": "scenic",
+      "name": "嘉兴古城",
+      "aliases": [
+        "禾城",
+        "由拳",
+        "禾兴",
+        "秀州"
+      ],
+      "level": "国家历史文化名城",
+      "location": "嘉兴市（杭嘉湖平原中东部）",
+      "facts": [
+        "嘉兴简称禾、嘉，古称由拳、禾兴、秀州，建制始于秦，是国家历史文化名城。",
+        "嘉兴地处杭嘉湖平原，京杭运河斜贯，素称“鱼米之乡、丝绸之府”。",
+        "吴黄龙三年（231年）“由拳野稻自生”改名禾兴，赤乌五年（242年）改称嘉兴。",
+        "1921年8月中共一大在嘉兴南湖游船上完成议程。",
+        "嘉兴是马家浜文化发祥地，历史上被誉为“天下粮仓”。"
+      ],
+      "fact_records": [
+        {
+          "text": "嘉兴简称禾、嘉，古称由拳、禾兴、秀州，建制始于秦，是国家历史文化名城。",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%98%89%E5%85%B4%E5%B8%82",
+          "source_title": "维基百科：嘉兴市",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-嘉兴市",
+          "evidence_quote": "嘉兴市（吴语拼音：Kāshīng，IPA：/gᴀɕiŋ/），简称禾、嘉，古称由拳、禾兴、秀州……嘉兴为国家历史文化名城，建制始于秦，嘉兴乌镇是世界互联网大会永久会址。",
+          "fact_type": "geography",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "嘉兴地处杭嘉湖平原，京杭运河斜贯，素称“鱼米之乡、丝绸之府”。",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%98%89%E5%85%B4%E5%B8%82",
+          "source_title": "维基百科：嘉兴市",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-嘉兴市",
+          "evidence_quote": "地处杭嘉湖平原中东部，全境地势平坦。京杭运河斜贯，境内河港湖荡密布……素称“鱼米之乡、丝绸之府”",
+          "fact_type": "geography",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "吴黄龙三年（231年）“由拳野稻自生”改名禾兴，赤乌五年（242年）改称嘉兴。",
+          "fact_index": 2,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%98%89%E5%85%B4%E5%B8%82",
+          "source_title": "维基百科：嘉兴市",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-嘉兴市",
+          "evidence_quote": "吴黄龙三年（231年），“由拳野稻自生”，吴大帝孙权以为祥瑞，改由拳为禾兴，赤乌五年（242年）改称嘉兴。",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "1921年8月中共一大在嘉兴南湖游船上完成议程。",
+          "fact_index": 3,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%98%89%E5%85%B4%E5%B8%82",
+          "source_title": "维基百科：嘉兴市",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-嘉兴市",
+          "evidence_quote": "民国十一年（1921年）年8月3日，中国共产党第一次全国代表大会在嘉兴南湖的一艘游船完成了大会的议程。",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "嘉兴是马家浜文化发祥地，历史上被誉为“天下粮仓”。",
+          "fact_index": 4,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%98%89%E5%85%B4%E5%B8%82",
+          "source_title": "维基百科：嘉兴市",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-嘉兴市",
+          "evidence_quote": "为马家浜文化发祥地。为中国歷朝历代的粮食提供地，被誉为“天下粮仓”。",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
+      ],
+      "cultural_significance": "七千年稻作史喂出来的城市——野稻自生都成了它的改名理由。",
+      "keywords_en": [
+        "Jiaxing",
+        "Jiaxing ancient city"
+      ],
+      "imagery": [
+        "月河老街",
+        "运河水巷",
+        "南湖烟雨",
+        "粉墙黛瓦"
+      ],
+      "best_season": "春秋两季",
+      "micro_drama_hook": "在这座城里，稻米、丝绸和一条红船决定过历史。",
+      "scenario_tags": [
+        "城市",
+        "历史",
+        "水乡",
+        "人文"
+      ]
+    },
+    {
+      "id": "jx-maodun",
+      "type": "person",
+      "name": "茅盾",
+      "aliases": [
+        "沈雁冰",
+        "沈德鸿",
+        "雁冰"
+      ],
+      "level": "中国现代作家、文学评论家",
+      "location": "嘉兴桐乡乌镇人",
+      "facts": [
+        "茅盾（1896—1981），原名沈德鸿，字雁冰，浙江桐乡人，中国现代作家及文学评论家，曾任中国作家协会主席。",
+        "1928年发表首部小说《蚀》三部曲；代表作有《子夜》《农村三部曲》《林家铺子》。",
+        "1921年与郑振铎等12人发起成立文学研究会，主编《小说月报》。"
+      ],
+      "fact_records": [
+        {
+          "text": "茅盾（1896—1981），原名沈德鸿，字雁冰，浙江桐乡人，中国现代作家及文学评论家，曾任中国作家协会主席。",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E8%8C%85%E7%9B%BE",
+          "source_title": "维基百科：茅盾",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-茅盾",
+          "evidence_quote": "茅盾（1896年7月4日—1981年3月27日），原名沈鸿，谱名（一说学名）沈德鴻，幼名燕昌，字雁冰……以字行，浙江桐乡人，中國现代作家及文学评论家",
+          "fact_type": "person",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "1928年发表首部小说《蚀》三部曲；代表作有《子夜》《农村三部曲》《林家铺子》。",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E8%8C%85%E7%9B%BE",
+          "source_title": "维基百科：茅盾",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-茅盾",
+          "evidence_quote": "茅盾於1928年發表首部小說《蚀》……代表作有《子夜》《農村三部曲》（《春蠶》《秋收》《殘冬》）《林家鋪子》",
+          "fact_type": "person",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "1921年与郑振铎等12人发起成立文学研究会，主编《小说月报》。",
+          "fact_index": 2,
+          "source_url": "https://zh.wikipedia.org/wiki/%E8%8C%85%E7%9B%BE",
+          "source_title": "维基百科：茅盾",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-茅盾",
+          "evidence_quote": "与郑振铎、耿济之、王统照等12人发起成立文学研究会提倡現實主義文學，主编《小说月报》",
+          "fact_type": "person",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
+      ],
+      "cultural_significance": "《子夜》写尽大上海的夜，他的起点是乌镇的一间家塾。",
+      "keywords_en": [
+        "Mao Dun",
+        "Shen Yanbing"
+      ],
+      "imagery": [
+        "乌镇故居",
+        "书房手稿",
+        "水乡童年",
+        "小说书影"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "从乌镇的窗到上海的夜，一部《子夜》走了三十年。",
+      "scenario_tags": [
+        "历史名人",
+        "人文",
+        "研学",
+        "文学"
+      ]
+    },
+    {
+      "id": "jx-jinyong",
+      "type": "person",
+      "name": "金庸",
+      "aliases": [
+        "查良镛",
+        "Louis Cha"
+      ],
+      "level": "武侠小说泰斗、《明报》创办人",
+      "location": "嘉兴海宁人",
+      "facts": [
+        "金庸（1924—2018），原名查良镛，籍贯浙江海宁，香港作家、《明报》创办人。",
+        "1955至1972年间创作《射雕英雄传》《天龙八部》《鹿鼎记》等15部武侠小说，全球发行量超过1亿册。",
+        "他出生于海宁县袁花镇（今嘉兴海宁市），海宁查氏在清康熙年间创下“一门十进士，叔侄五翰林”的科举纪录。"
+      ],
+      "fact_records": [
+        {
+          "text": "金庸（1924—2018），原名查良镛，籍贯浙江海宁，香港作家、《明报》创办人。",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E9%87%91%E5%BA%B8",
+          "source_title": "维基百科：金庸",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-金庸",
+          "evidence_quote": "金庸（英語：JinYong，1924年3月10日—2018年10月30日），大紫荊勳賢，OBE，原名查良鏞（英語：LouisChaLeung-yung），籍貫浙江海寧，香港作家、《明報》創辦人。",
+          "fact_type": "person",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "1955至1972年间创作《射雕英雄传》《天龙八部》《鹿鼎记》等15部武侠小说，全球发行量超过1亿册。",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E9%87%91%E5%BA%B8",
+          "source_title": "维基百科：金庸",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-金庸",
+          "evidence_quote": "1955年至1972年間，金庸創作《射雕英雄传》、《神鵰俠侶》、《倚天屠龍記》、《天龍八部》、《笑傲江湖》、《鹿鼎記》等15部武俠小說，全球發行量超過1億冊。",
+          "fact_type": "person",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "他出生于海宁县袁花镇（今嘉兴海宁市），海宁查氏在清康熙年间创下“一门十进士，叔侄五翰林”的科举纪录。",
+          "fact_index": 2,
+          "source_url": "https://zh.wikipedia.org/wiki/%E9%87%91%E5%BA%B8",
+          "source_title": "维基百科：金庸",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-金庸",
+          "evidence_quote": "金庸本名查良镛，1924年3月10日（農曆甲子年二月初六）出生於浙江省海宁縣袁花鎮新偉村（今浙江省嘉興市海寧市）……康熙年間創造了「一門十進士，叔侄五翰林」的科舉神話",
+          "fact_type": "person",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
+      ],
+      "cultural_significance": "海宁查家的第二十二代孙，把江湖写给了全世界。",
+      "keywords_en": [
+        "Jin Yong",
+        "Louis Cha"
+      ],
+      "imagery": [
+        "袁花镇故里",
+        "武侠书影",
+        "海宁潮畔",
+        "书城书院"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "有华人的地方就有他的江湖，江湖的起点在海宁。",
+      "scenario_tags": [
+        "历史名人",
+        "人文",
+        "文学",
+        "研学"
+      ]
+    },
+    {
+      "id": "jx-wufangzhai",
+      "type": "cuisine",
+      "name": "五芳斋粽子",
+      "aliases": [
+        "嘉兴粽子",
+        "五芳斋"
+      ],
+      "level": "中华老字号",
+      "location": "嘉兴",
+      "facts": [
+        "浙江五芳斋实业股份有限公司是以食品生产、加工和销售为主的中华老字号，著名产品为五芳斋粽子。"
+      ],
+      "fact_records": [
+        {
+          "text": "浙江五芳斋实业股份有限公司是以食品生产、加工和销售为主的中华老字号，著名产品为五芳斋粽子。",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E4%BA%94%E8%8A%B3%E6%96%8B",
+          "source_title": "维基百科：五芳斋",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-五芳斋",
+          "evidence_quote": "浙江五芳斋实业股份有限公司是一家以食品的生产、加工和销售为主的中华老字号，著名产品为五芳斋粽子。",
+          "fact_type": "cuisine",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
+      ],
+      "cultural_significance": "一只粽子包住江南的糯米与肉香，是嘉兴递给全国的早餐。",
+      "keywords_en": [
+        "Wufangzhai zongzi",
+        "Jiaxing rice dumpling"
+      ],
+      "imagery": [
+        "粽叶包裹",
+        "拆粽瞬间",
+        "老字号门店",
+        "蒸笼热气"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "高铁站人手一只的嘉兴，是从这口糯米开始的。",
+      "scenario_tags": [
+        "美食",
+        "老字号",
+        "早餐",
+        "伴手礼"
+      ]
+    },
+    {
+      "id": "jx-hangbaiju",
+      "type": "cuisine",
+      "name": "杭白菊",
+      "aliases": [
+        "白菊花",
+        "桐乡杭白菊"
+      ],
+      "level": "“浙八味”之一、桐乡特产",
+      "location": "嘉兴桐乡市（主产）",
+      "facts": [
+        "杭白菊是一种茶用菊花，主要产自浙江桐乡。",
+        "杭白菊历史上曾享有“杭白菊与龙井茶”并提之誉，是中国传统著名出口中药材“浙八味”之一。"
+      ],
+      "fact_records": [
+        {
+          "text": "杭白菊是一种茶用菊花，主要产自浙江桐乡。",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E6%9D%AD%E7%99%BD%E8%8F%8A",
+          "source_title": "维基百科：杭白菊",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-杭白菊",
+          "evidence_quote": "杭白菊一种茶用菊花，別名：白菊花、貢菊、滁菊、亳菊、黃菊花、杭菊花。這種杭白菊，主要產自浙江的桐鄉。",
+          "fact_type": "cuisine",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "杭白菊历史上曾享有“杭白菊与龙井茶”并提之誉，是中国传统著名出口中药材“浙八味”之一。",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E6%9D%AD%E7%99%BD%E8%8F%8A",
+          "source_title": "维基百科：杭白菊",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-杭白菊",
+          "evidence_quote": "历史上曾享有“杭白菊与龙井茶”并提之誉是中国传统著名出口中药材“浙八味”之一。",
+          "fact_type": "cuisine",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
+      ],
+      "cultural_significance": "名字带“杭”，家在桐乡——一朵泡进茶杯里的江南。",
+      "keywords_en": [
+        "Hangbaiju chrysanthemum",
+        "Tongxiang tea flower"
+      ],
+      "imagery": [
+        "菊田花海",
+        "采菊身影",
+        "茶杯绽放",
+        "晒菊竹匾"
+      ],
+      "best_season": "10-11月",
+      "micro_drama_hook": "十月杭白菊开的时候，整个桐乡都在茶杯里。",
+      "scenario_tags": [
+        "美食",
+        "农业遗产",
+        "自然",
+        "伴手礼"
+      ]
+    },
+    {
+      "id": "jx-xiashi-dengcai",
+      "type": "intangible",
+      "name": "硖石灯彩",
+      "aliases": [
+        "海宁灯彩"
+      ],
+      "level": "国家级非遗（2006年第一批·传统美术）",
+      "location": "嘉兴海宁市硖石镇",
+      "facts": [
+        "硖石灯彩2006年列入第一批国家级非遗名录（传统美术，项目编号Ⅶ-50）。",
+        "早在唐僖宗乾符年间（874—879）硖石灯彩即已誉满江南，南宋时被列为朝廷贡品。",
+        "硖石灯彩以针刺花纹出名，有画、拗、刻、扎、针刺、裱、糊、结八大制作技法。",
+        "灯体以宣纸、竹篾、铅丝为主要材料，制成后以灯映画，能显出立体画面。"
+      ],
+      "fact_records": [
+        {
+          "text": "硖石灯彩2006年列入第一批国家级非遗名录（传统美术，项目编号Ⅶ-50）。",
+          "fact_index": 0,
+          "source_url": "https://www.ihchina.cn/project_details/14057.html",
+          "source_title": "中国非物质文化遗产网·灯彩（硖石灯彩）",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-14057",
+          "evidence_quote": "灯彩（硖石灯彩）项目序号：349项目编号：Ⅶ-50公布时间：2006(第一批)类别：传统美术……申报地区或单位：浙江省海宁市",
+          "fact_type": "designation",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "早在唐僖宗乾符年间（874—879）硖石灯彩即已誉满江南，南宋时被列为朝廷贡品。",
+          "fact_index": 1,
+          "source_url": "https://www.ihchina.cn/project_details/14057.html",
+          "source_title": "中国非物质文化遗产网·灯彩（硖石灯彩）",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-14057",
+          "evidence_quote": "早在唐僖宗乾符年间（874-879），硖石灯彩即已誉满江南，南宋时，被列为朝廷贡品。",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "硖石灯彩以针刺花纹出名，有画、拗、刻、扎、针刺、裱、糊、结八大制作技法。",
+          "fact_index": 2,
+          "source_url": "https://www.ihchina.cn/project_details/14057.html",
+          "source_title": "中国非物质文化遗产网·灯彩（硖石灯彩）",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-14057",
+          "evidence_quote": "硖石灯彩以针剌花纹出名，制品工细绚丽，玲珑剔透。灯体以宣纸、竹篾、铅丝为主要材料，有画、拗、刻、扎、针刺、裱、糊、结等八大制作技法",
+          "fact_type": "craft",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "灯体以宣纸、竹篾、铅丝为主要材料，制成后以灯映画，能显出立体画面。",
+          "fact_index": 3,
+          "source_url": "https://www.ihchina.cn/project_details/14057.html",
+          "source_title": "中国非物质文化遗产网·灯彩（硖石灯彩）",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-14057",
+          "evidence_quote": "制成后以灯映画，能显出形象逼真、惟妙惟肖的立体画面。",
+          "fact_type": "craft",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        }
+      ],
+      "cultural_significance": "针在纸上刺出灯影，一枚灯彩里藏着一千年的江南夜。",
+      "keywords_en": [
+        "Xiashi lantern",
+        "Haining lantern craft"
+      ],
+      "imagery": [
+        "针刺灯片",
+        "灯彩点亮",
+        "灯会街景",
+        "手工糊裱"
+      ],
+      "best_season": "元宵季",
+      "micro_drama_hook": "灯一亮，纸上的山水活了。",
+      "scenario_tags": [
+        "非遗体验",
+        "夜景",
+        "手工艺",
+        "民俗"
+      ]
+    },
+    {
+      "id": "jx-haining-piying",
+      "type": "intangible",
+      "name": "海宁皮影戏",
+      "aliases": [
+        "蚕花班"
+      ],
+      "level": "国家级非遗（2006年第一批·传统戏剧）",
+      "location": "嘉兴海宁市（钱塘江北岸）",
+      "facts": [
+        "海宁皮影戏2006年列入第一批国家级非遗名录（传统戏剧，项目编号Ⅳ-91）。",
+        "海宁皮影戏自南宋传入，与当地“海塘盐工曲”“海宁小调”融合，改北曲为南腔。",
+        "民间因皮影戏长演“蚕花戏”，把它称作“蚕花班”；海宁皮影戏演绎至今已有近千年历史。",
+        "海宁皮影人像用羊皮或牛皮制成，特点是“少雕镂、重彩绘、单线平涂”。"
+      ],
+      "fact_records": [
+        {
+          "text": "海宁皮影戏2006年列入第一批国家级非遗名录（传统戏剧，项目编号Ⅳ-91）。",
+          "fact_index": 0,
+          "source_url": "https://www.ihchina.cn/project_details/13397.html",
+          "source_title": "中国非物质文化遗产网·皮影戏（海宁皮影戏）",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-13397",
+          "evidence_quote": "皮影戏（海宁皮影戏）项目序号：235项目编号：Ⅳ-91公布时间：2006(第一批)类别：传统戏剧……申报地区或单位：浙江省海宁市",
+          "fact_type": "designation",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "海宁皮影戏自南宋传入，与当地“海塘盐工曲”“海宁小调”融合，改北曲为南腔。",
+          "fact_index": 1,
+          "source_url": "https://www.ihchina.cn/project_details/13397.html",
+          "source_title": "中国非物质文化遗产网·皮影戏（海宁皮影戏）",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-13397",
+          "evidence_quote": "海宁皮影戏自南宋传入，即与当地的“海塘盐工曲”和“海宁小调”相融合，并吸收了“弋阳腔”等古典声腔，改北曲为南腔",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "民间因皮影戏长演“蚕花戏”，把它称作“蚕花班”；海宁皮影戏演绎至今已有近千年历史。",
+          "fact_index": 2,
+          "source_url": "https://www.ihchina.cn/project_details/13397.html",
+          "source_title": "中国非物质文化遗产网·皮影戏（海宁皮影戏）",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-13397",
+          "evidence_quote": "海宁盛产蚕丝，民间有祈求蚕神风俗，皮影戏也因长演“蚕花戏”，称作“蚕花班”。……海宁皮影戏演绎至今，已有近千年历史",
+          "fact_type": "culture",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "海宁皮影人像用羊皮或牛皮制成，特点是“少雕镂、重彩绘、单线平涂”。",
+          "fact_index": 3,
+          "source_url": "https://www.ihchina.cn/project_details/13397.html",
+          "source_title": "中国非物质文化遗产网·皮影戏（海宁皮影戏）",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-13397",
+          "evidence_quote": "海宁皮影的人像用羊皮或牛皮为材料……主要特点是：“少雕镂、重彩绘、单线平涂”",
+          "fact_type": "craft",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        }
+      ],
+      "cultural_significance": "南宋传下来的灯影戏，在海宁的蚕乡亮了近千年。",
+      "keywords_en": [
+        "Haining shadow puppetry",
+        "Piyingxi"
+      ],
+      "imagery": [
+        "影窗灯影",
+        "皮影人像",
+        "幕布手指",
+        "蚕乡戏台"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "一张皮影贴上灯，南宋的戏又开锣了。",
+      "scenario_tags": [
+        "非遗体验",
+        "戏曲",
+        "人文",
+        "民俗"
+      ]
+    },
+    {
+      "id": "jx-jiashan-tiange",
+      "type": "intangible",
+      "name": "嘉善田歌",
+      "aliases": [
+        "田山歌",
+        "山歌"
+      ],
+      "level": "国家级非遗（2008年第二批·传统音乐）",
+      "location": "嘉兴嘉善县",
+      "facts": [
+        "嘉善田歌2008年列入第二批国家级非遗名录（传统音乐，项目编号Ⅱ-87）。",
+        "嘉善田歌习称“田歌”，据明代冯梦龙所编《山歌》记载，系从明代吴歌直接承继而来。",
+        "曲调有平调、滴落声、急急歌、落秋歌、羊骚头、嗨罗调、埭头歌七种；代表作有《五姑娘》。"
+      ],
+      "fact_records": [
+        {
+          "text": "嘉善田歌2008年列入第二批国家级非遗名录（传统音乐，项目编号Ⅱ-87）。",
+          "fact_index": 0,
+          "source_url": "https://www.ihchina.cn/project_details/12617.html",
+          "source_title": "中国非物质文化遗产网·嘉善田歌",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-12617",
+          "evidence_quote": "嘉善田歌项目序号：586项目编号：Ⅱ-87公布时间：2008(第二批)类别：传统音乐……申报地区或单位：浙江省嘉善县",
+          "fact_type": "designation",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "嘉善田歌习称“田歌”，据明代冯梦龙所编《山歌》记载，系从明代吴歌直接承继而来。",
+          "fact_index": 1,
+          "source_url": "https://www.ihchina.cn/project_details/12617.html",
+          "source_title": "中国非物质文化遗产网·嘉善田歌",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-12617",
+          "evidence_quote": "嘉善民歌习称“田歌”，它原名“山歌”、“田山歌”，据明代冯梦龙所编《山歌》记载，嘉善田歌系从明代吴歌直接承继而来。",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "曲调有平调、滴落声、急急歌、落秋歌、羊骚头、嗨罗调、埭头歌七种；代表作有《五姑娘》。",
+          "fact_index": 2,
+          "source_url": "https://www.ihchina.cn/project_details/12617.html",
+          "source_title": "中国非物质文化遗产网·嘉善田歌",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-12617",
+          "evidence_quote": "嘉善田歌的曲调共有平调、滴落声、急急歌、落秋歌、羊骚头、嗨罗调、埭头歌七种……嘉善田歌代表性的作品有《五姑娘》等。",
+          "fact_type": "craft",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        }
+      ],
+      "cultural_significance": "田头的接唱从明朝一路传下来——四句山歌能唱三小时。",
+      "keywords_en": [
+        "Jiashan field songs",
+        "Tiange"
+      ],
+      "imagery": [
+        "田头对唱",
+        "水乡稻田",
+        "歌班围坐",
+        "芦苇荡"
+      ],
+      "best_season": "春夏两季",
+      "micro_drama_hook": "在稻田里唱一个下午，嘉善人的长篇是站着听完的。",
+      "scenario_tags": [
+        "非遗体验",
+        "曲艺",
+        "水乡",
+        "民俗"
+      ]
+    },
+    {
+      "id": "jx-wangchuanhui",
+      "type": "festival",
+      "name": "网船会",
+      "aliases": [
+        "刘猛将会",
+        "莲泗荡庙会"
+      ],
+      "level": "国家级非遗（2011年第三批·民俗）",
+      "location": "嘉兴秀洲区王江泾镇莲泗荡",
+      "facts": [
+        "网船会2011年列入第三批国家级非遗名录（民俗，项目编号Ⅹ-137）。",
+        "网船会是流行于嘉兴秀洲区王江泾镇的渔民水上庙会，每年清明、中秋、除夕举行三期。",
+        "庙会祭祀主神“刘猛将”，传说为元代灭蝗将军；届时不下数千艘船汇集荡面。",
+        "网船会堪称研究古代虫灾史的“活化石”，庙会期间原生态民间艺术表演持续一周左右。"
+      ],
+      "fact_records": [
+        {
+          "text": "网船会2011年列入第三批国家级非遗名录（民俗，项目编号Ⅹ-137）。",
+          "fact_index": 0,
+          "source_url": "https://www.ihchina.cn/project_details/15296.html",
+          "source_title": "中国非物质文化遗产网·网船会",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-15296",
+          "evidence_quote": "网船会项目序号：1212项目编号：Ⅹ-137公布时间：2011(第三批)类别：民俗……申报地区或单位：浙江省嘉兴市秀洲区",
+          "fact_type": "designation",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "网船会是流行于嘉兴秀洲区王江泾镇的渔民水上庙会，每年清明、中秋、除夕举行三期。",
+          "fact_index": 1,
+          "source_url": "https://www.ihchina.cn/project_details/15296.html",
+          "source_title": "中国非物质文化遗产网·网船会",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-15296",
+          "evidence_quote": "网船会是流行于浙江省嘉兴市秀洲区王江泾镇民主村的渔民水上庙会。每年清明、中秋、除夕举行三期庙会。",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "庙会祭祀主神“刘猛将”，传说为元代灭蝗将军；届时不下数千艘船汇集荡面。",
+          "fact_index": 2,
+          "source_url": "https://www.ihchina.cn/project_details/15296.html",
+          "source_title": "中国非物质文化遗产网·网船会",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-15296",
+          "evidence_quote": "届时，江浙沪一带渔民、船民数万人，纷纷驾船前来赶庙会，船只汇集荡面，不下数千艘，蔚为壮观。庙会的祭祀主神叫“刘猛将”。传说为元代灭蝗将军",
+          "fact_type": "culture",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "网船会堪称研究古代虫灾史的“活化石”，庙会期间原生态民间艺术表演持续一周左右。",
+          "fact_index": 3,
+          "source_url": "https://www.ihchina.cn/project_details/15296.html",
+          "source_title": "中国非物质文化遗产网·网船会",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-15296",
+          "evidence_quote": "嘉兴网船会堪称研究古代虫灾史的“活化石”，具有极高的史料价值。……庙会期间，各地渔民、船民自发表演宝卷、神歌、龙舞、狮舞……前后持续一周左右",
+          "fact_type": "culture",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        }
+      ],
+      "cultural_significance": "数千条船为一位灭蝗将军聚到一起，运河上最热闹的节日。",
+      "keywords_en": [
+        "Wangchuanhui boat fair",
+        "Liu Mengjiang temple fair"
+      ],
+      "imagery": [
+        "千船汇集",
+        "水面社旗",
+        "踏白船",
+        "庙会人潮"
+      ],
+      "best_season": "清明/中秋/除夕",
+      "micro_drama_hook": "船连着船，旗连着旗——运河把人和神都请来了。",
+      "scenario_tags": [
+        "民俗",
+        "节庆",
+        "水乡",
+        "人文"
+      ]
+    }
+  ]
+}
