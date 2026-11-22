@@ -1,0 +1,220 @@
+"""Build the Shaoxing shot-intent map from the XHS MCP note dataset.
+
+Curated by hand from the 62-note metadata dataset plus the 2026-11-21 manual
+pilot. Every row must cite note ids that exist in the dataset; the script
+fails if a cited id is missing. Output is reference-only research data.
+"""
+
+from __future__ import annotations
+
+import csv
+import json
+import pathlib
+import sys
+
+ROOT = pathlib.Path(__file__).resolve().parents[1]
+NOTES = ROOT / "docs/research/xhs-shaoxing-mcp-notes.csv"
+KB = ROOT / "data_zhejiang_kb/shaoxing.json"
+OUT = ROOT / "docs/research/shaoxing-shot-intents.csv"
+
+TAGS = {
+    "establishing", "landmark", "detail", "water", "boat", "people",
+    "food", "night", "season", "overlook", "interior", "transition",
+    "route", "light", "context",
+}
+
+# entity_id, entity_name, in_kb, shot_tag, angle_type, intent, motif,
+# composition, best_window, confidence, support_note_ids, claim_risk
+ROWS = [
+    ("sx-lanting", "兰亭", True, "establishing", "shot",
+     "用雨天空园建立清寂基调：雨打竹叶、池面涟漪、石径无人",
+     "雨中竹林/鹅池水面", "低机位特写接全景；固定机位等风", "雨天/清晨，避开节假日",
+     "high", ["6a83c5b9000000002501196f", "6a1705a2000000003701defa"], ""),
+    ("sx-lanting", "兰亭", True, "landmark", "shot",
+     "鹅池白鹅接碑亭：先白鹅特写，再低角度仰拍碑亭，把“鹅池”典故拍成画面",
+     "鹅池白鹅/兰亭碑亭", "低角度仰拍碑+竹林背景；白鹅中景", "上午人少",
+     "high", ["6abb7153000000000a01d8d3", "6a3d0da30000000017008397"],
+     "门票70元、8:00-17:20/16:50停止入场待核"),
+    ("sx-lanting", "兰亭", True, "detail", "shot",
+     "纱幔长廊：印《兰亭序》的半透明纱幔随风摆动，做全片国风转场",
+     "纱幔/墨字/荷", "逆光拍纱幔透光；慢门", "有风时段",
+     "high", ["6ac61fe60000000014039e53", "6a3d0da30000000017008397"], ""),
+    ("sx-lanting", "兰亭", True, "detail", "shot",
+     "曲水流觞空渠：用空无一人的水渠讲“觞”字与走马观花的反差",
+     "曲水渠/石径/空亭", "沿渠低机位跟移；结尾停在空亭", "雨天人少",
+     "medium", ["6aa6659b000000001203c091", "6a83c5b9000000002501196f"],
+     "笔记为批评视角，只取画面与叙事，不作事实"),
+    ("sx-lanting", "兰亭", True, "context", "narrative",
+     "预期管理：兰亭卖点是书法与清寂，不是大景观；脚本避免“震撼”类表述",
+     "—", "—", "—", "medium", ["6aa6659b000000001203c091"], ""),
+
+    ("sx-donghu", "东湖", False, "overlook", "shot",
+     "山顶观景台俯瞰：先给“山水盆景”全貌，再下到船视角",
+     "采石峭壁/湖水/乌篷船", "山顶俯拍大远景；航拍感", "晴天，登顶后",
+     "high", ["6985b7aa000000000b00abe1", "69d4ab12000000002301f49e"], ""),
+    ("sx-donghu", "东湖", False, "water", "shot",
+     "水墨峭壁仰拍：船头仰拍崖壁与倒影，建立“壁立直上”的压迫感",
+     "采石峭壁/绿色湖水/倒影", "竖构图仰拍；水面倒影对称", "雨后/阴天层次更好",
+     "high", ["68c24a04000000001b03f6d0", "6a3a83be0000000021015060"], ""),
+    ("sx-donghu", "东湖", False, "boat", "shot",
+     "乌篷船穿洞：进陶公洞时仰拍“坐井观天”，船桨与涟漪做节奏",
+     "乌篷船/石洞/一线天", "船内视角仰拍；洞口框景", "上午坐船避排队",
+     "high", ["693c0eb8000000001b033636", "6a59e957000000000301c6f8"],
+     "船40元/人、17点停航待核"),
+    ("sx-donghu", "东湖", False, "season", "shot",
+     "秋日红杉：水杉林小径与红杉倒影做季节限定开场",
+     "红杉/绿水/小径", "小径纵深；红杉做前景框", "11-12月",
+     "medium", ["693c0eb8000000001b033636"], ""),
+    ("sx-donghu", "东湖", False, "transition", "shot",
+     "霞川桥框景：以峭壁为背景，等乌篷船穿过桥洞",
+     "古桥/峭壁/船", "桥洞框景；等船入画", "—",
+     "medium", ["693c0eb8000000001b033636"], "86版《西游记》取景地待核"),
+
+    ("sx-anchang", "安昌古镇", True, "establishing", "shot",
+     "廊棚纵深：沿河廊棚与白墙黛瓦做水乡建立镜头",
+     "廊棚/河巷/石桥", "廊棚引导线；对称倒影", "清晨或傍晚",
+     "high", ["6a4f17750000000022009ad3", "6ad17a62000000000b00432f"], ""),
+    ("sx-anchang", "安昌古镇", True, "detail", "shot",
+     "腊味与酱缸：腊肠酱鸭、仁昌酱园酱缸做烟火气特写",
+     "腊味/酱缸/檐下", "前景腊味虚化；酱缸阵列俯拍", "秋冬晾晒季",
+     "high", ["6a4788dc0000000016027c9b", "6ad17a62000000000b00432f"], "仁昌酱园名称待核"),
+    ("sx-anchang", "安昌古镇", True, "people", "shot",
+     "原住民日常：洗衣、剥毛豆、晒干货，拍游客散去后的生活",
+     "临河老屋/居民", "中景跟拍；不摆拍", "清晨",
+     "high", ["6a4f17750000000022009ad3", "6a4788dc0000000016027c9b"], ""),
+    ("sx-anchang", "安昌古镇", True, "night", "shot",
+     "傍晚灯笼：从夕阳过渡到亮灯，河面倒影做“老电影”收尾",
+     "灯笼/河面/老屋", "固定机位等亮灯；低照度暖调", "17:00-18:00",
+     "medium", ["6ad0a2e1000000001403bc15"], ""),
+    ("sx-anchang", "安昌古镇", True, "interior", "shot",
+     "师爷馆：小院与展陈，讲“无绍不成衙”的师爷文化",
+     "师爷馆/小院/展陈", "门洞框景；展陈局部特写", "白天",
+     "medium", ["6ae03a8000000000170344b6"], "师爷人数等数字待核"),
+
+    ("sx-cangqiao", "仓桥直街", True, "establishing", "shot",
+     "石桥俯拍河道纵深：桥上与对岸双机位，等乌篷船入画",
+     "河道/石桥/乌篷船", "桥上俯拍纵深；对岸平视", "15:00-17:00",
+     "high", ["6a19b84a00000000380218e7", "6a2ba4ae000000001503fa40"], ""),
+    ("sx-cangqiao", "仓桥直街", True, "light", "shot",
+     "斜光白墙：下午树影投在白墙与水面，等船经过抓拍",
+     "白墙/树影/水光", "侧逆光；固定机位等船", "15:00-17:00 晴天",
+     "medium", ["6a19b84a00000000380218e7"], ""),
+    ("sx-cangqiao", "仓桥直街", True, "night", "shot",
+     "红灯笼倒影：入夜亮灯，河面灯火做情绪落点",
+     "灯笼/倒影/河面", "低机位贴水面；对称构图", "日落后",
+     "high", ["6a19b84a00000000380218e7", "6a79e3fd0000000022011835"], ""),
+    ("sx-cangqiao", "仓桥直街", True, "food", "shot",
+     "臭豆腐与小吃：甜面酱臭豆腐特写，补市井味",
+     "臭豆腐/小吃摊", "手部特写+蒸汽", "傍晚",
+     "medium", ["6a72cbd20000000022010a0c", "6a79e3fd0000000022011835"],
+     "店铺推荐均为笔记说法"),
+    ("sx-cangqiao", "仓桥直街", True, "people", "shot",
+     "原住民生活：还住着人的老街区，不是空壳古镇",
+     "台门/居民/门口", "门口中景；抓拍日常", "全天",
+     "medium", ["6a19b84a00000000380218e7"], ""),
+
+    ("sx-luxun-guli", "鲁迅故里·沈园", True, "route", "shot",
+     "课本动线：百草园→三味书屋→故居，按课文顺序剪成一条线",
+     "百草园/三味书屋/故居", "第一人称跟走；课本页插入", "9:30前避人流",
+     "high", ["6a9a7a09000000002603bc7f", "6ab35d49000000001b023d51"],
+     "免费但需预约待核"),
+    ("sx-luxun-guli", "鲁迅故里·沈园", True, "detail", "shot",
+     "Q版迅哥儿集邮：百草园、三味书屋、鲁迅书店逐个打卡",
+     "Q版雕塑/书店", "九宫格拼图；同机位合影", "全天",
+     "high", ["6a3bcdc7000000000702e3c1", "6a2ba4ae000000001503fa40"],
+     "具体点位以现场为准"),
+    ("sx-luxun-guli", "鲁迅故里·沈园", True, "detail", "shot",
+     "水野栀子：故居前老栀子，做“先生手植”的情感特写",
+     "栀子/庭院/故居", "浅景深特写；缓慢推近", "花期",
+     "low", ["6abe3fc80000000015016545"],
+     "117年/1909年手植仅单篇笔记，须核"),
+    ("sx-luxun-guli", "鲁迅故里·沈园", True, "context", "narrative",
+     "沈园预期管理：园子小、门票40元、30-40分钟；避免“必去大景”表述",
+     "—", "—", "—", "medium", ["6aacd7ec0000000029018151"],
+     "票价与游览时长待核；MCP 未覆盖沈园夜演画面"),
+
+    ("sx-dayuling", "大禹陵", True, "overlook", "shot",
+     "高处俯瞰：中轴对称的陵、庙、祠建筑群",
+     "陵区/会稽山/中轴", "航拍或高台大远景；对称构图", "晴天",
+     "high", ["6a93d0970000000020030a37", "6a749d17000000003202102a"],
+     "1996年第四批国保等待核"),
+    ("sx-dayuling", "大禹陵", True, "establishing", "shot",
+     "神道纵深：石牌坊→神道→长台阶，建立仪式感",
+     "神道/牌坊/台阶", "中轴对称；低机位", "上午",
+     "high", ["6a454904000000001702d5d2", "6a749d17000000003202102a"], ""),
+    ("sx-dayuling", "大禹陵", True, "route", "shot",
+     "祭祀动线：禹庙→禹祠→禹陵→大禹铜像，按礼制顺序讲",
+     "禹庙/禹祠/禹陵/铜像", "段落式仰拍；字幕点出“陵庙祠”", "半天",
+     "high", ["6a454904000000001702d5d2", "6a749d17000000003202102a"],
+     "铜像999级台阶说法待核"),
+    ("sx-dayuling", "大禹陵", True, "context", "narrative",
+     "大修提醒：禹庙在大修，观感受影响；拍摄前确认开放范围",
+     "—", "—", "—", "medium", ["6a749d17000000003202102a"], "以景区公告为准"),
+    ("sx-dayuling", "大禹陵", True, "context", "narrative",
+     "票价与体验预期：60元、以文史为主，不适合纯打卡",
+     "—", "—", "—", "medium",
+     ["6aacd7ec0000000029018151", "6a454904000000001702d5d2"], "60元待核"),
+]
+
+
+def main() -> int:
+    with NOTES.open(encoding="utf-8-sig") as handle:
+        notes = list(csv.DictReader(handle))
+    known_ids = {row["note_id"] for row in notes}
+    kb_ids = {entity["id"] for entity in json.loads(KB.read_text(encoding="utf-8"))["entities"]}
+
+    errors = []
+    for row in ROWS:
+        entity_id, _, in_kb, tag, angle_type, *_rest, note_ids, _claim = row
+        if in_kb and entity_id not in kb_ids:
+            errors.append(f"{entity_id}: marked in_kb but missing from {KB.name}")
+        if not in_kb and entity_id in kb_ids:
+            errors.append(f"{entity_id}: marked not in_kb but present in {KB.name}")
+        if tag not in TAGS:
+            errors.append(f"{entity_id}: unknown shot_tag {tag}")
+        if angle_type not in {"shot", "narrative"}:
+            errors.append(f"{entity_id}: bad angle_type {angle_type}")
+        for note_id in note_ids:
+            if note_id not in known_ids:
+                errors.append(f"{entity_id}: note {note_id} not in dataset")
+        if not note_ids and angle_type != "narrative":
+            errors.append(f"{entity_id}/{tag}: shot row without note support")
+    if errors:
+        print("FAILED")
+        for error in errors:
+            print(" -", error)
+        return 1
+
+    columns = [
+        "entity_id", "entity_name", "in_kb", "shot_tag", "angle_type", "intent",
+        "motif", "composition", "best_window", "confidence",
+        "support_note_ids", "support_count", "claim_risk", "status",
+    ]
+    with OUT.open("w", encoding="utf-8-sig", newline="") as handle:
+        writer = csv.DictWriter(handle, fieldnames=columns)
+        writer.writeheader()
+        for row in ROWS:
+            (entity_id, entity_name, in_kb, tag, angle_type, intent, motif,
+             composition, best_window, confidence, note_ids, claim) = row
+            writer.writerow({
+                "entity_id": entity_id, "entity_name": entity_name,
+                "in_kb": str(in_kb), "shot_tag": tag, "angle_type": angle_type,
+                "intent": intent, "motif": motif, "composition": composition,
+                "best_window": best_window, "confidence": confidence,
+                "support_note_ids": ";".join(note_ids),
+                "support_count": len(note_ids), "claim_risk": claim,
+                "status": "reference-only",
+            })
+    print(json.dumps({
+        "rows": len(ROWS),
+        "entities": len({row[0] for row in ROWS}),
+        "shot_rows": sum(1 for row in ROWS if row[4] == "shot"),
+        "narrative_rows": sum(1 for row in ROWS if row[4] == "narrative"),
+        "out": str(OUT),
+    }, ensure_ascii=False))
+    print("OK")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

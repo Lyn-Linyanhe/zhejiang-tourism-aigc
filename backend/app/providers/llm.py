@@ -1,9 +1,13 @@
 from __future__ import annotations
 
 import json
+import math
+import re
 import urllib.request
 from dataclasses import dataclass
 from typing import Any
+
+from .contract import TRANSITIONS
 
 
 def _resolve_knowledge_context(context: dict[str, Any]) -> str:
@@ -31,26 +35,52 @@ def _resolve_knowledge_context(context: dict[str, Any]) -> str:
         return ""
 
 
-# 中文配音实测约 3.9 字/秒（edge-tts 晓晓，rate=1.0）。预算按 3.8 算，留一点余量：
-# 宁可少写一个字，也不要把最后一句挤到容器外被裁掉。
-NARRATION_CHARS_PER_SECOND = 3.8
+# 中文配音实测约 4.2~4.5 字/秒（edge-tts 晓晓、rate=1.0、不含句间停顿）。
+# 预算按 4.2 算：带内部空格/顿号的旁白实际会慢到约 4.0 字/秒，超出的部分由
+# 配音阶段提速兜住（MAX_RATE_SCALE），比反过来留一大段没人说话的空档好。
+# 注意：这个值必须按"裁掉引擎静音之后"的测量来定。旧值 3.8 是按含 0.2~0.6 秒
+# 引擎内边距的时长标的，裁剪上线后沿用旧值会让成片尾部空出 2~8 秒。
+NARRATION_CHARS_PER_SECOND = 4.2
 
 # 字数兜底的改写轮数。一轮实测不总能落进区间，两轮封顶。
 NARRATION_REWRITE_ATTEMPTS = 2
+
+# 模型偶尔会把 JSON 包在 Markdown 代码块里，或者返回截断内容。先剥壳再解析，
+# 解析失败时把错误回灌给模型重试一次；仍然失败才让任务失败。
+_JSON_FENCE = re.compile(r"^\s*```(?:json)?\s*|\s*```\s*$", re.IGNORECASE)
+_CAPTION_NOISE = re.compile(r"[^\w\u4e00-\u9fff]+", re.UNICODE)
+
+
+def _strip_json_fence(content: str) -> str:
+    return _JSON_FENCE.sub("", str(content or "").strip())
+
+
+def _parse_json_object(content: str) -> dict[str, Any]:
+    text = _strip_json_fence(content)
+    result = json.loads(text)
+    if not isinstance(result, dict):
+        raise ValueError("LLM returned a non-object JSON response")
+    return result
+
+
+def _caption_key(value: Any) -> str:
+    """Compare narration and subtitle without whitespace or punctuation."""
+    return _CAPTION_NOISE.sub("", str(value or "")).casefold()
 
 
 def plan_narration_budget(duration: int, shot_count: int) -> dict[str, float]:
     """把成片时长拆成每镜的字数预算。
 
-    逐镜配音在镜头之间留一段静音（services.audio_sync.SILENCE_BETWEEN_SHOTS），
-    那段时间说不了字。算预算前必须先扣掉，否则旁白必然超长，成片锁回用户
-    秒数时把最后一句的结尾裁掉——这正是"结尾不完整"的成因。
+    逐镜配音在镜头之间留一段静音（services.audio_sync.SHOT_GAP_TTS_SEC，
+    裁掉引擎内边距后由构建器显式补上），那段时间说不了字。算预算前必须先扣掉，
+    否则旁白必然超长，成片锁回用户秒数时把最后一句的结尾裁掉——这正是
+    "结尾不完整"的成因。
     """
     try:
-        from ..services.audio_sync import SILENCE_BETWEEN_SHOTS
+        from ..services.audio_sync import SHOT_GAP_TTS_SEC
     except Exception:  # noqa: BLE001 - 取不到就退回同一份默认值
-        SILENCE_BETWEEN_SHOTS = 0.150
-    silence_total = SILENCE_BETWEEN_SHOTS * max(0, shot_count - 1)
+        SHOT_GAP_TTS_SEC = 0.300
+    silence_total = SHOT_GAP_TTS_SEC * max(0, shot_count - 1)
     usable = max(1.0, float(duration) - silence_total)
     total_chars = max(shot_count * 6, int(usable * NARRATION_CHARS_PER_SECOND))
     # 向下取整，不用 round：每镜上限回乘镜头数必须仍不超过总预算，
@@ -96,7 +126,14 @@ class OpenAICompatibleLLMProvider(LLMProvider):
         if not self.base_url or not self.api_key or not self.model:
             raise RuntimeError("LLM requires base_url, api_key, and model")
         duration = int(context.get("duration", 30))
-        shot_count = int(context.get("shot_count") or (4 if duration <= 15 else 6 if duration <= 30 else 8))
+        # 自动镜头数：按每镜约 5 秒切，夹在 2–12 之间。
+        # 图生视频单镜 4–15 秒，5 秒是既够运动、又不至于让单镜成本翻倍的中间值。
+        # 短时长要额外保护：5 秒切成 2 镜只有 2.5 秒/镜，低于模型下限，
+        # 所以镜头数不超过 floor(duration / 4)。
+        max_by_floor = max(1, int(duration // 4))
+        auto_shots = min(12, max_by_floor, max(2, round(duration / 5)))
+        auto_shots = max(1, auto_shots)
+        shot_count = int(context.get("shot_count") or auto_shots)
         # 每镜旁白要和它的配音时长对得上：中文配音约每秒 4 字。旁白超出镜头时长时，
         # 渲染器会把成片锁回用户选择的秒数，多出来的部分只能被裁掉。
         budget = plan_narration_budget(duration, shot_count)
@@ -122,11 +159,11 @@ class OpenAICompatibleLLMProvider(LLMProvider):
         instruction = (
             "你是浙江文旅竖屏短视频总编导。请根据用户输入生成可直接用于视频制作的 JSON。"
             f"必须生成 {shot_count} 个镜头，镜头时长总和必须等于 {duration} 秒。"
-            f"每镜约 {per_shot_seconds:.1f} 秒，中文配音约每秒 3.8 字，"
+            f"每镜约 {per_shot_seconds:.1f} 秒，中文配音约每秒 {NARRATION_CHARS_PER_SECOND} 字，"
             f"该镜的 narration 应写满 {per_shot_floor}~{per_shot_chars} 个汉字——"
             f"这是目标区间，不是上限。"
             f"全片旁白合计不得超过 {total_chars} 个汉字，这是硬约束："
-            f"配音时长 = 总字数 ÷ 3.8 + 镜头间的停顿，超过用户选的 {duration} 秒，"
+            f"配音时长 = 总字数 ÷ {NARRATION_CHARS_PER_SECOND} + 镜头间的停顿，超过用户选的 {duration} 秒，"
             "最后一句的结尾就会被裁掉。镜头多或少都要先把总字数守住。"
             "旁白太短会在成片里留下没有解说、只有静止画面的空档，太长则结尾被裁掉。"
             "按目标字数写满，不要靠重复句或空话凑数。"
@@ -147,8 +184,7 @@ class OpenAICompatibleLLMProvider(LLMProvider):
             {"role": "system", "content": "你是严谨的浙江文旅视频编导，只输出合法 JSON。"},
             {"role": "user", "content": instruction},
         ]
-        result = self._chat(messages)
-        shots = self._validated_shots(result, shot_count)
+        result, shots = self._generate_validated(messages, shot_count)
 
         # 字数靠 prompt 措辞约束不可靠：同一份约束实测出过"每镜 17 字"（结尾被裁）
         # 和"每镜 7 字"（成片后半段没有解说、只剩静止画面）两种偏差，方向还相反。
@@ -179,8 +215,7 @@ class OpenAICompatibleLLMProvider(LLMProvider):
                     ),
                 }
             )
-            result = self._chat(messages)
-            shots = self._validated_shots(result, shot_count)
+            result, shots = self._generate_validated(messages, shot_count)
             total = self._narration_total(shots)
             attempts += 1
 
@@ -200,7 +235,50 @@ class OpenAICompatibleLLMProvider(LLMProvider):
             },
         )
 
+    def _generate_validated(
+        self, messages: list[dict[str, str]], shot_count: int
+    ) -> tuple[dict[str, Any], list[dict[str, Any]]]:
+        """Parse JSON, then validate the script; repair once on either failure."""
+        result = self._chat(messages)
+        try:
+            return result, self._validated_shots(result, shot_count)
+        except Exception as exc:  # noqa: BLE001 - retry once with the exact validation error
+            repair_messages = list(messages) + [
+                {"role": "assistant", "content": json.dumps(result, ensure_ascii=False)[:6000]},
+                {
+                    "role": "user",
+                    "content": (
+                        f"上一版不符合要求：{exc}。请修正后重新输出完整 JSON；"
+                        "镜头数、必填字段、字幕与旁白逐字对应、转场名都必须正确。"
+                        "只输出 JSON，不要 Markdown 或解释。"
+                    ),
+                },
+            ]
+            result = self._chat(repair_messages)
+            return result, self._validated_shots(result, shot_count)
+
     def _chat(self, messages: list[dict[str, str]]) -> dict[str, Any]:
+        content = self._complete(messages)
+        try:
+            return _parse_json_object(content)
+        except (json.JSONDecodeError, ValueError) as exc:
+            repair_messages = list(messages) + [
+                {"role": "assistant", "content": str(content or "")[:6000]},
+                {
+                    "role": "user",
+                    "content": (
+                        f"上一条回复不是合法 JSON：{exc}。"
+                        "请只输出修正后的完整 JSON，不要 Markdown 代码块或解释。"
+                    ),
+                },
+            ]
+            content = self._complete(repair_messages)
+            try:
+                return _parse_json_object(content)
+            except (json.JSONDecodeError, ValueError) as second:
+                raise RuntimeError(f"LLM returned invalid JSON after repair: {second}") from second
+
+    def _complete(self, messages: list[dict[str, str]]) -> str:
         body = {
             "model": self.model,
             "temperature": 0.7,
@@ -218,10 +296,11 @@ class OpenAICompatibleLLMProvider(LLMProvider):
         )
         with urllib.request.urlopen(request, timeout=self.timeout) as response:
             payload = json.loads(response.read().decode("utf-8"))
-        result = json.loads(payload["choices"][0]["message"]["content"])
-        if not isinstance(result, dict):
-            raise RuntimeError("LLM returned a non-object JSON response")
-        return result
+        try:
+            content = payload["choices"][0]["message"]["content"]
+        except (KeyError, IndexError, TypeError) as exc:
+            raise RuntimeError("LLM response is missing choices[0].message.content") from exc
+        return str(content or "")
 
     @staticmethod
     def _narration_total(shots: list[dict[str, Any]]) -> int:
@@ -239,10 +318,22 @@ class OpenAICompatibleLLMProvider(LLMProvider):
         for index, shot in enumerate(shots, start=1):
             if not isinstance(shot, dict):
                 raise RuntimeError("LLM returned an invalid shot")
-            for key in ("visual_prompt", "narration", "subtitle"):
+            for key in ("title", "visual_prompt", "narration", "subtitle"):
                 if not str(shot.get(key, "")).strip():
-                    raise RuntimeError(f"LLM returned an empty shot field: {key}")
+                    raise RuntimeError(f"Shot {index} returned an empty {key}")
+            if _caption_key(shot.get("subtitle")) != _caption_key(shot.get("narration")):
+                raise RuntimeError(f"Shot {index} subtitle does not match its narration")
+            if "duration_sec" in shot:
+                try:
+                    duration = float(shot["duration_sec"])
+                except (TypeError, ValueError) as exc:
+                    raise RuntimeError(f"Shot {index} has a non-numeric duration_sec") from exc
+                if not math.isfinite(duration) or duration <= 0:
+                    raise RuntimeError(f"Shot {index} has an invalid duration_sec")
+            transition = str(shot.get("transition") or "").strip().lower()
+            if transition and transition not in TRANSITIONS:
+                raise RuntimeError(f"Shot {index} has an unsupported transition: {transition}")
             shot.setdefault("id", f"shot_{index}")
             shot.setdefault("order", index)
-            shot.setdefault("transition", "fade" if index == 1 else "dissolve")
+            shot["transition"] = transition or ("fade" if index == 1 else "dissolve")
         return shots

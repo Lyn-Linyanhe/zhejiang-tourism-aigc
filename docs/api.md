@@ -12,6 +12,16 @@ Returns provider configuration without exposing secrets.
 
 Returns city knowledge, default styles, voice choices, music moods and durations. `entities` lists `{id, name, city, type}` references and `shot_tags` maps `wide`, `detail`, `process`, `performance`, `ambient` to display names. The UI uses these values as suggestions; text fields also accept custom values.
 
+## `GET /api/music/library`
+
+Lists the tracks a user may pick from: only catalog entries with `approved: true` whose file exists on disk. Returns `{tracks, moods, styles, total}`; each track exposes `id`, `file`, `name`, `moods`, `styles`, `usage_scope` and `moods_source`.
+
+`moods_source` is `auto-estimated-tempo-quartile` for tracks whose mood was derived from tempo, so the UI labels mood as an estimate. Every bundled track lists all five narrative styles, meaning style does not currently narrow the choice.
+
+## `GET /music/{file}`
+
+Streams one library track for in-app preview (`audio/mpeg`). The filename must appear in the approved catalog; anything else, including path traversal attempts, returns `404`. Served from `MUSIC_DIR`, which may live outside the repo.
+
 ## `POST /api/previews`
 
 Creates a draft and generates only the script/storyboard.
@@ -44,6 +54,8 @@ Creates a draft and generates only the script/storyboard.
 
 The response has `status: "draft"` and contains `title`, `summary`, `cta`, `narration` and `shots`. No `final.mp4` is created by this endpoint.
 
+If the model returns invalid JSON or a script that fails validation, the server retries once with the exact error and asks for a corrected full JSON response. Validation checks shot count, required fields, positive shot durations, the transition whitelist, and that each shot's `subtitle` matches its `narration` after whitespace/punctuation normalization. A second failure is reported as a task error; it is not silently replaced by offline output.
+
 ## `GET /api/tasks/{task_id}`
 
 Returns the complete task, including:
@@ -54,6 +66,36 @@ Returns the complete task, including:
 - audio provider, model and URLs;
 - render URLs and `has_audio` / `has_burned_subtitles`;
 - provider trace and failure events.
+- `metrics.cost`: provider-reported amounts with `amount_status` (`reported`, `incomplete`, `not_reported`), reported subtotal, and no implied currency. Missing data is unknown, not zero.
+- `metrics.billing`: explicitly recorded billing entries grouped by currency; no mixed-currency grand total.
+- `metrics.execution`: measured pipeline run durations, where available.
+- `metrics.publication_observations`: manually entered platform-reported metrics with post URL and reporting window.
+
+The same `metrics` object is included by `GET /api/tasks?limit=...` and draft PATCH. Legacy `cost` remains as an alias of `metrics.cost`. Cost summaries report only calls that explicitly mark the provider amount as reported. Existing image/video adapters currently default this flag to false because their `cost_per_call` values default to zero and that zero is a placeholder, not a quote. An explicitly reported zero must set `cost_reported: true`.
+
+## `GET /api/tasks/{task_id}/export?format=md|txt|json`
+
+Exports the editable script and storyboard without calling any provider. `format` defaults to `md`; `txt` and `json` are also supported. The download includes title, summary, CTA, full narration, per-shot duration/visual/narration/subtitle/transition, input metadata, and provider/model/fallback. The export reflects the last saved task; save draft edits before exporting. Unknown formats return `400 INVALID_REQUEST`; a missing task returns `404 TASK_NOT_FOUND`.
+
+## `POST /api/tasks/{task_id}/billing`
+
+Record a manually reviewed billing amount. This does not alter provider-reported cost and does not claim the provider supplied a bill. `amount` must be finite and non-negative; `currency` is an uppercase 3-letter code; `source` and `captured_at` are required.
+
+```json
+{"amount": 12.34, "currency": "CNY", "source": "Provider invoice INV-123", "captured_at": "2026-11-21", "note": "November test batch"}
+```
+
+Response groups recorded amounts by currency. Do not sum unlike currencies or treat a provider estimate as an invoice.
+
+## `POST /api/tasks/{task_id}/publication-observations`
+
+Record a manually observed public-post metric snapshot. `platform` is one of `douyin`, `xiaohongshu`, `bilibili`, `youtube`, `weibo`, `wechat-channels`, `other`. Same post URL/platform/reporting window updates the current snapshot and appends the previous snapshot to a bounded revision history. Values omitted from `metrics` are unreported, not zero. Allowed keys: `views`, `reach`, `impressions`, `likes`, `comments`, `shares`, `saves`, `clicks`, `watch_time_seconds`, `followers_gained`.
+
+```json
+{"platform":"youtube","post_url":"https://youtube.com/watch?v=abc","published_at":"2026-11-20","observed_at":"2026-11-21","window_days":1,"metrics":{"views":0,"likes":3},"source_note":"Creator analytics screenshot"}
+```
+
+These are descriptive observations, not causal attribution or ROI. Keep platform and time window visible; do not aggregate unlike platform metrics.
 
 ## `PATCH /api/tasks/{task_id}`
 

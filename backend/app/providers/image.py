@@ -103,6 +103,36 @@ def build_image_payload(
     }
 
 
+def build_edit_payload(
+    prompt: str,
+    *,
+    model: str,
+    image_data_url: str,
+    quality: str = "high",
+) -> dict[str, Any]:
+    """图生图（images/edits）请求体。
+
+    网关只接受 JSON：`image` 必须是 base64 或 data URI。multipart 上传会返回
+    “不支持 multipart 文件上传”，http URL 会返回“暂不支持 URL 形态”。所以调用方
+    必须先用 image_file_to_data_url() 把参考图读成 data URI。
+    """
+    if not image_data_url.startswith("data:image/"):
+        raise ValueError("图生图的 image 必须是 data URI（data:image/...;base64,...）")
+    return {"model": model, "prompt": prompt, "image": image_data_url, "quality": quality}
+
+
+def image_file_to_data_url(path: Any) -> str:
+    """把本地图片读成 data URI，供 images/edits 使用。"""
+    file_path = Path(path)
+    raw = file_path.read_bytes()
+    if not raw:
+        raise RuntimeError(f"参考图为空，无法图生图：{file_path}")
+    suffix = file_path.suffix.lower().lstrip(".") or "png"
+    if suffix == "jpg":
+        suffix = "jpeg"
+    return f"data:image/{suffix};base64,{base64.b64encode(raw).decode('ascii')}"
+
+
 def _decode_image(payload: dict[str, Any]) -> bytes:
     data = payload.get("data")
     if not isinstance(data, list) or not data or not isinstance(data[0], dict):
@@ -226,6 +256,58 @@ class CloudImageProvider:
                 "provider": self.name,
                 "negative_prompt": negative,
                 "size": payload["size"],
+                "cost_reported": self.cost_per_call > 0,
+            },
+        )
+        result.validate()
+        return result
+
+    def edit(
+        self,
+        shot: dict[str, Any],
+        reference_path: Any,
+        output_dir: Any,
+        style_ctx: dict[str, Any] | None = None,
+    ) -> AssetResult:
+        """参考图生图：用同一镜头的参考图 + 画面提示词生成首帧。
+
+        走 images/edits，不是 images/generations。参考图先转 data URI，
+        因为网关不接受 multipart 也不接受 http URL。
+        """
+        style_ctx = style_ctx or {}
+        visual = str(shot.get("visual_prompt") or shot.get("prompt") or "").strip()
+        if not visual:
+            raise RuntimeError("参考图生图缺少 visual_prompt，拒绝发送空提示词")
+        prompt = compose_prompt(visual, style_ctx)
+        data_url = image_file_to_data_url(reference_path)
+        payload = build_edit_payload(
+            prompt,
+            model=self.model,
+            image_data_url=data_url,
+            quality=str(style_ctx.get("quality") or "high"),
+        )
+        raw = request_image(f"{self.base_url}/images/edits", payload, self.api_key)
+        target = Path(output_dir)
+        target.mkdir(parents=True, exist_ok=True)
+        shot_id = str(shot.get("id") or f"shot_{shot.get('order', 1)}")
+        path = target / f"{shot_id}_edit.png"
+        path.write_bytes(raw)
+        if not path.is_file() or path.stat().st_size <= 0:
+            raise RuntimeError(f"参考图生图落盘失败或文件为空：{path}")
+        result = AssetResult(
+            path=str(path),
+            media_type=MEDIA_TYPE_IMAGE,
+            source=f"{self.name}-edit",
+            model=self.model,
+            seed=0,
+            prompt=prompt,
+            cost=float(self.cost_per_call),
+            event={
+                "type": "image",
+                "provider": f"{self.name}-edit",
+                "reference": str(reference_path),
+                "quality": payload["quality"],
+                "cost_reported": self.cost_per_call > 0,
             },
         )
         result.validate()

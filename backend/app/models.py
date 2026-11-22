@@ -12,13 +12,31 @@ from .providers.contract import AssetProvenance, VISUAL_USAGES
 
 STAGES = ("scripting", "storyboard", "audio", "assets", "rendering", "review")
 TERMINAL_STATUSES = ("completed", "failed")
-ALLOWED_DURATIONS = (15, 30, 60)
-ALLOWED_SHOT_COUNTS = (0, 4, 6, 8)
+# 时长与镜头数原本写死成 (15,30,60) 和 (0,4,6,8)，用户选 20 秒就整条被拒。
+# 那只是常用档位，不是能力边界：真正的硬约束在下游——图生视频单镜 4–15 秒，
+# 所以只要保证「每镜 ≥ MIN_SHOT_SECONDS」就能跑。这里改成范围校验，
+# 默认值仍走 15 秒 / 自动镜头数，前端保留快捷档。
+DEFAULT_DURATION = 15
+DURATION_RANGE = (5, 180)
+DURATION_PRESETS = (15, 30, 60)
+SHOT_COUNT_RANGE = (2, 12)
+# 0 表示交给 LLM 按脚本自己定，是默认值。
+SHOT_COUNT_AUTO = 0
+# 图生视频模型的下限是 4 秒；给 1 秒余量避免分镜时长四舍五入后踩线。
+MIN_SHOT_SECONDS = 3.0
+MAX_SHOT_SECONDS = 15.0
 ALLOWED_RESOLUTIONS = {
     "720x1280": (720, 1280),
     "1080x1920": (1080, 1920),
     "1920x1080": (1920, 1080),
     "1080x1080": (1080, 1080),
+}
+# 画幅的显示名，供前端与文档统一口径。
+RESOLUTION_LABELS = {
+    "720x1280": "竖屏 9:16（720P）",
+    "1080x1920": "竖屏 9:16（1080P）",
+    "1920x1080": "横屏 16:9（1080P）",
+    "1080x1080": "方形 1:1",
 }
 ALLOWED_STYLES = ("诗意纪实", "城市漫游", "国风雅韵", "青春活力", "节庆热烈")
 ALLOWED_VOICES = ("女声", "男声", "无配音")
@@ -136,10 +154,28 @@ class TaskInput:
             raise ValueError("theme 长度不能超过 80 个字符")
         if len(values["custom_brief"]) > 500:
             raise ValueError("custom_brief 长度不能超过 500 个字符")
-        if values["shot_count"] not in ALLOWED_SHOT_COUNTS:
-            raise ValueError("shot_count must be 4, 6, or 8")
-        if values["duration"] not in ALLOWED_DURATIONS:
-            raise ValueError(f"duration 只能是 {ALLOWED_DURATIONS}")
+        shot_count = values["shot_count"]
+        if shot_count != SHOT_COUNT_AUTO and not (
+            SHOT_COUNT_RANGE[0] <= shot_count <= SHOT_COUNT_RANGE[1]
+        ):
+            raise ValueError(
+                f"shot_count 只能是 {SHOT_COUNT_AUTO}（自动）或 "
+                f"{SHOT_COUNT_RANGE[0]}–{SHOT_COUNT_RANGE[1]} 之间的整数"
+            )
+        duration = values["duration"]
+        if not (DURATION_RANGE[0] <= duration <= DURATION_RANGE[1]):
+            raise ValueError(
+                f"duration 必须在 {DURATION_RANGE[0]}–{DURATION_RANGE[1]} 秒之间"
+            )
+        # 每镜时长决定图生视频能不能跑：模型只接受 4–15 秒。
+        # 这里只在用户显式给了镜头数时校验；自动模式由分镜阶段按范围切分。
+        if shot_count:
+            per_shot = duration / shot_count
+            if per_shot < MIN_SHOT_SECONDS:
+                raise ValueError(
+                    f"{duration} 秒分 {shot_count} 个镜头，每镜只有 {per_shot:.1f} 秒，"
+                    f"低于单镜下限 {MIN_SHOT_SECONDS:.0f} 秒；请减少镜头数或延长时长"
+                )
         if values["asset_source"] not in {
             "configured", "offline", "upload", "pexels",
             "local-library", "library",
@@ -258,6 +294,9 @@ class Task:
     error: str = ""
     created_at: str = field(default_factory=now_iso)
     updated_at: str = field(default_factory=now_iso)
+    billing_records: list[dict[str, Any]] = field(default_factory=list)
+    publication_observations: list[dict[str, Any]] = field(default_factory=list)
+    execution_runs: list[dict[str, Any]] = field(default_factory=list)
 
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)

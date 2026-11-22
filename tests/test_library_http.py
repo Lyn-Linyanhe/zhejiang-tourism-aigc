@@ -1,6 +1,7 @@
 """HTTP regression tests with isolated storage and no external providers."""
 
 import base64
+import dataclasses
 import http.client
 import importlib
 import json
@@ -76,6 +77,35 @@ class LibraryHttpTests(unittest.TestCase):
         return self.request("PATCH", f"/api/library/assets/{asset['id']}", {
             "review_status": "approved", "license_status": "approved", "allowed_usages": ["preview", "publication"],
         })
+
+    def test_music_library_and_preview_only_serve_approved_tracks(self):
+        music_dir = Path(self.temp.name) / "music"
+        music_dir.mkdir()
+        (music_dir / "keep.mp3").write_bytes(b"ID3fake-audio")
+        (music_dir / "secret.txt").write_bytes(b"secret")
+        catalog = music_dir / "catalog.json"
+        catalog.write_text(json.dumps({
+            "tracks": [
+                {"id": "keep", "file": "keep.mp3", "moods": ["舒缓"],
+                 "styles": ["诗意纪实"], "approved": True},
+                {"id": "draft", "file": "keep.mp3", "moods": ["热烈"],
+                 "styles": ["诗意纪实"], "approved": False},
+            ]
+        }, ensure_ascii=False), encoding="utf-8")
+        isolated = dataclasses.replace(self.settings, music_dir=music_dir, music_catalog_path=catalog)
+        with patch.object(self.app, "settings", isolated):
+            status, body = self.request("GET", "/api/music/library")
+            self.assertEqual(status, 200, body)
+            self.assertEqual(body["total"], 1)
+            self.assertEqual([t["id"] for t in body["tracks"]], ["keep"])
+
+            status, payload = self.request("GET", "/music/keep.mp3")
+            self.assertEqual(status, 200)
+            self.assertEqual(payload, b"ID3fake-audio")
+            for path in ("/music/missing.mp3", "/music/secret.txt"):
+                with self.subTest(path=path):
+                    status, _ = self.request("GET", path)
+                    self.assertEqual(status, 404)
 
     def test_invalid_bindings_leave_no_files_or_records(self):
         cases = (
@@ -169,7 +199,7 @@ class LibraryHttpTests(unittest.TestCase):
 
     def test_batch_draft_save_is_atomic_over_http(self):
         self.task.shots = [Shot(f"shot_{i}", i, 3.75, "塔", "全景", "旁白", "字幕") for i in range(1, 5)]
-        self.task.trace = TraceRecord("offline", "test", "v1", False, events=[{"type": "asset", "cost": 0.42}])
+        self.task.trace = TraceRecord("offline", "test", "v1", False, events=[{"type": "asset", "cost": 0.42, "cost_reported": True}])
         self.storage.save_task(self.task)
         endpoint = f"/api/tasks/{self.task.id}"
         status, task = self.request("PATCH", endpoint, {"title": "新标题", "shots": [
@@ -195,6 +225,58 @@ class LibraryHttpTests(unittest.TestCase):
         self.assertEqual(status, 200, task)
         self.assertEqual(task["status"], "draft")
         self.assertEqual(task["shots"][0]["duration_sec"], 0.8)
+
+    def test_task_list_reports_unknown_cost_execution_billing_and_observations(self):
+        status, response = self.request("GET", "/api/tasks?limit=50")
+        self.assertEqual(status, 200)
+        metrics = response["items"][0]["metrics"]
+        self.assertEqual(metrics["cost"]["amount_status"], "not_reported")
+        self.assertIsNone(metrics["cost"]["total"])
+        self.assertIsNone(metrics["execution"]["last_seconds"])
+        self.assertEqual(metrics["billing"]["by_currency"], {})
+        self.assertEqual(metrics["publication_observations"], [])
+
+    def test_billing_records_are_explicitly_sourced_and_kept_separate(self):
+        status, response = self.request("POST", f"/api/tasks/{self.task.id}/billing", {
+            "amount": 1.25, "currency": "CNY", "source": "Invoice INV-1",
+            "captured_at": "2026-11-21", "note": "Test record",
+        })
+        self.assertEqual(status, 201, response)
+        self.assertEqual(response["by_currency"], {"CNY": 1.25})
+        task = self.storage.get_task(self.task.id)
+        self.assertEqual(task["billing_records"][0]["source"], "Invoice INV-1")
+        self.assertEqual(task["trace"], None)
+
+    def test_publication_observations_upsert_by_post_and_window(self):
+        endpoint = f"/api/tasks/{self.task.id}/publication-observations"
+        record = {
+            "platform": "youtube", "post_url": "https://youtube.com/watch?v=abc",
+            "published_at": "2026-11-20", "observed_at": "2026-11-21", "window_days": 1,
+            "metrics": {"views": 0, "likes": 2}, "source_note": "Creator analytics screenshot",
+        }
+        self.assertEqual(self.request("POST", endpoint, record)[0], 201)
+        update = {**record, "observed_at": "2026-11-22", "metrics": {"views": 50, "likes": 3}}
+        self.assertEqual(self.request("POST", endpoint, update)[0], 201)
+        stored = self.storage.get_task(self.task.id)["publication_observations"]
+        self.assertEqual(len(stored), 1)
+        self.assertEqual(stored[0]["metrics"]["views"], 50)
+        self.assertEqual(len(stored[0]["revisions"]), 1)
+
+    def test_publication_observation_invalid_input_is_rejected(self):
+        status, body = self.request("POST", f"/api/tasks/{self.task.id}/publication-observations", {
+            "platform": "youtube", "post_url": "javascript:alert(1)",
+            "published_at": "2026-11-20", "observed_at": "2026-11-21", "window_days": 7,
+            "metrics": {"views": -4},
+        })
+        self.assertEqual(status, 400, body)
+        self.assertFalse(self.storage.get_task(self.task.id).get("publication_observations"))
+
+    def test_script_export_is_available_without_rendering(self):
+        status, body = self.request("GET", f"/api/tasks/{self.task.id}/export?format=md")
+        self.assertEqual(status, 200)
+        self.assertIn("分镜".encode("utf-8"), body)
+        self.assertEqual(self.request("GET", f"/api/tasks/{self.task.id}/export?format=bogus")[0], 400)
+        self.assertEqual(self.request("GET", "/api/tasks/missing/export?format=md")[0], 404)
 
     def test_invalid_usage_is_client_error_and_media_stays_within_root(self):
         self.assertEqual(self.request("GET", "/api/library/assets?usage=invalid")[0], 400)
