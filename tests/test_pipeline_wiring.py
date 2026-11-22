@@ -316,6 +316,12 @@ class _ScriptedChatProvider(OpenAICompatibleLLMProvider):
 
 
 class NarrationEnforcementTests(unittest.TestCase):
+    # 字数区间由 plan_narration_budget 决定，测试里现算，避免预算常量化后又写死一份。
+    BUDGET = plan_narration_budget(15, 4)
+    INSIDE = BUDGET["per_shot_chars"]
+    SHORT = max(4, INSIDE // 2)
+    OVERLONG = INSIDE + 6
+
     def _generate(self, replies: list[dict]):
         provider = _ScriptedChatProvider(replies)
         result = provider.generate("杭州西湖", {"duration": 15, "shot_count": 4})
@@ -323,27 +329,29 @@ class NarrationEnforcementTests(unittest.TestCase):
 
     def test_short_script_is_rewritten_into_the_target_band(self):
         # 实测模型会因为"七言诗"节奏只写 7 字/镜，成片后半段只剩静止画面。
-        provider, result = self._generate([_reply(7), _reply(12)])
+        provider, result = self._generate([_reply(self.SHORT), _reply(self.INSIDE)])
         self.assertEqual(provider.calls, 2)
         self.assertEqual(result.event["narration_rewrite_attempts"], 1)
-        self.assertEqual(result.event["narration_chars"], 48)
-        self.assertEqual(result.data["shots"][0]["narration"], "字" * 12)
+        self.assertEqual(result.event["narration_chars"], self.INSIDE * 4)
+        self.assertEqual(result.data["shots"][0]["narration"], "字" * self.INSIDE)
 
     def test_rewrite_retries_once_more_when_still_out_of_band(self):
         # 一轮改写不总能落进区间（实测 29 字只改到 42 字），所以给第二轮。
-        provider, result = self._generate([_reply(7), _reply(9), _reply(12)])
+        provider, result = self._generate(
+            [_reply(self.SHORT), _reply(self.SHORT), _reply(self.INSIDE)]
+        )
         self.assertEqual(provider.calls, 3)
         self.assertEqual(result.event["narration_rewrite_attempts"], 2)
-        self.assertEqual(result.event["narration_chars"], 48)
+        self.assertEqual(result.event["narration_chars"], self.INSIDE * 4)
 
     def test_overlong_script_is_also_rewritten(self):
         # 另一个方向：写超了会在渲染时把最后一句的结尾裁掉。
-        provider, result = self._generate([_reply(20), _reply(12)])
+        provider, result = self._generate([_reply(self.OVERLONG), _reply(self.INSIDE)])
         self.assertEqual(provider.calls, 2)
-        self.assertEqual(result.event["narration_chars"], 48)
+        self.assertEqual(result.event["narration_chars"], self.INSIDE * 4)
 
     def test_script_inside_the_band_is_not_rewritten(self):
-        provider, result = self._generate([_reply(12)])
+        provider, result = self._generate([_reply(self.INSIDE)])
         self.assertEqual(provider.calls, 1)
         self.assertEqual(result.event["narration_rewrite_attempts"], 0)
 

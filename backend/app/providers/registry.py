@@ -253,7 +253,19 @@ class _CloudAssetAdapter:
         ctx.setdefault("accent", accent)
         ctx.setdefault("duration_sec", shot.get("duration_sec"))
         ctx.setdefault("task_id", task_id)
-        if hasattr(provider, "generate"):
+        # 参考图生图：首帧也走这条路（orchestrator 用 create_or_find 出首帧），
+        # 所以参考图必须在这里生效，否则 edit() 永远不会被调到。
+        reference = str(
+            shot.get("reference_image_path") or ctx.get("reference_image_path") or ""
+        ).strip()
+        if (
+            self.kind == "image"
+            and reference
+            and Path(reference).is_file()
+            and hasattr(provider, "edit")
+        ):
+            result = provider.edit(shot, reference, output_dir, ctx)
+        elif hasattr(provider, "generate"):
             result = provider.generate(shot, output_dir, ctx)
         elif hasattr(provider, "create_or_find"):
             result = provider.create_or_find(task_id, shot, output_dir, theme_color, accent)
@@ -267,6 +279,25 @@ class _CloudAssetAdapter:
             "review_status": "pending", "license_status": "pending", "allowed_usages": ["preview"],
         }
         return asset
+
+    def edit(
+        self,
+        shot: dict[str, Any],
+        reference_path: Path,
+        output_dir: Path,
+        style_ctx: dict[str, Any] | None = None,
+    ) -> Any:
+        """转发到 provider.edit()。provider 不支持时抛错，由降级链接管。
+
+        adapter 自己必须暴露这个方法，否则 generate_asset 里的
+        `hasattr(provider, "edit")` 永远是假，参考图会被静默忽略。
+        """
+        if not self.available or self._module is None:
+            raise RuntimeError(self.reason or f"{self.name} 不可用")
+        provider = _instantiate(self._module, self._settings, self.kind, self.factory_name)
+        if not hasattr(provider, "edit"):
+            raise RuntimeError(f"{self.name} 的 provider 不支持参考图生图")
+        return provider.edit(shot, reference_path, output_dir, style_ctx or {})
 
 
 class ProviderRegistry:
@@ -399,9 +430,25 @@ class ProviderRegistry:
         output_dir: Path,
         style_ctx: dict[str, Any],
     ) -> dict[str, Any]:
-        """Invoke either the frozen AssetResult protocol or a legacy asset provider."""
+        """Invoke either the frozen AssetResult protocol or a legacy asset provider.
+
+        若 provider 支持 edit() 且 shot 里带了参考图，走图生图：参考图决定构图与
+        质感，提示词决定这一镜要什么。参考图只作为生成输入，不会被输出或入库，
+        因此用 reference-only 的第三方图片也不会把原图带进成片。
+        """
         provider = self.create("asset", name)
-        if hasattr(provider, "generate"):
+        reference = str(
+            shot.get("reference_image_path")
+            or (style_ctx or {}).get("reference_image_path")
+            or ""
+        ).strip()
+        # 参考图只对静帧生成（图生图）有意义。视频 provider 拿到参考图应该忽略：
+        # 它的首帧由 _ensure_first_frame 单独生成，把参考图当输入只会触发
+        # “provider 不支持参考图生图”并把整条链打断。
+        is_image_provider = getattr(provider, "kind", "") == "image"
+        if is_image_provider and reference and Path(reference).is_file() and hasattr(provider, "edit"):
+            result = provider.edit(shot, reference, output_dir, style_ctx)
+        elif hasattr(provider, "generate"):
             result = provider.generate(shot, output_dir, style_ctx)
             required = ("path", "media_type", "source", "model", "seed", "prompt", "cost", "event")
             if not isinstance(result, AssetResult) and not all(hasattr(result, field_name) for field_name in required):

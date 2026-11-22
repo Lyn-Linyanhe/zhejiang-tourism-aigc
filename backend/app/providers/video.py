@@ -81,6 +81,20 @@ def _settings_value(settings: Any, name: str) -> str:
     return str(getattr(settings, name, "") or "").strip()
 
 
+def _detect_api_style(base_url: str) -> str:
+    """按 base_url 判断视频协议。
+
+    tokendance / gateway（OpenAI 兼容 /v1/videos）/ volcengine（火山方舟）。
+    误判会让请求打到不存在的路径，所以这里只认明确特征，其余落回 volcengine。
+    """
+    text = (base_url or "").lower()
+    if "tokendance.space" in text:
+        return "tokendance"
+    if text.rstrip("/").endswith("/v1") and "volces.com" not in text:
+        return "gateway"
+    return "volcengine"
+
+
 def resolve_config(settings: Any = None) -> dict[str, Any]:
     """密钥只从 VIDEO_API_KEY（或 settings.video_api_key）读。没有就空着，由构造函数抛错。"""
     base_url = (
@@ -98,7 +112,13 @@ def resolve_config(settings: Any = None) -> dict[str, Any]:
     ratio = _env("VIDEO_RATIO") or _settings_value(settings, "video_ratio") or DEFAULT_RATIO
     api_style = (_env("VIDEO_API_STYLE") or _settings_value(settings, "video_api_style") or "auto").lower()
     if api_style == "auto":
-        api_style = "tokendance" if "tokendance.space" in base_url.lower() else "volcengine"
+        # 网关协议：/v1 结尾且不是火山域名。火山方舟是 .../api/v3。
+        if "tokendance.space" in base_url.lower():
+            api_style = "tokendance"
+        elif base_url.rstrip("/").endswith("/v1") and "volces.com" not in base_url.lower():
+            api_style = "gateway"
+        else:
+            api_style = "volcengine"
     poll_interval = int(_env("VIDEO_POLL_INTERVAL") or _settings_value(settings, "video_poll_interval") or "5")
     timeout = int(_env("VIDEO_TIMEOUT") or _settings_value(settings, "video_timeout") or "1800")
     return {
@@ -331,9 +351,7 @@ class CloudVideoProvider:
         self.model = model or resolved["model"]
         self.resolution = normalize_resolution(str(resolved["resolution"]))
         self.ratio = normalize_ratio(str(resolved["ratio"]))
-        self.api_style = (
-            "tokendance" if "tokendance.space" in self.base_url.lower() else "volcengine"
-        ) if base_url else resolved["api_style"]
+        self.api_style = _detect_api_style(self.base_url) if base_url else resolved["api_style"]
         self.poll_interval = max(1, int(resolved["poll_interval"]))
         self.timeout = max(30, int(resolved["timeout"]))
         if not self.base_url:
@@ -382,6 +400,10 @@ class CloudVideoProvider:
             return self._generate_tokendance(
                 shot, frame_path, output_dir, prompt, seed, duration, resolution, ratio
             )
+        if self.api_style == "gateway":
+            return self._generate_gateway(
+                shot, output_dir, prompt, duration, image_url, frame_path
+            )
         payload = build_video_payload(
             model=self.model,
             prompt=prompt,
@@ -415,11 +437,59 @@ class CloudVideoProvider:
                 "resolution": resolution,
                 "ratio": ratio,
                 "mode": "i2v" if frame_path else "t2v",
+                "cost_reported": self.cost_per_call > 0,
             },
         )
         result.validate()
         return result
 
+
+    def _generate_gateway(self, shot, output_dir, prompt, duration, image_url, frame_path=None):
+        """OpenAI 兼容网关（/v1/videos）：创建 → 轮询 → 下载。
+
+        与火山协议的区别：字段是 seconds 而不是 duration；没有 resolution/ratio/seed；
+        图生视频的 image 直接放在顶层，且必须是 data URI。
+        创建只发一次——超时或 5xx 时远端可能已计费，重试等于重复扣费。
+        """
+        from . import video_gateway
+
+        target = Path(output_dir)
+        target.mkdir(parents=True, exist_ok=True)
+        shot_id = str(shot.get("id") or f"shot_{shot.get('order', 1)}")
+        dest = target / f"{shot_id}.mp4"
+        outcome = video_gateway.generate_video(
+            self.base_url,
+            self.api_key,
+            prompt=prompt,
+            target=dest,
+            seconds=int(duration),
+            model=self.model,
+            image_data_url=image_url or "",
+            interval=self.poll_interval,
+            max_wait=self.timeout,
+        )
+        result = AssetResult(
+            path=str(dest),
+            media_type=MEDIA_TYPE_VIDEO,
+            source=self.name,
+            model=self.model,
+            seed=0,
+            prompt=prompt,
+            first_frame_path=str(frame_path) if frame_path else "",
+            cost=float(outcome.get("credit") or 0) / 100.0,
+            event={
+                "type": "video",
+                "provider": self.name,
+                "remote_task_id": outcome.get("task_id"),
+                "credit": outcome.get("credit"),
+                "seconds": outcome.get("seconds"),
+                # 契约要求：有首帧就是图生视频；没有首帧必须显式标 t2v，
+                # 否则校验器会拒绝这条来路不明的视频。
+                "mode": "i2v" if frame_path else "t2v",
+            },
+        )
+        result.validate()
+        return result
 
     def _generate_tokendance(self, shot, frame_path, output_dir, prompt, seed, duration, resolution, ratio=""):
         # ratio 缺省回落到配置值：图生视频用不到它（比例跟首帧走），文生视频必须给。
@@ -505,6 +575,8 @@ class CloudVideoProvider:
         dest = target / f"{shot_id}.mp4"
         download_video(video_url, dest)
         result = AssetResult(path=str(dest), media_type=MEDIA_TYPE_VIDEO, source=self.name, model=self.model, seed=seed, prompt=prompt, first_frame_path=str(frame_path or ""), cost=float(self.cost_per_call), event={"type":"video", "provider":self.name, "api_style":"tokendance", "remote_task_id":task_id, "duration":duration, "resolution":resolution, "mode": "i2v" if frame_path else "t2v"})
+        if self.cost_per_call > 0:
+            result.event["cost_reported"] = True
         result.validate()
         saved.update(status="downloaded", local_path=str(dest))
         receipt.write_text(json.dumps(saved, ensure_ascii=False, indent=2), encoding="utf-8")

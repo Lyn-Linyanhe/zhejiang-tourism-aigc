@@ -1,4 +1,4 @@
-const state = { catalog: null, systemConfig: null, latestTaskId: null, pollTimer: null, libraryAssets: [], publicationLibraryAssets: [], libraryRequest: 0 };
+const state = { catalog: null, systemConfig: null, latestTaskId: null, pollTimer: null, libraryAssets: [], publicationLibraryAssets: [], libraryRequest: 0, musicLibrary: null };
 const $ = (selector) => document.querySelector(selector);
 const $$ = (selector) => Array.from(document.querySelectorAll(selector));
 
@@ -32,16 +32,20 @@ function choiceOptions(values, selected) {
   return [...new Set([...values, ...(selected ? [selected] : [])])].map(value => `<option value="${escapeHtml(value)}" ${value === selected ? "selected" : ""}>${escapeHtml(value)}</option>`).join("");
 }
 
-function fillChoice(name, values, fallback = "", optional = false) {
+function fillChoice(name, values, fallback = "", optional = false, allowCustom = true) {
   const field = $(`#create-form [name='${name}']`);
   const current = field.value || fallback;
-  field.innerHTML = (optional ? '<option value="">未指定</option>' : "") + choiceOptions(values, current === "__custom__" ? "" : current) + '<option value="__custom__">自定义…</option>';
+  const customOption = allowCustom ? '<option value="__custom__">自定义…</option>' : "";
+  field.innerHTML = (optional ? '<option value="">未指定</option>' : "") + choiceOptions(values, current === "__custom__" ? "" : current) + customOption;
   field.value = current;
 }
 
 function createChoiceValue(name) {
   const field = $(`#create-form [name='${name}']`);
-  return field.value === "__custom__" ? $(`[data-custom-for='${name}']`).value.trim() : field.value;
+  if (field.value !== "__custom__") return field.value;
+  // 风格与背景音乐只允许固定选项，没有自定义输入框；这里兜住旧缓存或手改 DOM 的情况。
+  const custom = $(`[data-custom-for='${name}']`);
+  return custom ? custom.value.trim() : field.value;
 }
 
 function voiceChoiceOptions(selected) {
@@ -89,9 +93,11 @@ async function loadCatalog() {
   fillChoice("city", state.catalog.cities.map(item => item.name), "杭州");
   fillChoice("festival", state.catalog.festivals, "", true);
   fillChoice("audience", state.catalog.audiences, "", true);
-  fillChoice("style", state.catalog.styles, "诗意纪实");
+  // 风格与背景音乐必须是曲库/知识库认识的标准值，不给「自定义…」，
+  // 否则手填「国风」这类词会导致选曲失败。
+  fillChoice("style", state.catalog.styles, "诗意纪实", false, false);
   $("#create-form [name='voice']").innerHTML = voiceChoiceOptions($("#create-form [name='voice']").value);
-  fillChoice("music_mood", state.catalog.music_moods, "无音乐");
+  fillChoice("music_mood", state.catalog.music_moods, "无音乐", false, false);
   fillChoice("culture", state.catalog.cities.flatMap(item => item.culture.split("、")), "", true);
   $$("[data-custom-for]").forEach(custom => {
     const field = $(`#create-form [name='${custom.dataset.customFor}']`);
@@ -105,6 +111,15 @@ async function loadCatalog() {
   $("#city").addEventListener("input", updateCityPreview);
   $("[data-custom-for='city']").addEventListener("input", updateCityPreview);
   $("#create-form [name='voice']").addEventListener("change", syncCreateVoice);
+  // 时长是自由输入，快捷档只是把常用值填进去，不锁死选项。
+  $$("[data-duration-preset]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const input = $("#create-form [name='duration']");
+      if (!input) return;
+      input.value = button.dataset.durationPreset;
+      input.dispatchEvent(new Event("input", { bubbles: true }));
+    });
+  });
   $("#create-form").addEventListener("input", updateInputMetrics);
   updateCityPreview();
   updateInputMetrics();
@@ -580,7 +595,8 @@ function renderTask(task) {
   state.activeTask = task;
   const error = task.error ? `<div class="error-box"><strong>任务失败</strong><p>${escapeHtml(task.error)}</p><button class="text-button" data-retry="${escapeHtml(task.id)}">从脚本阶段重试</button></div>` : "";
   const render = task.render || {};
-  const links = render.video_url ? `<div class="task-links"><a href="${render.video_url}" target="_blank">打开 MP4</a><a href="${render.video_url}" download>下载 MP4</a><a href="${render.subtitle_url}" target="_blank">下载 SRT</a>${task.audio?.voice_url ? `<a href="${task.audio.voice_url}" target="_blank">试听配音</a>` : ""}${task.audio?.music_url ? `<a href="${task.audio.music_url}" target="_blank">试听音乐</a>` : ""}</div><video class="result-video" controls playsinline src="${render.video_url}"></video>` : "";
+  const mediaLinks = render.video_url ? `<a href="${render.video_url}" target="_blank">打开 MP4</a><a href="${render.video_url}" download>下载 MP4</a><a href="${render.subtitle_url}" target="_blank">下载 SRT</a>${task.audio?.voice_url ? `<a href="${task.audio.voice_url}" target="_blank">试听配音</a>` : ""}${task.audio?.music_url ? `<a href="${task.audio.music_url}" target="_blank">试听音乐</a>` : ""}` : "";
+  const links = `<div class="task-links"><a href="/api/tasks/${encodeURIComponent(task.id)}/export?format=md" download title="导出已保存版本；未保存的修改请先保存">导出文案</a>${mediaLinks}</div>${render.video_url ? `<video class="result-video" controls playsinline src="${render.video_url}"></video>` : ""}`;
   const draft = task.shots?.length && ["draft", "edited", "failed"].includes(task.status) ? `<div class="draft-editor">
     <div class="draft-editor-header"><div><span class="section-index">SCRIPT REVIEW</span><h4>审核并修改后再生成</h4></div><button class="primary-button" data-generate-task="${escapeHtml(task.id)}"><span>确认并生成实际视频</span><b>→</b></button></div>
     <label>标题<input class="draft-title" value="${escapeHtml(task.title)}" /></label><label>摘要<textarea class="draft-summary">${escapeHtml(task.summary)}</textarea></label><label>CTA<textarea class="draft-cta">${escapeHtml(task.cta)}</textarea></label><label>完整旁白<textarea class="draft-narration">${escapeHtml(task.narration)}</textarea></label>
@@ -739,10 +755,72 @@ async function retryTask(taskId) {
 async function loadProjects() {
   const data = await api("/api/tasks?limit=50");
   const container = $("#project-list");
-  if (!data.items.length) return (container.innerHTML = `<div class="empty-state">还没有任务。</div>`);
-  container.innerHTML = data.items.map((task) => `<article class="project-card"><img src="${task.render?.cover_url || ""}" alt="" /><div><span class="status ${task.status === "failed" ? "failed" : ""}">${escapeHtml(task.status.toUpperCase())}</span><h3>${escapeHtml(task.title || task.input.theme)}</h3><p>${escapeHtml(task.input.city)} / ${escapeHtml(task.input.landmark || "未指定地标")} / ${task.input.duration}s<br />${escapeHtml(task.updated_at)}</p></div><div class="project-card-actions">${task.render?.video_url ? `<a href="${task.render.video_url}" target="_blank">打开 MP4</a>` : ""}<button data-open-task="${escapeHtml(task.id)}">打开任务</button></div></article>`).join("");
-  $$("[data-open-task]").forEach((button) => button.addEventListener("click", () => openTask(button.dataset.openTask)));
+  const overview = $("#metrics-overview");
+  const tasks = data.items;
+  const billingCurrencies = new Map();
+  for (const task of tasks) {
+    for (const [currency, amount] of Object.entries(task.metrics?.billing?.by_currency || {})) {
+      billingCurrencies.set(currency, (billingCurrencies.get(currency) || 0) + Number(amount || 0));
+    }
+  }
+  const billingMarkup = [...billingCurrencies.entries()].sort(([a],[b]) => a.localeCompare(b)).map(([currency, amount]) => `<article class="metric-tile"><span>已记录账单 · ${escapeHtml(currency)}</span><strong>${Number(amount).toFixed(2)} ${escapeHtml(currency)}</strong><small>人工登记金额，不代表已完成对账</small></article>`).join("");
+  const unknownCostCount = tasks.filter((task) => task.metrics?.cost?.amount_status !== "reported").length;
+  const costMarkup = `<article class="metric-tile"><span>Provider 成本状态</span><strong>${unknownCostCount} / ${tasks.length} 待完整报告</strong><small>未报告或不完整金额按未知处理；不推断为免费</small></article>`;
+  const observations = tasks.flatMap((task) => (task.metrics?.publication_observations || []).map((item) => ({...item, title:task.title || task.input?.theme || task.id})));
+  const observationMarkup = observations.length ? observations.slice(0, 12).map((item) => `<article class="observation-card"><strong>${escapeHtml(item.platform)} · ${escapeHtml(item.title)}</strong><small>${escapeHtml(item.published_at)} / 发布后 ${Number(item.window_days)} 天观测 / ${escapeHtml(item.observed_at)}</small><a href="${escapeHtml(item.post_url)}" target="_blank" rel="noopener noreferrer">查看原帖</a><div class="observation-metrics">${Object.entries(item.metrics || {}).map(([key,value]) => `<span>${escapeHtml(key)} <b>${Number(value).toLocaleString()}</b></span>`).join("")}</div></article>`).join("") : `<p class="metrics-empty">尚无平台观测数据。需录入平台帖子与带时间窗口的后台指标；未录入不代表 0。</p>`;
+  overview.innerHTML = `${costMarkup}${billingMarkup}<div class="observation-list">${observationMarkup}</div>`;
+  if (!tasks.length) return (container.innerHTML = `<div class="empty-state">还没有任务。</div>`);
+  container.innerHTML = tasks.map((task) => {
+    const cost = task.metrics?.cost || {};
+    const costLabel = cost.amount_status === "reported" ? `${Number(cost.total).toFixed(4)} ${cost.currency || "币种未声明"} · Provider 报告` : cost.amount_status === "incomplete" ? `部分报告 ${Number(cost.reported_total || 0).toFixed(4)} · 未完整` : "成本未报告";
+    const execution = task.metrics?.execution || {};
+    const durationLabel = execution.last_seconds == null ? "运行耗时未记录" : `最近运行 ${Number(execution.last_seconds).toFixed(1)} 秒`;
+    return `<article class="project-card"><img src="${escapeHtml(task.render?.cover_url || "")}" alt="" /><div><span class="status ${task.status === "failed" ? "failed" : ""}">${escapeHtml(task.status.toUpperCase())}</span><h3>${escapeHtml(task.title || task.input.theme)}</h3><p>${escapeHtml(task.input.city)} / ${escapeHtml(task.input.landmark || "未指定地标")} / ${task.input.duration}s<br />${escapeHtml(task.updated_at)}<br />${escapeHtml(costLabel)}<br />${escapeHtml(durationLabel)}</p><button class="text-button" data-add-observation="${escapeHtml(task.id)}">记录平台观测</button> <button class="text-button" data-add-billing="${escapeHtml(task.id)}">登记实际账单</button></div><div class="project-card-actions">${task.render?.video_url ? `<a href="${escapeHtml(task.render.video_url)}" target="_blank" rel="noopener noreferrer">打开 MP4</a>` : ""}<button data-open-task="${escapeHtml(task.id)}">打开任务</button></div></article>`;
+  }).join("");
+  $$(`[data-open-task]`).forEach((button) => button.addEventListener("click", () => openTask(button.dataset.openTask)));
+  $$(`[data-add-observation]`).forEach((button) => button.addEventListener("click", () => recordPublicationObservation(button.dataset.addObservation)));
+  $$(`[data-add-billing]`).forEach((button) => button.addEventListener("click", () => recordBilling(button.dataset.addBilling)));
 }
+
+async function recordBilling(taskId) {
+  const amount = Number(prompt("账单金额（不含币种符号）:"));
+  if (!Number.isFinite(amount) || amount < 0) return showToast("金额必须是非负数字。");
+  const currency = prompt("币种代码（3 位大写 ISO，如 CNY、USD）:", "CNY");
+  if (!currency) return;
+  const source = prompt("账单/发票/后台记录来源（建议含单号）:");
+  if (!source) return;
+  const capturedAt = prompt("记录日期 YYYY-MM-DD:", new Date().toISOString().slice(0, 10));
+  if (!capturedAt) return;
+  const note = prompt("备注（可选）:", "");
+  try {
+    await api(`/api/tasks/${encodeURIComponent(taskId)}/billing`, {method:"POST", body:JSON.stringify({amount,currency,source,captured_at:capturedAt,note:note || ""})});
+    showToast("人工账单记录已保存，与 provider 报告成本分开列示。");
+    await loadProjects();
+  } catch (error) { showToast(error.message); }
+}
+
+async function recordPublicationObservation(taskId) {
+  const platform = prompt("平台 slug: douyin / xiaohongshu / bilibili / youtube / weibo / wechat-channels / other");
+  if (!platform) return;
+  const postUrl = prompt("公开帖子 URL:");
+  if (!postUrl) return;
+  const publishedAt = prompt("发布日期 YYYY-MM-DD:");
+  if (!publishedAt) return;
+  const observedAt = prompt("数据抓取日期 YYYY-MM-DD:");
+  if (!observedAt) return;
+  const windowDays = Number(prompt("发布后第几天观测 (1–365):", "7"));
+  const metricsText = prompt("输入后台可见指标 JSON；只填实际报告值，例如 {\"views\":123,\"likes\":4}。未显示的指标不要填 0:");
+  if (!metricsText) return;
+  let metrics;
+  try { metrics = JSON.parse(metricsText); } catch { return showToast("指标必须是有效 JSON 对象。"); }
+  const sourceNote = prompt("数据来源/截图备注（可选）:", "手工读取平台公开页面");
+  try {
+    await api(`/api/tasks/${encodeURIComponent(taskId)}/publication-observations`, {method:"POST", body:JSON.stringify({platform,post_url:postUrl,published_at:publishedAt,observed_at:observedAt,window_days:windowDays,metrics,source_note:sourceNote || ""})});
+    showToast("平台观测已记录；这是描述性数据，不代表因果归因或 ROI。");
+    await loadProjects();
+  } catch (error) { showToast(error.message); }
+}
+
 
 // 打开一条任务并把 id 写进地址栏。这样刷新、收藏、把链接发给别人，
 // 都能直接回到同一条片子，而不是回到空白的创作工作台。
@@ -777,9 +855,166 @@ async function boot() {
   $$(".nav-item").forEach((button) => button.addEventListener("click", () => showView(button.dataset.view)));
   $("#refresh-button").addEventListener("click", () => window.location.reload());
   $("#view-latest").addEventListener("click", () => state.latestTaskId ? openTask(state.latestTaskId) : showToast("还没有任务。"));
+  bindMusicLibrary();
   // #task=<id> 深链：刷新或从别处打开链接时直接恢复那条任务
   const linked = window.location.hash.match(/^#task=(.+)$/);
   if (linked) openTask(decodeURIComponent(linked[1]));
+}
+
+// ---- 曲库浏览 ----
+// 曲目标签由后端 catalog 提供，前端只负责展示与筛选，避免两边各写一份词表。
+async function loadMusicLibrary() {
+  if (state.musicLibrary) return state.musicLibrary;
+  const payload = await api("/api/music/library");
+  state.musicLibrary = payload;
+  return payload;
+}
+
+// 曲目风格目前对全部曲目都是「全风格通用」（catalog 里就是这么标的），
+// 所以逐首列出 5 个风格只是噪音，这里合并成一个「通用」标签；
+// 哪天有曲目真正限定风格，就会自动显示成它自己的标签。
+function musicStyleTag(track, library) {
+  const all = (library.styles || []).length;
+  const own = (track.styles || []).length;
+  if (all > 0 && own >= all) return "通用";
+  return own ? (track.styles || []).join("、") : "未标风格";
+}
+
+function renderMusicList(library, mood) {
+  const list = $("#music-list");
+  if (!list) return;
+  const tracks = (library.tracks || []).filter((track) => {
+    if (mood && !(track.moods || []).includes(mood)) return false;
+    return true;
+  });
+  if (!tracks.length) {
+    list.innerHTML = '<p class="field-note">没有符合筛选条件的曲目，试试放宽情绪。</p>';
+    return;
+  }
+  list.innerHTML = tracks.map((track) => `
+    <div class="music-row">
+      <div class="music-row-main">
+        <strong>${escapeHtml(track.name)}</strong>
+        <span class="music-tags">${(track.moods || []).map((m) => `<em>${escapeHtml(m)}</em>`).join("")}</span>
+        <span class="music-tags music-tags-style"><em>${escapeHtml(musicStyleTag(track, library))}</em></span>
+      </div>
+      <div class="music-row-actions">
+        <span class="field-note">${escapeHtml(track.usage_scope || "")}</span>
+        <button type="button" class="text-button" data-preview-music="${escapeHtml(track.id)}">试听</button>
+        <button type="button" class="text-button" data-pick-music="${escapeHtml(track.id)}">用这首</button>
+      </div>
+    </div>`).join("");
+}
+
+// 试听共用一个 <audio>，避免一屏 47 个音频元素
+let musicPreview = null;
+let musicPreviewId = "";
+
+function toggleMusicPreview(trackId) {
+  const track = (state.musicLibrary?.tracks || []).find((t) => t.id === trackId);
+  if (!track) return;
+  if (!musicPreview) {
+    musicPreview = new Audio();
+    musicPreview.addEventListener("ended", () => { musicPreviewId = ""; syncPreviewButtons(); });
+  }
+  if (musicPreviewId === trackId && !musicPreview.paused) {
+    musicPreview.pause();
+    musicPreviewId = "";
+    syncPreviewButtons();
+    return;
+  }
+  musicPreviewId = trackId;
+  musicPreview.src = `/music/${encodeURIComponent(track.file)}`;
+  musicPreview.play().catch((error) => {
+    musicPreviewId = "";
+    syncPreviewButtons();
+    showToast(error?.name === "NotAllowedError"
+      ? "浏览器拦截了自动播放，再点一次「试听」即可。"
+      : "这段音频浏览器放不了，可以下载后本地试听。");
+  });
+  syncPreviewButtons();
+}
+
+function syncPreviewButtons() {
+  document.querySelectorAll("[data-preview-music]").forEach((button) => {
+    const playing = button.dataset.previewMusic === musicPreviewId;
+    button.textContent = playing ? "停止" : "试听";
+  });
+}
+
+// 点「用这首」= 把该曲目的第一个情绪填进背景音乐下拉框。
+// 生成时后端按「情绪 + 叙事风格」再挑具体曲目，所以这里只能定情绪，不能锁定单曲。
+function pickMusicTrack(trackId) {
+  const library = state.musicLibrary;
+  const track = (library?.tracks || []).find((t) => t.id === trackId);
+  if (!track) return;
+  const moods = (state.catalog?.music_moods || []).filter((m) => m !== "无音乐");
+  const mood = (track.moods || []).find((m) => moods.includes(m));
+  if (!mood) {
+    showToast("这首曲子的情绪不在当前选项里，换一首试试。");
+    return;
+  }
+  const select = document.querySelector("#create-form [name='music_mood']");
+  if (select) {
+    select.value = mood;
+    select.dispatchEvent(new Event("change", { bubbles: true }));
+  }
+  if (musicPreview) { musicPreview.pause(); musicPreviewId = ""; }
+  $("#music-modal").hidden = true;
+  showToast(`背景音乐已设为「${mood}」，生成时会从该情绪的曲目里挑选。`);
+}
+
+async function openMusicLibrary() {
+  const modal = $("#music-modal");
+  if (!modal) return;
+  try {
+    const library = await loadMusicLibrary();
+    const count = $("#music-count");
+    if (count) count.textContent = String(library.total || 0);
+    const moodSelect = $("#music-filter-mood");
+    if (moodSelect && moodSelect.options.length <= 1) {
+      (library.moods || []).forEach((m) => moodSelect.add(new Option(m, m)));
+    }
+    renderMusicList(library, moodSelect?.value || "");
+    modal.hidden = false;
+  } catch (error) {
+    showToast("曲库加载失败，请确认服务已启动。");
+  }
+}
+
+function bindMusicLibrary() {
+  const browse = $("#browse-music");
+  if (browse) browse.addEventListener("click", openMusicLibrary);
+  const close = $("#music-modal-close");
+  if (close) close.addEventListener("click", () => {
+    if (musicPreview) musicPreview.pause();
+    musicPreviewId = "";
+    $("#music-modal").hidden = true;
+  });
+  const modal = $("#music-modal");
+  if (modal) modal.addEventListener("click", (event) => {
+    if (event.target !== modal) return;
+    if (musicPreview) musicPreview.pause();
+    musicPreviewId = "";
+    modal.hidden = true;
+  });
+  const list = $("#music-list");
+  if (list) list.addEventListener("click", (event) => {
+    const pick = event.target.closest("[data-pick-music]");
+    if (pick) { pickMusicTrack(pick.dataset.pickMusic); return; }
+    const preview = event.target.closest("[data-preview-music]");
+    if (preview) toggleMusicPreview(preview.dataset.previewMusic);
+  });
+  const moodFilter = $("#music-filter-mood");
+  if (moodFilter) moodFilter.addEventListener("change", async () => {
+    const library = await loadMusicLibrary();
+    renderMusicList(library, moodFilter.value || "");
+  });
+  // 首次加载就把曲目数填进按钮文案
+  loadMusicLibrary().then((library) => {
+    const count = $("#music-count");
+    if (count) count.textContent = String(library.total || 0);
+  }).catch(() => {});
 }
 
 boot();

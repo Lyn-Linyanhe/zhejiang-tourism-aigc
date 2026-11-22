@@ -5,6 +5,7 @@ import math
 import threading
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import dataclass
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Callable
 
@@ -17,6 +18,7 @@ from ..providers.registry import ProviderRegistry, build_provider_registry, invo
 from ..storage import Storage, library_provenance
 from . import consistency
 from . import knowledge as zhejiang_kb
+from . import reference_images
 from .audio_sync import PerShotAudioBuilder
 from .library import library_asset_record
 from .voice_studio import validate_clip, plan_track
@@ -295,6 +297,9 @@ class Orchestrator:
             error=data.get("error", ""),
             created_at=data.get("created_at", now_iso()),
             updated_at=data.get("updated_at", now_iso()),
+            billing_records=list(data.get("billing_records", [])),
+            publication_observations=list(data.get("publication_observations", [])),
+            execution_runs=list(data.get("execution_runs", [])),
         )
         task.shots = [Shot(**shot) for shot in data.get("shots", [])]
         task.assets = [AssetRecord(**asset) for asset in data.get("assets", [])]
@@ -324,6 +329,16 @@ class Orchestrator:
 
     def _run(self, task_id: str, from_stage: str | None) -> None:
         task = self._load(task_id)
+        run_id = new_id("run")
+        started_at = datetime.now(timezone.utc)
+        run_entry: dict[str, Any] = {
+            "run_id": run_id,
+            "started_at": started_at.isoformat(),
+            "status": "running",
+            "stage": from_stage or PIPELINE[0].name,
+        }
+        task.execution_runs.append(run_entry)
+        self.update(task)
         try:
             selected_stage = from_stage or PIPELINE[0].name
             stage_names = [stage.name for stage in PIPELINE]
@@ -359,6 +374,15 @@ class Orchestrator:
                     "message": str(exc),
                 },
             )
+        finally:
+            elapsed = max(0.0, (datetime.now(timezone.utc) - started_at).total_seconds())
+            run_entry.update(
+                finished_at=datetime.now(timezone.utc).isoformat(),
+                duration_seconds=round(elapsed, 3),
+                status="failed" if task.status == "failed" else "completed",
+                stage=task.stage,
+            )
+            self.update(task)
 
     def _scripting(self, task: Task) -> None:
         self.update(
@@ -396,12 +420,15 @@ class Orchestrator:
         task.tags = list(result.data["tags"])
         task.narration = str(result.data["narration"])
         task.shots = [Shot(**item) for item in normalized_shots]
+        trace_event = dict(result.event)
+        trace_event.setdefault("type", "llm")
+        trace_event.setdefault("cost_reported", bool(trace_event.get("cost_reported", False)))
         task.trace = TraceRecord(
             provider=result.provider,
             model=result.model,
             prompt_version=result.event.get("prompt_version", "zj-tourism-prompt-v1"),
             fallback_used=result.fallback_used,
-            events=[result.event],
+            events=[trace_event],
         )
         task.audio["knowledge"] = result.data.get("knowledge", {})
         self.update(
@@ -759,6 +786,7 @@ class Orchestrator:
             provider_event.setdefault("slot", "asset")
             provider_event.setdefault("provider", asset.get("source", "unknown"))
             provider_event.setdefault("cost", float(asset.get("cost", 0) or 0))
+            provider_event.setdefault("cost_reported", bool(asset.get("cost_reported", provider_event.get("cost_reported", False))))
             provider_event.setdefault("shot_id", shot.id)
             task.trace.events.append(provider_event)
         task.assets.append(
@@ -809,12 +837,38 @@ class Orchestrator:
             # 首帧也是画面 provider 出的，配色/风格/规格必须和后续图生视频一致。
             frame_ctx.setdefault("color", knowledge.get("color", "#2d6c63"))
             frame_ctx.setdefault("accent", knowledge.get("accent", "#d6ad60"))
+            # 参考图：优先用同城市同点位的小红书采集图，让构图/机位/质感贴近实景。
+            # 参考图只作为图生图的输入，不会被输出或入库——原图不会进成片。
+            # Shot 上没有 spot 字段，用 entity_id 反查实体名，它与图片索引的 spot 同口径。
+            entity_id = str(payload.get("entity_id") or "")
+            entity = zhejiang_kb.get_entity(entity_id, city=task.input.city) if entity_id else None
+            spot_name = str((entity or {}).get("name") or "")
+            reference = reference_images.find_reference(
+                city=task.input.city,
+                spot=spot_name,
+                shot_tag=str(payload.get("shot_tag") or shot.shot_tag or ""),
+                seed=shot.id,
+            )
+            if reference:
+                payload["reference_image_path"] = reference
+                frame_ctx["reference_image_path"] = reference
             acquired = self.registry.acquire_asset(
                 frame_chain,
                 lambda name, provider, body=payload, ctx=frame_ctx: invoke_create_or_find(
                     provider, task.id, body, directory, ctx
                 ),
             )
+            if reference:
+                self.update(
+                    task,
+                    event={
+                        "type": "reference",
+                        "shot_id": shot.id,
+                        "status": "used",
+                        "file": Path(reference).name,
+                        "note": "reference-only：仅作图生图输入，不输出原图",
+                    },
+                )
         except Exception as exc:
             self._note_fallback(task, "asset", "ai-image", True, str(exc))
             return ""
@@ -918,7 +972,10 @@ class Orchestrator:
             }
         )
         if task.trace and event:
-            task.trace.events.append(dict(event, stage="audio"))
+            audio_event = dict(event, stage="audio")
+            if result.cost > 0:
+                audio_event["cost_reported"] = True
+            task.trace.events.append(audio_event)
         self._sync_shots_to_audio(task)
         # 镜头时长按 cues 实测（P1 任务3），成片容器锁回用户选择的秒数（三条不能破的指标）。
         task.audio["requested_duration"] = target

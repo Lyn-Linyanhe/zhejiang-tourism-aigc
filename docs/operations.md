@@ -50,6 +50,12 @@ Changing entity/place, source, author, license, usage scope or expiration eviden
 
 A file license does not grant rights to unrelated music, people, trademarks or copied descriptions. Keep fact-source records separate from image-source records. CC BY requires author/source/license and an indication of edits; do not treat CC BY-SA as CC BY.
 
+## Cost, efficiency and outcome measurement
+
+The archive distinguishes provider-reported cost from manually documented billing. Missing provider amounts display as unknown/incomplete, never as free. Billing records require a source, captured date, currency, and amount; they are grouped per currency, not mixed. Run duration is measured around actual task runs. Publication observations are manually entered with platform, public post URL, publication date, capture date, and reporting window; omitted metrics remain unreported. These descriptive platform readings do not establish causal impact or ROI.
+
+Use `docs/research/evaluation-protocol.md` and its CSV templates to run a fixed-input offline evaluation. Keep fact-support and shot-match labels human-reviewed, retain evidence/sample IDs, and report denominators and failure cases alongside rates. Do not run paid-cloud or campaign tests without explicit user authorization and approved credentials/budget.
+
 ## Reproduce the small local pilot
 
 The 2026-11-20 pilot uses an isolated data directory. It does not overwrite the normal database, existing media, `.env` or music library.
@@ -126,6 +132,14 @@ runtime/media/<task_id>/cover.jpg
 
 - Provider failure: inspect `task.error` and `trace.events`.
 - Re-render with saved script and assets: `POST /api/tasks/{id}/retry` with `{"from_stage":"rendering"}`.
+
+## Narration audio
+
+- `TTS_PROVIDER=auto` tries edge-tts first, then the installed Windows voice. Windows SAPI (`Microsoft Huihui Desktop`) is audibly robotic, so treat `voice_provider=windows-system-speech` in a task as a broken environment, not a style choice.
+- edge-tts normally runs inside the isolated audio runtime (`AUDIO_PYTHON`). When that interpreter is missing but the `edge-tts` package is installed for the main interpreter, synthesis runs in-process instead of degrading to SAPI. Check `runtime/audio-cache/*.json`: `"model": "zh-CN-XiaoxiaoNeural"` means the neural voice was used.
+- Each synthesized sentence carries 0.2–0.6 s of engine silence. The builder trims it to 50 ms per edge and then inserts explicit pauses: 220 ms between sentences in the same shot, 300 ms between shots. Uploaded narration is never trimmed.
+- `task.audio.event` exposes `sentence_gap_ms`, `silence_between_shots_ms` and `edge_silence_trimmed` so a render can be audited after the fact.
+- Mixing runs in two steps: human voice + BGM are premixed with `amix normalize=0` (the ffmpeg default divides every input by the input count, which silently costs 6 dB whenever music is present), then the premix is measured with `loudnorm` in analysis mode and lifted by a fixed gain to `-16 LUFS`, capped so true peak stays at or below `-1.5 dBTP`. `manifest.json` records `loudness.input_lufs`, `input_true_peak` and `gain_db` for every render.
 - Re-run audio: retry from `audio`.
 - Regenerate the script: retry from `scripting`.
 - Do not delete `runtime/db` or `runtime/media` while a task is running.

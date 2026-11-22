@@ -21,6 +21,7 @@
 """
 import json
 import os
+import re
 import threading
 from typing import Any
 
@@ -166,6 +167,111 @@ def _type_label(entity_type: str) -> str:
     }.get(str(entity_type or "").strip(), "文旅条目")
 
 
+_PUNCT_RE = re.compile(r"[\s，。；、：（）()《》“”\"'·—\-–~!？?,.;:]+")
+
+
+def _normalize_fact(text: object) -> str:
+    """Normalize a fact for matching, without changing what gets displayed.
+
+    Facts and records are often paraphrases of each other ("始建于东晋咸和元年
+    （326 年）" vs "公元326年，灵隐寺在杭州始建"), and punctuation/spacing drift
+    between edits. Exact string equality therefore reports "no source" for
+    facts that do have one. Stripping punctuation and whitespace is a cheap,
+    predictable step; anything looser would start matching unrelated facts.
+    """
+    return _PUNCT_RE.sub("", str(text or "")).lower()
+
+
+def _evidence_status(entity: dict, facts: list[str]) -> str:
+    """Describe how many injected facts actually have per-fact source records.
+
+    Records may bind to a fact two ways:
+    - `fact_index`: explicit 0-based position, used when the record text is a
+      paraphrase and cannot be matched by string equality;
+    - `text`: matched after punctuation/whitespace normalization.
+    Explicit binding wins, because it survives rewording on either side.
+    """
+    selected = [str(f).strip() for f in facts[:FACTS_PER_ENTITY] if str(f).strip()]
+    if not selected:
+        return ""
+    raw_records = [r for r in (entity.get("fact_records") or []) if isinstance(r, dict)]
+    by_index = {}
+    by_text = {}
+    for record in raw_records:
+        index = record.get("fact_index")
+        if isinstance(index, int) and not isinstance(index, bool):
+            by_index.setdefault(index, record)
+        by_text[_normalize_fact(record.get("text"))] = record
+    matched = []
+    for position, text in enumerate(selected):
+        record = by_index.get(position) or by_text.get(_normalize_fact(text))
+        matched.append(record)
+    count = sum(1 for record in matched if record)
+    if count == len(selected):
+        pending = any(_license_pending(record.get("license_status")) for record in matched if record)
+        return f"逐条来源已登记（{count}/{len(selected)}）" + ("，许可待核" if pending else "")
+    if count:
+        return f"部分事实有来源记录（{count}/{len(selected)}），其余仅作背景"
+    return "尚未逐条登记来源，仅作背景参考"
+
+
+def _license_pending(status: object) -> bool:
+    """Treat a license as pending unless it is an explicit clearance.
+
+    Free-text matching on words like "review" or "未" is unreliable: "preview"
+    contains "review", and a status can be "已确认可复用" while still mentioning
+    no pending work. Only an explicit clearance list counts as cleared.
+    """
+    text = str(status or "").strip().lower()
+    if not text:
+        return True
+    if text in {"approved", "cleared", "public-domain", "cc0"}:
+        return False
+    if "approved" in text or "已获授权" in text or "可公开复用" in text:
+        return False
+    return True
+
+
+def _status_rank(status: str) -> int:
+    """0 = fully sourced, 1 = partially, 2 = background only, 3 = unknown."""
+    if status.startswith("逐条来源已登记"):
+        return 0
+    if status.startswith("部分事实有来源记录"):
+        return 1
+    if status.startswith("尚未逐条登记来源"):
+        return 2
+    return 3
+
+
+def _fact_rule(statuses: list[str], fact_count: int) -> str:
+    """Pick a fact-usage rule that matches how well the injected facts are sourced.
+
+    The old text always demanded "at least 3 facts in the narration", which
+    contradicted the header's "background only" warning and pushed the model to
+    treat unverified material as citable. It also asked for more facts than some
+    entities actually carry, which invites fabrication. The rule now scales with
+    both evidence quality and the number of facts really injected.
+    """
+    if not statuses:
+        return ""
+    worst = max(_status_rank(status) for status in statuses)
+    if worst == 0:
+        want = min(fact_count, 3)
+        return (
+            f"1. 上述资料中的具体事实应真正用进旁白：挑 {want} 条写进不同镜头的旁白，"
+            "让观众听到可核实的细节（年代、人物、工艺名、典故、具体地名），而不是泛泛的赞美。\n"
+        )
+    if worst == 1:
+        return (
+            "1. 只把「来源状态」为逐条登记的事实写进旁白；标为“其余仅作背景”的内容"
+            "只能提供氛围与用词，不得当作可核实事实陈述。\n"
+        )
+    return (
+        "1. 上述内容仅作背景与用词参考，不要写进旁白当作可核实事实；"
+        "旁白请依靠画面描述与通用文化常识，不要补编年代、数字、荣誉称号。\n"
+    )
+
+
 def build_generation_context(
     *,
     city: str = "",
@@ -233,6 +339,8 @@ def build_generation_context(
 
     if scored:
         blocks: list[str] = []
+        statuses: list[str] = []
+        injected_facts = 0
         used = 0
         for _score, entity in scored:
             facts = [str(f).strip() for f in (entity.get("facts") or []) if str(f).strip()]
@@ -248,14 +356,24 @@ def build_generation_context(
             hook = str(entity.get("micro_drama_hook") or "").strip()
             if hook:
                 lines.append(f"- 叙事切口：{hook}")
+            evidence = _evidence_status(entity, facts)
+            if evidence:
+                lines.append(f"- 来源状态：{evidence}")
             block = "\n".join(lines)
             if used + len(block) > max_chars and blocks:
                 break
             blocks.append(block)
+            # Only entities that actually made it into the block may influence
+            # the header; a budget-dropped entity's status would otherwise lie.
+            if evidence:
+                statuses.append(evidence)
+            injected_facts += len(facts[:FACTS_PER_ENTITY])
             used += len(block)
-        header = f"以下是与本次创作相关的浙江文旅资料（已核查，可放心引用）。"
-        if city:
-            header = f"以下是{city}的浙江文旅资料（已核查，可放心引用）。"
+        all_sourced = bool(statuses) and all(item.startswith("逐条来源已登记") for item in statuses)
+        if all_sourced:
+            header = f"以下是{city or '浙江'}的浙江文旅资料（事实逐条登记来源；许可状态见条目，引用前仍需核对）。"
+        else:
+            header = f"以下是{city or '浙江'}的浙江文旅资料（来源登记状态见条目；未逐条登记来源的内容仅作背景，不要当作已核实事实引用）。"
         body = "\n\n".join(blocks)
     else:
         # 未命中具体实体：至少给出城市气质与一个兜底实体，避免参考块为空。
@@ -265,6 +383,8 @@ def build_generation_context(
             pool[0] if pool else None,
         )
         lines = []
+        statuses = []
+        injected_facts = 0
         if city_dna:
             lines.append(f"- 城市气质：{city_dna}")
         if fallback is not None:
@@ -272,20 +392,29 @@ def build_generation_context(
             facts = [str(f).strip() for f in (fallback.get("facts") or []) if str(f).strip()]
             if facts:
                 lines.append("- 可用事实：" + "；".join(facts[:FACTS_PER_ENTITY]))
+                injected_facts = len(facts[:FACTS_PER_ENTITY])
+            evidence = _evidence_status(fallback, facts)
+            if evidence:
+                lines.append(f"- 来源状态：{evidence}")
+                statuses.append(evidence)
         if not lines:
             return ""
-        header = f"以下是{city or '浙江'}的文旅背景资料（已核查）。" if city else "以下是浙江文旅背景资料（已核查）。"
+        if statuses and all(item.startswith("逐条来源已登记") for item in statuses):
+            header = f"以下是{city or '浙江'}的文旅背景资料（事实已逐条登记来源；许可状态见条目）。"
+        else:
+            header = f"以下是{city or '浙江'}的文旅背景资料（来源状态见条目；未登记来源的内容仅作背景）。"
         body = "\n".join(lines)
+
+    fact_rule = _fact_rule(statuses, injected_facts)
 
     return (
         f"{header}\n\n{body}\n\n"
         "使用规则（必须遵守）：\n"
-        f"1. 上述资料中的具体事实必须真正用进旁白：至少挑 {min(3, FACTS_PER_ENTITY)} 条"
-        "写进不同镜头的旁白，让观众听到可核实的细节（年代、人物、工艺名、典故、"
-        "具体地名），而不是泛泛的赞美。\n"
+        f"{fact_rule}"
         "2. 事实要拆散到镜头里，一条事实配一个画面，不要集中在一句话里罗列。\n"
         "3. 上述资料未覆盖的信息（实时票价、活动日期、交通班次、荣誉称号）一律不要编造。\n"
-        "4. 画面描述可参考「画面提示」，它对应真实存在的景观细节。"
+        "4. 画面描述可参考「画面提示」，它对应真实存在的景观细节。\n"
+        "5. 来源或许可状态不明确的内容只能作背景，不得改写成“已核实”“已批准”或具体荣誉。"
     )
 
 

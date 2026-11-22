@@ -78,7 +78,10 @@ class Settings:
     # 逐镜素材生成的并发数。单镜实测约 110 秒（文生图 37~70s + 图生视频 44s），
     # 串行跑 4 镜要 8 分钟。网关限流时把这个值调小。
     asset_concurrency: int = max(1, int(_env("ASSET_CONCURRENCY", "4") or 4))
-    asset_provider: str = _env("ASSET_PROVIDER", "offline")
+    # 默认走 AI 生成（图生视频）：这是文旅 AIGC 的本分，不是可选项。
+    # 没配密钥时注册表会把 available=False 的档位跳过，降级链自然落到
+    # local-library / offline，不会假装生成了 AI 画面。
+    asset_provider: str = _env("ASSET_PROVIDER", "ai-video")
     asset_fallback_providers: tuple[str, ...] = _env_list(
         "ASSET_FALLBACK_PROVIDERS", "local-library,offline"
     )
