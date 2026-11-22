@@ -72,10 +72,15 @@ class AssetResult:
             raise ValueError("AssetResult.source 不能为空（用于追溯素材来源）")
         if self.cost < 0:
             raise ValueError("AssetResult.cost 不能为负")
-        if self.media_type == MEDIA_TYPE_VIDEO and not self.first_frame_path:
+        # 视频素材必须能说清「这一镜为什么长这样」：图生视频靠首帧（也是失败重试的
+        # 起点），文生视频没有首帧，靠 event.mode=t2v 显式声明。两者都没有就拒绝——
+        # 一条来路不明的视频不该进成片档案。
+        is_text_to_video = str(self.event.get("mode", "")).lower() == "t2v"
+        if self.media_type == MEDIA_TYPE_VIDEO and not self.first_frame_path and not is_text_to_video:
             raise ValueError(
                 "图生视频必须回填 first_frame_path——"
-                "它是「这一镜为什么长这样」的唯一证据，也是失败重试的起点"
+                "它是「这一镜为什么长这样」的唯一证据，也是失败重试的起点；"
+                "文生视频请把 event.mode 标成 t2v"
             )
 
     def to_dict(self) -> dict[str, Any]:

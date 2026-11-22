@@ -1,0 +1,128 @@
+[
+  {
+    "file": "Rare Love.mp3",
+    "bpm": 64.9,
+    "lufs": -8.8,
+    "mood": "舒缓",
+    "needs_review": true
+  },
+  {
+    "file": "去有风的地方.mp3",
+    "bpm": 65.4,
+    "lufs": -10.5,
+    "mood": "舒缓",
+    "needs_review": true
+  },
+  {
+    "file": "又见月光光 伴奏.mp3",
+    "bpm": 73.6,
+    "lufs": -14.8,
+    "mood": "舒缓",
+    "needs_review": true
+  },
+  {
+    "file": "草原之风 Wind Of The Prairie.mp3",
+    "bpm": 76.6,
+    "lufs": -23.1,
+    "mood": "舒缓",
+    "needs_review": true
+  },
+  {
+    "file": "聘书伴奏.m4a",
+    "bpm": 79.9,
+    "lufs": -12.3,
+    "mood": "舒缓",
+    "needs_review": true
+  },
+  {
+    "file": "CHINA 春风.mp3",
+    "bpm": 80.0,
+    "lufs": -10.1,
+    "mood": "雅致",
+    "needs_review": true
+  },
+  {
+    "file": "apricity.mp3",
+    "bpm": 84.8,
+    "lufs": -13.0,
+    "mood": "雅致",
+    "needs_review": true
+  },
+  {
+    "file": "Lemon.mp3",
+    "bpm": 87.1,
+    "lufs": -11.1,
+    "mood": "雅致",
+    "needs_review": true
+  },
+  {
+    "file": "For All Eternity.mp3",
+    "bpm": 93.4,
+    "lufs": -14.9,
+    "mood": "雅致",
+    "needs_review": true
+  },
+  {
+    "file": "Do It All Over Again.mp3",
+    "bpm": 104.2,
+    "lufs": -16.7,
+    "mood": "轻快",
+    "needs_review": true
+  },
+  {
+    "file": "HeartStrings.mp3",
+    "bpm": 107.1,
+    "lufs": -15.2,
+    "mood": "轻快",
+    "needs_review": true
+  },
+  {
+    "file": "Love a Little Harder.mp3",
+    "bpm": 126.7,
+    "lufs": -10.8,
+    "mood": "轻快",
+    "needs_review": true
+  },
+  {
+    "file": "Weather Any Storm.mp3",
+    "bpm": 129.6,
+    "lufs": -16.6,
+    "mood": "轻快",
+    "needs_review": true
+  },
+  {
+    "file": "夏至未至 伴奏.mp3",
+    "bpm": 135.3,
+    "lufs": -15.2,
+    "mood": "轻快",
+    "needs_review": true
+  },
+  {
+    "file": "没语季节 钢琴版.mp3",
+    "bpm": 137.6,
+    "lufs": -20.2,
+    "mood": "热烈",
+    "needs_review": true
+  },
+  {
+    "file": "What If I Told You.mp3",
+    "bpm": 148.2,
+    "lufs": -10.3,
+    "mood": "热烈",
+    "needs_review": true
+  },
+  {
+    "file": "River Flows in You.mp3",
+    "bpm": 151.0,
+    "lufs": -26.9,
+    "mood": "热烈",
+    "needs_review": true
+  },
+  {
+    "file": "summer triangle.mp3",
+    "bpm": 176.5,
+    "lufs": -22.3,
+    "mood": "热烈",
+    "needs_review": true
+  }
+]

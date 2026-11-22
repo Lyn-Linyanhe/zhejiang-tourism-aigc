@@ -140,6 +140,7 @@ class AudioRuntimeClient:
         output_path: Path,
         voice: str,
         rate: str = "+0%",
+        pitch: str = "+0Hz",
     ) -> dict[str, Any]:
         return self._invoke(
             {
@@ -148,6 +149,7 @@ class AudioRuntimeClient:
                 "output_path": str(output_path.resolve()),
                 "voice": voice,
                 "rate": rate,
+                "pitch": pitch,
             }
         )
 

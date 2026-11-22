@@ -18,6 +18,24 @@ from pathlib import Path
 from typing import Any
 
 
+# AIGC 显式标识。只把说明写进 manifest 不算标识——《人工智能生成合成内容标识办法》
+# 要求生成合成内容在画面上带可见标识。标识文字和位置必须一眼能看见，
+# 所以烧在成片画面上，不依赖文件里的元数据。
+AIGC_LABEL_TEXT = "本片含 AI 生成内容"
+
+# 优先用系统自带中文字体。找不到就不烧，并在 manifest 里记 label_burned=false，
+# 不能因为缺字体把整条渲染任务打死。
+CJK_FONT_CANDIDATES = (
+    r"C:\Windows\Fonts\msyh.ttc",
+    r"C:\Windows\Fonts\simhei.ttf",
+    r"C:\Windows\Fonts\Deng.ttf",
+    r"C:\Windows\Fonts\simsun.ttc",
+    "/System/Library/Fonts/PingFang.ttc",
+    "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc",
+    "/usr/share/fonts/truetype/wqy/wqy-zenhei.ttc",
+)
+
+
 # 与 contract.TRANSITIONS 对齐。实现全部是段内效果，禁止 xfade 跨段重叠。
 TRANSITIONS = ("fade", "dissolve", "slideleft", "slideright", "zoom")
 
@@ -162,6 +180,40 @@ def create_srt(
                 ]
             )
     output_path.write_text("\n".join(lines), encoding="utf-8")
+
+
+def find_cjk_font() -> Path | None:
+    """找一个能渲染汉字的字体文件。找不到返回 None，由调用方决定降级。"""
+    for candidate in CJK_FONT_CANDIDATES:
+        path = Path(candidate)
+        if path.is_file():
+            return path
+    return None
+
+
+def _escape_drawtext(value: str) -> str:
+    """drawtext 的 text 值转义。滤镜语法里 \\ ' : , % 都有含义。"""
+    escaped = str(value)
+    for char in ("\\", "'", ":", ",", "%"):
+        escaped = escaped.replace(char, "\\" + char)
+    return escaped
+
+
+def aigc_label_filter(text: str, width: int, height: int, font_path: Path) -> str:
+    """AIGC 显式标识的 drawtext 滤镜。竖屏按高度取字号，右上角留安全边距。
+
+    expansion=none：关掉 drawtext 的 %{...} 展开，标识文字里的百分号不会被当成变量。
+    fontfile 里的冒号必须转义，否则会被当成分隔滤镜参数的冒号。
+    """
+    fontsize = max(16, int(round(height * 0.024 / 2) * 2))
+    margin = max(12, int(round(width * 0.030)))
+    fontfile = str(font_path).replace("\\", "/").replace(":", "\\:")
+    return (
+        f"drawtext=fontfile='{fontfile}':text='{_escape_drawtext(text)}':"
+        f"expansion=none:fontcolor=white@0.92:fontsize={fontsize}:"
+        f"box=1:boxcolor=black@0.42:boxborderw={margin // 2}:"
+        f"x=w-tw-{margin}:y={margin}"
+    )
 
 
 def _grade_number(grade: dict[str, Any] | None, key: str, default: float) -> float:

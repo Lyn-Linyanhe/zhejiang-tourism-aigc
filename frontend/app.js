@@ -70,7 +70,7 @@ function formData() {
   const form = $("#create-form");
   const data = Object.fromEntries(new FormData(form).entries());
   for (const key of ["duration", "shot_count", "fps"]) data[key] = Number(data[key]);
-  for (const key of ["voice_rate", "voice_volume", "music_volume"]) data[key] = Number(data[key]);
+  for (const key of ["voice_rate", "voice_pitch", "voice_volume", "music_volume"]) data[key] = Number(data[key]);
   data.include_ai_label = form.elements.include_ai_label.checked;
   data.include_subtitles = form.elements.include_subtitles.checked;
   return data;
@@ -97,6 +97,48 @@ function assetProviderOptions(selected) {
   return configured + providers.map((item) => `<option value="${escapeHtml(item.name)}" ${selected === item.name ? "selected" : ""} ${item.available ? "" : "disabled"}>${escapeHtml(item.label)}${item.available ? "" : "（未配置）"}</option>`).join("");
 }
 
+// 只有"逐镜头上传"这条来源会去读用户传的文件。AI 生成、素材库、Pexels 都不读，
+// 把上传框一直摆在那里只会让人以为传了就会被用上。
+function sourceNeedsUpload(source) {
+  const value = String(source || "").trim();
+  if (value === "upload") return true;
+  if (value === "configured") return String(state.systemConfig?.selected?.asset || "") === "upload";
+  return false;
+}
+
+// 来源说明直接取后端注册表里的 description，不再手写一份必然过期的文案。
+function describeSource(source) {
+  if (source === "configured") {
+    return `跟随服务端 .env 的 ASSET_PROVIDER，当前解析为 ${state.systemConfig?.selected?.asset || "未配置"}。`;
+  }
+  const providers = state.systemConfig?.providers?.asset || [];
+  return providers.find((item) => item.name === source)?.description || "";
+}
+
+// 当前草稿里某个参数的值。条件显示要读"正在编辑的值"，不是任务快照里的旧值。
+function draftFieldValue(name) {
+  return $('.draft-editor [data-input-field="' + name + '"]')?.value ?? "";
+}
+
+// 哪些附加上传面板该出现。三个面板各自绑定一条规则，规则之外一律不显示——
+// 显示了也用不上（无配音时上传的配音片段会被直接跳过，无音乐时上传的音乐同理）。
+function attachVisibility() {
+  return {
+    "asset-upload": sourceNeedsUpload(draftFieldValue("asset_source")),
+    "voice-upload": draftFieldValue("voice") !== "无配音",
+    "music-upload": draftFieldValue("music_mood") !== "无音乐",
+  };
+}
+
+function syncAttachPanels() {
+  const visible = attachVisibility();
+  $$(".draft-editor [data-when]").forEach((panel) => {
+    panel.classList.toggle("is-hidden", !visible[panel.dataset.when]);
+  });
+  const note = $("#source-note");
+  if (note) note.textContent = describeSource(draftFieldValue("asset_source"));
+}
+
 async function loadSystemConfig() {
   state.systemConfig = await api("/api/config");
   const selected = state.systemConfig.selected || {};
@@ -109,26 +151,102 @@ async function loadSystemConfig() {
   if (grid) grid.innerHTML = Object.entries(state.systemConfig.providers).map(([slot, providers]) => `<article><span class="section-index">${escapeHtml(slot.toUpperCase())}</span><h3>${escapeHtml(selected[slot] || "按任务选择")}</h3><div class="provider-list">${providers.map((item) => `<div class="provider-row"><i class="provider-state ${item.available ? "ready" : ""}"></i><span><strong>${escapeHtml(item.label)}</strong><small>${escapeHtml(item.name)} · ${item.available ? "可用" : "未配置"}</small></span></div>`).join("")}</div></article>`).join("");
 }
 
-function reviewInputMarkup(task) {
+// 上传面板共用的一套结构。镜头下拉是每个面板自己的（配音面板不能依赖素材面板的
+// #upload-shot —— AI 生成时那个面板整个不渲染，共用会让配音上传直接失效）。
+function attachPanel(kind, task, head, sub, controls) {
+  return `<div class="attach-panel" data-when="${kind}">
+    <div class="attach-head"><strong>${head}</strong><small>${sub}</small></div>
+    <div class="attach-row">${controls}</div>
+  </div>`;
+}
+
+function shotOptions(task) {
+  return (task.shots || []).map((shot) => `<option value="${escapeHtml(shot.id)}">镜头 ${String(shot.order).padStart(2, "0")}</option>`).join("");
+}
+
+function assetAttachPanel(task) {
+  return attachPanel(
+    "asset-upload",
+    task,
+    "逐镜头上传素材",
+    "每个镜头都要有图片或视频，缺一个就会在生成时报错。",
+    `<label>绑定到镜头<select id="upload-shot">${shotOptions(task)}</select></label>
+     <label>选择文件<input id="asset-file" type="file" accept="image/*,video/*" /></label>
+     <button id="upload-asset" data-upload-task="${escapeHtml(task.id)}">上传素材</button>`
+  );
+}
+
+function voiceAttachPanel(task) {
+  return attachPanel(
+    "voice-upload",
+    task,
+    "用自己录的配音覆盖某镜",
+    "只覆盖选中的那一镜，其余镜头仍用上面的音色合成。",
+    `<label>绑定到镜头<select id="voice-shot">${shotOptions(task)}</select></label>
+     <label>选择音频<input id="voice-file" type="file" accept="audio/*" /></label>
+     <button data-upload-audio="voice" data-upload-task="${escapeHtml(task.id)}">上传配音</button>`
+  );
+}
+
+function musicAttachPanel(task) {
+  return attachPanel(
+    "music-upload",
+    task,
+    "上传授权音乐",
+    "上传后覆盖曲库里随机选中的那一首，授权信息会随成片存档。",
+    `<label>授权说明<input id="music-license" value="已获授权" /></label>
+     <label>作者<input id="music-author" value="待填写" /></label>
+     <label>使用范围<input id="music-scope" value="比赛展示与内部审核" /></label>
+     <label>选择音频<input id="music-file" type="file" accept="audio/*" /></label>
+     <label class="toggle-label">已确认授权<input id="music-approved" type="checkbox" checked /><span class="toggle"></span></label>
+     <button data-upload-audio="music" data-upload-task="${escapeHtml(task.id)}">上传音乐</button>`
+  );
+}
+
+// 审核面板按"你要决定什么"分三段，附加上传紧跟它所属的那段，而不是垫在整块分镜
+// 编辑器之后。素材来源是决定后面出现什么的关键选择，单独提到第一段的最前面。
+function reviewSettingsMarkup(task) {
   const input = task.input;
-  const fields = [
-    ["city", "城市"], ["landmark", "核心地标"], ["theme", "主题"], ["culture", "文化线索"],
-    ["festival", "节庆 / 活动"], ["audience", "目标受众"], ["style", "叙事风格"], ["voice", "配音"],
-    ["music_mood", "背景音乐"],
-  ];
-  return `<div class="review-settings"><div class="section-index">CREATION SETTINGS</div><div class="review-settings-grid">
-    ${fields.map(([key, label]) => `<label>${label}<input class="draft-input" data-input-field="${key}" value="${escapeHtml(input[key])}" /></label>`).join("")}
-    <label>成片时长<select class="draft-input" data-input-field="duration">${[15, 30, 60].map((value) => `<option value="${value}" ${Number(input.duration) === value ? "selected" : ""}>${value} 秒</option>`).join("")}</select></label>
-    <label>镜头数量<select class="draft-input" data-input-field="shot_count">${[0, 4, 6, 8].map((value) => `<option value="${value}" ${Number(input.shot_count) === value ? "selected" : ""}>${value || "自动"}${value ? " 个" : ""}</option>`).join("")}</select></label>
-    <label>素材来源<select class="draft-input" data-input-field="asset_source">${assetProviderOptions(input.asset_source)}</select></label>
-    <label>输出规格<select class="draft-input" data-input-field="output_resolution">${["720x1280", "1080x1920", "1920x1080", "1080x1080"].map((value) => `<option value="${value}" ${input.output_resolution === value ? "selected" : ""}>${value}</option>`).join("")}</select></label>
-    <label>帧率<select class="draft-input" data-input-field="fps">${[24, 25, 30, 60].map((value) => `<option value="${value}" ${Number(input.fps) === value ? "selected" : ""}>${value} fps</option>`).join("")}</select></label>
-    <label>配音语速<input class="draft-input" data-input-field="voice_rate" type="number" min="0.5" max="2" step="0.1" value="${input.voice_rate}" /></label>
-    <label>配音音量<input class="draft-input" data-input-field="voice_volume" type="number" min="0" max="2" step="0.05" value="${input.voice_volume}" /></label>
-    <label>音乐音量<input class="draft-input" data-input-field="music_volume" type="number" min="0" max="1" step="0.05" value="${input.music_volume}" /></label>
-    <label class="toggle-label">烧录字幕<input class="draft-input" data-input-field="include_subtitles" type="checkbox" ${input.include_subtitles ? "checked" : ""} /><span class="toggle"></span></label>
-    <label class="toggle-label">AIGC 标识<input class="draft-input" data-input-field="include_ai_label" type="checkbox" ${input.include_ai_label ? "checked" : ""} /><span class="toggle"></span></label>
-  </div><label>补充要求<textarea class="draft-input" data-input-field="custom_brief">${escapeHtml(input.custom_brief)}</textarea></label></div>`;
+  const draft = (key) => `class="draft-input" data-input-field="${key}"`;
+  return `<div class="review-settings">
+    <section class="review-block">
+      <div class="review-block-head"><span class="section-index">01 / 画面</span><h5>镜头画面从哪来</h5></div>
+      <label class="source-picker">素材来源<select ${draft("asset_source")}>${assetProviderOptions(input.asset_source)}</select></label>
+      <p class="section-note" id="source-note">${escapeHtml(describeSource(input.asset_source))}</p>
+      ${assetAttachPanel(task)}
+      <div class="review-settings-grid">
+        <label>输出规格<select ${draft("output_resolution")}>${["720x1280", "1080x1920", "1920x1080", "1080x1080"].map((value) => `<option value="${value}" ${input.output_resolution === value ? "selected" : ""}>${value}</option>`).join("")}</select></label>
+        <label>帧率<select ${draft("fps")}>${[24, 25, 30, 60].map((value) => `<option value="${value}" ${Number(input.fps) === value ? "selected" : ""}>${value} fps</option>`).join("")}</select></label>
+        <label class="toggle-label">烧录字幕<input ${draft("include_subtitles")} type="checkbox" ${input.include_subtitles ? "checked" : ""} /><span class="toggle"></span></label>
+        <label class="toggle-label">AIGC 标识<input ${draft("include_ai_label")} type="checkbox" ${input.include_ai_label ? "checked" : ""} /><span class="toggle"></span></label>
+      </div>
+    </section>
+
+    <section class="review-block">
+      <div class="review-block-head"><span class="section-index">02 / 声音</span><h5>念什么，配什么</h5></div>
+      <div class="review-settings-grid">
+        <label>配音<input ${draft("voice")} list="voice-options" value="${escapeHtml(input.voice)}" /></label>
+        <label>语速<input ${draft("voice_rate")} type="number" min="0.5" max="2" step="0.1" value="${input.voice_rate}" /></label>
+        <label>音高 (Hz)<input ${draft("voice_pitch")} type="number" min="-50" max="50" step="5" value="${input.voice_pitch ?? 0}" /></label>
+        <label>配音音量<input ${draft("voice_volume")} type="number" min="0" max="2" step="0.05" value="${input.voice_volume}" /></label>
+        <label>背景音乐<input ${draft("music_mood")} list="music-options" value="${escapeHtml(input.music_mood)}" /></label>
+        <label>音乐音量<input ${draft("music_volume")} type="number" min="0" max="1" step="0.05" value="${input.music_volume}" /></label>
+        <label>旁白出现时<select ${draft("music_ducking")}>${(state.catalog?.music_ducking || ["不压低", "轻微", "标准"]).map((value) => `<option value="${escapeHtml(value)}" ${input.music_ducking === value ? "selected" : ""}>${escapeHtml(value === "不压低" ? "保持音量不变" : value + "压低")}</option>`).join("")}</select></label>
+      </div>
+      ${voiceAttachPanel(task)}
+      ${musicAttachPanel(task)}
+    </section>
+
+    <section class="review-block">
+      <div class="review-block-head"><span class="section-index">03 / 创作参数</span><h5>这支片子讲什么</h5></div>
+      <div class="review-settings-grid">
+        ${[["city", "城市"], ["landmark", "核心地标"], ["theme", "主题"], ["culture", "文化线索"], ["festival", "节庆 / 活动"], ["audience", "目标受众"], ["style", "叙事风格"]].map(([key, label]) => `<label>${label}<input ${draft(key)} value="${escapeHtml(input[key])}" /></label>`).join("")}
+        <label>成片时长<select ${draft("duration")}>${[15, 30, 60].map((value) => `<option value="${value}" ${Number(input.duration) === value ? "selected" : ""}>${value} 秒</option>`).join("")}</select></label>
+        <label>镜头数量<select ${draft("shot_count")}>${[0, 4, 6, 8].map((value) => `<option value="${value}" ${Number(input.shot_count) === value ? "selected" : ""}>${value || "自动"}${value ? " 个" : ""}</option>`).join("")}</select></label>
+      </div>
+      <label>补充要求<textarea ${draft("custom_brief")}>${escapeHtml(input.custom_brief)}</textarea></label>
+    </section>
+  </div>`;
 }
 
 function shotEditor(task) {
@@ -156,16 +274,28 @@ function renderTask(task) {
   const draft = task.shots?.length && ["draft", "edited", "failed"].includes(task.status) ? `<div class="draft-editor">
     <div class="draft-editor-header"><div><span class="section-index">SCRIPT REVIEW</span><h4>审核并修改后再生成</h4></div><button class="primary-button" data-generate-task="${escapeHtml(task.id)}"><span>确认并生成实际视频</span><b>→</b></button></div>
     <label>标题<input class="draft-title" value="${escapeHtml(task.title)}" /></label><label>摘要<textarea class="draft-summary">${escapeHtml(task.summary)}</textarea></label><label>CTA<textarea class="draft-cta">${escapeHtml(task.cta)}</textarea></label><label>完整旁白<textarea class="draft-narration">${escapeHtml(task.narration)}</textarea></label>
-    ${reviewInputMarkup(task)}<div class="shot-editor-grid">${shotEditor(task)}</div><button class="text-button" data-save-draft="${escapeHtml(task.id)}">保存脚本、分镜和参数修改</button>
+    ${reviewSettingsMarkup(task)}
+    <section class="review-block">
+      <div class="review-block-head"><span class="section-index">04 / 分镜脚本</span><h5>逐镜要念的、要拍的</h5></div>
+      <div class="shot-editor-grid">${shotEditor(task)}</div>
+    </section>
+    <button class="text-button" data-save-draft="${escapeHtml(task.id)}">保存脚本、分镜和参数修改</button>
   </div>` : "";
-  const uploads = task.shots?.length ? `<div class="upload-box"><div><strong>上传镜头素材</strong><small>选择图片或视频并绑定到一个镜头。上传后会覆盖该镜头的自动素材。</small></div><select id="upload-shot">${task.shots.map((shot) => `<option value="${escapeHtml(shot.id)}">镜头 ${shot.order}</option>`).join("")}</select><input id="asset-file" type="file" accept="image/*,video/*" /><button id="upload-asset" data-upload-task="${escapeHtml(task.id)}">上传素材</button></div><div class="audio-upload-row"><label>上传配音（绑定到上面选中的镜头）<input id="voice-file" type="file" accept="audio/*" /></label><button data-upload-audio="voice" data-upload-task="${escapeHtml(task.id)}">上传配音</button></div><div class="audio-upload-row"><label>音乐情绪<input id="music-mood" value="${escapeHtml(task.input?.music_mood || "舒缓")}" /></label><label>授权说明<input id="music-license" value="已获授权" /></label><label>作者<input id="music-author" value="待填写" /></label><label>使用范围<input id="music-scope" value="比赛展示与内部审核" /></label><label><input id="music-approved" type="checkbox" checked /> 已确认授权</label><label>上传音乐<input id="music-file" type="file" accept="audio/*" /></label><button data-upload-audio="music" data-upload-task="${escapeHtml(task.id)}">上传音乐</button></div>` : "";
-  $("#active-task").innerHTML = `<div class="task-progress"><div class="task-meta"><div><h4>${escapeHtml(task.title || "脚本预览")}</h4><p>${escapeHtml(task.summary || "请审核脚本和分镜后生成。")} / ${escapeHtml(task.status)} / ${escapeHtml(task.id)}</p></div><strong>${task.progress}%</strong></div><div class="progress-bar"><span style="width:${task.progress}%"></span></div><div class="pipeline">${stageMarkup(task)}</div>${error}${draft}${uploads}${links}<div class="asset-summary"><strong>素材记录</strong>${assetList(task)}</div><div class="trace-line">文本 provider: ${escapeHtml(task.trace?.provider || "pending")} / 模型: ${escapeHtml(task.trace?.model || "pending")} / fallback: ${String(Boolean(task.trace?.fallback_used))}<br />配音: ${escapeHtml(task.audio?.voice_provider || "pending")} / 音乐: ${escapeHtml(task.audio?.music_provider || "pending")} / 音频: ${render.has_audio ? "有" : "无"} / 烧录字幕: ${render.has_burned_subtitles ? "有" : "无"}<br />Provider 报告成本: ${Number(task.cost?.total || 0).toFixed(4)}（${escapeHtml(task.cost?.unit || "等待统计")}）</div></div>`;
+  $("#active-task").innerHTML = `<div class="task-progress"><div class="task-meta"><div><h4>${escapeHtml(task.title || "脚本预览")}</h4><p>${escapeHtml(task.summary || "请审核脚本和分镜后生成。")} / ${escapeHtml(task.status)} / ${escapeHtml(task.id)}</p></div><strong>${task.progress}%</strong></div><div class="progress-bar"><span style="width:${task.progress}%"></span></div><div class="pipeline">${stageMarkup(task)}</div>${error}${draft}${links}<div class="asset-summary"><strong>素材记录</strong>${assetList(task)}</div><div class="trace-line">文本 provider: ${escapeHtml(task.trace?.provider || "pending")} / 模型: ${escapeHtml(task.trace?.model || "pending")} / fallback: ${String(Boolean(task.trace?.fallback_used))}<br />配音: ${escapeHtml(task.audio?.voice_provider || "pending")} / 音乐: ${escapeHtml(task.audio?.music_provider || "pending")} / 音频: ${render.has_audio ? "有" : "无"} / 烧录字幕: ${render.has_burned_subtitles ? "有" : "无"}<br />Provider 报告成本: ${Number(task.cost?.total || 0).toFixed(4)}（${escapeHtml(task.cost?.unit || "等待统计")}）</div></div>`;
   $$("[data-retry]").forEach((button) => button.addEventListener("click", () => retryTask(button.dataset.retry)));
   $$("[data-generate-task]").forEach((button) => button.addEventListener("click", () => generateTask(button.dataset.generateTask)));
   $$("[data-save-draft]").forEach((button) => button.addEventListener("click", () => saveDraft(button.dataset.saveDraft)));
   const uploadButton = $("#upload-asset");
   if (uploadButton) uploadButton.addEventListener("click", () => uploadAsset(uploadButton.dataset.uploadTask));
   $$("[data-upload-audio]").forEach((button) => button.addEventListener("click", () => uploadAudio(button.dataset.uploadTask, button.dataset.uploadAudio)));
+  // 改素材来源/配音/音乐要立刻反映到上传面板上：选 AI 生成就不该再看到上传框。
+  // 只切 class 不重渲染，免得把用户还没保存的改动冲掉。
+  const editor = $(".draft-editor");
+  if (editor) {
+    editor.addEventListener("input", (event) => { if (event.target.dataset?.inputField) syncAttachPanels(); });
+    editor.addEventListener("change", (event) => { if (event.target.dataset?.inputField) syncAttachPanels(); });
+  }
+  syncAttachPanels();
 }
 
 function readFileAsDataUrl(file) {
@@ -184,7 +314,7 @@ async function saveDraft(taskId) {
     $$("[data-input-field]").forEach((field) => {
       let value = field.type === "checkbox" ? field.checked : field.value;
       if (["duration", "shot_count", "fps"].includes(field.dataset.inputField)) value = Number(value);
-      if (["voice_rate", "voice_volume", "music_volume"].includes(field.dataset.inputField)) value = Number(value);
+      if (["voice_rate", "voice_pitch", "voice_volume", "music_volume"].includes(field.dataset.inputField)) value = Number(value);
       input[field.dataset.inputField] = value;
     });
     await api(`/api/tasks/${taskId}`, { method: "PATCH", body: JSON.stringify({ ...topLevel, input }) });
@@ -222,12 +352,14 @@ async function uploadAudio(taskId, kind) {
   try {
     const payload = { task_id: taskId, kind, name: file.name, data_base64: await readFileAsDataUrl(file) };
     if (kind === "voice") {
-      // P3：配音按镜头绑定（shot_id 必填）
-      payload.shot_id = $("#upload-shot")?.value || "";
-      if (!payload.shot_id) return showToast("请先在上方选择一个镜头。");
+      // 配音面板有自己的镜头下拉，不能借用素材面板的 #upload-shot —
+      // 选 AI 生成时那个面板整个不渲染，共用会让配音上传直接失效。
+      payload.shot_id = $("#voice-shot")?.value || "";
+      if (!payload.shot_id) return showToast("请先选择一个镜头。");
     } else {
-      // P3：音乐上传必须带授权字段并确认已获授权
-      payload.mood = $("#music-mood")?.value?.trim() || "";
+      // 音乐上传必须带授权字段并确认已获授权。mood 直接取表单里的音乐情绪：
+      // 单独一个输入框时，填得和表单不一致就会静默匹配不上，上传了却不出声。
+      payload.mood = draftFieldValue("music_mood").trim();
       payload.license = $("#music-license")?.value?.trim() || "";
       payload.author = $("#music-author")?.value?.trim() || "";
       payload.usage_scope = $("#music-scope")?.value?.trim() || "";
@@ -265,7 +397,16 @@ async function loadProjects() {
   const container = $("#project-list");
   if (!data.items.length) return (container.innerHTML = `<div class="empty-state">还没有任务。</div>`);
   container.innerHTML = data.items.map((task) => `<article class="project-card"><img src="${task.render?.cover_url || ""}" alt="" /><div><span class="status ${task.status === "failed" ? "failed" : ""}">${escapeHtml(task.status.toUpperCase())}</span><h3>${escapeHtml(task.title || task.input.theme)}</h3><p>${escapeHtml(task.input.city)} / ${escapeHtml(task.input.landmark || "未指定地标")} / ${task.input.duration}s<br />${escapeHtml(task.updated_at)}</p></div><div class="project-card-actions">${task.render?.video_url ? `<a href="${task.render.video_url}" target="_blank">打开 MP4</a>` : ""}<button data-open-task="${escapeHtml(task.id)}">打开任务</button></div></article>`).join("");
-  $$("[data-open-task]").forEach((button) => button.addEventListener("click", () => { showView("create"); pollTask(button.dataset.openTask); }));
+  $$("[data-open-task]").forEach((button) => button.addEventListener("click", () => openTask(button.dataset.openTask)));
+}
+
+// 打开一条任务并把 id 写进地址栏。这样刷新、收藏、把链接发给别人，
+// 都能直接回到同一条片子，而不是回到空白的创作工作台。
+function openTask(taskId) {
+  if (!taskId) return;
+  showView("create");
+  window.location.hash = `task=${encodeURIComponent(taskId)}`;
+  pollTask(taskId);
 }
 
 function showView(name) {
@@ -291,7 +432,10 @@ async function boot() {
   $("#create-form").addEventListener("submit", createTask);
   $$(".nav-item").forEach((button) => button.addEventListener("click", () => showView(button.dataset.view)));
   $("#refresh-button").addEventListener("click", () => window.location.reload());
-  $("#view-latest").addEventListener("click", () => state.latestTaskId ? pollTask(state.latestTaskId) : showToast("还没有任务。"));
+  $("#view-latest").addEventListener("click", () => state.latestTaskId ? openTask(state.latestTaskId) : showToast("还没有任务。"));
+  // #task=<id> 深链：刷新或从别处打开链接时直接恢复那条任务
+  const linked = window.location.hash.match(/^#task=(.+)$/);
+  if (linked) openTask(decodeURIComponent(linked[1]));
 }
 
 boot();

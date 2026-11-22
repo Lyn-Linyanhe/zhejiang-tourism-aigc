@@ -21,9 +21,9 @@
 ## 安装和启动
 
 ```powershell
-Set-Location C:\Users\ev041\Desktop\人工智能\zhejiang-tourism-aigc
+Set-Location <解压后的项目目录>
 Copy-Item .env.example .env
-notepad .env
+notepad .env          # 填 LLM_API_KEY / IMAGE_API_KEY / VIDEO_API_KEY
 .\scripts\start.ps1
 ```
 
@@ -81,9 +81,45 @@ PEXELS_BASE_URL=https://api.pexels.com/v1
 
 如果都不可用且 `ALLOW_SYNTHETIC_AUDIO_FALLBACK=false`，任务失败并记录错误。合成音调只允许在明确打开该开关时用于技术 smoke，不会默认伪装成正式配音。
 
+建配音运行时（只装 edge-tts，几 MB，任意 Python 3.9+）：
+
+```powershell
+.\scripts\setup-edge-tts.ps1
+```
+
+> 换机器后必须重跑：`.venv-audio` 不能跨机器拷贝——venv 会把建立时的 base python 绝对路径写进 `pyvenv.cfg`，换台机器就起不来。要连字级对齐（whisperx）一起装才用 `setup-audio-runtime.ps1`，那个需要 Python 3.11 且要下数 GB。
+
+**Edge TTS 是联网的免费通道**（微软 Edge 朗读接口），不是本地合成；真正的本地兜底是第 4 项 Windows 系统语音，只在 Edge 失败时才用。可选中文音色共 8 个（晓晓/晓伊/小北/小妮/云希/云健/云扬/云夏），旧的"女声""男声"仍作为别名可用。
+
+旁白会**按标点分句合成**，句间插入停顿（逗号 0.2s、句号 0.34s），字幕因此按句跟随，而不是整镜一条字幕从头挂到尾。
+
 ### 音乐
 
 上传音乐，或者把已获授权的音频文件放到 `runtime/music`。音乐选项不是“无音乐”时，如果没有真实音乐且未明确打开合成 fallback，任务会失败。
+
+**光把文件放进目录还不够。** 情绪匹配走的是 `MUSIC_CATALOG_PATH`（默认 `runtime/music/catalog.json`），一条曲目要同时满足才会被选中：
+
+1. 文件在 `MUSIC_DIR` 下且扩展名受支持；
+2. catalog 里该条 `approved: true`；
+3. 该条的 `moods` 含用户选的音乐情绪，`styles` 含用户选的叙事风格。
+
+```json
+{
+  "tracks": [
+    {
+      "file": "曲子.mp3",
+      "moods": ["舒缓", "雅致"],
+      "styles": ["诗意纪实", "国风雅韵"],
+      "license": "已授权 / 待确认",
+      "author": "作者",
+      "usage_scope": "使用范围",
+      "approved": true
+    }
+  ]
+}
+```
+
+只放文件不写 catalog 时，任何非“无音乐”的选择都会在音频阶段失败，错误信息会点名 mood 和 style。
 
 ## 验证
 

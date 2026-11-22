@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import random
 from pathlib import Path
 from typing import Any
 
@@ -33,8 +34,10 @@ def find_music_file(music_dir: Path) -> Path | None:
 
 
 def _result_from_record(record: dict[str, Any], path: Path, provider: str) -> MusicResult:
+    # 手工维护的 catalog 条目常常只写 file 不写 id，缺了就退回文件名，
+    # 不然会在 MusicResult.validate() 上炸掉，看起来像"曲目没被选中"。
     result = MusicResult(
-        id=str(record.get("id", "")),
+        id=str(record.get("id") or path.stem),
         path=str(path),
         moods=[str(value) for value in record.get("moods", [])],
         styles=[str(value) for value in record.get("styles", [])],
@@ -99,13 +102,23 @@ def select_music(
         ):
             return _result_from_record(uploaded, upload_path.resolve(), "task-upload")
 
-    for record in load_music_catalog(catalog_path, music_dir):
-        if mood in record.get("moods", []) and style in record.get("styles", []):
-            return _result_from_record(
-                record,
-                Path(record["resolved_path"]),
-                "local-catalog",
-            )
+    # 同情绪多曲时随机选一首：曲库有几十首，固定取第一首会让每支片子配同一段音乐。
+    # 选中的曲目 id 会进 MusicResult，manifest 的 music_match 能追到实际用了哪首。
+    matches = [
+        record
+        for record in load_music_catalog(catalog_path, music_dir)
+        if mood in record.get("moods", []) and style in record.get("styles", [])
+    ]
+    if matches:
+        record = random.choice(matches)
+        result = _result_from_record(record, Path(record["resolved_path"]), "local-catalog")
+        result.event = {
+            "type": "music-match",
+            "provider": "local-catalog",
+            "candidates": len(matches),
+            "chosen": result.id,
+        }
+        return result
 
     if cloud_enabled:
         if cloud_provider is None:

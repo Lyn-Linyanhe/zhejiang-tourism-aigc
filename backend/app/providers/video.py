@@ -22,10 +22,12 @@ from __future__ import annotations
 
 import argparse
 import base64
+import hashlib
 import json
 import os
 import time
 import urllib.error
+import urllib.parse
 import urllib.request
 from pathlib import Path
 from typing import Any
@@ -40,9 +42,12 @@ DEFAULT_MODEL = "doubao-seedance-1-0-pro-250528"
 DEFAULT_RESOLUTION = "720p"
 DEFAULT_RATIO = "9:16"
 DEFAULT_DURATION = 5
-MIN_DURATION = 2
+# 实测该网关最稳定的最短片段是 5 秒。镜头时长由逐镜配音反推，短旁白（如 8 个字
+# ≈2 秒）会把请求压到 2 秒，那种长度会被网关拒掉，整条任务跟着失败。
+# 请求 5 秒再由渲染器按镜头时长裁掉多余部分，比让 provider 端报错安全。
+MIN_DURATION = 5
 MAX_DURATION = 12
-SUPPORTED_RESOLUTIONS = frozenset({"480p", "720p", "1080p"})
+SUPPORTED_RESOLUTIONS = frozenset({"480p", "720p", "768p", "1080p"})
 SUPPORTED_RATIOS = frozenset({"9:16", "16:9", "1:1", "4:3", "3:4", "21:9", "9:21"})
 POLL_INTERVAL_SECONDS = 5.0
 RUN_TIMEOUT_SECONDS = 1800.0
@@ -91,12 +96,15 @@ def resolve_config(settings: Any = None) -> dict[str, Any]:
         or DEFAULT_RESOLUTION
     ).lower()
     ratio = _env("VIDEO_RATIO") or _settings_value(settings, "video_ratio") or DEFAULT_RATIO
+    api_style = (_env("VIDEO_API_STYLE") or _settings_value(settings, "video_api_style") or "auto").lower()
+    if api_style == "auto":
+        api_style = "tokendance" if "tokendance.space" in base_url.lower() else "volcengine"
+    poll_interval = int(_env("VIDEO_POLL_INTERVAL") or _settings_value(settings, "video_poll_interval") or "5")
+    timeout = int(_env("VIDEO_TIMEOUT") or _settings_value(settings, "video_timeout") or "1800")
     return {
-        "base_url": base_url.rstrip("/"),
-        "api_key": api_key,
-        "model": model,
-        "resolution": resolution,
-        "ratio": ratio,
+        "base_url": base_url.rstrip("/"), "api_key": api_key, "model": model,
+        "resolution": resolution, "ratio": ratio, "api_style": api_style,
+        "poll_interval": poll_interval, "timeout": timeout,
     }
 
 
@@ -277,6 +285,18 @@ def download_video(url: str, dest: Path) -> None:
         raise VideoDownloadError(f"远端视频已生成，但本地文件为空：{dest}")
 
 
+def _is_error_envelope(payload: dict[str, Any]) -> bool:
+    """网关的错误信封：带 error 字段、且没有任务状态。
+
+    正常任务对象也有可能有 status；错误信封没有 status，只有 error / request_id / type。
+    两个条件都满足才算，避免把"失败任务"（有 status=failed 且有 error）误判成查询失败
+    ——那种要按任务失败处理，不能重试。
+    """
+    if not isinstance(payload, dict) or not payload.get("error"):
+        return False
+    return not str(payload.get("status") or "").strip()
+
+
 def _video_url(task: dict[str, Any]) -> str:
     content = task.get("content")
     if isinstance(content, dict):
@@ -299,19 +319,29 @@ class CloudVideoProvider:
         base_url: str = "",
         api_key: str = "",
         model: str = "",
+        require_first_frame: bool = True,
     ) -> None:
         resolved = resolve_config(settings)
+        # 同一个模型既能图生视频也能文生视频，差别只在有没有首帧。
+        # require_first_frame=False 走纯文生视频：不带图，但**必须**显式给 ratio，
+        # 网关对此有硬校验（"ratio is required for text-to-video"）。
+        self.require_first_frame = require_first_frame
         self.base_url = (base_url or resolved["base_url"]).rstrip("/")
         self.api_key = api_key if api_key else resolved["api_key"]
         self.model = model or resolved["model"]
         self.resolution = normalize_resolution(str(resolved["resolution"]))
         self.ratio = normalize_ratio(str(resolved["ratio"]))
-        if not self.api_key:
-            raise VideoConfigError(
-                "未配置 VIDEO_API_KEY。图生视频不会在缺少密钥时假装生成成功。"
-            )
+        self.api_style = (
+            "tokendance" if "tokendance.space" in self.base_url.lower() else "volcengine"
+        ) if base_url else resolved["api_style"]
+        self.poll_interval = max(1, int(resolved["poll_interval"]))
+        self.timeout = max(30, int(resolved["timeout"]))
         if not self.base_url:
             raise VideoConfigError("未配置 VIDEO_BASE_URL。")
+        if not self.api_key:
+            raise VideoConfigError(
+                "未配置 VIDEO_API_KEY。视频生成不会在缺少密钥时假装生成成功。"
+            )
         if not self.model:
             raise VideoConfigError("未配置 VIDEO_MODEL。")
 
@@ -329,11 +359,16 @@ class CloudVideoProvider:
             or ""
         ).strip()
         frame_path = Path(frame) if frame else None
-        if frame_path is None or not frame_path.is_file():
-            raise RuntimeError("图生视频缺少首帧图片 first_frame_path")
+        if self.require_first_frame:
+            if frame_path is None or not frame_path.is_file():
+                raise RuntimeError("图生视频缺少首帧图片 first_frame_path")
+        else:
+            # 文生视频：没有首帧是正常的，给了也不该用——用了就退回成图生视频，
+            # 画面运动只剩推镜，正是要避免的那种。
+            frame_path = None
         visual = str(shot.get("visual_prompt") or shot.get("prompt") or "").strip()
         if not visual:
-            raise RuntimeError("图生视频缺少 visual_prompt")
+            raise RuntimeError("视频生成缺少 visual_prompt")
         prompt = compose_prompt(visual, style_ctx)
         task_id = str(shot.get("task_id") or style_ctx.get("task_id") or "")
         seed = seed_for_shot(task_id, shot, style_ctx)
@@ -342,7 +377,11 @@ class CloudVideoProvider:
         )
         resolution = normalize_resolution(str(style_ctx.get("resolution") or self.resolution))
         ratio = normalize_ratio(str(style_ctx.get("ratio") or self.ratio))
-        image_url = image_to_data_url(frame_path)
+        image_url = image_to_data_url(frame_path) if frame_path else ""
+        if self.api_style == "tokendance":
+            return self._generate_tokendance(
+                shot, frame_path, output_dir, prompt, seed, duration, resolution, ratio
+            )
         payload = build_video_payload(
             model=self.model,
             prompt=prompt,
@@ -375,15 +414,127 @@ class CloudVideoProvider:
                 "duration": duration,
                 "resolution": resolution,
                 "ratio": ratio,
+                "mode": "i2v" if frame_path else "t2v",
             },
         )
         result.validate()
         return result
 
 
+    def _generate_tokendance(self, shot, frame_path, output_dir, prompt, seed, duration, resolution, ratio=""):
+        # ratio 缺省回落到配置值：图生视频用不到它（比例跟首帧走），文生视频必须给。
+        ratio = str(ratio or self.ratio)
+        target = Path(output_dir)
+        target.mkdir(parents=True, exist_ok=True)
+        shot_id = str(shot.get("id") or f"shot_{shot.get('order', 1)}")
+        if Path(shot_id).name != shot_id or shot_id in {".", ".."}:
+            raise ValueError("Invalid shot id")
+        receipt = target / f"{shot_id}.remote-task.json"
+        content: list[dict[str, Any]] = [{"type": "text", "text": prompt}]
+        body: dict[str, Any] = {
+            "model": self.model,
+            "resolution": str(resolution).upper(),
+            "duration": duration,
+            "content": content,
+        }
+        if frame_path:
+            content.append(
+                {"type": "image_url", "image_url": {"url": image_to_data_url(frame_path)}, "role": "first_frame"}
+            )
+        else:
+            # 文生视频**必须**显式给 ratio，且不能是 adaptive。不带这一段网关会报
+            # "invalid params, ratio is required for text-to-video and must not be adaptive (2013)"。
+            body["ratio"] = str(ratio)
+        fingerprint = hashlib.sha256(json.dumps({"endpoint": self.base_url, "body": body}, sort_keys=True).encode()).hexdigest()
+        saved = {}
+        if receipt.is_file():
+            try:
+                saved = json.loads(receipt.read_text(encoding="utf-8"))
+            except (OSError, ValueError) as exc:
+                raise VideoSubmitUnconfirmed("Remote task receipt is unreadable; submission was not repeated") from exc
+            if not isinstance(saved, dict) or not saved.get("remote_task_id") or saved.get("fingerprint") != fingerprint:
+                raise VideoSubmitUnconfirmed("Existing remote task receipt does not match this input; submission was not repeated")
+        else:
+            submitted = self._tokendance_request(f"{self.base_url}/video_generation", "POST", body)
+            task_id = str(submitted.get("task_id") or submitted.get("id") or "")
+            if not task_id:
+                raise VideoSubmitUnconfirmed("TokenDance 图生视频提交未返回 task_id")
+            saved = {"remote_task_id": task_id, "provider": self.name, "shot_id": shot_id, "fingerprint": fingerprint, "status": "submitted"}
+            receipt.write_text(json.dumps(saved, ensure_ascii=False, indent=2), encoding="utf-8")
+        task_id = str(saved["remote_task_id"])
+        deadline = time.monotonic() + self.timeout
+        video_url = ""
+        query_failures = 0
+        while time.monotonic() < deadline:
+            time.sleep(self.poll_interval)
+            payload = self._tokendance_request(f"{self.base_url}/query/video_generation/{urllib.parse.quote(task_id, safe='')}", "GET", None)
+            # 网关出错时返回的是 {"error":…,"request_id":…,"type":…} 这种信封，
+            # 不是任务对象。不先认出来就会去读 status，报出 'unrecognized status ""'
+            # 这种把真实原因（限流/额度/参数）整个吞掉的错误。查询失败只重试查询，
+            # 绝不重新提交——远端任务可能已经计费。
+            if _is_error_envelope(payload):
+                query_failures += 1
+                detail = json.dumps(payload.get("error"), ensure_ascii=False)[:300]
+                saved.update(status="query_error", last_polled_at=time.time(), query_error=detail)
+                receipt.write_text(json.dumps(saved, ensure_ascii=False, indent=2), encoding="utf-8")
+                if query_failures > MAX_POLL_RETRIES:
+                    raise RuntimeError(
+                        f"TokenDance 查询连续失败 {query_failures} 次，远端任务 {task_id} 状态未知：{detail}"
+                    )
+                continue
+            query_failures = 0
+            task = payload.get("task") if isinstance(payload.get("task"), dict) else payload
+            status = str(task.get("status") or "").lower()
+            saved.update(status=status, last_polled_at=time.time(), response_fields=sorted(task))
+            receipt.write_text(json.dumps(saved, ensure_ascii=False, indent=2), encoding="utf-8")
+            if status == "succeeded":
+                content = task.get("content")
+                video_url = str((content.get("url") or content.get("video_url")) if isinstance(content, dict) else "") or str(task.get("url") or "")
+                if not video_url:
+                    raise VideoDownloadError(f"TokenDance task {task_id} succeeded but returned no video URL")
+                break
+            if status in TERMINAL_FAILURE:
+                raise RuntimeError(f"TokenDance 图生视频失败: {status} {task.get('error') or ''}".strip())
+            if status not in ACTIVE_STATUS:
+                raise VideoSubmitUnconfirmed(
+                    f"TokenDance task {task_id} returned unrecognized status {status!r}; "
+                    f"response fields: {sorted(task)}; raw: {json.dumps(payload, ensure_ascii=False)[:300]}"
+                )
+        if not video_url:
+            raise VideoSubmitUnconfirmed(f"TokenDance 图生视频超时，远端编号已保存，可查询同一任务: {task_id}")
+        dest = target / f"{shot_id}.mp4"
+        download_video(video_url, dest)
+        result = AssetResult(path=str(dest), media_type=MEDIA_TYPE_VIDEO, source=self.name, model=self.model, seed=seed, prompt=prompt, first_frame_path=str(frame_path or ""), cost=float(self.cost_per_call), event={"type":"video", "provider":self.name, "api_style":"tokendance", "remote_task_id":task_id, "duration":duration, "resolution":resolution, "mode": "i2v" if frame_path else "t2v"})
+        result.validate()
+        saved.update(status="downloaded", local_path=str(dest))
+        receipt.write_text(json.dumps(saved, ensure_ascii=False, indent=2), encoding="utf-8")
+        return result
+
+    def _tokendance_request(self, url, method, body):
+        headers = {"Authorization": f"Bearer {self.api_key}", "Content-Type": "application/json"}
+        data = json.dumps(body, ensure_ascii=False).encode("utf-8") if body is not None else None
+        request = urllib.request.Request(url, data=data, headers=headers, method=method)
+        try:
+            with urllib.request.urlopen(request, timeout=60) as response: payload = json.loads(response.read().decode("utf-8"))
+        except urllib.error.HTTPError as exc:
+            detail = exc.read().decode("utf-8", errors="replace")[:500]
+            raise RuntimeError(f"TokenDance 图生视频 HTTP {exc.code}: {detail}") from exc
+        except urllib.error.URLError as exc:
+            raise RuntimeError(f"TokenDance 图生视频请求未完成：{exc.reason}") from exc
+        except TimeoutError as exc:
+            raise RuntimeError("TokenDance 图生视频请求超时；未自动重试，避免重复提交") from exc
+        if not isinstance(payload, dict): raise RuntimeError("TokenDance 图生视频返回格式不是 JSON 对象")
+        return payload
+
+
 def build_provider(settings: Any = None) -> CloudVideoProvider:
-    """registry._instantiate 找的就是这个名字。"""
+    """registry._instantiate 找的就是这个名字。走图生视频。"""
     return CloudVideoProvider(settings)
+
+
+def build_t2v_provider(settings: Any = None) -> CloudVideoProvider:
+    """纯文生视频。同一个模型，只是不带首帧。"""
+    return CloudVideoProvider(settings, require_first_frame=False)
 
 
 def main() -> int:
@@ -414,3 +565,4 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+

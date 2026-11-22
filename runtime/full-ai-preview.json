@@ -1,0 +1,163 @@
+{
+  "id": "draft_600616cb49ba",
+  "input": {
+    "city": "杭州",
+    "landmark": "西湖",
+    "theme": "西湖春日宋韵游",
+    "culture": "宋韵文化与江南园林",
+    "festival": "春日",
+    "audience": "年轻游客",
+    "duration": 15,
+    "style": "诗意纪实",
+    "voice": "晓伊·活泼女声",
+    "music_mood": "舒缓",
+    "include_ai_label": true,
+    "custom_brief": "用经核查的西湖事实，画面要有镜头运动，不要静态图。",
+    "shot_count": 4,
+    "include_subtitles": true,
+    "asset_source": "ai-t2v",
+    "output_resolution": "720x1280",
+    "fps": 25,
+    "voice_rate": 1.0,
+    "voice_pitch": 0.0,
+    "voice_volume": 1.0,
+    "music_volume": 0.18,
+    "music_ducking": "不压低"
+  },
+  "status": "draft",
+  "stage": "preview",
+  "progress": 35,
+  "title": "西湖春日宋韵游",
+  "summary": "15秒竖屏短片，以镜头运动呈现西湖春日，穿插白娘子传说、三潭印月石塔与南宋西湖十景等经核查事实，面向年轻游客传递宋韵江南之美。",
+  "cta": "来西湖，走一趟宋韵春天。",
+  "tags": [
+    "西湖",
+    "杭州",
+    "宋韵文化",
+    "春日",
+    "江南园林"
+  ],
+  "narration": "断桥春雾里 白娘子曾与许仙相逢。苏堤柳枝垂水 摇动千年宋韵。三潭印月石塔 明天启元年补立。南宋西湖十景 题名流传至今。",
+  "shots": [
+    {
+      "id": "shot_1",
+      "order": 1,
+      "duration_sec": 3.8,
+      "title": "断桥春雾相逢",
+      "visual_prompt": "竖屏，清晨薄雾中的西湖断桥，镜头从桥面低角度缓缓向前推进，远处山影朦胧，柳丝轻摆，写实电影感，25fps，自然光。",
+      "narration": "断桥春雾里 白娘子曾与许仙相逢",
+      "subtitle": "断桥春雾里 白娘子曾与许仙相逢",
+      "transition": "fade",
+      "asset_url": "",
+      "asset_id": "",
+      "asset_local_path": "",
+      "asset_media_type": "",
+      "asset_model": "",
+      "asset_seed": 0,
+      "asset_first_frame_path": "",
+      "audio_url": "",
+      "audio_local_path": ""
+    },
+    {
+      "id": "shot_2",
+      "order": 2,
+      "duration_sec": 3.8,
+      "title": "苏堤柳浪摇春",
+      "visual_prompt": "竖屏，苏堤岸边嫩绿柳枝垂入湖面，镜头沿堤横向缓慢移动，水波倒影随行，春日阳光穿过柳叶，写实诗意，25fps。",
+      "narration": "苏堤柳枝垂水 摇动千年宋韵",
+      "subtitle": "苏堤柳枝垂水 摇动千年宋韵",
+      "transition": "fade",
+      "asset_url": "",
+      "asset_id": "",
+      "asset_local_path": "",
+      "asset_media_type": "",
+      "asset_model": "",
+      "asset_seed": 0,
+      "asset_first_frame_path": "",
+      "audio_url": "",
+      "audio_local_path": ""
+    },
+    {
+      "id": "shot_3",
+      "order": 3,
+      "duration_sec": 3.8,
+      "title": "三潭石塔映波",
+      "visual_prompt": "竖屏，西湖三潭印月水面，镜头围绕石塔缓慢环绕上升，塔影与波光交错，远处游船轻过，写实纪录片风格，25fps。",
+      "narration": "三潭印月石塔 明天启元年补立",
+      "subtitle": "三潭印月石塔 明天启元年补立",
+      "transition": "fade",
+      "asset_url": "",
+      "asset_id": "",
+      "asset_local_path": "",
+      "asset_media_type": "",
+      "asset_model": "",
+      "asset_seed": 0,
+      "asset_first_frame_path": "",
+      "audio_url": "",
+      "audio_local_path": ""
+    },
+    {
+      "id": "shot_4",
+      "order": 4,
+      "duration_sec": 3.6,
+      "title": "南宋十景题名",
+      "visual_prompt": "竖屏，西湖十景碑刻与湖山春色叠化，镜头从碑文缓缓拉远，露出苏堤春晓全景，花瓣飘落，写实人文风光，25fps。",
+      "narration": "南宋西湖十景 题名流传至今",
+      "subtitle": "南宋西湖十景 题名流传至今",
+      "transition": "fade",
+      "asset_url": "",
+      "asset_id": "",
+      "asset_local_path": "",
+      "asset_media_type": "",
+      "asset_model": "",
+      "asset_seed": 0,
+      "asset_first_frame_path": "",
+      "audio_url": "",
+      "audio_local_path": ""
+    }
+  ],
+  "assets": [],
+  "audio": {
+    "knowledge": {
+      "fact": "西湖是中国首个湖泊类世界文化遗产，2011年列入《世界遗产名录》；西湖十景得名于南宋，经清康熙帝御题碑刻而定型；三潭印月石塔现存为明天启元年（1621年）补立。",
+      "color": "#24526a",
+      "accent": "#d6ad60",
+      "aliases": [
+        "西湖",
+        "杭州西湖"
+      ]
+    }
+  },
+  "render": {},
+  "trace": {
+    "provider": "openai-compatible",
+    "model": "deepseek-chat",
+    "prompt_version": "zj-tourism-prompt-v1",
+    "fallback_used": false,
+    "created_at": "2026-10-07T09:12:36.738221+00:00",
+    "events": [
+      {
+        "type": "llm",
+        "provider": "openai-compatible",
+        "model": "deepseek-chat",
+        "ok": true,
+        "narration_chars": 55,
+        "narration_target": 55,
+        "narration_rewrite_attempts": 0
+      },
+      {
+        "type": "stage",
+        "stage": "scripting",
+        "status": "completed"
+      },
+      {
+        "type": "preview",
+        "status": "ready",
+        "message": "Script and storyboard are ready for review"
+      }
+    ]
+  },
+  "error": "",
+  "created_at": "2026-10-07T09:12:32.218945+00:00",
+  "updated_at": "2026-10-07T09:12:36.754149+00:00"
+}

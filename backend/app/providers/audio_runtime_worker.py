@@ -132,6 +132,7 @@ def edge_tts_synthesize(request: dict[str, Any]) -> dict[str, Any]:
     text = str(request.get("text", "")).strip()
     voice = str(request.get("voice", "zh-CN-XiaoxiaoNeural")).strip()
     rate = str(request.get("rate", "+0%")).strip()
+    pitch = str(request.get("pitch", "+0Hz")).strip()
     output = Path(str(request.get("output_path", ""))).expanduser().resolve()
     if not text or not voice or not output.name:
         raise ValueError("edge_tts requires text, voice, and output_path")
@@ -152,6 +153,7 @@ def edge_tts_synthesize(request: dict[str, Any]) -> dict[str, Any]:
                         text=text,
                         voice=voice,
                         rate=rate,
+                        pitch=pitch,
                         connector=connector,
                         connect_timeout=30,
                         receive_timeout=90,

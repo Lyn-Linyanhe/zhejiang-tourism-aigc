@@ -28,7 +28,11 @@ PROVIDER_NAME = "cloud-t2i"
 DEFAULT_SIZE = "1024x1536"
 DEFAULT_MODEL = "doubao-seedream-4-0-250828"
 DEFAULT_COST = 0.0
-REQUEST_TIMEOUT = 300
+# 读超时（秒）。实测同一网关同一模型在 37 秒到 300 秒以上之间波动，卡在多镜任务
+# 的中间一镜上会把前面已出的图和视频全部作废，所以默认给得宽一点。
+# 按本项目的既定原则，付费调用不做自动重试（超时可能已经出图并计费），只把等待窗口
+# 放长，由 IMAGE_TIMEOUT_SECONDS 按现场网络调。
+DEFAULT_REQUEST_TIMEOUT = 600
 
 
 class ImageConfigError(RuntimeError):
@@ -37,6 +41,14 @@ class ImageConfigError(RuntimeError):
 
 def _env(name: str) -> str:
     return str(os.getenv(name, "") or "").strip()
+
+
+def request_timeout() -> int:
+    """单次文生图的读超时。惰性读取，确保 .env 已经加载。"""
+    try:
+        return max(30, int(_env("IMAGE_TIMEOUT_SECONDS") or DEFAULT_REQUEST_TIMEOUT))
+    except ValueError:
+        return DEFAULT_REQUEST_TIMEOUT
 
 
 def _settings_value(settings: Any, name: str) -> str:
@@ -53,11 +65,15 @@ def resolve_config(settings: Any = None) -> dict[str, str]:
     api_key = _env("IMAGE_API_KEY") or _settings_value(settings, "image_api_key")
     model = _env("IMAGE_MODEL") or _settings_value(settings, "image_model") or DEFAULT_MODEL
     size = _env("IMAGE_SIZE") or _settings_value(settings, "image_size") or DEFAULT_SIZE
+    api_style = (_env("IMAGE_API_STYLE") or _settings_value(settings, "image_api_style") or "auto").lower()
+    if api_style == "auto":
+        api_style = "tokendance" if "tokendance.space" in base_url.lower() else "openai-compatible"
     return {
         "base_url": base_url.rstrip("/"),
         "api_key": api_key,
         "model": model,
         "size": size,
+        "api_style": api_style,
     }
 
 
@@ -68,18 +84,22 @@ def build_image_payload(
     size: str,
     seed: int,
     negative: str,
+    api_style: str = "openai-compatible",
 ) -> dict[str, Any]:
-    """文生图请求体。seed 必带；负向词用两个常见键名，避免网关对不上。"""
+    """文生图请求体。seed 必带；负向词用两个常见键名，避免网关对不上。
+
+    TokenDance 的 Seedream 协议不收 negative_prompt 字段（也不收 seed），
+    负向词只能折进 prompt。不折的话默认负向词里的"文字，水印，logo"整条失效，
+    出图会带上模型自己画的伪中文标语。
+    """
+    if api_style == "tokendance":
+        text = prompt
+        if negative.strip():
+            text = f"{prompt}\n\n不要出现以下内容：{negative}"
+        return {"model": model, "prompt": text, "size": size, "response_format": "url", "output_format": "png", "watermark": False}
     return {
-        "model": model,
-        "prompt": prompt,
-        "n": 1,
-        "size": size,
-        "seed": int(seed),
-        "response_format": "b64_json",
-        "negative_prompt": negative,
-        "negative": negative,
-        "watermark": False,
+        "model": model, "prompt": prompt, "n": 1, "size": size, "seed": int(seed),
+        "response_format": "b64_json", "negative_prompt": negative, "negative": negative, "watermark": False,
     }
 
 
@@ -100,7 +120,7 @@ def _decode_image(payload: dict[str, Any]) -> bytes:
     image_url = entry.get("url")
     if isinstance(image_url, str) and image_url.startswith(("http://", "https://")):
         request = urllib.request.Request(image_url, method="GET")
-        with urllib.request.urlopen(request, timeout=REQUEST_TIMEOUT) as response:
+        with urllib.request.urlopen(request, timeout=request_timeout()) as response:
             raw = response.read()
         if not raw:
             raise RuntimeError("文生图下载结果是空文件")
@@ -120,7 +140,7 @@ def request_image(endpoint: str, payload: dict[str, Any], api_key: str) -> bytes
         method="POST",
     )
     try:
-        with urllib.request.urlopen(request, timeout=REQUEST_TIMEOUT) as response:
+        with urllib.request.urlopen(request, timeout=request_timeout()) as response:
             body = json.loads(response.read().decode("utf-8"))
     except urllib.error.HTTPError as exc:
         detail = exc.read().decode("utf-8", errors="replace")[:300]
@@ -151,10 +171,15 @@ class CloudImageProvider:
         self.api_key = api_key if api_key else resolved["api_key"]
         self.model = model or resolved["model"]
         self.size = resolved["size"]
+        self.api_style = (
+            "tokendance" if "tokendance.space" in self.base_url.lower() else "openai-compatible"
+        ) if base_url else resolved["api_style"]
         if not self.base_url:
             raise ImageConfigError(
                 "未配置 IMAGE_BASE_URL。可以填 OpenAI 兼容云端，也可以填本地 ComfyUI 网关。"
             )
+        if self.api_style == "tokendance" and not self.api_key:
+            raise ImageConfigError("未配置 IMAGE_API_KEY。TokenDance 文生图需要 API key。")
         if not self.model:
             raise ImageConfigError("未配置 IMAGE_MODEL。")
 
@@ -178,6 +203,7 @@ class CloudImageProvider:
             size=str(style_ctx.get("size") or self.size),
             seed=seed,
             negative=negative,
+            api_style=self.api_style,
         )
         raw = request_image(f"{self.base_url}/images/generations", payload, self.api_key)
         target = Path(output_dir)

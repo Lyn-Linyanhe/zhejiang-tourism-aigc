@@ -45,7 +45,13 @@ class EndToEndSyncTests(unittest.TestCase):
                 "task_e2e", [shot.__dict__ for shot in shots], audio,
                 True, True, "720x1280", 25, 1.0, 0.18,
             )
-            self.assertEqual(rendered["mix_strategy"], "sidechaincompress-asplit-2")
+            self.assertEqual(rendered["mix_strategy"], "music-constant")
+            # 各镜时长之和必须等于人声轨时长，否则画面会随时间相对声音漂移。
+            self.assertAlmostEqual(
+                sum(shot.duration_sec for shot in shots),
+                audio["total_duration"],
+                places=3,
+            )
             self.assertLessEqual(abs(rendered["total_duration"] - audio["total_duration"]), 0.05)
             srt = (settings.media_dir / "task_e2e" / "subtitles.srt").read_text(encoding="utf-8")
             self.assertIn("字幕甲", srt)

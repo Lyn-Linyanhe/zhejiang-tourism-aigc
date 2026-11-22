@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import threading
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Callable
@@ -11,7 +12,7 @@ from ..models import AssetRecord, Shot, Task, TaskInput, TraceRecord, now_iso, n
 from ..providers.audio_runtime import AudioRuntimeClient
 from ..providers.media_ffmpeg import validate_audio_file
 from ..providers.music import select_music
-from ..providers.registry import ProviderRegistry, build_provider_registry
+from ..providers.registry import ProviderRegistry, build_provider_registry, invoke_create_or_find
 from ..storage import Storage
 from . import consistency
 from . import knowledge as zhejiang_kb
@@ -20,6 +21,14 @@ from .audio_sync import PerShotAudioBuilder
 
 NO_VOICE = "\u65e0\u914d\u97f3"
 NO_MUSIC = "\u65e0\u97f3\u4e50"
+
+# \u9700\u8981\u9996\u5e27\u56fe\u7684\u7d20\u6750 provider\u3002\u56fe\u751f\u89c6\u9891\u5fc5\u987b\u6709\u9996\u5e27\uff1b\u6587\u751f\u89c6\u9891\u81ea\u5df1\u7ec4\u7ec7\u753b\u9762\uff0c\u4e0d\u9700\u8981\uff0c
+# \u7ed9\u5b83\u5148\u505a\u4e00\u6b21\u6587\u751f\u56fe\u7eaf\u5c5e\u591a\u4ed8\u4e00\u6b21\u94b1\u3002
+FRAME_REQUIRED_PROVIDERS = frozenset({"ai-video", "cloud-i2v", "cloud"})
+# \u8fd9\u51e0\u6761\u6765\u6e90\u53ea\u8d70\u964d\u7ea7\u94fe\u7b2c\u4e00\u6863\uff1a\u751f\u6210\u5931\u8d25\u5c31\u62a5\u9519\uff0c\u4e0d\u9000\u56de\u672c\u5730\u5360\u4f4d\u56fe\u3002
+STRICT_ASSET_SOURCES = frozenset(
+    {"ai", "cloud", "ai-video", "cloud-i2v", "ai-t2v", "cloud-t2v"}
+)
 
 @dataclass(frozen=True)
 class StageSpec:
@@ -49,6 +58,9 @@ class Orchestrator:
         self.audio_builder = PerShotAudioBuilder(settings, self.audio_runtime)
         self._threads: dict[str, threading.Thread] = {}
         self._threads_lock = threading.RLock()
+        # 逐镜素材并发生成时，task.assets / trace.events / 进度都会被多个线程碰。
+        # 用同一把锁保护，避免交错写坏任务快照。
+        self._state_lock = threading.RLock()
 
     def system_config(self) -> dict[str, Any]:
         return {
@@ -207,16 +219,17 @@ class Orchestrator:
         progress: int | None = None,
         event: dict[str, Any] | None = None,
     ) -> None:
-        if status:
-            task.status = status
-        if stage:
-            task.stage = stage
-        if progress is not None:
-            task.progress = max(0, min(100, progress))
-        task.updated_at = now_iso()
-        if event and task.trace:
-            task.trace.events.append(event)
-        self.storage.save_task(task)
+        with self._state_lock:
+            if status:
+                task.status = status
+            if stage:
+                task.stage = stage
+            if progress is not None:
+                task.progress = max(0, min(100, progress))
+            task.updated_at = now_iso()
+            if event and task.trace:
+                task.trace.events.append(event)
+            self.storage.save_task(task)
 
     def _run(self, task_id: str, from_stage: str | None) -> None:
         task = self._load(task_id)
@@ -225,6 +238,13 @@ class Orchestrator:
             stage_names = [stage.name for stage in PIPELINE]
             if selected_stage not in stage_names:
                 raise ValueError(f"Unsupported pipeline stage: {selected_stage}")
+            # 重跑时必须清掉上一次的错误和降级标记。前端只按 task.error 是否有值
+            # 决定要不要显示失败框，不清的话任务明明在跑、界面上还挂着旧报错；
+            # fallback_used 描述的是"本次运行有没有降级"，留着上次的值会让一次
+            # 完全走主链路的任务被误判成降级产物。历史事件保留，不动 trace.events。
+            task.error = ""
+            if task.trace:
+                task.trace.fallback_used = False
             self.update(task, status="running", stage=selected_stage, progress=5)
             handlers: dict[str, Callable[[Task], None]] = {
                 "scripting": self._scripting,
@@ -358,112 +378,91 @@ class Orchestrator:
             "style": task.input.style,
             "color": knowledge.get("color", "#2d6c63"),
             "accent": knowledge.get("accent", "#d6ad60"),
-            "resolution": task.input.output_resolution,
+            # 成片规格单独放一份；resolution / ratio / size 是 provider 认的口径，
+            # 直接塞 "720x1280" 会被 video.normalize_resolution 拒掉。
+            "output_resolution": task.input.output_resolution,
         }
+        style_ctx.update(
+            consistency.output_spec(
+                task.input.output_resolution, fallback_size=self.settings.image_size
+            )
+        )
         style_ctx["grade"] = consistency.grade(style_ctx)
         task.audio["grade"] = style_ctx["grade"]
         existing_assets = {asset.shot_id: asset for asset in task.assets}
         task.assets = []
         used_sources: set[str] = set()
+        strict_dynamic = asset_source in STRICT_ASSET_SOURCES
+
+        # 三个阶段：先规划（哪些镜复用、哪些要生成），再并发生成，最后按镜头顺序提交。
+        # 提交必须串行且有序——task.assets 的顺序就是成片里镜头的顺序。
+        # 单镜实测约 110 秒（文生图 37~70s + 图生视频 44s），串行四镜要八分钟。
+        reused: dict[str, dict[str, Any]] = {}
+        pending: list[dict[str, Any]] = []
         for shot in task.shots:
             existing = existing_assets.get(shot.id)
-            if existing and existing.local_path and Path(existing.local_path).exists():
-                asset = {
-                    "id": existing.id,
-                    "name": existing.name,
-                    "url": existing.url,
-                    "local_path": existing.local_path,
-                    "source": existing.source,
-                    "license": existing.license,
-                    "author": existing.author,
-                    "usage_scope": existing.usage_scope,
-                    "is_ai_generated": existing.is_ai_generated,
-                }
+            if existing and self._is_reusable(existing, strict_dynamic):
+                reused[shot.id] = self._reused_asset(existing)
             else:
-                shot_payload = shot.__dict__.copy()
-                shot_payload["library_query"] = f"{task.input.city} {task.input.theme} {shot.title}"
-                # 知识库增强：中文长句映射为经核查的英文检索词，提升素材站命中率
-                search_query = zhejiang_kb.english_query(
-                    shot.visual_prompt,
-                    shot.narration,
-                    task.input.theme,
-                    city=task.input.city,
-                    landmark=task.input.landmark,
-                )
-                if search_query:
-                    shot_payload["search_query"] = search_query
-                # 图生视频需要一张首帧，先备好；失败不打断这一镜
-                if "ai-video" in candidates:
-                    frame = self._ensure_first_frame(
-                        task, shot, shot_payload, directory, knowledge, style_ctx
+                pending.append(self._plan_shot(task, shot))
+
+        generated: dict[str, dict[str, Any]] = {}
+        if pending:
+            workers = max(1, min(self.settings.asset_concurrency, len(pending)))
+            with ThreadPoolExecutor(max_workers=workers) as pool:
+                futures = [
+                    pool.submit(
+                        self._generate_shot,
+                        task,
+                        item,
+                        directory,
+                        knowledge,
+                        style_ctx,
+                        candidates,
+                        strict_dynamic,
                     )
-                    if frame:
-                        shot_payload["first_frame_path"] = frame
-                failures: list[str] = []
-                asset = None
-                for candidate in candidates:
-                    try:
-                        asset = self.registry.generate_asset(
-                            candidate,
-                            task.id,
-                            shot_payload,
-                            directory,
-                            style_ctx,
-                        )
-                        used_sources.add(candidate)
-                        if failures and task.trace:
+                    for item in pending
+                ]
+                for future in as_completed(futures):
+                    result = future.result()
+                    generated[result["shot_id"]] = result
+                    self.update(
+                        task,
+                        stage="assets",
+                        progress=min(
+                            75,
+                            67 + int(8 * len(generated) / max(len(task.shots), 1)),
+                        ),
+                        event={
+                            "type": "shot",
+                            "stage": "assets",
+                            "shot_id": result["shot_id"],
+                            "status": "failed" if result["error"] else "completed",
+                            "order": result["order"],
+                        },
+                    )
+
+        errors: list[str] = []
+        for shot in task.shots:
+            result = generated.get(shot.id)
+            if result is not None:
+                if result["error"]:
+                    errors.append(result["error"])
+                    continue
+                used_sources.update(result["used_sources"])
+                if result["events"]:
+                    with self._state_lock:
+                        if task.trace:
                             task.trace.fallback_used = True
-                            task.trace.events.append({
-                                "type": "provider_fallback", "slot": "asset",
-                                "shot_id": shot.id, "provider": candidate,
-                                "fallback_reason": "; ".join(failures),
-                            })
-                        break
-                    except Exception as exc:
-                        failures.append(f"{candidate}: {exc}")
-                if asset is None:
-                    raise RuntimeError(f"No asset provider succeeded for shot {shot.order}: {'; '.join(failures)}")
-            shot.asset_url = asset["url"]
-            shot.asset_id = asset["id"]
-            shot.asset_local_path = asset["local_path"]
-            shot.asset_media_type = str(asset.get("media_type", ""))
-            shot.asset_model = str(asset.get("model", ""))
-            shot.asset_seed = int(asset.get("seed", 0) or 0)
-            shot.asset_first_frame_path = str(asset.get("first_frame_path", ""))
-            provider_event = dict(asset.get("event") or {})
-            if (provider_event or float(asset.get("cost", 0) or 0) > 0) and task.trace:
-                provider_event.setdefault("type", "asset")
-                provider_event.setdefault("slot", "asset")
-                provider_event.setdefault("provider", asset.get("source", "unknown"))
-                provider_event.setdefault("cost", float(asset.get("cost", 0) or 0))
-                provider_event.setdefault("shot_id", shot.id)
-                task.trace.events.append(provider_event)
-            task.assets.append(
-                AssetRecord(
-                    task_id=task.id,
-                    shot_id=shot.id,
-                    local_path=asset["local_path"],
-                    **{
-                        key: asset[key]
-                        for key in (
-                            "id",
-                            "name",
-                            "url",
-                            "source",
-                            "license",
-                            "author",
-                            "usage_scope",
-                            "is_ai_generated",
-                        )
-                    },
-                    media_type=str(asset.get("media_type", "")),
-                    model=str(asset.get("model", "")),
-                    seed=int(asset.get("seed", 0) or 0),
-                    prompt=str(asset.get("prompt", "")),
-                    first_frame_path=str(asset.get("first_frame_path", "")),
-                    cost=float(asset.get("cost", 0) or 0),
-                )
-            )
+                            task.trace.events.extend(result["events"])
+                asset = result["asset"]
+            else:
+                asset = reused[shot.id]
+            self._commit_shot(task, shot, asset)
+        # 有镜头失败也先把成功的提交完：素材已经落盘，重试时能直接复用，
+        # 不用把已经付过费的那几镜重跑一遍。
+        if errors:
+            raise RuntimeError("; ".join(errors))
         self.update(
             task,
             stage="assets",
@@ -477,6 +476,174 @@ class Orchestrator:
             },
         )
 
+    @staticmethod
+    def _is_reusable(existing: AssetRecord, strict_dynamic: bool) -> bool:
+        """已落盘的素材能不能直接复用。
+
+        strict_dynamic（AI 图生视频）下只认视频文件：复用一张旧图会让这一镜
+        退回成静止画面，和"全 AI 动态"的意图不符。
+        """
+        if not existing.local_path or not Path(existing.local_path).exists():
+            return False
+        if strict_dynamic:
+            suffix = Path(existing.local_path).suffix.lower()
+            return suffix in {".mp4", ".mov", ".m4v", ".webm"}
+        return True
+
+    @staticmethod
+    def _reused_asset(existing: AssetRecord) -> dict[str, Any]:
+        """复用已落盘的素材。元数据字段必须一起带上，漏掉会让复用的镜头在
+        AssetRecord 里 media_type / model 变成空串，manifest 和作品档案就读不到
+        "这一镜是哪个模型出的什么类型素材"。"""
+        return {
+            "id": existing.id,
+            "name": existing.name,
+            "url": existing.url,
+            "local_path": existing.local_path,
+            "source": existing.source,
+            "license": existing.license,
+            "author": existing.author,
+            "usage_scope": existing.usage_scope,
+            "is_ai_generated": existing.is_ai_generated,
+            "media_type": existing.media_type,
+            "model": existing.model,
+            "seed": existing.seed,
+            "prompt": existing.prompt,
+            "first_frame_path": existing.first_frame_path,
+            "cost": existing.cost,
+        }
+
+    def _plan_shot(self, task: Task, shot: Shot) -> dict[str, Any]:
+        """准备好一镜生成所需的输入。放在主线程做，避免并发里读任务状态。"""
+        payload = shot.__dict__.copy()
+        payload["library_query"] = f"{task.input.city} {task.input.theme} {shot.title}"
+        # 知识库增强：中文长句映射为经核查的英文检索词，提升素材站命中率
+        search_query = zhejiang_kb.english_query(
+            shot.visual_prompt,
+            shot.narration,
+            task.input.theme,
+            city=task.input.city,
+            landmark=task.input.landmark,
+        )
+        if search_query:
+            payload["search_query"] = search_query
+        return {"shot": shot, "payload": payload}
+
+    def _generate_shot(
+        self,
+        task: Task,
+        item: dict[str, Any],
+        directory: Path,
+        knowledge: dict[str, Any],
+        style_ctx: dict[str, Any],
+        candidates: tuple[str, ...],
+        strict_dynamic: bool,
+    ) -> dict[str, Any]:
+        """在一个工作线程里跑完一镜的素材链。异常一律收进结果，不往外抛——
+        一镜失败不该让其它镜头的并发任务跟着崩。"""
+        shot: Shot = item["shot"]
+        payload: dict[str, Any] = item["payload"]
+        result: dict[str, Any] = {
+            "shot_id": shot.id,
+            "order": shot.order,
+            "asset": None,
+            "used_sources": [],
+            "events": [],
+            "error": "",
+        }
+        failures: list[str] = []
+        asset: dict[str, Any] | None = None
+        # strict 来源只走降级链的第一档：AI 生成失败就该报错，不该悄悄退回
+        # 本地占位图，那样交付出去的"AI 成片"里会混着程序画的场景。
+        chain = candidates[:1] if strict_dynamic else candidates
+        try:
+            for candidate in chain:
+                try:
+                    if candidate in FRAME_REQUIRED_PROVIDERS:
+                        # 首帧按需生成：文生视频自己出画面，先做一次文生图纯属多付一次钱。
+                        frame = self._ensure_first_frame(
+                            task,
+                            shot,
+                            payload,
+                            directory,
+                            knowledge,
+                            style_ctx,
+                            allow_offline=not strict_dynamic,
+                        )
+                        if not frame:
+                            raise RuntimeError("没有可用的首帧图片（图生视频必须有首帧）")
+                        payload["first_frame_path"] = frame
+                    asset = self.registry.generate_asset(
+                        candidate, task.id, payload, directory, style_ctx
+                    )
+                except Exception as exc:
+                    failures.append(f"{candidate}: {exc}")
+                    continue
+                result["used_sources"].append(candidate)
+                if failures:
+                    result["events"].append(
+                        {
+                            "type": "provider_fallback",
+                            "slot": "asset",
+                            "shot_id": shot.id,
+                            "provider": candidate,
+                            "fallback_reason": "; ".join(failures),
+                        }
+                    )
+                break
+            if asset is None:
+                raise RuntimeError(
+                    f"Shot {shot.order} 素材生成失败: {'; '.join(failures)}"
+                )
+            result["asset"] = asset
+        except Exception as exc:  # noqa: BLE001 - 收进结果，由主线程统一决定失败
+            result["error"] = str(exc)
+        return result
+
+    def _commit_shot(self, task: Task, shot: Shot, asset: dict[str, Any]) -> None:
+        """把一镜的素材写回镜头和 task.assets。只在主线程按镜头顺序调用。"""
+        shot.asset_url = asset["url"]
+        shot.asset_id = asset["id"]
+        shot.asset_local_path = asset["local_path"]
+        shot.asset_media_type = str(asset.get("media_type", ""))
+        shot.asset_model = str(asset.get("model", ""))
+        shot.asset_seed = int(asset.get("seed", 0) or 0)
+        shot.asset_first_frame_path = str(asset.get("first_frame_path", ""))
+        provider_event = dict(asset.get("event") or {})
+        if (provider_event or float(asset.get("cost", 0) or 0) > 0) and task.trace:
+            provider_event.setdefault("type", "asset")
+            provider_event.setdefault("slot", "asset")
+            provider_event.setdefault("provider", asset.get("source", "unknown"))
+            provider_event.setdefault("cost", float(asset.get("cost", 0) or 0))
+            provider_event.setdefault("shot_id", shot.id)
+            task.trace.events.append(provider_event)
+        task.assets.append(
+            AssetRecord(
+                task_id=task.id,
+                shot_id=shot.id,
+                local_path=asset["local_path"],
+                **{
+                    key: asset[key]
+                    for key in (
+                        "id",
+                        "name",
+                        "url",
+                        "source",
+                        "license",
+                        "author",
+                        "usage_scope",
+                        "is_ai_generated",
+                    )
+                },
+                media_type=str(asset.get("media_type", "")),
+                model=str(asset.get("model", "")),
+                seed=int(asset.get("seed", 0) or 0),
+                prompt=str(asset.get("prompt", "")),
+                first_frame_path=str(asset.get("first_frame_path", "")),
+                cost=float(asset.get("cost", 0) or 0),
+            )
+        )
+
     def _ensure_first_frame(
         self,
         task: Task,
@@ -485,20 +652,22 @@ class Orchestrator:
         directory: Path,
         knowledge: dict[str, Any],
         style_ctx: dict[str, Any],
+        allow_offline: bool = True,
     ) -> str:
         """图生视频需要一张首帧。文生图失败时用离线场景图，不让这一镜把任务打死。"""
-        existing = str(payload.get("first_frame_path") or "")
+        existing = str(payload.get("first_frame_path") or payload.get("asset_first_frame_path") or "")
         if existing and Path(existing).is_file():
             return existing
         try:
+            frame_chain = ["ai-image"] + (["offline"] if allow_offline else [])
+            frame_ctx = dict(style_ctx)
+            # 首帧也是画面 provider 出的，配色/风格/规格必须和后续图生视频一致。
+            frame_ctx.setdefault("color", knowledge.get("color", "#2d6c63"))
+            frame_ctx.setdefault("accent", knowledge.get("accent", "#d6ad60"))
             acquired = self.registry.acquire_asset(
-                ["ai-image", "offline"],
-                lambda name, provider, body=payload: provider.create_or_find(
-                    task.id,
-                    body,
-                    directory,
-                    knowledge.get("color", "#2d6c63"),
-                    knowledge.get("accent", "#d6ad60"),
+                frame_chain,
+                lambda name, provider, body=payload, ctx=frame_ctx: invoke_create_or_find(
+                    provider, task.id, body, directory, ctx
                 ),
             )
         except Exception as exc:
@@ -509,24 +678,28 @@ class Orchestrator:
         if frame and Path(frame).suffix.lower() in {".mp4", ".mov", ".m4v", ".webm"}:
             return ""
         shot.asset_local_path = frame
+        shot.asset_first_frame_path = frame
+        self.update(task, event={"type": "first_frame", "shot_id": shot.id, "status": "ready", "provider": acquired.provider})
         return frame
 
     def _note_fallback(self, task: Task, slot: str, provider: str, used: bool, reason: str) -> None:
-        if not task.trace:
-            return
-        if used:
-            task.trace.fallback_used = True
-        if not used and not reason:
-            return
-        task.trace.events.append(
-            {
-                "type": "fallback",
-                "slot": slot,
-                "provider": provider,
-                "fallback_used": used,
-                "reason": reason,
-            }
-        )
+        # 并发生成时多个镜头会同时写 trace，必须加锁。
+        with self._state_lock:
+            if not task.trace:
+                return
+            if used:
+                task.trace.fallback_used = True
+            if not used and not reason:
+                return
+            task.trace.events.append(
+                {
+                    "type": "fallback",
+                    "slot": slot,
+                    "provider": provider,
+                    "fallback_used": used,
+                    "reason": reason,
+                }
+            )
 
     def _audio(self, task: Task) -> None:
         self.update(
@@ -546,6 +719,7 @@ class Orchestrator:
             task.shots,
             voice=task.input.voice,
             rate=task.input.voice_rate,
+            pitch=task.input.voice_pitch,
             target_duration=target,
             output_dir=directory,
         )
@@ -648,8 +822,14 @@ class Orchestrator:
         missing = [shot.id for shot in task.shots if shot.id not in ranges]
         if missing:
             raise ValueError(f"Audio cues are missing shots: {', '.join(missing)}")
-        for shot in task.shots:
+        # 每镜的时长要一直算到**下一镜第一句**开始，把镜间停顿含进去。只取本镜
+        # 首句起点到末句终点（end - start）会漏掉停顿，各镜之和就短于人声轨，
+        # 画面每过一个镜头边界超前 150ms，八镜累计超过一秒。
+        ordered = list(task.shots)
+        for index, shot in enumerate(ordered):
             start, end = ranges[shot.id]
+            if index + 1 < len(ordered):
+                end = ranges[ordered[index + 1].id][0]
             shot.duration_sec = round(end - start, 3)
         task.audio["duration_sec"] = round(max(item[1] for item in ranges.values()), 3)
         task.audio["cue_source"] = "provider"
@@ -672,6 +852,11 @@ class Orchestrator:
         renderer = self.registry.create("render", self.settings.render_provider)
         # 成片容器锁回用户选择的秒数（30.000s / 720x1280 / 25fps 三条不能破的指标）
         task.audio["requested_duration"] = float(task.input.duration)
+        # 旁白出现时 BGM 的处理方式。默认不压低，需要时由任务参数选"轻微/标准"。
+        task.audio["duck"] = {
+            "mode": task.input.music_ducking,
+            "release_sec": 0.35,
+        }
         grade = task.audio.get("grade") if isinstance(task.audio.get("grade"), dict) else None
         task.render = renderer.render(
             task.id,

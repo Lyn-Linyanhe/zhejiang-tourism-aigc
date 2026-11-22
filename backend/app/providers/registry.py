@@ -102,8 +102,12 @@ def _has_factory(module: Any) -> bool:
     return False
 
 
-def _instantiate(module: Any, settings: Any, kind: str) -> Any:
-    factory = getattr(module, "build_provider", None) or getattr(module, "create_provider", None)
+def _instantiate(module: Any, settings: Any, kind: str, factory_name: str = "build_provider") -> Any:
+    # factory_name 允许同一个模块暴露多个入口（video.py 的 build_provider 走图生视频、
+    # build_t2v_provider 走纯文生视频），缺了再退回默认名。
+    factory = getattr(module, factory_name, None)
+    if not callable(factory):
+        factory = getattr(module, "build_provider", None) or getattr(module, "create_provider", None)
     if callable(factory):
         try:
             return factory(settings)
@@ -132,6 +136,31 @@ def _instantiate(module: Any, settings: Any, kind: str) -> Any:
                 getattr(settings, f"{kind}_model", ""),
             )
     raise RuntimeError(f"providers.{kind} 没有 build_provider/create_provider")
+
+
+def invoke_create_or_find(
+    provider: Any,
+    task_id: str,
+    shot: dict[str, Any],
+    output_dir: Path,
+    style_ctx: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    """调 create_or_find，把 style_ctx 传给声明了它的 provider。
+
+    老 provider（upload / local-library）只收 5 个参数，传第 6 个会 TypeError。
+    所以按签名判断，别一律多传——它们是冻结合同的一部分。
+    """
+    ctx = dict(style_ctx or {})
+    arguments = [
+        task_id,
+        shot,
+        output_dir,
+        str(ctx.get("color", "#2d6c63")),
+        str(ctx.get("accent", "#d6ad60")),
+    ]
+    if "style_ctx" in signature(provider.create_or_find).parameters:
+        arguments.append(ctx)
+    return provider.create_or_find(*arguments)
 
 
 def _asset_dict_from_any(result: Any, task_id: str, shot: dict[str, Any]) -> dict[str, Any]:
@@ -170,10 +199,13 @@ def _asset_dict_from_any(result: Any, task_id: str, shot: dict[str, Any]) -> dic
 class _CloudAssetAdapter:
     """包住 image.build_provider / video.build_provider。缺模块或缺密钥时 available=False。"""
 
-    def __init__(self, name: str, kind: str, module_name: str, settings: Any) -> None:
+    def __init__(
+        self, name: str, kind: str, module_name: str, settings: Any, factory_name: str = "build_provider"
+    ) -> None:
         self.name = name
         self.kind = kind
         self.module_name = module_name
+        self.factory_name = factory_name
         self._settings = settings
         self._module = _import_optional(module_name)
         self.available, self.reason = self._availability()
@@ -209,7 +241,7 @@ class _CloudAssetAdapter:
     ) -> dict[str, Any]:
         if not self.available or self._module is None:
             raise RuntimeError(self.reason or f"{self.name} 不可用")
-        provider = _instantiate(self._module, self._settings, self.kind)
+        provider = _instantiate(self._module, self._settings, self.kind, self.factory_name)
         ctx = dict(style_ctx or {})
         ctx.setdefault("color", theme_color)
         ctx.setdefault("accent", accent)
@@ -247,6 +279,9 @@ class ProviderRegistry:
         "cloud": ("ai-video", "ai-image", "local-library", "offline"),
         "cloud-i2v": ("ai-video", "ai-image", "local-library", "offline"),
         "ai-video": ("ai-video", "ai-image", "local-library", "offline"),
+        # 文生视频：纯文本直接出片，不经过文生图
+        "ai-t2v": ("ai-t2v",),
+        "cloud-t2v": ("ai-t2v",),
     }
 
     def asset_chain_for(self, source: str) -> list[str]:
@@ -380,13 +415,7 @@ class ProviderRegistry:
             }
             return payload
         if hasattr(provider, "create_or_find"):
-            payload = provider.create_or_find(
-                task_id,
-                shot,
-                output_dir,
-                str(style_ctx.get("color", "#2d6c63")),
-                str(style_ctx.get("accent", "#d6ad60")),
-            )
+            payload = invoke_create_or_find(provider, task_id, shot, output_dir, style_ctx)
             suffix = Path(str(payload.get("local_path", ""))).suffix.lower()
             payload.setdefault("media_type", "video" if suffix in {".mp4", ".mov", ".webm", ".mkv"} else "image")
             payload.setdefault("model", str(getattr(provider, "name", name)))
@@ -557,16 +586,31 @@ def build_provider_registry(settings: Any, storage: Any) -> ProviderRegistry:
     registry.register(ProviderSpec("llm", "openai-compatible", "OpenAI 兼容文本模型", lambda: OpenAICompatibleLLMProvider(settings.llm_base_url, settings.llm_api_key, settings.llm_model), "DeepSeek 等兼容 chat/completions 的服务", ("deepseek", "openai"), lambda: bool(settings.llm_base_url and settings.llm_api_key and settings.llm_model)))
     registry.register(ProviderSpec("llm", "moneyprinterturbo", "MoneyPrinterTurbo", lambda: MoneyPrinterTurboLLMProvider(settings.mpt_root, settings.mpt_timeout_seconds, settings.mpt_python), "隔离子进程桥接", ("mpt",), lambda: settings.mpt_root.exists()))
 
-    # P2 画面 provider：文生图 / 图生视频。缺密钥或模块时 available=False，降级链自动跳过。
+    # 画面 provider：文生图 / 图生视频 / 文生视频。缺密钥或模块时 available=False，
+    # 降级链自动跳过。
+    #
+    # 标签必须能分辨出画面动不起来：ai-image 只出静帧，运动全靠渲染器推近；
+    # 另两个才是真的视频模型。之前 ai-image 和 ai-video 都叫"AI 生成画面"，
+    # 用户选到静帧那条，得到的正是"只是把图放大、移动"的观感。
     _ai_image = _CloudAssetAdapter("cloud-t2i", "image", "image", settings)
     _ai_video = _CloudAssetAdapter("cloud-i2v", "video", "video", settings)
+    _ai_t2v = _CloudAssetAdapter(
+        "cloud-t2v", "video", "video", settings, factory_name="build_t2v_provider"
+    )
     registry.register(ProviderSpec(
-        "asset", "ai-image", "AI 生成画面", lambda: _ai_image,
-        "OpenAI 兼容文生图（P2）", ("cloud-t2i",), lambda: _ai_image.available,
+        "asset", "ai-image", "AI 静帧（画面不动）", lambda: _ai_image,
+        "只生成一张图，运动来自渲染器的推近。最便宜，但画面本身不会动。",
+        ("cloud-t2i",), lambda: _ai_image.available,
     ))
     registry.register(ProviderSpec(
-        "asset", "ai-video", "AI 生成画面", lambda: _ai_video,
-        "火山方舟图生视频（P2）", ("cloud-i2v", "ai", "cloud"), lambda: _ai_video.available,
+        "asset", "ai-video", "AI 图生视频（有运动）", lambda: _ai_video,
+        "先出首帧图，再让它动起来。单镜约 80~110 秒、2 次付费调用。",
+        ("cloud-i2v", "ai", "cloud"), lambda: _ai_video.available,
+    ))
+    registry.register(ProviderSpec(
+        "asset", "ai-t2v", "AI 文生视频（有运动，最快）", lambda: _ai_t2v,
+        "纯文本直接出视频，不走文生图。单镜约 30 秒、1 次付费调用，画面与机位由模型自己组织。",
+        ("cloud-t2v",), lambda: _ai_t2v.available,
     ))
     registry.register(ProviderSpec("asset", "pexels", "Pexels 在线素材", lambda: PexelsAssetProvider(settings.pexels_api_key, settings.pexels_base_url), "需 PEXELS_API_KEY", available=lambda: bool(settings.pexels_api_key)))
     registry.register(ProviderSpec("asset", "local-library", "本地素材库", lambda: _LocalLibraryAssetProvider(storage), "从已登记素材中检索", ("library",)))

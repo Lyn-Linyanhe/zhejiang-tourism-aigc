@@ -3,7 +3,7 @@
 ## Start the local service
 
 ```powershell
-Set-Location C:\Users\ev041\Desktop\人工智能\zhejiang-tourism-aigc
+Set-Location <解压后的项目目录>
 .\scripts\start.ps1
 ```
 
@@ -98,7 +98,7 @@ runtime/media/<task_id>/cover.jpg
 The sibling checkout is optional for script/keyword generation:
 
 ```powershell
-Set-Location C:\Users\ev041\Desktop\人工智能\MoneyPrinterTurbo
+Set-Location <MoneyPrinterTurbo 检出目录>   # 可选上游，同级放置即可
 uv sync --frozen
 Copy-Item config.example.toml config.toml
 ```

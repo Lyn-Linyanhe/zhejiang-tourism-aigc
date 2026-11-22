@@ -11,6 +11,81 @@ from typing import Any
 from .audio_runtime import AudioRuntimeClient
 
 
+# edge-tts 的中文音色。这张表以实测 edge_tts.list_voices() 的 zh-CN 全集为准，
+# 不要凭印象加音色名——写错会变成运行时的 404。
+# 表里没有的字符串按 edge 的 ShortName 原样透传，所以直接填 zh-CN-* 也能跑。
+EDGE_VOICES: dict[str, str] = {
+    # 旧值保留为别名，历史任务的 voice 字段还要能跑
+    "女声": "zh-CN-XiaoxiaoNeural",
+    "男声": "zh-CN-YunxiNeural",
+    "晓晓·温暖女声": "zh-CN-XiaoxiaoNeural",
+    "晓伊·活泼女声": "zh-CN-XiaoyiNeural",
+    "小北·东北女声": "zh-CN-liaoning-XiaobeiNeural",
+    "小妮·陕西女声": "zh-CN-shaanxi-XiaoniNeural",
+    "云希·清朗男声": "zh-CN-YunxiNeural",
+    "云健·沉稳男声": "zh-CN-YunjianNeural",
+    "云扬·播报男声": "zh-CN-YunyangNeural",
+    "云夏·少年男声": "zh-CN-YunxiaNeural",
+}
+
+# 给前端下拉用的顺序：两位默认音色在前，其余按性别分组。
+EDGE_VOICE_CHOICES: tuple[str, ...] = (
+    "晓晓·温暖女声",
+    "晓伊·活泼女声",
+    "小北·东北女声",
+    "小妮·陕西女声",
+    "云希·清朗男声",
+    "云健·沉稳男声",
+    "云扬·播报男声",
+    "云夏·少年男声",
+)
+
+
+def edge_voice_name(voice: str) -> str:
+    """把用户选的音色名翻成 edge 的 ShortName。未知值原样返回。"""
+    return EDGE_VOICES.get(str(voice or "").strip(), str(voice or "").strip())
+
+
+# 句读停顿。edge-tts 免费接口不吃 SSML，插停顿只能靠"分句合成 + 句间补静音"。
+# 逗号短、句号长。数值是按中文播报习惯取的，改之前先听成片。
+CLAUSE_PAUSE_SEC: dict[str, float] = {
+    "。": 0.34, "！": 0.34, "？": 0.34, "…": 0.34,
+    ".": 0.34, "!": 0.34, "?": 0.34,
+    "，": 0.20, "、": 0.20, "；": 0.20,
+    ",": 0.20, ";": 0.20,
+}
+DEFAULT_CLAUSE_PAUSE_SEC = 0.24
+
+_CLAUSE_ENDINGS = "。！？…，、；.!?,;"
+
+
+def split_clauses(text: str) -> list[str]:
+    """按标点把一句话切成朗读片段，标点跟着前一段走。
+
+    标点保留是有意的：edge-tts 靠句末标点决定降调，去掉标点会让每段听起来
+    像被硬切断。返回值里不会出现纯标点或空白段。
+    """
+    clauses: list[str] = []
+    current = ""
+    for char in str(text or ""):
+        current += char
+        if char in _CLAUSE_ENDINGS:
+            if current.strip(_CLAUSE_ENDINGS + " \t　"):
+                clauses.append(current.strip())
+            current = ""
+    if current.strip():
+        clauses.append(current.strip())
+    return clauses
+
+
+def clause_pause_sec(clause: str) -> float:
+    """这一段读完后该停多久，看它的收尾标点。"""
+    stripped = str(clause or "").rstrip()
+    if stripped and stripped[-1] in CLAUSE_PAUSE_SEC:
+        return CLAUSE_PAUSE_SEC[stripped[-1]]
+    return DEFAULT_CLAUSE_PAUSE_SEC
+
+
 @dataclass
 class TTSResult:
     path: Path
@@ -71,24 +146,25 @@ def generate_edge_tts(
     voice: str,
     rate: float = 1.0,
     runtime: AudioRuntimeClient | None = None,
+    pitch_hz: float = 0.0,
 ) -> dict[str, Any]:
     """Use Edge TTS through the isolated Python 3.11 audio runtime."""
     if not text.strip():
         raise ValueError("speech text cannot be empty")
-    voice_name = {
-        "女声": "zh-CN-XiaoxiaoNeural",
-        "男声": "zh-CN-YunxiNeural",
-    }.get(voice, voice)
+    voice_name = edge_voice_name(voice)
     if not voice_name:
         raise ValueError("edge TTS voice cannot be empty")
     rate_percent = round((float(rate) - 1.0) * 100)
     rate_arg = f"{rate_percent:+d}%"
+    # edge 的音高按赫兹偏移给，0 表示不变调。神经音色做音高偏移容易发假，
+    # 所以默认 0，只在用户显式调整时才动。
+    pitch_arg = f"{round(float(pitch_hz)):+d}Hz"
     if runtime is None:
         raise RuntimeError(
             "Edge TTS requires the isolated audio runtime. "
             "Run scripts/setup-audio-runtime.ps1 first."
         )
-    return runtime.synthesize_edge_tts(text, output_path, voice_name, rate_arg)
+    return runtime.synthesize_edge_tts(text, output_path, voice_name, rate_arg, pitch_arg)
 
 
 def generate_system_speech(

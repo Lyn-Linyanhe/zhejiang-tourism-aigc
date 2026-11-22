@@ -3,6 +3,9 @@ __pycache__/
 *.py[cod]
 .venv/
 venv/
+# 隔离的音频运行时（edge-tts / whisperx），由 scripts/setup-audio-runtime.ps1
+# 或手动 venv 创建，体积很大，不进仓库
+.venv-audio/
 .pytest_cache/
 .mypy_cache/
 .ruff_cache/

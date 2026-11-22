@@ -20,6 +20,8 @@ ALLOWED_RESOLUTIONS = {
 ALLOWED_STYLES = ("诗意纪实", "城市漫游", "国风雅韵", "青春活力", "节庆热烈")
 ALLOWED_VOICES = ("女声", "男声", "无配音")
 ALLOWED_MUSIC_MOODS = ("舒缓", "热烈", "雅致", "轻快", "无音乐")
+# 旁白出现时是否压低 BGM。默认不压低：默认配比下 BGM 已比人声低约 15dB。
+ALLOWED_MUSIC_DUCKING = ("不压低", "轻微", "标准")
 
 
 def now_iso() -> str:
@@ -50,8 +52,11 @@ class TaskInput:
     output_resolution: str = "720x1280"
     fps: int = 25
     voice_rate: float = 1.0
+    # edge 的音高偏移（赫兹）。0 = 不变调。
+    voice_pitch: float = 0.0
     voice_volume: float = 1.0
     music_volume: float = 0.18
+    music_ducking: str = "不压低"
 
     @classmethod
     def from_dict(cls, raw: dict[str, Any]) -> "TaskInput":
@@ -74,8 +79,10 @@ class TaskInput:
             "output_resolution": str(raw.get("output_resolution", "720x1280")).strip().lower(),
             "fps": int(raw.get("fps", 25)),
             "voice_rate": float(raw.get("voice_rate", 1.0)),
+            "voice_pitch": float(raw.get("voice_pitch", 0.0)),
             "voice_volume": float(raw.get("voice_volume", 1.0)),
             "music_volume": float(raw.get("music_volume", 0.18)),
+            "music_ducking": str(raw.get("music_ducking", "不压低")).strip(),
         }
         if not values["city"]:
             raise ValueError("city 不能为空")
@@ -92,9 +99,9 @@ class TaskInput:
         if values["asset_source"] not in {
             "configured", "offline", "upload", "pexels",
             "local-library", "library",
-            "ai-image", "ai-video",
+            "ai-image", "ai-video", "ai-t2v",
             # P2 注册表使用的旧名称，作为别名一并接受
-            "cloud-i2v", "cloud-t2i", "ai", "cloud",
+            "cloud-i2v", "cloud-t2i", "cloud-t2v", "ai", "cloud",
         }:
             raise ValueError("asset_source must be a registered asset provider")
         if values["output_resolution"] not in ALLOWED_RESOLUTIONS:
@@ -103,10 +110,14 @@ class TaskInput:
             raise ValueError("fps must be 24, 25, 30, or 60")
         if not 0.5 <= values["voice_rate"] <= 2.0:
             raise ValueError("voice_rate must be between 0.5 and 2.0")
+        if not -50.0 <= values["voice_pitch"] <= 50.0:
+            raise ValueError("voice_pitch must be between -50 and 50 Hz")
         if not 0.0 <= values["voice_volume"] <= 2.0:
             raise ValueError("voice_volume must be between 0 and 2")
         if not 0.0 <= values["music_volume"] <= 1.0:
             raise ValueError("music_volume must be between 0 and 1")
+        if values["music_ducking"] not in ALLOWED_MUSIC_DUCKING:
+            raise ValueError(f"music_ducking 只能是 {ALLOWED_MUSIC_DUCKING}")
         for field_name in ("style", "voice", "music_mood"):
             if not values[field_name] or len(values[field_name]) > 80:
                 raise ValueError(f"{field_name} must be non-empty and no longer than 80 characters")

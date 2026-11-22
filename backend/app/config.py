@@ -75,18 +75,31 @@ class Settings:
         "AUDIO_ALLOW_CPU_FALLBACK", "true"
     ).lower() in {"1", "true", "yes"}
     audio_timeout_seconds: int = int(_env("AUDIO_TIMEOUT_SECONDS", "900"))
+    # 逐镜素材生成的并发数。单镜实测约 110 秒（文生图 37~70s + 图生视频 44s），
+    # 串行跑 4 镜要 8 分钟。网关限流时把这个值调小。
+    asset_concurrency: int = max(1, int(_env("ASSET_CONCURRENCY", "4") or 4))
     asset_provider: str = _env("ASSET_PROVIDER", "offline")
     asset_fallback_providers: tuple[str, ...] = _env_list(
         "ASSET_FALLBACK_PROVIDERS", "local-library,offline"
     )
     image_provider: str = _env("IMAGE_PROVIDER", "")
-    image_base_url: str = _env("IMAGE_BASE_URL")
+    image_api_style: str = _env("IMAGE_API_STYLE", "auto")
+    image_base_url: str = _env("IMAGE_BASE_URL", "https://tokendance.space/gateway/ark/v3")
     image_api_key: str = _env("IMAGE_API_KEY")
-    image_model: str = _env("IMAGE_MODEL")
+    image_model: str = _env("IMAGE_MODEL", "seedream-5.0-pro")
+    image_size: str = _env("IMAGE_SIZE", "2K")
+    image_seed: int = int(_env("IMAGE_SEED", "0"))
+    image_style_prefix: str = _env("IMAGE_STYLE_PREFIX")
+    image_negative_prompt: str = _env("IMAGE_NEGATIVE_PROMPT")
     video_provider: str = _env("VIDEO_PROVIDER", "")
-    video_base_url: str = _env("VIDEO_BASE_URL")
+    video_api_style: str = _env("VIDEO_API_STYLE", "auto")
+    video_base_url: str = _env("VIDEO_BASE_URL", "https://tokendance.space/gateway/minimax/v2")
     video_api_key: str = _env("VIDEO_API_KEY")
-    video_model: str = _env("VIDEO_MODEL")
+    video_model: str = _env("VIDEO_MODEL", "minimax-h3")
+    video_resolution: str = _env("VIDEO_RESOLUTION", "768P")
+    video_ratio: str = _env("VIDEO_RATIO", "9:16")
+    video_poll_interval: int = int(_env("VIDEO_POLL_INTERVAL", "5"))
+    video_timeout: int = int(_env("VIDEO_TIMEOUT", "1800"))
     pexels_api_key: str = _env("PEXELS_API_KEY")
     pexels_base_url: str = _env("PEXELS_BASE_URL", "https://api.pexels.com/v1")
     music_dir: Path = PROJECT_ROOT / _env("MUSIC_DIR", "runtime/music")

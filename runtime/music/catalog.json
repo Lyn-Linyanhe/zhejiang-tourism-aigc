@@ -1,0 +1,366 @@
+{
+  "version": 3,
+  "note": "Moods are tempo/loudness estimates, not human listening review. See runtime/music_moods_review.json; correct 'moods' here if wrong.",
+  "tracks": [
+    {
+      "id": "bgm-apricity",
+      "file": "apricity.mp3",
+      "source_file": "apricity .mp3",
+      "moods": [
+        "雅致"
+      ],
+      "styles": [
+        "诗意纪实",
+        "城市漫游",
+        "国风雅韵",
+        "青春活力",
+        "节庆热烈"
+      ],
+      "license": "用户自备素材，授权状态未知，公开传播前需自行确认",
+      "author": "用户提供",
+      "usage_scope": "比赛展示与内部评审；正式对外发布前必须确认授权",
+      "approved": true,
+      "moods_source": "auto-estimated-tempo-quartile"
+    },
+    {
+      "id": "bgm-CHINA 春风",
+      "file": "CHINA 春风.mp3",
+      "source_file": "私人致享 P1 在百万豪装录音棚大声听 徐梦圆《CHINA-春风》【Hi-res】_1429430060.mp3",
+      "moods": [
+        "雅致"
+      ],
+      "styles": [
+        "诗意纪实",
+        "城市漫游",
+        "国风雅韵",
+        "青春活力",
+        "节庆热烈"
+      ],
+      "license": "用户自备素材，授权状态未知，公开传播前需自行确认",
+      "author": "用户提供",
+      "usage_scope": "比赛展示与内部评审；正式对外发布前必须确认授权",
+      "approved": true,
+      "moods_source": "auto-estimated-tempo-quartile"
+    },
+    {
+      "id": "bgm-Do It All Over Again",
+      "file": "Do It All Over Again.mp3",
+      "source_file": "",
+      "moods": [
+        "轻快"
+      ],
+      "styles": [
+        "诗意纪实",
+        "城市漫游",
+        "国风雅韵",
+        "青春活力",
+        "节庆热烈"
+      ],
+      "license": "用户自备素材，授权状态未知，公开传播前需自行确认",
+      "author": "用户提供",
+      "usage_scope": "比赛展示与内部评审；正式对外发布前必须确认授权",
+      "approved": true,
+      "moods_source": "auto-estimated-tempo-quartile"
+    },
+    {
+      "id": "bgm-For All Eternity",
+      "file": "For All Eternity.mp3",
+      "source_file": "超好听的纯音乐-For All Eternity_1239258219.mp3",
+      "moods": [
+        "雅致"
+      ],
+      "styles": [
+        "诗意纪实",
+        "城市漫游",
+        "国风雅韵",
+        "青春活力",
+        "节庆热烈"
+      ],
+      "license": "用户自备素材，授权状态未知，公开传播前需自行确认",
+      "author": "用户提供",
+      "usage_scope": "比赛展示与内部评审；正式对外发布前必须确认授权",
+      "approved": true,
+      "moods_source": "auto-estimated-tempo-quartile"
+    },
+    {
+      "id": "bgm-HeartStrings",
+      "file": "HeartStrings.mp3",
+      "source_file": "HeartStrings·曾怡.mp3",
+      "moods": [
+        "轻快"
+      ],
+      "styles": [
+        "诗意纪实",
+        "城市漫游",
+        "国风雅韵",
+        "青春活力",
+        "节庆热烈"
+      ],
+      "license": "用户自备素材，授权状态未知，公开传播前需自行确认",
+      "author": "用户提供",
+      "usage_scope": "比赛展示与内部评审；正式对外发布前必须确认授权",
+      "approved": true,
+      "moods_source": "auto-estimated-tempo-quartile"
+    },
+    {
+      "id": "bgm-Lemon",
+      "file": "Lemon.mp3",
+      "source_file": "",
+      "moods": [
+        "雅致"
+      ],
+      "styles": [
+        "诗意纪实",
+        "城市漫游",
+        "国风雅韵",
+        "青春活力",
+        "节庆热烈"
+      ],
+      "license": "用户自备素材，授权状态未知，公开传播前需自行确认",
+      "author": "用户提供",
+      "usage_scope": "比赛展示与内部评审；正式对外发布前必须确认授权",
+      "approved": true,
+      "moods_source": "auto-estimated-tempo-quartile"
+    },
+    {
+      "id": "bgm-Love a Little Harder",
+      "file": "Love a Little Harder.mp3",
+      "source_file": "Love a Little Harder .mp3",
+      "moods": [
+        "轻快"
+      ],
+      "styles": [
+        "诗意纪实",
+        "城市漫游",
+        "国风雅韵",
+        "青春活力",
+        "节庆热烈"
+      ],
+      "license": "用户自备素材，授权状态未知，公开传播前需自行确认",
+      "author": "用户提供",
+      "usage_scope": "比赛展示与内部评审；正式对外发布前必须确认授权",
+      "approved": true,
+      "moods_source": "auto-estimated-tempo-quartile"
+    },
+    {
+      "id": "bgm-Rare Love",
+      "file": "Rare Love.mp3",
+      "source_file": "美国音乐人Cody Francis - Rare Love_580915769.mp3",
+      "moods": [
+        "舒缓"
+      ],
+      "styles": [
+        "诗意纪实",
+        "城市漫游",
+        "国风雅韵",
+        "青春活力",
+        "节庆热烈"
+      ],
+      "license": "用户自备素材，授权状态未知，公开传播前需自行确认",
+      "author": "用户提供",
+      "usage_scope": "比赛展示与内部评审；正式对外发布前必须确认授权",
+      "approved": true,
+      "moods_source": "auto-estimated-tempo-quartile"
+    },
+    {
+      "id": "bgm-River Flows in You",
+      "file": "River Flows in You.mp3",
+      "source_file": "",
+      "moods": [
+        "热烈"
+      ],
+      "styles": [
+        "诗意纪实",
+        "城市漫游",
+        "国风雅韵",
+        "青春活力",
+        "节庆热烈"
+      ],
+      "license": "用户自备素材，授权状态未知，公开传播前需自行确认",
+      "author": "用户提供",
+      "usage_scope": "比赛展示与内部评审；正式对外发布前必须确认授权",
+      "approved": true,
+      "moods_source": "auto-estimated-tempo-quartile"
+    },
+    {
+      "id": "bgm-summer triangle",
+      "file": "summer triangle.mp3",
+      "source_file": "summer triangle .mp3",
+      "moods": [
+        "热烈"
+      ],
+      "styles": [
+        "诗意纪实",
+        "城市漫游",
+        "国风雅韵",
+        "青春活力",
+        "节庆热烈"
+      ],
+      "license": "用户自备素材，授权状态未知，公开传播前需自行确认",
+      "author": "用户提供",
+      "usage_scope": "比赛展示与内部评审；正式对外发布前必须确认授权",
+      "approved": true,
+      "moods_source": "auto-estimated-tempo-quartile"
+    },
+    {
+      "id": "bgm-Weather Any Storm",
+      "file": "Weather Any Storm.mp3",
+      "source_file": "日推歌单 P1 “好适合睡前单曲循环 慵懒又温柔”《Weather Any Storm》｜日推歌单_1044663293.mp3",
+      "moods": [
+        "轻快"
+      ],
+      "styles": [
+        "诗意纪实",
+        "城市漫游",
+        "国风雅韵",
+        "青春活力",
+        "节庆热烈"
+      ],
+      "license": "用户自备素材，授权状态未知，公开传播前需自行确认",
+      "author": "用户提供",
+      "usage_scope": "比赛展示与内部评审；正式对外发布前必须确认授权",
+      "approved": true,
+      "moods_source": "auto-estimated-tempo-quartile"
+    },
+    {
+      "id": "bgm-What If I Told You",
+      "file": "What If I Told You.mp3",
+      "source_file": "广播剧小行星BGM⭐What If I Told You (Lyrics)-Cayson Renshaw番外3：你是我的烟火人间✨仇音✖应宸 P1 Cayson Renshaw - What If I Told You (Lyrics)_550279609.mp3",
+      "moods": [
+        "热烈"
+      ],
+      "styles": [
+        "诗意纪实",
+        "城市漫游",
+        "国风雅韵",
+        "青春活力",
+        "节庆热烈"
+      ],
+      "license": "用户自备素材，授权状态未知，公开传播前需自行确认",
+      "author": "用户提供",
+      "usage_scope": "比赛展示与内部评审；正式对外发布前必须确认授权",
+      "approved": true,
+      "moods_source": "auto-estimated-tempo-quartile"
+    },
+    {
+      "id": "bgm-去有风的地方",
+      "file": "去有风的地方.mp3",
+      "source_file": "",
+      "moods": [
+        "舒缓"
+      ],
+      "styles": [
+        "诗意纪实",
+        "城市漫游",
+        "国风雅韵",
+        "青春活力",
+        "节庆热烈"
+      ],
+      "license": "用户自备素材，授权状态未知，公开传播前需自行确认",
+      "author": "用户提供",
+      "usage_scope": "比赛展示与内部评审；正式对外发布前必须确认授权",
+      "approved": true,
+      "moods_source": "auto-estimated-tempo-quartile"
+    },
+    {
+      "id": "bgm-又见月光光 伴奏",
+      "file": "又见月光光 伴奏.mp3",
+      "source_file": "洛天依 - 又见月光光 - 原版伴奏_39363085163.mp3",
+      "moods": [
+        "舒缓"
+      ],
+      "styles": [
+        "诗意纪实",
+        "城市漫游",
+        "国风雅韵",
+        "青春活力",
+        "节庆热烈"
+      ],
+      "license": "用户自备素材，授权状态未知，公开传播前需自行确认",
+      "author": "用户提供",
+      "usage_scope": "比赛展示与内部评审；正式对外发布前必须确认授权",
+      "approved": true,
+      "moods_source": "auto-estimated-tempo-quartile"
+    },
+    {
+      "id": "bgm-夏至未至 伴奏",
+      "file": "夏至未至 伴奏.mp3",
+      "source_file": "胡夏 夏至未至 伴奏 P1 伴奏_35803104701.mp3",
+      "moods": [
+        "轻快"
+      ],
+      "styles": [
+        "诗意纪实",
+        "城市漫游",
+        "国风雅韵",
+        "青春活力",
+        "节庆热烈"
+      ],
+      "license": "用户自备素材，授权状态未知，公开传播前需自行确认",
+      "author": "用户提供",
+      "usage_scope": "比赛展示与内部评审；正式对外发布前必须确认授权",
+      "approved": true,
+      "moods_source": "auto-estimated-tempo-quartile"
+    },
+    {
+      "id": "bgm-没语季节 钢琴版",
+      "file": "没语季节 钢琴版.mp3",
+      "source_file": "没语季节 钢琴完整版.mp3",
+      "moods": [
+        "热烈"
+      ],
+      "styles": [
+        "诗意纪实",
+        "城市漫游",
+        "国风雅韵",
+        "青春活力",
+        "节庆热烈"
+      ],
+      "license": "用户自备素材，授权状态未知，公开传播前需自行确认",
+      "author": "用户提供",
+      "usage_scope": "比赛展示与内部评审；正式对外发布前必须确认授权",
+      "approved": true,
+      "moods_source": "auto-estimated-tempo-quartile"
+    },
+    {
+      "id": "bgm-聘书伴奏",
+      "file": "聘书伴奏.m4a",
+      "source_file": "",
+      "moods": [
+        "舒缓"
+      ],
+      "styles": [
+        "诗意纪实",
+        "城市漫游",
+        "国风雅韵",
+        "青春活力",
+        "节庆热烈"
+      ],
+      "license": "用户自备素材，授权状态未知，公开传播前需自行确认",
+      "author": "用户提供",
+      "usage_scope": "比赛展示与内部评审；正式对外发布前必须确认授权",
+      "approved": true,
+      "moods_source": "auto-estimated-tempo-quartile"
+    },
+    {
+      "id": "bgm-草原之风 Wind Of The Prairie",
+      "file": "草原之风 Wind Of The Prairie.mp3",
+      "source_file": "草原の風 (Wind Of The Prairie).mp3",
+      "moods": [
+        "舒缓"
+      ],
+      "styles": [
+        "诗意纪实",
+        "城市漫游",
+        "国风雅韵",
+        "青春活力",
+        "节庆热烈"
+      ],
+      "license": "用户自备素材，授权状态未知，公开传播前需自行确认",
+      "author": "用户提供",
+      "usage_scope": "比赛展示与内部评审；正式对外发布前必须确认授权",
+      "approved": true,
+      "moods_source": "auto-estimated-tempo-quartile"
+    }
+  ]
+}

@@ -1,0 +1,161 @@
+﻿{
+    "id":  "draft_a88812a04bfb",
+    "input":  {
+                  "city":  "杭州",
+                  "landmark":  "西湖",
+                  "theme":  "西湖春日宋韵游",
+                  "culture":  "宋韵文化与江南园林",
+                  "festival":  "春日",
+                  "audience":  "年轻游客",
+                  "duration":  15,
+                  "style":  "诗意纪实",
+                  "voice":  "女声",
+                  "music_mood":  "舒缓",
+                  "include_ai_label":  true,
+                  "custom_brief":  "画面自然流畅，优先生成真实动态镜头，不要用静态图充数。",
+                  "shot_count":  4,
+                  "include_subtitles":  true,
+                  "asset_source":  "ai",
+                  "output_resolution":  "720x1280",
+                  "fps":  25,
+                  "voice_rate":  1.0,
+                  "voice_volume":  1.0,
+                  "music_volume":  0.12
+              },
+    "status":  "draft",
+    "stage":  "preview",
+    "progress":  35,
+    "title":  "西湖春日宋韵游",
+    "summary":  "15秒竖屏短片，以真实动态镜头展现西湖春日与宋韵文化，旁白引用西湖十景、苏轼三塔、白蛇传说等可核实事实。",
+    "cta":  "春日西湖，宋韵等您。",
+    "tags":  [
+                 "杭州",
+                 "西湖",
+                 "宋韵",
+                 "春日",
+                 "江南园林"
+             ],
+    "narration":  "清晨薄雾，西湖如画。南宋西湖十景，题名传千年。苏轼立三塔，白蛇断桥缘。春日宋韵，等您入画。",
+    "shots":  [
+                  {
+                      "id":  "shot_1",
+                      "order":  1,
+                      "duration_sec":  3.8,
+                      "title":  "晨雾西湖",
+                      "visual_prompt":  "清晨薄雾中的西湖湖面，真实动态镜头：微风吹拂，水面泛起涟漪，倒影轻轻晃动；远处断桥与远山轮廓若隐若现，柳枝轻摆，光线柔和，25fps自然流畅。",
+                      "narration":  "清晨薄雾，西湖如画。",
+                      "subtitle":  "清晨薄雾，西湖如画",
+                      "transition":  "fade",
+                      "asset_url":  "",
+                      "asset_id":  "",
+                      "asset_local_path":  "",
+                      "asset_media_type":  "",
+                      "asset_model":  "",
+                      "asset_seed":  0,
+                      "asset_first_frame_path":  "",
+                      "audio_url":  "",
+                      "audio_local_path":  ""
+                  },
+                  {
+                      "id":  "shot_2",
+                      "order":  2,
+                      "duration_sec":  3.8,
+                      "title":  "十景题名",
+                      "visual_prompt":  "苏堤春晓实景动态镜头：苏堤上柳枝垂水，桃花初绽，游客缓步走过；镜头平移，展现南宋西湖十景题名碑刻与湖光山色交融，自然光线，动态捕捉。",
+                      "narration":  "南宋西湖十景，题名传千年。",
+                      "subtitle":  "南宋西湖十景，题名传千年",
+                      "transition":  "fade",
+                      "asset_url":  "",
+                      "asset_id":  "",
+                      "asset_local_path":  "",
+                      "asset_media_type":  "",
+                      "asset_model":  "",
+                      "asset_seed":  0,
+                      "asset_first_frame_path":  "",
+                      "audio_url":  "",
+                      "audio_local_path":  ""
+                  },
+                  {
+                      "id":  "shot_3",
+                      "order":  3,
+                      "duration_sec":  3.8,
+                      "title":  "三潭印月",
+                      "visual_prompt":  "三潭印月石塔动态特写：湖面波光粼粼，三座石塔静立水中，倒影随波荡漾；镜头缓慢拉远，展现苏轼元祐四年（1089年）立塔典故，春日暖阳，真实水纹动态。",
+                      "narration":  "苏轼立三塔，白蛇断桥缘。",
+                      "subtitle":  "苏轼立三塔，白蛇断桥缘",
+                      "transition":  "fade",
+                      "asset_url":  "",
+                      "asset_id":  "",
+                      "asset_local_path":  "",
+                      "asset_media_type":  "",
+                      "asset_model":  "",
+                      "asset_seed":  0,
+                      "asset_first_frame_path":  "",
+                      "audio_url":  "",
+                      "audio_local_path":  ""
+                  },
+                  {
+                      "id":  "shot_4",
+                      "order":  4,
+                      "duration_sec":  3.6,
+                      "title":  "断桥春韵",
+                      "visual_prompt":  "断桥实景动态镜头：春日桃花盛开，桥上游人如织，湖面画舫缓缓划过；镜头从桥洞穿过，展现白娘子与许仙传说氛围，光线明媚，自然流畅。",
+                      "narration":  "春日宋韵，等您入画。",
+                      "subtitle":  "春日宋韵，等您入画",
+                      "transition":  "fade",
+                      "asset_url":  "",
+                      "asset_id":  "",
+                      "asset_local_path":  "",
+                      "asset_media_type":  "",
+                      "asset_model":  "",
+                      "asset_seed":  0,
+                      "asset_first_frame_path":  "",
+                      "audio_url":  "",
+                      "audio_local_path":  ""
+                  }
+              ],
+    "assets":  [
+
+               ],
+    "audio":  {
+                  "knowledge":  {
+                                    "fact":  "西湖十景得名于南宋，经清康熙帝御题碑刻定型；三潭印月肇始于北宋苏轼元祐四年（1089年）所立三座量水塔；断桥相传为白娘子与许仙相遇处。",
+                                    "color":  "#24526a",
+                                    "accent":  "#d6ad60",
+                                    "aliases":  [
+
+                                                ]
+                                }
+              },
+    "render":  {
+
+               },
+    "trace":  {
+                  "provider":  "openai-compatible",
+                  "model":  "deepseek-chat",
+                  "prompt_version":  "zj-tourism-prompt-v1",
+                  "fallback_used":  false,
+                  "created_at":  "2026-10-06T07:31:49.225099+00:00",
+                  "events":  [
+                                 {
+                                     "type":  "llm",
+                                     "provider":  "openai-compatible",
+                                     "model":  "deepseek-chat",
+                                     "ok":  true
+                                 },
+                                 {
+                                     "type":  "stage",
+                                     "stage":  "scripting",
+                                     "status":  "completed"
+                                 },
+                                 {
+                                     "type":  "preview",
+                                     "status":  "ready",
+                                     "message":  "Script and storyboard are ready for review"
+                                 }
+                             ]
+              },
+    "error":  "",
+    "created_at":  "2026-10-06T07:31:44.753739+00:00",
+    "updated_at":  "2026-10-06T07:31:49.240108+00:00"
+}

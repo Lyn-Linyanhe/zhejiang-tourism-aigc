@@ -2,11 +2,15 @@ from __future__ import annotations
 
 import json
 import subprocess
+from math import gcd
 from pathlib import Path
 from typing import Any
 
 from ..providers.media_ffmpeg import (
+    AIGC_LABEL_TEXT,
+    aigc_label_filter,
     create_srt,
+    find_cjk_font,
     is_video_media,
     run_ffmpeg,
     shot_filter,
@@ -19,6 +23,28 @@ from ..providers.media_ffmpeg import (
 # 想更高画质就调低 VIDEO_CRF；现场渲染太慢就把 VIDEO_PRESET 调回 veryfast。
 VIDEO_CRF = "18"
 VIDEO_PRESET = "medium"
+
+
+# 旁白出现时 BGM 的处理方式。默认"不压低"：两条轨道各自已经调好音量
+# （默认 music_volume=0.18 比人声低约 15dB，人声本来就不会被盖住），
+# 再叠 sidechaincompress 会让音乐忽大忽小。需要时可在任务里选"轻微/标准"。
+MUSIC_DUCKING_MODES = ("不压低", "轻微", "标准")
+DEFAULT_MUSIC_DUCKING = "不压低"
+
+
+def music_ducking(duck: dict[str, Any] | None) -> tuple[str, int]:
+    """从调用方给的 duck 配置取出压低模式与释放时间（毫秒）。缺省不压低。"""
+    mode = DEFAULT_MUSIC_DUCKING
+    release = 0.35
+    if isinstance(duck, dict):
+        candidate = str(duck.get("mode") or "").strip()
+        if candidate in MUSIC_DUCKING_MODES:
+            mode = candidate
+        try:
+            release = float(duck.get("release_sec", release))
+        except (TypeError, ValueError):
+            release = 0.35
+    return mode, max(50, int(round(release * 1000)))
 
 
 def _probe_stream_types(path: Path) -> set[str]:
@@ -102,15 +128,20 @@ class VideoRenderer:
         if result.returncode != 0:
             raise RuntimeError(result.stderr.strip() or f"Shot render failed: {source.name}")
 
-    def _burn_subtitles(self, output_dir: Path, silent_video: Path, output: Path) -> None:
-        # Run from the task directory so the subtitles filter can use an ASCII
-        # relative path on Windows without escaping drive letters.
+    def _burn_overlays(
+        self, output_dir: Path, source: Path, output: Path, filters: list[str]
+    ) -> None:
+        """把字幕和 AIGC 标识烧进画面。一次重编码搞定，避免多烧一道掉一次画质。
+
+        Run from the task directory so the subtitles filter can use an ASCII
+        relative path on Windows without escaping drive letters.
+        """
         result = run_ffmpeg(
             [
                 "-i",
-                "silent.mp4",
+                source.name,
                 "-vf",
-                "subtitles=subtitles.srt",
+                ",".join(filters),
                 "-c:v",
                 "libx264",
                 "-pix_fmt",
@@ -122,12 +153,12 @@ class VideoRenderer:
                 "-an",
                 "-fps_mode",
                 "cfr",
-                "subtitled.mp4",
+                output.name,
             ],
             cwd=output_dir,
         )
         if result.returncode != 0 or not output.exists():
-            raise RuntimeError(result.stderr.strip() or "Subtitle burn-in failed")
+            raise RuntimeError(result.stderr.strip() or "Subtitle/label burn-in failed")
 
     def _mux_audio(
         self,
@@ -139,7 +170,11 @@ class VideoRenderer:
         fps: int = 25,
     ) -> None:
         args = ["-i", str(visual_video)]
-        for audio_path, _volume in audio_tracks:
+        for index, (audio_path, _volume) in enumerate(audio_tracks):
+            if index == 1:
+                # 音乐输入循环。曲子比成片短时 apad 补的是静音（后半段没音乐），
+                # -stream_loop -1 让它无缝续上，再由下面的 atrim 精确截到成片秒数。
+                args.extend(["-stream_loop", "-1"])
             args.extend(["-i", str(audio_path)])
 
         if len(audio_tracks) == 1:
@@ -148,31 +183,41 @@ class VideoRenderer:
                 f"apad=pad_dur={duration:.3f},atrim=duration={duration:.3f}[a]"
             )
         else:
-            # 旁白说话时压低 BGM。音量和释放时间优先用调用方传入的 duck，
-            # 没有就用 P3 约定的 0.18 / 0.35。sidechaincompress 不改变时长。
-            ducked = 0.18
-            release = 0.35
-            if duck:
-                try:
-                    ducked = float(duck.get("music_volume", ducked))
-                except (TypeError, ValueError):
-                    ducked = 0.18
-                try:
-                    release = float(duck.get("release_sec", release))
-                except (TypeError, ValueError):
-                    release = 0.35
-            # 没有 duck 时沿用调用方传入的音量，避免把已经调好的 music_volume 再压一次。
+            mode, release_ms = music_ducking(duck)
             music_volume = float(audio_tracks[1][1])
-            if duck and duck.get("music_volume") not in (None, ""):
-                music_volume = ducked
-            release_ms = max(50, int(round(release * 1000)))
-            filter_complex = (
-                f"[1:a]volume={audio_tracks[0][1]:.3f},apad=pad_dur={duration:.3f},asplit=2[voice][sc];"
-                f"[2:a]volume={music_volume:.3f},apad=pad_dur={duration:.3f}[music];"
-                f"[music][sc]sidechaincompress=threshold=0.02:ratio=8:attack=20:release={release_ms}[ducked];"
-                "[voice][ducked]amix=inputs=2:duration=longest:dropout_transition=0,"
-                f"atrim=duration={duration:.3f}[a]"
+            # 淡入/淡出按成片时长收缩，短片不出现两段淡变重叠。
+            fade_in = min(0.8, duration / 5)
+            fade_out = min(2.0, duration / 3)
+            fade_out_start = max(0.0, duration - fade_out)
+            voice_chain = (
+                f"[1:a]volume={audio_tracks[0][1]:.3f},"
+                f"apad=pad_dur={duration:.3f},atrim=duration={duration:.3f}"
             )
+            music_chain = (
+                f"[2:a]volume={music_volume:.3f},"
+                f"atrim=duration={duration:.3f},asetpts=PTS-STARTPTS,"
+                f"afade=t=in:st=0:d={fade_in:.3f},"
+                f"afade=t=out:st={fade_out_start:.3f}:d={fade_out:.3f}[music]"
+            )
+            if mode == "不压低":
+                # 旁白与 BGM 的音量已经在各自轨道上调好（默认 BGM 比人声低约 15dB），
+                # 再叠 sidechain 属于过度处理，会让音乐忽大忽小。
+                filter_complex = (
+                    f"{voice_chain}[voice];"
+                    f"{music_chain};"
+                    "[voice][music]amix=inputs=2:duration=longest:dropout_transition=0[a]"
+                )
+            else:
+                params = {
+                    "轻微": "threshold=0.05:ratio=2.5:attack=20",
+                    "标准": "threshold=0.02:ratio=8:attack=20",
+                }[mode]
+                filter_complex = (
+                    f"{voice_chain},asplit=2[voice][sc];"
+                    f"{music_chain};"
+                    f"[music][sc]sidechaincompress={params}:release={release_ms}[ducked];"
+                    "[voice][ducked]amix=inputs=2:duration=longest:dropout_transition=0[a]"
+                )
         # -t 在非整数帧边界会向上取整（25fps 下 15.000 仍可能变成 15.040）。
         # 用帧数锁住画面，音频仍按请求秒数 apad/atrim，不把成片拉长。
         locked_frames = max(1, int(round(duration * fps)))
@@ -220,6 +265,9 @@ class VideoRenderer:
     ) -> dict[str, Any]:
         output_dir = self.media_root / task_id
         output_dir.mkdir(parents=True, exist_ok=True)
+        width, height = (int(value) for value in resolution.split("x", 1))
+        divisor = gcd(width, height) or 1
+        aspect_ratio = f"{width // divisor}:{height // divisor}"
         segment_paths: list[Path] = []
         # 成片时长以用户选择的秒数为准。镜头之和若被配音拉长，这里裁回请求秒数；
         # 镜头之和更短时，尾部由下面的 tpad 补到请求秒数，不把停顿裁掉。
@@ -242,6 +290,7 @@ class VideoRenderer:
             event = audio.get("event")
             if isinstance(event, dict) and isinstance(event.get("mix"), dict):
                 duck = event["mix"]
+        duck_mode, _ = music_ducking(duck)
 
         for shot in shots:
             duration = float(shot["duration_sec"])
@@ -280,6 +329,11 @@ class VideoRenderer:
         # 四段加起来会比请求秒数长一到两帧。这里按帧数把成片锁回各镜头时长之和，
         # 不足的尾部用最后一帧补上，不跨段重叠。
         locked_frames = max(1, int(round(total_duration * fps)))
+        # tpad 的 stop_duration 必须按实际缺口算，不能写死 1 秒。镜头合计比请求秒数
+        # 短超过 1 秒时，写死 1 秒补不满，成片就会短于用户选的秒数
+        # （实测请求 15.0 秒、镜头合计 13.46 秒时出片只有 14.48 秒）。
+        # 多给 1 秒冗余，最终仍由 trim / -frames:v 精确截到 locked_frames。
+        pad_seconds = round(max(0.0, total_duration - shot_total) + 1.0, 3)
         result = run_ffmpeg(
             [
                 "-f",
@@ -290,7 +344,7 @@ class VideoRenderer:
                 str(concat_file),
                 "-vf",
                 (
-                    f"tpad=stop_mode=clone:stop_duration=1,"
+                    f"tpad=stop_mode=clone:stop_duration={pad_seconds:.3f},"
                     f"fps={fps},"
                     f"trim=end_frame={locked_frames},"
                     f"setpts=PTS-STARTPTS"
@@ -324,11 +378,23 @@ class VideoRenderer:
             raw_cues if isinstance(raw_cues, list) else None,
             picture_end=total_duration,
         )
-        subtitled = output_dir / "subtitled.mp4"
-        visual_video = silent_video
+        # 字幕和 AIGC 标识都在这一道烧进去。标识是合规要求，不能因为用户关掉字幕
+        # 就不烧；缺中文字体时跳过并在 manifest 里记 label_burned=false。
+        overlay_filters: list[str] = []
         if include_subtitles:
-            self._burn_subtitles(output_dir, silent_video, subtitled)
-            visual_video = subtitled
+            overlay_filters.append("subtitles=subtitles.srt")
+        label_text = AIGC_LABEL_TEXT if include_ai_label else ""
+        label_font = find_cjk_font() if label_text else None
+        label_burned = bool(label_text and label_font)
+        if label_burned:
+            overlay_filters.append(
+                aigc_label_filter(label_text, width, height, label_font)
+            )
+        visual_video = silent_video
+        if overlay_filters:
+            overlaid = output_dir / "overlaid.mp4"
+            self._burn_overlays(output_dir, silent_video, overlaid, overlay_filters)
+            visual_video = overlaid
 
         audio_tracks: list[tuple[Path, float]] = []
         voice_path = Path(str(audio.get("voice_local_path", "")).strip())
@@ -390,17 +456,22 @@ class VideoRenderer:
             "cover_url": f"/media/{task_id}/cover.jpg" if cover_result.returncode == 0 else "",
             "video_local_path": str(final_path),
             "format": "MP4/H.264/AAC" if "audio" in streams else "MP4/H.264",
-            "aspect_ratio": "9:16",
+            "aspect_ratio": aspect_ratio,
             "resolution": resolution,
             "has_audio": "audio" in streams,
             "has_burned_subtitles": include_subtitles,
+            "has_burned_aigc_label": label_burned,
+            "aigc_label_font": str(label_font) if label_burned else "",
             "total_duration": total_duration,
-            # P3 的混音策略与时间轴口径，随 manifest 一并留档（合并时并入）
+            # 混音策略与时间轴口径，随 manifest 一并留档。名字要反映实际做法：
+            # 不压低时用 music-constant，不能一律写成 sidechain。
             "mix_strategy": (
-                "sidechaincompress-asplit-2" if len(audio_tracks) >= 2
-                else "single-track" if len(audio_tracks) == 1
+                ("music-constant" if duck_mode == "不压低" else "music-ducked-sidechain")
+                if len(audio_tracks) >= 2
+                else "voice-only" if len(audio_tracks) == 1
                 else "none"
             ),
+            "music_ducking": duck_mode if len(audio_tracks) >= 2 else "",
             "timing_source": audio.get("timing_source", ""),
             "target_duration": audio.get("target_duration", ""),
             "cues": raw_cues if isinstance(raw_cues, list) else [],
