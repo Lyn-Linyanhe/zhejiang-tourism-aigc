@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import json
 import subprocess
-from math import gcd
+from math import gcd, isfinite
 from pathlib import Path
 from typing import Any
 
@@ -32,6 +32,58 @@ VIDEO_PRESET = "medium"
 # 再叠 sidechaincompress 会让音乐忽大忽小。需要时可在任务里选"轻微/标准"。
 MUSIC_DUCKING_MODES = ("不压低", "轻微", "标准")
 DEFAULT_MUSIC_DUCKING = "不压低"
+
+# 成片响度目标。短视频平台普遍把响度拉齐到 -14~-16 LUFS，取 -16 是为了留出
+# AAC 转码与平台二次归一化的余量；真峰值留 1.5dB 避免转码后削顶。
+TARGET_LUFS = -16.0
+MAX_TRUE_PEAK = -1.5
+# 补增益的上下限。超出说明源素材本身有问题（全程静音或几乎满刻度），
+# 与其硬拉到目标，不如留原样并在 manifest 里记下实测值。
+MIN_GAIN_DB = -12.0
+MAX_GAIN_DB = 18.0
+
+
+def measure_loudness(path: Path) -> dict[str, float | None]:
+    """用 loudnorm 的分析模式量一遍整轨响度，只读不写。
+
+    run_ffmpeg 会把日志压到 error 级，而 loudnorm 的 JSON 是 info 级输出，
+    所以这里直接调 subprocess，保留 stderr 再抓最后一段 JSON。
+    """
+    command = [
+        "ffmpeg", "-hide_banner", "-nostats", "-i", str(path),
+        "-af",
+        f"loudnorm=I={TARGET_LUFS}:TP={MAX_TRUE_PEAK}:LRA=11:print_format=json",
+        "-f", "null", "-",
+    ]
+    result = subprocess.run(command, text=True, capture_output=True, check=False)
+    text = result.stderr or ""
+    start, end = text.rfind("{"), text.rfind("}")
+    if start < 0 or end <= start:
+        return {}
+    try:
+        data = json.loads(text[start:end + 1])
+    except json.JSONDecodeError:
+        return {}
+
+    def number(key: str) -> float | None:
+        try:
+            return float(data.get(key))
+        except (TypeError, ValueError):
+            return None
+
+    return {"input_i": number("input_i"), "input_tp": number("input_tp")}
+
+
+def loudness_gain(loudness: dict[str, float | None]) -> float:
+    """按实测响度算出固定增益，同时保证补完不超真峰值上限。"""
+    measured = loudness.get("input_i")
+    if measured is None or not isfinite(measured):
+        return 0.0
+    gain = TARGET_LUFS - measured
+    peak = loudness.get("input_tp")
+    if peak is not None and isfinite(peak):
+        gain = min(gain, MAX_TRUE_PEAK - peak)
+    return max(MIN_GAIN_DB, min(MAX_GAIN_DB, gain))
 
 
 def music_ducking(duck: dict[str, Any] | None) -> tuple[str, int]:
@@ -173,64 +225,104 @@ class VideoRenderer:
         duration: float,
         duck: dict[str, Any] | None = None,
         fps: int = 25,
-    ) -> None:
-        args = ["-i", str(visual_video)]
-        for index, (audio_path, _volume) in enumerate(audio_tracks):
-            if index == 1:
-                # 音乐输入循环。曲子比成片短时 apad 补的是静音（后半段没音乐），
-                # -stream_loop -1 让它无缝续上，再由下面的 atrim 精确截到成片秒数。
-                args.extend(["-stream_loop", "-1"])
-            args.extend(["-i", str(audio_path)])
+    ) -> dict[str, Any]:
+        """先混出人声+BGM 的 premix，再按响度目标补增益，最后封进 MP4。
+
+        分两步是因为 amix 默认 normalize=1，会把每路都除以输入数：带 BGM 时
+        人声会被平白压低 6dB，而纯人声时又不会，成片响度全看有没有音乐。
+        这里改成 normalize=0，混完再统一按目标响度补一个固定增益（不是动态
+        压限，避免 15 秒短片里的抽气感），并留 alimiter 兜住峰值。
+        """
+        mix_path = final_path.parent / "audio-mix.wav"
+        premix_args: list[str] = []
+        chains: list[str] = []
+        for index, (audio_path, volume) in enumerate(audio_tracks):
+            if index >= 1:
+                # 音乐输入循环。曲子比成片短时 -stream_loop -1 让它无缝续上，
+                # 再由 atrim 精确截到成片秒数。统一转 48k 立体声，避免 amix
+                # 因为声道布局不同而拒绝混音。
+                premix_args.extend(["-stream_loop", "-1"])
+            premix_args.extend(["-i", str(audio_path)])
+            chains.append(
+                f"[{index}:a]aformat=sample_fmts=fltp:sample_rates=48000:"
+                f"channel_layouts=stereo,volume={float(volume):.3f}"
+            )
 
         if len(audio_tracks) == 1:
-            filter_complex = (
-                f"[1:a]volume={audio_tracks[0][1]:.3f},"
-                f"apad=pad_dur={duration:.3f},atrim=duration={duration:.3f}[a]"
+            premix_filter = (
+                f"{chains[0]},apad=pad_dur={duration:.3f},"
+                f"atrim=duration={duration:.3f}[a]"
             )
         else:
             mode, release_ms = music_ducking(duck)
-            music_volume = float(audio_tracks[1][1])
             # 淡入/淡出按成片时长收缩，短片不出现两段淡变重叠。
             fade_in = min(0.8, duration / 5)
             fade_out = min(2.0, duration / 3)
             fade_out_start = max(0.0, duration - fade_out)
             voice_chain = (
-                f"[1:a]volume={audio_tracks[0][1]:.3f},"
-                f"apad=pad_dur={duration:.3f},atrim=duration={duration:.3f}"
+                f"{chains[0]},apad=pad_dur={duration:.3f},atrim=duration={duration:.3f}"
             )
             music_chain = (
-                f"[2:a]volume={music_volume:.3f},"
-                f"atrim=duration={duration:.3f},asetpts=PTS-STARTPTS,"
+                f"{chains[1]},atrim=duration={duration:.3f},asetpts=PTS-STARTPTS,"
                 f"afade=t=in:st=0:d={fade_in:.3f},"
                 f"afade=t=out:st={fade_out_start:.3f}:d={fade_out:.3f}[music]"
             )
             if mode == "不压低":
                 # 旁白与 BGM 的音量已经在各自轨道上调好（默认 BGM 比人声低约 15dB），
                 # 再叠 sidechain 属于过度处理，会让音乐忽大忽小。
-                filter_complex = (
+                premix_filter = (
                     f"{voice_chain}[voice];"
                     f"{music_chain};"
-                    "[voice][music]amix=inputs=2:duration=longest:dropout_transition=0[a]"
+                    "[voice][music]amix=inputs=2:duration=longest:"
+                    "dropout_transition=0:normalize=0[a]"
                 )
             else:
                 params = {
                     "轻微": "threshold=0.05:ratio=2.5:attack=20",
                     "标准": "threshold=0.02:ratio=8:attack=20",
                 }[mode]
-                filter_complex = (
+                premix_filter = (
                     f"{voice_chain},asplit=2[voice][sc];"
                     f"{music_chain};"
                     f"[music][sc]sidechaincompress={params}:release={release_ms}[ducked];"
-                    "[voice][ducked]amix=inputs=2:duration=longest:dropout_transition=0[a]"
+                    "[voice][ducked]amix=inputs=2:duration=longest:"
+                    "dropout_transition=0:normalize=0[a]"
                 )
+
+        premix = run_ffmpeg(
+            [
+                *premix_args,
+                "-filter_complex",
+                premix_filter,
+                "-map",
+                "[a]",
+                "-ar",
+                "48000",
+                "-c:a",
+                "pcm_s16le",
+                str(mix_path),
+            ]
+        )
+        if premix.returncode != 0:
+            raise RuntimeError(premix.stderr.strip() or "Audio premix failed")
+
+        # premix 存在才量；缺文件说明 ffmpeg 行为异常，交给后面的 mux 报错，
+        # 不在这里猜测（也让只验证参数拼装的测试不必真跑 ffmpeg）。
+        loudness = measure_loudness(mix_path) if mix_path.is_file() else {}
+        gain_db = loudness_gain(loudness)
+
         # -t 在非整数帧边界会向上取整（25fps 下 15.000 仍可能变成 15.040）。
         # 用帧数锁住画面，音频仍按请求秒数 apad/atrim，不把成片拉长。
         locked_frames = max(1, int(round(duration * fps)))
         result = run_ffmpeg(
             [
-                *args,
+                "-i",
+                str(visual_video),
+                "-i",
+                str(mix_path),
                 "-filter_complex",
-                filter_complex,
+                f"[1:a]volume={gain_db:.2f}dB:precision=float,"
+                "alimiter=limit=0.891:level=disabled[a]",
                 "-map",
                 "0:v:0",
                 "-map",
@@ -254,6 +346,14 @@ class VideoRenderer:
         )
         if result.returncode != 0:
             raise RuntimeError(result.stderr.strip() or "Audio mux failed")
+        mix_path.unlink(missing_ok=True)
+        return {
+            "target_lufs": TARGET_LUFS,
+            "input_lufs": loudness.get("input_i"),
+            "input_true_peak": loudness.get("input_tp"),
+            "gain_db": round(gain_db, 2),
+            "amix_normalize": 0,
+        }
 
     def render(
         self,
@@ -450,8 +550,9 @@ class VideoRenderer:
         if audio.get("music_local_path") and music_path.exists():
             audio_tracks.append((music_path, float(music_volume)))
         final_path = output_dir / "final.mp4"
+        mix_info: dict[str, Any] = {}
         if audio_tracks:
-            self._mux_audio(
+            mix_info = self._mux_audio(
                 visual_video,
                 audio_tracks,
                 final_path,
@@ -518,6 +619,7 @@ class VideoRenderer:
                 else "none"
             ),
             "music_ducking": duck_mode if len(audio_tracks) >= 2 else "",
+            "loudness": mix_info,
             "timing_source": audio.get("timing_source", ""),
             "target_duration": audio.get("target_duration", ""),
             "cues": raw_cues if isinstance(raw_cues, list) else [],

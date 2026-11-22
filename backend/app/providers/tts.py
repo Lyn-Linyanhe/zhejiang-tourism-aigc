@@ -140,6 +140,62 @@ class OpenAICompatibleTTSProvider(TTSProvider):
 # ---------------------------------------------------------------------------
 
 
+def _edge_tts_in_process(
+    text: str, output_path: Path, voice_name: str, rate_arg: str, pitch_arg: str
+) -> dict[str, Any]:
+    """没有隔离音频运行时时，直接用主环境的 edge-tts 合成。
+
+    edge-tts 只是网络请求 + 音频流，不需要 torch/whisper 那套 Python 3.11 环境。
+    这条路径存在的意义：隔离环境缺失时，配音不该悄悄降级成 Windows SAPI 的
+    机械音——那是用户能一耳朵听出来的质量断层。
+    """
+    try:
+        import asyncio
+        import threading
+
+        import edge_tts
+    except ImportError as exc:  # pragma: no cover - 依赖缺失时的兜底提示
+        raise RuntimeError(
+            "edge-tts 未安装且隔离音频运行时不可用：pip install edge-tts，"
+            "或运行 scripts/setup-audio-runtime.ps1"
+        ) from exc
+
+    async def _save() -> None:
+        communicate = edge_tts.Communicate(text, voice_name, rate=rate_arg, pitch=pitch_arg)
+        await communicate.save(str(output_path))
+
+    def _run() -> None:
+        try:
+            asyncio.get_running_loop()
+        except RuntimeError:
+            asyncio.run(_save())
+            return
+        # 调用方线程里已经有事件循环时，另起线程跑，避免 asyncio.run 报错
+        error: list[BaseException] = []
+
+        def target() -> None:
+            try:
+                asyncio.run(_save())
+            except BaseException as exc:  # noqa: BLE001 - 原样带回调用线程
+                error.append(exc)
+
+        thread = threading.Thread(target=target)
+        thread.start()
+        thread.join()
+        if error:
+            raise error[0]
+
+    _run()
+    if not output_path.is_file() or output_path.stat().st_size < 1000:
+        raise RuntimeError("edge-tts 返回了空音频")
+    return {
+        "path": str(output_path),
+        "provider": "edge-tts",
+        "model": voice_name,
+        "transport": "in-process",
+    }
+
+
 def generate_edge_tts(
     text: str,
     output_path: Path,
@@ -148,7 +204,7 @@ def generate_edge_tts(
     runtime: AudioRuntimeClient | None = None,
     pitch_hz: float = 0.0,
 ) -> dict[str, Any]:
-    """Use Edge TTS through the isolated Python 3.11 audio runtime."""
+    """Use Edge TTS, preferring the isolated runtime when it exists."""
     if not text.strip():
         raise ValueError("speech text cannot be empty")
     voice_name = edge_voice_name(voice)
@@ -159,12 +215,9 @@ def generate_edge_tts(
     # edge 的音高按赫兹偏移给，0 表示不变调。神经音色做音高偏移容易发假，
     # 所以默认 0，只在用户显式调整时才动。
     pitch_arg = f"{round(float(pitch_hz)):+d}Hz"
-    if runtime is None:
-        raise RuntimeError(
-            "Edge TTS requires the isolated audio runtime. "
-            "Run scripts/setup-audio-runtime.ps1 first."
-        )
-    return runtime.synthesize_edge_tts(text, output_path, voice_name, rate_arg, pitch_arg)
+    if runtime is not None and runtime.available():
+        return runtime.synthesize_edge_tts(text, output_path, voice_name, rate_arg, pitch_arg)
+    return _edge_tts_in_process(text, output_path, voice_name, rate_arg, pitch_arg)
 
 
 def generate_system_speech(
