@@ -75,6 +75,38 @@ class Orchestrator:
         # 用同一把锁保护，避免交错写坏任务快照。
         self._state_lock = threading.RLock()
 
+    def recover_interrupted_tasks(self) -> list[str]:
+        """进程重启后，内存里的线程丢了，任务却还躺在 running 状态。
+
+        不恢复的话：前端永远转圈、retry 又被 "Task is already running" 挡住。
+        这里把这些孤儿任务标记为 failed，写清中断原因，用户可以用
+        「从 XX 阶段重试」继续——已落盘的素材和音频会按既有规则复用。
+        """
+        recovered: list[str] = []
+        for data in self.storage.list_tasks(200):
+            if data.get("status") not in {"queued", "running"}:
+                continue
+            task_id = str(data.get("id") or "")
+            stage = str(data.get("stage") or "scripting")
+            try:
+                task = self._load(task_id)
+            except KeyError:
+                continue
+            task.status = "failed"
+            task.error = f"服务重启导致任务中断（中断于 {stage} 阶段）。可从该阶段重试，已落盘的素材与音频会自动复用。"
+            task.progress = 0
+            if task.trace is None:
+                task.trace = TraceRecord(provider="recovery", model="", prompt_version="", fallback_used=False)
+            task.trace.events.append({
+                "type": "interrupted", "stage": stage,
+                "status": "service-restarted", "ok": False,
+            })
+            self.storage.save_task(task)
+            recovered.append(task_id)
+        if recovered:
+            print(f"Recovered {len(recovered)} interrupted task(s): " + ", ".join(recovered))
+        return recovered
+
     def system_config(self) -> dict[str, Any]:
         return {
             "providers": self.registry.describe(),
@@ -618,7 +650,8 @@ class Orchestrator:
                 selection_key = hashlib.sha256(json.dumps(selection, ensure_ascii=False).encode()).hexdigest()
                 item["payload"]["selection_key"] = selection_key
             existing = existing_assets.get(shot.id)
-            if (existing and (not stock_source or existing.page_url) and existing.selection_key == selection_key
+            if (existing and self._prompt_matches(existing, shot)
+                    and (not stock_source or existing.page_url) and existing.selection_key == selection_key
                     and self._is_reusable(existing, strict_dynamic)):
                 reused[shot.id] = self._reused_asset(existing)
             else:
@@ -729,6 +762,22 @@ class Orchestrator:
                 "visual_qa_passed": qa_report["passed"],
             },
         )
+    @staticmethod
+    def _prompt_matches(existing: AssetRecord, shot: Shot) -> bool:
+        """改完脚本再跑时，画面描述变了的镜头不能沿用旧素材。
+
+        素材提交时记录了画面描述快照（visual_fingerprint）：快照存在且与当前
+        描述不一致 → 画面内容变了，必须重新生成。没有快照的历史素材按可复用
+        处理，避免把已经付过费的素材作废（重试场景的既有契约）。
+        """
+        if not str(shot.visual_prompt or "").strip():
+            return True
+        fingerprint = str(getattr(existing, "visual_fingerprint", "") or "")
+        if not fingerprint:
+            return True
+        current = hashlib.sha256(str(shot.visual_prompt or "").encode("utf-8")).hexdigest()
+        return fingerprint == current
+
     @staticmethod
     def _is_reusable(existing: AssetRecord, strict_dynamic: bool) -> bool:
         """已落盘的素材能不能直接复用。
@@ -939,6 +988,7 @@ class Orchestrator:
                 model=str(asset.get("model", "")),
                 seed=int(asset.get("seed", 0) or 0),
                 prompt=str(asset.get("prompt", "")),
+                visual_fingerprint=hashlib.sha256(str(shot.visual_prompt or "").encode("utf-8")).hexdigest(),
                 first_frame_path=str(asset.get("first_frame_path", "")),
                 cost=float(asset.get("cost", 0) or 0),
                 provenance=dict(asset.get("provenance") or {}),

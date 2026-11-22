@@ -731,6 +731,11 @@ class AppHandler(BaseHTTPRequestHandler):
 
 
 def run() -> None:
+    # 进程重启后把遗留的 running 任务标记为失败（可从阶段重试），避免前端永远转圈。
+    try:
+        orchestrator.recover_interrupted_tasks()
+    except Exception as exc:  # noqa: BLE001 - 恢复失败不阻塞启动
+        print(f"Interrupted-task recovery skipped: {exc}")
     server = ThreadingHTTPServer((settings.host, settings.port), AppHandler)
     print(f"ZhejiangTourismAIGC listening on http://{settings.host}:{settings.port}")
     print(f"Frontend: {FRONTEND_ROOT}")

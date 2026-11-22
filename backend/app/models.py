@@ -278,6 +278,8 @@ class AssetRecord:
     model: str = ""
     seed: int = 0
     prompt: str = ""
+    # 画面描述快照（sha256）：改脚本重跑时判断素材是否该重新生成
+    visual_fingerprint: str = ""
     first_frame_path: str = ""
     cost: float = 0.0
     created_at: str = field(default_factory=now_iso)
