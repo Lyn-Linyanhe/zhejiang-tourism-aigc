@@ -8,6 +8,6 @@ if ((-not (Test-Path -LiteralPath (Join-Path $projectRoot ".venv-audio\Scripts\p
   Write-Host "First run: installing the small Edge TTS runtime..." -ForegroundColor Cyan
   & (Join-Path $projectRoot "first_setup.ps1")
 }
-Write-Host "Open http://127.0.0.1:8787 in a browser after startup." -ForegroundColor Green
+Write-Host "Open http://127.0.0.1:8790 in a browser after startup." -ForegroundColor Green
 & (Join-Path $projectRoot "scripts\start.ps1")
 if ($LASTEXITCODE -ne 0) { throw "Service exited with code $LASTEXITCODE" }

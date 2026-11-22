@@ -26,6 +26,23 @@ from .catalog import bank_voices
 
 SILENCE_BETWEEN_SHOTS = 0.150
 
+# 神经 TTS 每条合成音频首尾都自带 0.2~0.6 秒静音，长度还随句尾标点变化。
+# 原样拼接时这段内边距会让语流拖沓、节奏不可控，所以合成后先裁掉首尾静音
+# （各留 50ms 防削掉气口），再用下面的常量显式补停顿。上传音频不裁不补。
+TRIM_EDGE_PADDING_SEC = 0.05
+TRIM_THRESHOLD_DB = -45
+SENTENCE_GAP_SEC = 0.220
+SHOT_GAP_TTS_SEC = 0.300
+
+_TRIM_FILTER = (
+    "silenceremove=start_periods=1:start_threshold="
+    f"{TRIM_THRESHOLD_DB}dB:start_silence={TRIM_EDGE_PADDING_SEC}:detection=peak,"
+    "areverse,"
+    "silenceremove=start_periods=1:start_threshold="
+    f"{TRIM_THRESHOLD_DB}dB:start_silence={TRIM_EDGE_PADDING_SEC}:detection=peak,"
+    "areverse"
+)
+
 # 为了把旁白压进用户选的秒数，最多把语速提这么多倍。再快就不像人说话了，
 # 宁可留一点裁切，也不要交付一个念得像按了快进的配音。
 MAX_RATE_SCALE = 1.25
@@ -62,6 +79,36 @@ def probe_audio(path: Path) -> dict[str, Any]:
     }
 
 
+def _trim_segment_edges(path: Path) -> dict[str, Any]:
+    """裁掉合成片段首尾的引擎静音，返回裁剪后的音频信息。
+
+    只对 TTS 片段调用；上传音频是用户原始素材，不做处理。裁完比原长还短很多
+    说明这段本来就没几句人声（或者检测阈值不合适），此时保留原样更安全。
+    """
+    before = probe_audio(path)
+    temporary = path.with_name(path.stem + ".trim" + path.suffix)
+    completed = run_ffmpeg(
+        [
+            "-i", str(path),
+            "-af", _TRIM_FILTER,
+            "-ac", "1",
+            "-ar", "48000",
+            "-sample_fmt", "s16",
+            "-c:a", "pcm_s16le",
+            str(temporary),
+        ]
+    )
+    if completed.returncode != 0 or not temporary.is_file():
+        temporary.unlink(missing_ok=True)
+        return before
+    after = probe_audio(temporary)
+    if after["duration"] < 0.08 or after["duration"] < before["duration"] * 0.25:
+        temporary.unlink(missing_ok=True)
+        return before
+    os.replace(temporary, path)
+    return after
+
+
 def _atomic_normalize(source: Path, output: Path) -> dict[str, Any]:
     output.parent.mkdir(parents=True, exist_ok=True)
     temporary = output.with_name(output.stem + ".tmp" + output.suffix)
@@ -71,7 +118,7 @@ def _atomic_normalize(source: Path, output: Path) -> dict[str, Any]:
             str(source),
             "-vn",
             "-ac",
-            "2",
+            "1",
             "-ar",
             "48000",
             "-sample_fmt",
@@ -86,9 +133,9 @@ def _atomic_normalize(source: Path, output: Path) -> dict[str, Any]:
         raise RuntimeError(result.stderr.strip() or "Audio normalization failed")
     validate_audio_file(temporary)
     info = probe_audio(temporary)
-    if info["sample_rate"] != 48000 or info["channels"] != 2:
+    if info["sample_rate"] != 48000 or info["channels"] != 1:
         temporary.unlink(missing_ok=True)
-        raise RuntimeError("Normalized shot audio is not 48 kHz stereo")
+        raise RuntimeError("Normalized shot audio is not 48 kHz mono")
     os.replace(temporary, output)
     return info
 
@@ -177,9 +224,6 @@ class PerShotAudioBuilder:
                 try:
                     info = probe_audio(cached)
                     if info["sample_rate"] == 48000 and info["channels"] == 1:
-                        # Upgrade an existing mono cache entry without another TTS request.
-                        info = _atomic_normalize(cached, cached)
-                    if info["sample_rate"] == 48000 and info["channels"] == 2:
                         saved = json.loads(metadata.read_text(encoding="utf-8")) if metadata.exists() else {}
                         return cached, {
                             "provider": provider,
@@ -246,7 +290,7 @@ class PerShotAudioBuilder:
         if target.is_file():
             try:
                 info = probe_audio(target)
-                if info["sample_rate"] == 48000 and info["channels"] == 2:
+                if info["sample_rate"] == 48000 and info["channels"] == 1:
                     return target
             except Exception:
                 pass
@@ -256,7 +300,7 @@ class PerShotAudioBuilder:
                 "-f",
                 "lavfi",
                 "-i",
-                "anullsrc=r=48000:cl=stereo",
+                "anullsrc=r=48000:cl=mono",
                 "-t",
                 f"{seconds:.3f}",
                 "-c:a",
@@ -375,6 +419,9 @@ class PerShotAudioBuilder:
                     f"{shot_id}.wav" if len(plan) == 1 else f"{shot_id}-{piece_index + 1}.wav"
                 )
                 info = _atomic_normalize(source, normalized)
+                if not use_upload:
+                    # 引擎自带的句尾静音长短不一，裁掉后统一由 gap 控制节奏
+                    info = _trim_segment_edges(normalized)
                 duration = float(info["duration"])
                 cue = Cue(
                     shot_id=shot_id,
@@ -401,11 +448,12 @@ class PerShotAudioBuilder:
                 traces.append(trace)
                 if is_last_piece:
                     requested_gap = getattr(shot, "voice_pause_after", None)
-                    gap = (SILENCE_BETWEEN_SHOTS if requested_gap is None else requested_gap) if index < len(shots) - 1 else 0.0
+                    default_gap = SILENCE_BETWEEN_SHOTS if use_upload else SHOT_GAP_TTS_SEC
+                    gap = (default_gap if requested_gap is None else requested_gap) if index < len(shots) - 1 else 0.0
                 else:
-                    # The engine already renders sentence punctuation. Do not
-                    # insert a second fixed pause at every comma/full stop.
-                    gap = 0.0
+                    # 每条片段已经裁掉了引擎内边距，句间停顿必须自己补，
+                    # 否则两句会连成一个没有换气的长句。
+                    gap = SENTENCE_GAP_SEC
                 entries.append((normalized, gap))
                 speech_total += duration
                 elapsed = cue.end + gap
@@ -490,6 +538,7 @@ class PerShotAudioBuilder:
             )
         if shots:
             shots[-1].duration_sec += measured_total - elapsed
+        uploaded_any = any(bool(str(getattr(shot, "audio_local_path", "") or "")) for shot in shots)
         # 编排层从 event 里读 voice_provider / voice_model，缺了会显示成 "none"，
         # 让已经合成好的配音看起来像没生成。这里按段汇总实际用到的 provider。
         result = AudioResult(
@@ -502,7 +551,11 @@ class PerShotAudioBuilder:
             provider_trace=traces,
             event={
                 "type": "audio",
-                "silence_between_shots_ms": round(SILENCE_BETWEEN_SHOTS * 1000),
+                "silence_between_shots_ms": round(
+                    (SILENCE_BETWEEN_SHOTS if uploaded_any else SHOT_GAP_TTS_SEC) * 1000
+                ),
+                "sentence_gap_ms": round(SENTENCE_GAP_SEC * 1000),
+                "edge_silence_trimmed": not uploaded_any,
                 "segment_count": len(entries),
                 "clause_level_cues": False,
                 "sentence_level_cues": True,

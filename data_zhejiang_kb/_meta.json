@@ -1,6 +1,6 @@
 {
   "dataset": "浙江文旅知识库（Zhejiang Culture & Tourism Knowledge Base）",
-  "version": "1.0.0",
+  "version": "0.9.0",
   "created": "2026-09-11",
   "description": "面向 AIGC 文旅短视频生成的结构化浙江文旅语料库。为脚本生成提供可核对的事实依据，为素材检索提供精准英文关键词，为分镜引擎提供画面意象描述。",
   "schema_version": 1,
@@ -26,7 +26,8 @@
     "best_season": "最佳游览/拍摄季节，可选",
     "micro_drama_hook": "微短剧式叙事钩子，用于视频开场或情绪落点，呼应‘跟着微短剧去旅行’创作计划",
     "scenario_tags": "主题场景标签列表，供场景化检索（如“杭州亲子游”“非遗体验”）。检索时命中场景标签的实体优先级高于仅靠全文匹配偶然命中的条目。",
-    "sources": "支持该实体事实的来源列表，包含题名、URL 和核验日期。老版杭州语料按数据集级来源查阅。"
+    "fact_records": "事实级来源记录列表，包含短事实、来源 URL、发布机构、核查日期和许可状态；不替代 facts 字符串列表",
+    "external_ids": "外部知识库或名录标识，可选；必须与对应来源和许可一起核验"
   },
   "cities": {
     "杭州": {
@@ -42,91 +43,57 @@
         "scenic"
       ],
       "scenario_tags_total": 192,
-      "status": "完整样板（已做透：46 实体覆盖景区/非遗/美食/节庆/传说/名人六类）"
-    },
-    "湖州": {
-      "file": "huzhou.json",
-      "entities": 4,
-      "facts": 9,
-      "types_covered": [
-        "cuisine",
-        "festival",
-        "intangible",
-        "scenic"
-      ],
-      "scenario_tags_total": 8,
-      "status": "已收录代表性条目"
-    },
-    "嘉兴": {
-      "file": "jiaxing.json",
-      "entities": 6,
-      "facts": 13,
-      "types_covered": [
-        "cuisine",
-        "festival",
-        "intangible",
-        "person",
-        "scenic"
-      ],
-      "scenario_tags_total": 12,
-      "status": "已收录代表性条目"
-    },
-    "金华": {
-      "file": "jinhua.json",
-      "entities": 6,
-      "facts": 13,
-      "types_covered": [
-        "cuisine",
-        "intangible",
-        "scenic"
-      ],
-      "scenario_tags_total": 12,
-      "status": "已收录代表性条目"
-    },
-    "丽水": {
-      "file": "lishui.json",
-      "entities": 6,
-      "facts": 13,
-      "types_covered": [
-        "cuisine",
-        "festival",
-        "intangible",
-        "scenic"
-      ],
-      "scenario_tags_total": 12,
-      "status": "已收录代表性条目"
+      "status": "完整样板：46 实体覆盖景区/非遗/美食/节庆/传说/名人六类，全部 46 个实体均有逐条 fact_records（共 65 条）。来源分两档：中国非遗网 3 项 + 景区官网/政府站 4 项标待核许可；其余 39 项为维基百科，标 CC BY-SA 4.0。全部 65 条引文已通过 verify_kb_quotes.py 联网逐条核验。注意：每个实体只登记了核心事实（如西湖 6 条事实登记 1 条），未登记的事实注入时标为“其余仅作背景”。",
+      "fact_records": 65,
+      "entities_with_records": 46
     },
     "宁波": {
       "file": "ningbo.json",
-      "entities": 6,
-      "facts": 13,
+      "entities": 12,
+      "facts": 22,
       "types_covered": [
-        "cuisine",
-        "festival",
         "intangible",
-        "legend",
         "scenic"
       ],
-      "scenario_tags_total": 12,
-      "status": "已收录代表性条目"
-    },
-    "衢州": {
-      "file": "quzhou.json",
-      "entities": 5,
-      "facts": 11,
-      "types_covered": [
-        "cuisine",
-        "festival",
-        "person",
-        "scenic"
-      ],
-      "scenario_tags_total": 10,
-      "status": "已收录代表性条目"
+      "scenario_tags_total": 46,
+      "status": "小规模试点：9 个非遗实体 + 3 个景区实体（天一阁·月湖、老外滩、东钱湖）。非遗事实来自宁波市非遗保护中心在线名录；天一阁事实来自博物院官网 meta 描述；月湖/老外滩/东钱湖仅有维基百科来源，标 CC BY-SA 4.0，商业使用需评估相同方式共享义务。整体不应作为已获授权的数据集发布",
+      "fact_records": 22,
+      "entities_with_records": 12
     },
     "绍兴": {
       "file": "shaoxing.json",
-      "entities": 7,
-      "facts": 16,
+      "entities": 10,
+      "facts": 29,
+      "types_covered": [
+        "intangible",
+        "scenic"
+      ],
+      "scenario_tags_total": 53,
+      "status": "小规模采集试点；10 个实体覆盖景区、非遗与农业遗产，事实逐条绑定官方或权威媒体来源；官网/媒体/非遗网页未见开放数据再分发许可，不应作为已获授权数据集发布",
+      "fact_records": 29,
+      "entities_with_records": 10
+    },
+    "湖州": {
+      "file": "huzhou.json",
+      "entities": 27,
+      "facts": 108,
+      "fact_records": 108,
+      "entities_with_records": 27,
+      "types_covered": [
+        "cuisine",
+        "intangible",
+        "person",
+        "scenic"
+      ],
+      "scenario_tags_total": 112,
+      "status": "27 个实体、108 条事实、108 条记录，覆盖景区/非遗/美食/人物四类。景区官网（南浔/莫干山/太湖/安吉各景区）与湖州市文广旅局均无法取得正文，全部以维基百科为来源（CC BY-SA 4.0），商业使用需评估相同方式共享。108 条引文已通过 verify_kb_quotes.py 联网逐条核验。"
+    },
+    "嘉兴": {
+      "file": "jiaxing.json",
+      "entities": 12,
+      "facts": 41,
+      "fact_records": 41,
+      "entities_with_records": 12,
       "types_covered": [
         "cuisine",
         "festival",
@@ -134,49 +101,105 @@
         "person",
         "scenic"
       ],
-      "scenario_tags_total": 14,
-      "status": "已收录代表性条目"
-    },
-    "台州": {
-      "file": "taizhou.json",
-      "entities": 6,
-      "facts": 13,
-      "types_covered": [
-        "festival",
-        "intangible",
-        "legend",
-        "scenic"
-      ],
-      "scenario_tags_total": 12,
-      "status": "已收录代表性条目"
+      "scenario_tags_total": 48,
+      "status": "12 个实体、41 条事实、41 条记录，覆盖景区/非遗/美食/节庆/人物五类（乌镇、南湖、西塘三点位 + 硖石灯彩/海宁皮影戏/嘉善田歌/网船会非遗 + 茅盾、金庸）。来源同上，引文核验 0 问题。"
     },
     "温州": {
       "file": "wenzhou.json",
-      "entities": 5,
-      "facts": 11,
+      "entities": 13,
+      "facts": 52,
+      "fact_records": 52,
+      "entities_with_records": 13,
       "types_covered": [
         "cuisine",
         "intangible",
+        "person",
         "scenic"
       ],
-      "scenario_tags_total": 10,
-      "status": "已收录代表性条目"
+      "scenario_tags_total": 52,
+      "status": "13 个实体、52 条事实、52 条记录，覆盖景区/非遗/美食/人物四类（雁荡山、楠溪江、江心屿三点位 + 温州鼓词/瓯绣/乐清黄杨木雕非遗 + 泰顺廊桥、南麂列岛等）。来源为维基百科（CC BY-SA 4.0）与中国非遗网（待核许可）。86 条引文经 verify_kb_quotes.py 联网核验 0 问题。"
+    },
+    "金华": {
+      "file": "jinhua.json",
+      "entities": 12,
+      "facts": 44,
+      "fact_records": 44,
+      "entities_with_records": 12,
+      "types_covered": [
+        "cuisine",
+        "intangible",
+        "legend",
+        "person",
+        "scenic"
+      ],
+      "scenario_tags_total": 48,
+      "status": "12 个实体、44 条事实、44 条记录，覆盖景区/非遗/美食/传说/人物五类（双龙洞、横店影视城、诸葛八卦村三点位 + 婺剧/东阳木雕/浦江剪纸非遗 + 黄大仙传说、艾青、骆宾王）。来源同上，引文核验 0 问题。"
+    },
+    "衢州": {
+      "file": "quzhou.json",
+      "entities": 13,
+      "facts": 44,
+      "fact_records": 44,
+      "entities_with_records": 13,
+      "types_covered": [
+        "cuisine",
+        "intangible",
+        "legend",
+        "person",
+        "scenic"
+      ],
+      "scenario_tags_total": 52,
+      "status": "13 个实体、44 条事实、44 条记录，覆盖景区/非遗/美食/传说/人物五类（廿八都古镇、江郎山、龙游石窟三点位 + 西安高腔/喝彩歌谣/婺州窑非遗 + 孔氏南宗家庙、烂柯山、清漾村）。来源同上，引文核验 0 问题。"
     },
     "舟山": {
       "file": "zhoushan.json",
-      "entities": 6,
-      "facts": 13,
+      "entities": 11,
+      "facts": 41,
+      "fact_records": 41,
+      "entities_with_records": 11,
       "types_covered": [
         "cuisine",
-        "festival",
         "intangible",
         "legend",
+        "person",
         "scenic"
       ],
-      "scenario_tags_total": 12,
-      "status": "已收录代表性条目"
+      "scenario_tags_total": 44,
+      "status": "11 个实体、41 条事实、41 条记录，覆盖景区/非遗/美食/传说/人物五类（普陀山、东极岛、朱家尖三点位 + 观音传说/舟山锣鼓/渔民号子非遗 + 沈家门渔港、三毛）。来源同上，引文核验 0 问题。"
+    },
+    "台州": {
+      "file": "taizhou.json",
+      "entities": 12,
+      "facts": 47,
+      "fact_records": 47,
+      "entities_with_records": 12,
+      "types_covered": [
+        "cuisine",
+        "intangible",
+        "legend",
+        "person",
+        "scenic"
+      ],
+      "scenario_tags_total": 48,
+      "status": "12 个实体、47 条事实、47 条记录，覆盖景区/非遗/美食/传说/人物五类（台州府城墙、石塘、神仙居三点位 + 仙居花灯/翻簧竹雕非遗 + 天台山、刘阮传说、王士性）。来源同上，引文核验 0 问题。"
+    },
+    "丽水": {
+      "file": "lishui.json",
+      "entities": 13,
+      "facts": 51,
+      "fact_records": 51,
+      "entities_with_records": 13,
+      "types_covered": [
+        "cuisine",
+        "intangible",
+        "person",
+        "scenic"
+      ],
+      "scenario_tags_total": 52,
+      "status": "13 个实体、51 条事实、51 条记录，覆盖景区/非遗/美食/人物四类（云和梯田、仙都、松阳古村落三点位 + 青田石雕/龙泉青瓷/龙泉宝剑/松阳高腔/畲族民歌非遗 + 通济堰、青田稻鱼共生、缙云烧饼、汤显祖）。来源同上，引文核验 0 问题。"
     }
   },
+  "planned_cities": [],
   "data_sources": [
     {
       "name": "中国非物质文化遗产网",
@@ -201,6 +224,36 @@
       "url": "https://whc.unesco.org",
       "usage": "西湖文化景观（2011）、大运河（2014）、良渚古城遗址（2019）列入年份与标准",
       "accessed": "2026-09"
+    },
+    {
+      "name": "绍兴兰亭景区官网",
+      "url": "https://www.sxlanting.com/",
+      "usage": "兰亭得名、王羲之曲水流觞与《兰亭集序》、现存兰亭重建年代；仅摘短事实并保留链接",
+      "accessed": "2026-11-21"
+    },
+    {
+      "name": "绍兴鲁迅故里·沈园景区官网",
+      "url": "http://sxlxmuseum.com/",
+      "usage": "鲁迅故里 5A 级景区、沈园宋代园林与占地规模；仅摘短事实并保留链接",
+      "accessed": "2026-11-21"
+    },
+    {
+      "name": "绍兴大禹陵景区官网",
+      "url": "https://www.sxdayuling.com/",
+      "usage": "大禹陵组成与文物保护级别、大禹陵祭典国家级非遗与谷雨祭、会稽山得名；仅摘短事实并保留链接",
+      "accessed": "2026-11-21"
+    },
+    {
+      "name": "新华网、人民日报海外版、社科在线",
+      "url": "https://www.news.cn/",
+      "usage": "安昌古镇、仓桥直街、乌篷船制作技艺的权威报道；仅摘短事实并保留具体文章链接",
+      "accessed": "2026-11-21"
+    },
+    {
+      "name": "联合国粮农组织 GIAHS",
+      "url": "https://www.fao.org/giahs/around-the-world/detail/china-kuaijishan/zh",
+      "usage": "会稽山古香榧群 2013 年认定、古树树龄与农林复合系统价值；仅摘短事实并保留链接",
+      "accessed": "2026-11-21"
     }
   ],
   "quality_rules": [
@@ -254,10 +307,66 @@
     "近代史",
     "避暑",
     "雪景",
-    "非遗体验"
+    "非遗体验",
+    "书法",
+    "古镇",
+    "水乡",
+    "黄酒",
+    "戏曲",
+    "曲艺",
+    "农业遗产"
   ],
-  "updated": "2026-11-21",
+  "updated": "2026-11-22",
   "quality_assurance": {
+    "entity_media_pilot": {
+      "checked_at": "2026-11-20",
+      "entities": [
+        "hz-xihu",
+        "hz-duanqiao",
+        "hz-leifengta",
+        "hz-lingyinsi",
+        "hz-longjing"
+      ],
+      "fact_records_added": 5,
+      "method": "3 条短事实绑定官方正文，2 条仅描述已经目视核实的照片；不覆盖既有 facts；图片来源与许可独立存素材库。",
+      "scope": "每实体 1 张实拍照片，4 个全景与 1 个茶汤细节；尚未覆盖每实体 2–3 类镜头、宁波非遗授权画面或动态实拍视频。",
+      "manifest": "docs/research/entity-assets-pilot.md"
+    },
+    "ningbo_pilot": {
+      "checked_at": "2026-11-20",
+      "source": "宁波市文化馆（宁波市非物质文化遗产保护中心）在线非遗名录与项目详情页",
+      "source_url": "https://www.ihningbo.cn/directory",
+      "entities": 9,
+      "facts": 9,
+      "license_status": "未发现明确允许商业再分发的独立开放数据许可；仅保留短目录事实，需确认授权后方可用于正式发布",
+      "method": "逐条记录项目正式名称、所属级别、批次、门类、地区；不复制详情页叙述文本；每条事实绑定官方目录详情页 URL。"
+    },
+    "shaoxing_pilot": {
+      "checked_at": "2026-11-21",
+      "entities": 10,
+      "facts": 29,
+      "sources": [
+        "https://www.sxlanting.com/",
+        "http://sxlxmuseum.com/",
+        "https://www.sxdayuling.com/",
+        "https://www.ihchina.cn/",
+        "https://www.news.cn/",
+        "http://paper.people.com.cn/",
+        "https://skzx.zjol.com.cn/",
+        "https://www.fao.org/giahs/"
+      ],
+      "method": "每条 facts 与 fact_records 一一对应；只摘短事实并保留来源 URL、发布机构、原文短引与核查日；不复制官网/媒体叙述全文。",
+      "license_status": "官方景区、非遗网、权威媒体与 FAO 页面均未发现开放数据再分发许可；全部标为 fact-only-pending-license-review，不能当作已获授权数据集发布。",
+      "media": "docs/research/shaoxing-entity-media-candidates.csv；9 个实体有 Wikimedia Commons 候选，莲花落未找到开放许可演出影像；CC BY-SA 候选仅限预览并需评估相同方式共享义务。",
+      "gaps": [
+        "兰亭未取得全景/曲水流觞开放许可图，仅有鹅池碑亭与御碑细节",
+        "大禹陵仅有 1930 年历史照片，不能当现状",
+        "仓桥直街仅有巷弄/街角建筑，缺少河街全景",
+        "香榧仅有炒制果实细节，缺少古树/林下环境",
+        "绍兴莲花落无开放许可演出影像",
+        "绍兴仅覆盖 10 个实体，尚未覆盖美食、节庆、人物等类型"
+      ]
+    },
     "fact_check": {
       "method": "对含年份/数字/绝对表述的 89 条高风险事实，逐条联网核查（权威来源：政府网站、UNESCO、中国非遗网、维基百科、主流媒体）",
       "date": "2026-09-12",
@@ -271,11 +380,6 @@
         "印象西湖 主题曲《忆江南》 → 演出名称取自《忆江南》，主题曲为《印象西湖雨》",
         "良渚 第一个新石器世遗 → 官方口径为填补东亚新石器时代城市遗址空白"
       ]
-    },
-    "2026-11-21": {
-      "new_records": "新增地市条目逐条保存来源页面及核验日期",
-      "legacy_hangzhou": "保留原有杭州数据与原有数据集级来源信息"
     }
-  },
-  "scope": "浙江11个设区市的文旅代表性实体与创作事实"
+  }
 }

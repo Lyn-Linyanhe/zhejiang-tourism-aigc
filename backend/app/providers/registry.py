@@ -1,12 +1,15 @@
 from __future__ import annotations
 
 import importlib
+import json
+import subprocess
 import sys
 from dataclasses import dataclass, field
 from inspect import signature
 from pathlib import Path
 from typing import Any, Callable
 
+from ..storage import library_provenance
 from .contract import AssetResult, FallbackChain
 from .llm import OpenAICompatibleLLMProvider
 from .stock import StockProvider
@@ -190,7 +193,10 @@ def _asset_dict_from_any(result: Any, task_id: str, shot: dict[str, Any]) -> dic
         "cost": float(getattr(result, "cost", 0) or 0),
         "first_frame_path": str(getattr(result, "first_frame_path", "") or ""),
         "prompt": str(getattr(result, "prompt", "") or ""),
+        "event": dict(getattr(result, "event", {}) or {}),
     }
+    if payload["event"].get("remote_task_id"):
+        payload["provenance"] = {"remote_task_id": str(payload["event"]["remote_task_id"])}
     validate = getattr(result, "validate", None)
     if callable(validate):
         validate()
@@ -248,13 +254,51 @@ class _CloudAssetAdapter:
         ctx.setdefault("accent", accent)
         ctx.setdefault("duration_sec", shot.get("duration_sec"))
         ctx.setdefault("task_id", task_id)
-        if hasattr(provider, "generate"):
+        # 参考图生图：首帧也走这条路（orchestrator 用 create_or_find 出首帧），
+        # 所以参考图必须在这里生效，否则 edit() 永远不会被调到。
+        reference = str(
+            shot.get("reference_image_path") or ctx.get("reference_image_path") or ""
+        ).strip()
+        if (
+            self.kind == "image"
+            and reference
+            and Path(reference).is_file()
+            and hasattr(provider, "edit")
+        ):
+            result = provider.edit(shot, reference, output_dir, ctx)
+        elif hasattr(provider, "generate"):
             result = provider.generate(shot, output_dir, ctx)
         elif hasattr(provider, "create_or_find"):
             result = provider.create_or_find(task_id, shot, output_dir, theme_color, accent)
         else:
             raise RuntimeError(f"{self.name} 没有 generate/create_or_find")
-        return _asset_dict_from_any(result, task_id, shot)
+        asset = _asset_dict_from_any(result, task_id, shot)
+        asset["provenance"] = {
+            **dict(asset.get("provenance") or {}),
+            "classification": "ai-generated", "entity_id": str(shot.get("entity_id") or ""),
+            "shot_tags": [shot["shot_tag"]] if shot.get("shot_tag") else [],
+            "review_status": "pending", "license_status": "pending", "allowed_usages": ["preview"],
+        }
+        return asset
+
+    def edit(
+        self,
+        shot: dict[str, Any],
+        reference_path: Path,
+        output_dir: Path,
+        style_ctx: dict[str, Any] | None = None,
+    ) -> Any:
+        """转发到 provider.edit()。provider 不支持时抛错，由降级链接管。
+
+        adapter 自己必须暴露这个方法，否则 generate_asset 里的
+        `hasattr(provider, "edit")` 永远是假，参考图会被静默忽略。
+        """
+        if not self.available or self._module is None:
+            raise RuntimeError(self.reason or f"{self.name} 不可用")
+        provider = _instantiate(self._module, self._settings, self.kind, self.factory_name)
+        if not hasattr(provider, "edit"):
+            raise RuntimeError(f"{self.name} 的 provider 不支持参考图生图")
+        return provider.edit(shot, reference_path, output_dir, style_ctx or {})
 
 
 class ProviderRegistry:
@@ -389,9 +433,25 @@ class ProviderRegistry:
         output_dir: Path,
         style_ctx: dict[str, Any],
     ) -> dict[str, Any]:
-        """Invoke either the frozen AssetResult protocol or a legacy asset provider."""
+        """Invoke either the frozen AssetResult protocol or a legacy asset provider.
+
+        若 provider 支持 edit() 且 shot 里带了参考图，走图生图：参考图决定构图与
+        质感，提示词决定这一镜要什么。参考图只作为生成输入，不会被输出或入库，
+        因此用 reference-only 的第三方图片也不会把原图带进成片。
+        """
         provider = self.create("asset", name)
-        if hasattr(provider, "generate"):
+        reference = str(
+            shot.get("reference_image_path")
+            or (style_ctx or {}).get("reference_image_path")
+            or ""
+        ).strip()
+        # 参考图只对静帧生成（图生图）有意义。视频 provider 拿到参考图应该忽略：
+        # 它的首帧由 _ensure_first_frame 单独生成，把参考图当输入只会触发
+        # “provider 不支持参考图生图”并把整条链打断。
+        is_image_provider = getattr(provider, "kind", "") == "image"
+        if is_image_provider and reference and Path(reference).is_file() and hasattr(provider, "edit"):
+            result = provider.edit(shot, reference, output_dir, style_ctx)
+        elif hasattr(provider, "generate"):
             result = provider.generate(shot, output_dir, style_ctx)
             required = ("path", "media_type", "source", "model", "seed", "prompt", "cost", "event")
             if not isinstance(result, AssetResult) and not all(hasattr(result, field_name) for field_name in required):
@@ -509,18 +569,93 @@ class _LocalLibraryAssetProvider:
     def __init__(self, storage: Any) -> None:
         self.storage = storage
 
-    def create_or_find(self, task_id: str, shot: dict[str, Any], output_dir: Path, theme_color: str, accent: str) -> dict[str, Any]:
+    def create_or_find(self, task_id: str, shot: dict[str, Any], output_dir: Path, theme_color: str, accent: str, style_ctx: dict[str, Any] | None = None) -> dict[str, Any]:
+        ctx = style_ctx or {}
         query = str(shot.get("library_query") or shot.get("visual_prompt") or shot.get("title") or "")
-        asset = self.storage.find_library_asset("image", query) or self.storage.find_library_asset("video", query)
-        asset = asset or self.storage.find_library_asset("image") or self.storage.find_library_asset("video")
-        if not asset or not Path(str(asset.get("local_path", ""))).is_file():
+        entity_id = str(shot.get("entity_id") or "")
+        shot_tag = str(shot.get("shot_tag") or "")
+        asset_id = str(shot.get("library_asset_id") or "")
+        usage = str(ctx.get("visual_usage") or "preview")
+        asset = None
+        city = str(ctx.get("city") or "")
+        if usage == "publication" or asset_id:
+            if usage != "publication" or (entity_id and shot_tag):
+                rows = self.storage.list_library_assets(
+                    limit=500, entity_id=entity_id, shot_tag=shot_tag, usage=usage, asset_id=asset_id, city=city,
+                )
+                for row in rows:
+                    path = Path(str(row.get("local_path") or ""))
+                    if row.get("asset_type") not in {"image", "video"} or not path.is_file():
+                        continue
+                    if row.get("review_status") == "rejected":
+                        continue
+                    if usage == "publication" and not self.storage.library_file_matches(row, path):
+                        continue
+                    asset = row
+                    break
+            if not asset:
+                message = "No approved publication asset" if usage == "publication" else "No usable bound library asset"
+                binding = f" library_asset_id={asset_id}" if asset_id else ""
+                raise RuntimeError(f"{message} for entity={entity_id or 'unlinked'} shot_tag={shot_tag or 'unspecified'}{binding}")
+        else:
+            searches = []
+            if entity_id:
+                searches.append(("", {"entity_id": entity_id, "shot_tag": shot_tag, "city": city}))
+            if query:
+                searches.append((query, {"entity_id": entity_id, "shot_tag": shot_tag, "city": city}))
+            if not entity_id and ctx.get("allow_generic_preview"):
+                searches.append(("", {"city": city}))
+            for text, filters in searches:
+                for kind in ("image", "video"):
+                    rows = self.storage.list_library_assets(kind, text, **filters)
+                    asset = next((row for row in rows if row.get("review_status") != "rejected"
+                                  and Path(str(row.get("local_path") or "")).is_file()), None)
+                    if asset:
+                        break
+                if asset:
+                    break
+        if not asset:
             raise RuntimeError("Local asset library has no usable image/video for this shot")
+        provenance = library_provenance(asset)
+        provenance["search_query"] = query if not (entity_id or asset_id) else str(shot.get("search_query") or "")
+        media_type = asset.get("asset_type", "image")
+        if media_type == "video":
+            probe = subprocess.run(
+                ["ffprobe", "-v", "error", "-show_entries", "stream=width,height:format=duration", "-of", "json", asset["local_path"]],
+                text=True, capture_output=True, check=False,
+            )
+            if probe.returncode == 0:
+                details = json.loads(probe.stdout)
+                stream = next((row for row in details.get("streams", []) if "width" in row), {})
+                provenance["width"] = int(stream.get("width", 0))
+                provenance["height"] = int(stream.get("height", 0))
+                provenance["duration_sec"] = float((details.get("format") or {}).get("duration", 0) or 0)
+        else:
+            try:
+                from PIL import Image
+                with Image.open(asset["local_path"]) as image:
+                    provenance["width"], provenance["height"] = image.size
+            except ImportError:
+                pass
+        event = {
+            "type": "asset", "provider": self.name, "shot_id": shot.get("id", ""),
+            "library_asset_id": asset["id"], "entity_id": entity_id,
+            "shot_tag": shot_tag, "search_query": provenance.get("search_query", ""),
+            "license_status": provenance.get("license_status", ""),
+            "review_status": provenance.get("review_status", ""),
+            "provenance": provenance,
+        }
         return {
             "id": asset["id"], "name": asset.get("name", shot.get("title", "library asset")),
             "url": asset.get("url", ""), "local_path": asset["local_path"], "source": self.name,
-            "license": asset.get("license_status", "pending-review"), "author": asset.get("author", "unknown"),
+            "license": asset.get("license", asset.get("license_status", "pending-review")),
+            "author": asset.get("author", "unknown"),
             "usage_scope": asset.get("usage_scope", "technical-validation"),
             "is_ai_generated": bool(asset.get("is_ai_generated", False)),
+            "media_type": asset.get("asset_type", "image"), "model": asset.get("model", "local-library"),
+            "seed": int(asset.get("seed", 0) or 0), "prompt": asset.get("prompt", ""),
+            "first_frame_path": asset.get("first_frame_path", ""), "cost": float(asset.get("cost", 0) or 0),
+            "provenance": provenance, "event": event,
         }
 
 

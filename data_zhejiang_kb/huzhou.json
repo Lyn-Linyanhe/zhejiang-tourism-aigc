@@ -1,144 +1,2655 @@
 {
   "city": "湖州",
-  "city_meta": {
-    "aliases": [
-      "吴兴",
-      "菰城"
-    ],
-    "city_dna": "湖丝与蚕桑、湖笔工艺、南浔藏书"
-  },
   "entities": [
     {
-      "id": "huzhou-nanxun",
+      "id": "huz-nanxun",
       "type": "scenic",
       "name": "南浔古镇",
       "aliases": [
         "南浔",
-        "小莲庄",
-        "嘉业堂藏书楼"
+        "南浔镇",
+        "南浔古镇景区"
       ],
-      "location": "湖州南浔区",
+      "level": "中国历史文化名镇（含全国重点文物保护单位小莲庄、嘉业堂藏书楼）",
+      "location": "湖州市南浔区南浔镇",
       "facts": [
-        "小莲庄在南浔万古桥西，与嘉业堂藏书楼隔溪相望。",
-        "小莲庄的东升阁结合了中国塔式形态与西式建筑元素。",
-        "小莲庄刘氏家庙外两座牌坊建于清光绪年间。"
+        "南浔镇自南宋淳祐季年（1252 年）建镇，是浙江省湖州市南浔区政府所在地，中国历史文化名镇之一。",
+        "明万历至清中葉为南浔经济繁荣鼎盛时期，民间有“湖州一个城，不及南浔半个镇”之说。",
+        "南浔是近代湖丝贸易的重要集散中心；道光二十七年（1847 年）上海口岸蚕丝出口 21176 包，其中南浔出口 13426 包，占 63.396%。",
+        "小莲庄又名刘园，是晚清南浔“四象”之首刘镛的私家花园和家庙，南浔五大名园之一，全国重点文物保护单位。",
+        "嘉业堂藏书楼由刘承幹于 1920—1924 年所建，是中国近代规模最宏大、功能最齐全的私家藏书楼，2001 年与小莲庄一同列入第五批全国重点文物保护单位。",
+        "百间楼是南浔镇东北部百间楼港东西两岸的两条传统街巷，全长约 400 米，沿街门牌约 180 余间。",
+        "南浔区北濒太湖，东接江苏苏州，距上海、苏州、杭州均约 100 公里。",
+        "刘镛（1826—1899）是清末南浔巨商，以经营辑里丝出口致富。"
       ],
+      "fact_records": [
+        {
+          "text": "南浔镇自南宋淳祐季年（1252 年）建镇，是浙江省湖州市南浔区政府所在地，中国历史文化名镇之一。",
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%8D%97%E6%B5%94%E9%8E%AE",
+          "source_title": "南浔镇",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-nanxunzhen",
+          "evidence_quote": "南潯鎮是浙江省湖州市南潯區轄鎮，也是該區政府所在地，中國歷史文化名鎮之一。南潯鎮自南宋淳祐季年(1252年)建鎮",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "明万历至清中葉为南浔经济繁荣鼎盛时期，民间有“湖州一个城，不及南浔半个镇”之说。",
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%8D%97%E6%B5%94%E9%8E%AE",
+          "source_title": "南浔镇",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-nanxunzhen",
+          "evidence_quote": "明萬曆至清中葉為南潯經濟繁榮鼎盛時期，民間有“湖州一個城，不及南潯半個鎮”之說。",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "南浔是近代湖丝贸易的重要集散中心；道光二十七年（1847 年）上海口岸蚕丝出口 21176 包，其中南浔出口 13426 包，占 63.396%。",
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%8D%97%E6%B5%94%E9%8E%AE",
+          "source_title": "南浔镇",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-nanxunzhen",
+          "evidence_quote": "道光二十七年（1847年）上海口岸蠶絲出口總數為21176包，其中南潯出口數為13426包，占出口總數的63．396％",
+          "fact_type": "economy",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "小莲庄又名刘园，是晚清南浔“四象”之首刘镛的私家花园和家庙，南浔五大名园之一，全国重点文物保护单位。",
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%B0%8F%E8%8E%B2%E5%BA%84",
+          "source_title": "小莲庄",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-xiaolianzhuang",
+          "evidence_quote": "小莲庄又名刘园……是清光禄大夫刘镛（嘉业堂主人，晚清南浔“四象”之首）的私家花园和家庙所在，是南浔五大名园之一，是全國重點文物保護單位。",
+          "fact_type": "heritage",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "嘉业堂藏书楼由刘承幹于 1920—1924 年所建，是中国近代规模最宏大、功能最齐全的私家藏书楼，2001 年与小莲庄一同列入第五批全国重点文物保护单位。",
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%98%89%E4%B8%9A%E5%A0%82%E8%97%8F%E4%B9%A6%E6%A5%BC",
+          "source_title": "嘉业堂藏书楼",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-jiayetang",
+          "evidence_quote": "嘉业堂藏书楼……是当地首富刘镛的承重孙刘承幹（次子刘锦藻之子）于1920-1924年所建的私家藏书楼……是中国近代规模最宏大、功能最齐全的私家藏书楼……2001年与小莲庄一同被列為第五批全國重點文物保護單位。",
+          "fact_type": "heritage",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "百间楼是南浔镇东北部百间楼港东西两岸的两条传统街巷，全长约 400 米，沿街门牌约 180 余间。",
+          "fact_index": 5,
+          "source_url": "https://zh.wikipedia.org/wiki/%E7%99%BE%E9%97%B4%E6%A5%BC",
+          "source_title": "百间楼",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-baijianlou",
+          "evidence_quote": "百间楼是浙江省湖州市南浔镇东北部百间楼港（又称百间楼河）东西两岸的两条传统风貌保存较完整的古街……全长约400米。百间楼沿街门牌约180余间",
+          "fact_type": "heritage",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "南浔区北濒太湖，东接江苏苏州，距上海、苏州、杭州均约 100 公里。",
+          "fact_index": 6,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%8D%97%E6%B5%94%E5%8C%BA",
+          "source_title": "南浔区",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-nanxunqu",
+          "evidence_quote": "南潯區是中國浙江省湖州市下轄的一個區……南潯區北瀕太湖，東接江蘇省蘇州市，地處長三角城市群的中心腹地，距離上海、蘇州、杭州等大城市均為100公里左右",
+          "fact_type": "geography",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "刘镛（1826—1899）是清末南浔巨商，以经营辑里丝出口致富。",
+          "fact_index": 7,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%88%98%E9%8F%9E",
+          "source_title": "刘镛",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-liuyong",
+          "evidence_quote": "劉鏞（1826年—1899年），名介康，字冠軍，一字貫經，浙江湖州府烏程縣南浔人，清末巨商，以经营辑里丝出口致富。",
+          "fact_type": "person",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
+      ],
+      "cultural_significance": "以蚕丝贸易兴起的江南名镇，“四象八牛”丝商群体的故里，私家园林与藏书楼并称。",
       "keywords_en": [
-        "Nanxun Huzhou Xiaolianzhuang"
+        "Nanxun Ancient Town",
+        "Nanxun Huzhou",
+        "Xiaolianzhuang garden"
       ],
       "imagery": [
-        "小莲庄荷池",
-        "万古桥",
-        "隔溪的嘉业堂藏书楼"
+        "百间楼沿河民居",
+        "小莲庄荷花池",
+        "嘉业堂藏书楼",
+        "洪济桥倒影",
+        "入夜灯笼"
       ],
+      "best_season": "四季皆宜，入夜亮灯后最佳",
+      "micro_drama_hook": "一个镇子靠蚕丝富可敌城，钱最后变成了园子和书楼。",
       "scenario_tags": [
-        "摄影",
-        "古建"
-      ],
-      "sources": [
-        {
-          "title": "湖州市档案馆·小莲庄",
-          "url": "https://daj.huzhou.gov.cn/dawh/rwls/msp/20081119/i3926542.html",
-          "checked_on": "2026-11-21"
-        }
+        "人文",
+        "古镇",
+        "水乡",
+        "丝商",
+        "园林",
+        "藏书"
       ]
     },
     {
-      "id": "huzhou-inkbrush",
+      "id": "huz-moganshan",
+      "type": "scenic",
+      "name": "莫干山",
+      "aliases": [
+        "莫干山风景区",
+        "莫干山别墅群"
+      ],
+      "level": "国家级风景名胜区（含全国重点文物保护单位莫干山别墅群）",
+      "location": "湖州市德清县",
+      "facts": [
+        "莫干山位于湖州市德清县，属天目山余脉，面积 20 平方千米，主峰塔山海拔 720 米。",
+        "莫干山与庐山、北戴河、鸡公山并列为中国四大避暑胜地，素有“清凉世界”之称。",
+        "山名传自春秋干将、莫邪在此为吴王铸剑的传说；明《嘉靖浙江通志》已记载山上有铸剑池、磨剑石。",
+        "1898 年美南长老会传教士洪慈恩在山上建造第一座欧式别墅，此后外侨纷纷上山购地筑屋。",
+        "到 1920 年代山上形成 1940 亩外国人避暑地，留下 154 座西式别墅，其中 118 幢属于外侨。",
+        "莫干山别墅群于 2006 年 5 月被国务院列为第六批全国重点文物保护单位。",
+        "莫干山所在的德清县总面积 935.9 平方公里，界于湖州与杭州之间。"
+      ],
+      "fact_records": [
+        {
+          "text": "莫干山位于湖州市德清县，属天目山余脉，面积 20 平方千米，主峰塔山海拔 720 米。",
+          "source_url": "https://zh.wikipedia.org/wiki/%E8%8E%AB%E5%B9%B2%E5%B1%B1",
+          "source_title": "莫干山",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-moganshan",
+          "evidence_quote": "莫干山，位于中国浙江省湖州市德清县……属天目山余脉，耸立在低平的杭嘉湖平原之上，面积20平方千米。主峰塔山海拔720米。",
+          "fact_type": "geography",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "莫干山与庐山、北戴河、鸡公山并列为中国四大避暑胜地，素有“清凉世界”之称。",
+          "source_url": "https://zh.wikipedia.org/wiki/%E8%8E%AB%E5%B9%B2%E5%B1%B1",
+          "source_title": "莫干山",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-moganshan",
+          "evidence_quote": "莫干山素有“清凉世界”之美誉……它和庐山、北戴河、鸡公山并列为中国四大避暑胜地。",
+          "fact_type": "designation",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "山名传自春秋干将、莫邪在此为吴王铸剑的传说；明《嘉靖浙江通志》已记载山上有铸剑池、磨剑石。",
+          "source_url": "https://zh.wikipedia.org/wiki/%E8%8E%AB%E5%B9%B2%E5%B1%B1",
+          "source_title": "莫干山",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-moganshan",
+          "evidence_quote": "传世史料中最早的记载是明《嘉靖浙江通志》：莫干山在（湖州府）县西南一百五十里，上有铸剑池，水常清澈，旁有磨剑石。",
+          "fact_type": "legend",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "1898 年美南长老会传教士洪慈恩在山上建造第一座欧式别墅，此后外侨纷纷上山购地筑屋。",
+          "source_url": "https://zh.wikipedia.org/wiki/%E8%8E%AB%E5%B9%B2%E5%B1%B1",
+          "source_title": "莫干山",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-moganshan",
+          "evidence_quote": "1898年，美南长老会驻杭州的传教士洪慈恩……在山上建造了第一座欧式别墅，上海和江南各地的外侨纷纷上山购地筑屋。",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "到 1920 年代山上形成 1940 亩外国人避暑地，留下 154 座西式别墅，其中 118 幢属于外侨。",
+          "source_url": "https://zh.wikipedia.org/wiki/%E8%8E%AB%E5%B9%B2%E5%B1%B1",
+          "source_title": "莫干山",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-moganshan",
+          "evidence_quote": "到1920年代山上已经形成了面积为1940亩的外国人避暑地……那个时期给莫干山留下了154座西式别墅（其中118幢属于外侨）",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "莫干山别墅群于 2006 年 5 月被国务院列为第六批全国重点文物保护单位。",
+          "source_url": "https://zh.wikipedia.org/wiki/%E8%8E%AB%E5%B9%B2%E5%B1%B1%E5%88%A5%E5%A2%85%E7%BE%A4",
+          "source_title": "莫干山别墅群",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-moganshan-villas",
+          "evidence_quote": "2006年5月，莫幹山別墅群被國務院列為第六批全國重點文物保護單位。",
+          "fact_type": "heritage",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "莫干山所在的德清县总面积 935.9 平方公里，界于湖州与杭州之间。",
+          "fact_index": 6,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%BE%B7%E6%B8%85%E5%8E%BF",
+          "source_title": "德清县",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-deqing",
+          "evidence_quote": "德清县，古稱餘不，为中国浙江省下辖县份，隶属湖州市管辖。德清县辖域总面积为935.9平方公里，德清位于长三角中心地带，界于湖州与杭州二市之间",
+          "fact_type": "geography",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
+      ],
+      "cultural_significance": "中国四大避暑胜地之一，竹海与近代西式别墅群叠合的山地度假地。",
+      "keywords_en": [
+        "Moganshan Huzhou",
+        "Moganshan mountain retreat",
+        "Moganshan villas"
+      ],
+      "imagery": [
+        "竹海与山脊",
+        "西式别墅群",
+        "剑池瀑布",
+        "芦花荡公园",
+        "山间晨雾"
+      ],
+      "best_season": "夏季避暑，10-11 月红叶",
+      "micro_drama_hook": "一把剑的传说，引来一百多座洋别墅。",
+      "scenario_tags": [
+        "自然",
+        "山地",
+        "避暑",
+        "别墅",
+        "竹海",
+        "民国"
+      ]
+    },
+    {
+      "id": "huz-taihu",
+      "type": "scenic",
+      "name": "太湖旅游度假区",
+      "aliases": [
+        "南太湖",
+        "湖州太湖",
+        "月亮湾"
+      ],
+      "level": "国家级旅游度假区（南太湖新区）",
+      "location": "湖州市南太湖新区太湖南岸",
+      "facts": [
+        "太湖是中国五大淡水湖之一，水域面积排行第三，是江苏、浙江两省的界湖。",
+        "太湖周边浙江省境内的主要城市为湖州；太湖为国家重点风景名胜区之一。",
+        "湖州地处太湖南岸，是杭嘉湖平原与浙北丘陵的交接带，东苕溪、西苕溪在此汇成苕溪注入太湖。",
+        "湖州是国家历史文化名城，也是世界丝绸文明的发祥地之一，素有“湖丝衣天下”之说。"
+      ],
+      "fact_records": [
+        {
+          "text": "太湖是中国五大淡水湖之一，水域面积排行第三，是江苏、浙江两省的界湖。",
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%A4%AA%E6%B9%96",
+          "source_title": "太湖",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-taihu",
+          "evidence_quote": "太湖是中国五大淡水湖之一，水域面积排行第三，位于江苏省南部和浙江省北部交界处……是江、浙两省的界湖",
+          "fact_type": "geography",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "太湖周边浙江省境内的主要城市为湖州；太湖为国家重点风景名胜区之一。",
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%A4%AA%E6%B9%96",
+          "source_title": "太湖",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-taihu",
+          "evidence_quote": "浙江省境内的是湖州。太湖是国家重点风景名胜区之一。",
+          "fact_type": "designation",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "湖州地处太湖南岸，是杭嘉湖平原与浙北丘陵的交接带，东苕溪、西苕溪在此汇成苕溪注入太湖。",
+          "source_url": "https://zh.wikipedia.org/wiki/%E6%B9%96%E5%B7%9E%E5%B8%82",
+          "source_title": "湖州市",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-huzhou",
+          "evidence_quote": "地处太湖南岸，浙北丘陵区与杭嘉湖平原交接带。东苕溪、西苕溪自南往北流贯，于城区汇合成苕溪注入太湖",
+          "fact_type": "geography",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "湖州是国家历史文化名城，也是世界丝绸文明的发祥地之一，素有“湖丝衣天下”之说。",
+          "source_url": "https://zh.wikipedia.org/wiki/%E6%B9%96%E5%B7%9E%E5%B8%82",
+          "source_title": "湖州市",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-huzhou",
+          "evidence_quote": "湖州是国家历史文化名城……亦是蠶鄉，世界絲綢文明的發祥地之一，中國四大綢都之一，素有“湖絲衣天下”之說。",
+          "fact_type": "culture",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
+      ],
+      "cultural_significance": "太湖南岸的国家级度假区，以湖滨夜景、音乐喷泉与“月亮”地标建筑为标识。",
+      "keywords_en": [
+        "Taihu Lake Huzhou",
+        "South Taihu resort",
+        "Huzhou Taihu"
+      ],
+      "imagery": [
+        "月亮湾环形建筑",
+        "湖面夜色与灯光",
+        "音乐喷泉",
+        "渔人码头",
+        "阴雨湖雾"
+      ],
+      "best_season": "夏季夜游，秋冬看湖雾",
+      "micro_drama_hook": "一湖分两省，南岸的灯先亮起来。",
+      "scenario_tags": [
+        "自然",
+        "湖泊",
+        "夜景",
+        "度假",
+        "喷泉"
+      ]
+    },
+    {
+      "id": "huz-hubi",
       "type": "intangible",
       "name": "湖笔制作技艺",
       "aliases": [
         "湖笔",
         "善琏湖笔"
       ],
-      "location": "湖州南浔区善琏镇",
+      "level": "国家级非物质文化遗产（湖笔制作技艺）",
+      "location": "湖州市南浔区善琏镇",
       "facts": [
-        "湖笔发源于湖州南浔善琏镇。",
-        "到元代，湖笔已颇有名声，常与徽墨、端砚、宣纸并称。"
+        "湖笔产于浙江湖州善琏镇，始自晋朝已家家户户造笔，到元朝时以工艺精湛、品质上乘著称。",
+        "湖笔与宣纸、徽墨、端砚合称为“文房四宝”。",
+        "湖笔通常用黄鼠狼尾部毛与羊毫制造，也会用鸡毛、鼠须。",
+        "元代书法家赵孟頫对湖笔的制作非常重视；湖笔制作技艺已列入国家级非物质文化遗产。"
       ],
+      "fact_records": [
+        {
+          "text": "湖笔产于浙江湖州善琏镇，始自晋朝已家家户户造笔，到元朝时以工艺精湛、品质上乘著称。",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E6%B9%96%E7%AC%94",
+          "source_title": "湖笔",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-hubi",
+          "evidence_quote": "湖笔（亦称为湖颖）是产于中国浙江湖州善璉鎮的毛笔，始自晉朝已家家戶戶造筆，到元朝时就以工艺精湛、品质上乘著称",
+          "fact_type": "craft",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "湖笔与宣纸、徽墨、端砚合称为“文房四宝”。",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E6%B9%96%E7%AC%94",
+          "source_title": "湖笔",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-hubi",
+          "evidence_quote": "与宣纸、徽墨、端砚合称为“文房四宝”。",
+          "fact_type": "culture",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "湖笔通常用黄鼠狼尾部毛与羊毫制造，也会用鸡毛、鼠须。",
+          "fact_index": 2,
+          "source_url": "https://zh.wikipedia.org/wiki/%E6%B9%96%E7%AC%94",
+          "source_title": "湖笔",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-hubi",
+          "evidence_quote": "湖笔通常用黄鼠狼的尾部的毛跟羊毫制造但也会有用鸡毛，鼠须来制的笔",
+          "fact_type": "craft",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "元代书法家赵孟頫对湖笔的制作非常重视；湖笔制作技艺已列入国家级非物质文化遗产。",
+          "fact_index": 3,
+          "source_url": "https://zh.wikipedia.org/wiki/%E6%B9%96%E7%AC%94",
+          "source_title": "湖笔",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-hubi",
+          "evidence_quote": "尤其是元朝书法家赵孟頫对湖笔的制作非常重视……其制作技术更被列为中国国家级非物质文化遗产。",
+          "fact_type": "craft",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
+      ],
+      "cultural_significance": "文房四宝之一，善琏镇千年制笔传统的代表。",
       "keywords_en": [
-        "Shanlian Huzhou ink brush"
+        "Hubi brush Huzhou",
+        "Shanlian writing brush"
       ],
       "imagery": [
-        "梳理笔毫",
-        "制笔工匠齐锋",
-        "毛笔试墨"
+        "水盆工序",
+        "择笔与装套",
+        "笔毫特写",
+        "善琏老街笔庄",
+        "刻字"
       ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "一支笔要经过一百多道手，最后才落到纸上。",
       "scenario_tags": [
-        "艺术",
-        "非遗体验"
-      ],
-      "sources": [
-        {
-          "title": "中国非遗网·湖笔制作技艺",
-          "url": "https://www.ihchina.cn/project_details/14395.html",
-          "checked_on": "2026-11-21"
-        }
+        "非遗",
+        "手工艺",
+        "文房",
+        "书画"
       ]
     },
     {
-      "id": "huzhou-silkworm",
-      "type": "festival",
-      "name": "扫蚕花地",
+      "id": "huz-feiyingta",
+      "type": "scenic",
+      "name": "飞英塔",
       "aliases": [
-        "蚕桑习俗",
-        "蚕花地",
-        "湖州蚕俗"
+        "飞英塔",
+        "塔中塔"
       ],
-      "location": "湖州德清县",
+      "level": "全国重点文物保护单位",
+      "location": "湖州市吴兴区塔下街",
       "facts": [
-        "这一蚕桑习俗起源于德清，曾在湖嘉地区流传。",
-        "旧时蚕农会在寒食清明前后请艺人入户表演，以祈蚕桑丰收。"
+        "飞英塔始建于唐中和四年（884 年），乾宁元年（894 年）完工，最初仅有一座舍利石塔。",
+        "北宋开宝年间在石塔外加盖砖木塔，形成“塔中塔”，是中国现存唯一一座塔中塔。",
+        "外塔为砖木混合楼阁式塔，七层八角，通高 55 米，直径 11 米。",
+        "1988 年飞英塔被列为全国重点文物保护单位。"
       ],
+      "fact_records": [
+        {
+          "text": "飞英塔始建于唐中和四年（884 年），乾宁元年（894 年）完工，最初仅有一座舍利石塔。",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E9%A3%9E%E8%8B%B1%E5%A1%94",
+          "source_title": "飞英塔",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-feiyingta",
+          "evidence_quote": "始建于中国唐朝中和四年（884年）并于乾宁元年（894年）完工，最初仅有一座舍利石塔。",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "北宋开宝年间在石塔外加盖砖木塔，形成“塔中塔”，是中国现存唯一一座塔中塔。",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E9%A3%9E%E8%8B%B1%E5%A1%94",
+          "source_title": "飞英塔",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-feiyingta",
+          "evidence_quote": "北宋开宝年间，舍利石塔外面加盖了一座砖木塔，是为今天的飞英塔，同时是中国境内现存唯一一座塔中塔。",
+          "fact_type": "architecture",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "外塔为砖木混合楼阁式塔，七层八角，通高 55 米，直径 11 米。",
+          "fact_index": 2,
+          "source_url": "https://zh.wikipedia.org/wiki/%E9%A3%9E%E8%8B%B1%E5%A1%94",
+          "source_title": "飞英塔",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-feiyingta",
+          "evidence_quote": "外塔为砖木混合的楼阁式塔，共有7层，平面为八角形，通高55米，直径11米。",
+          "fact_type": "architecture",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "1988 年飞英塔被列为全国重点文物保护单位。",
+          "fact_index": 3,
+          "source_url": "https://zh.wikipedia.org/wiki/%E9%A3%9E%E8%8B%B1%E5%A1%94",
+          "source_title": "飞英塔",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-feiyingta",
+          "evidence_quote": "1988年，飞英塔被列为全国重点文物保护单位。",
+          "fact_type": "designation",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
+      ],
+      "cultural_significance": "中国现存唯一的“塔中塔”，湖州城内的文化地标。",
       "keywords_en": [
-        "Deqing silkworm folk ritual"
+        "Feiying Pagoda Huzhou",
+        "pagoda within a pagoda"
       ],
       "imagery": [
-        "蚕农家中的民俗表演",
-        "桑叶和蚕匾"
+        "外塔全景",
+        "塔身斗拱",
+        "内石塔",
+        "塔下街街景"
       ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "一座塔包着另一座塔，包了一千年。",
       "scenario_tags": [
-        "民俗",
-        "演艺"
-      ],
-      "sources": [
-        {
-          "title": "中国非遗网·扫蚕花地",
-          "url": "https://www.ihchina.cn/project_details/19986.html",
-          "checked_on": "2026-11-21"
-        }
+        "古建",
+        "人文",
+        "地标"
       ]
     },
     {
-      "id": "huzhou-zhulaoda",
+      "id": "huz-lianhuazhuang",
+      "type": "scenic",
+      "name": "莲花庄",
+      "aliases": [
+        "莲花庄",
+        "学士庄",
+        "南园"
+      ],
+      "level": "湖州市区古典园林",
+      "location": "湖州市区东南隅",
+      "facts": [
+        "莲花庄原名“南园”，元代书画家赵孟頫在此置业，开辟莲花池，故名莲花庄。",
+        "因赵孟頫有翰林学士承旨衔，莲花庄又称“学士庄”。",
+        "1986 年湖州市人民政府按历史记载在原址偏南处修复，1987 年春节对外开放。",
+        "修复后总面积 7.47 公顷，其中三分之一为水面，分西、中、南、北四个景区。"
+      ],
+      "fact_records": [
+        {
+          "text": "莲花庄原名“南园”，元代书画家赵孟頫在此置业，开辟莲花池，故名莲花庄。",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E8%93%AE%E8%8A%B1%E8%8E%8A",
+          "source_title": "莲花庄",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-lianhuazhuang",
+          "evidence_quote": "原名「南園」，本系古代園林……元代著名書畫家趙孟頫在此置業，開闢蓮花池，建造松月齋、水月亭等，故名「蓮花莊」。",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "因赵孟頫有翰林学士承旨衔，莲花庄又称“学士庄”。",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E8%93%AE%E8%8A%B1%E8%8E%8A",
+          "source_title": "莲花庄",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-lianhuazhuang",
+          "evidence_quote": "因趙孟頫有翰林學士承旨銜，故蓮花莊有「學士莊」之稱。",
+          "fact_type": "toponymy",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "1986 年湖州市人民政府按历史记载在原址偏南处修复，1987 年春节对外开放。",
+          "fact_index": 2,
+          "source_url": "https://zh.wikipedia.org/wiki/%E8%93%AE%E8%8A%B1%E8%8E%8A",
+          "source_title": "莲花庄",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-lianhuazhuang",
+          "evidence_quote": "1986年湖州市人民政府按歷史記載在原址偏南處予以修復，1987年春節對外開放",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "修复后总面积 7.47 公顷，其中三分之一为水面，分西、中、南、北四个景区。",
+          "fact_index": 3,
+          "source_url": "https://zh.wikipedia.org/wiki/%E8%93%AE%E8%8A%B1%E8%8E%8A",
+          "source_title": "莲花庄",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-lianhuazhuang",
+          "evidence_quote": "總面積為7.47公頃，其中三分之一為水面，分成西、中、南、北四個景區。",
+          "fact_type": "geography",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
+      ],
+      "cultural_significance": "赵孟頫故园，湖州城内以荷池与碑刻著称的古典园林。",
+      "keywords_en": [
+        "Lianhua Zhuang Huzhou",
+        "Lotus Manor"
+      ],
+      "imagery": [
+        "荷池与曲桥",
+        "松雪斋",
+        "《吴兴赋》石碑",
+        "回廊碑刻"
+      ],
+      "best_season": "夏季荷花盛开",
+      "micro_drama_hook": "一个人把家变成了园子，园子又成了他的名字。",
+      "scenario_tags": [
+        "园林",
+        "人文",
+        "书画",
+        "古建"
+      ]
+    },
+    {
+      "id": "huz-person-zhaomengfu",
+      "type": "person",
+      "name": "赵孟頫与湖州",
+      "aliases": [
+        "赵孟頫",
+        "赵子昂",
+        "松雪道人"
+      ],
+      "level": "元代书画领袖，湖州吴兴人",
+      "location": "湖州吴兴（今湖州市吴兴区）",
+      "facts": [
+        "赵孟頫（1254—1322 年），字子昂，号松雪道人，湖州吴兴人，元代书画家。",
+        "赵孟頫为宋太祖后代，官至翰林学士承旨，是元代文人画、书法的领袖人物。",
+        "书法上精通行书、楷体，独创“赵体”，对后代书法影响很大。",
+        "绘画上首次提出书画用笔相同的理论，开启以“写意”为主的文人画风。"
+      ],
+      "fact_records": [
+        {
+          "text": "赵孟頫（1254—1322 年），字子昂，号松雪道人，湖州吴兴人，元代书画家。",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E8%B6%99%E5%AD%9F%E9%A0%AB",
+          "source_title": "赵孟頫",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-zhaomengfu",
+          "evidence_quote": "赵孟頫（1254年10月22日—1322年7月30日），字子昂，号松雪道人……今浙江省湖州市吳興區）人。",
+          "fact_type": "person",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "赵孟頫为宋太祖后代，官至翰林学士承旨，是元代文人画、书法的领袖人物。",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E8%B6%99%E5%AD%9F%E9%A0%AB",
+          "source_title": "赵孟頫",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-zhaomengfu",
+          "evidence_quote": "赵孟頫为宋太祖后代……官至翰林学士承旨，是元代文人画、书法的领袖人物。",
+          "fact_type": "person",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "书法上精通行书、楷体，独创“赵体”，对后代书法影响很大。",
+          "fact_index": 2,
+          "source_url": "https://zh.wikipedia.org/wiki/%E8%B6%99%E5%AD%9F%E9%A0%AB",
+          "source_title": "赵孟頫",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-zhaomengfu",
+          "evidence_quote": "书法上精通行书、楷体，独创“赵体”，对后代书法艺术影响很大",
+          "fact_type": "art",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "绘画上首次提出书画用笔相同的理论，开启以“写意”为主的文人画风。",
+          "fact_index": 3,
+          "source_url": "https://zh.wikipedia.org/wiki/%E8%B6%99%E5%AD%9F%E9%A0%AB",
+          "source_title": "赵孟頫",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-zhaomengfu",
+          "evidence_quote": "画法上也有独创性，首次提出书画用笔相同的理论",
+          "fact_type": "art",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
+      ],
+      "cultural_significance": "元代书画领袖，“赵体”创立者，湖州最重要的文化名人之一。",
+      "keywords_en": [
+        "Zhao Mengfu Huzhou",
+        "Zhao style calligraphy"
+      ],
+      "imagery": [
+        "《吴兴赋》碑",
+        "莲花庄松雪斋",
+        "书法拓片",
+        "湖州博物馆藏品"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "他给元朝皇帝写字，也给故乡留了一座园子。",
+      "scenario_tags": [
+        "人物",
+        "书画",
+        "元代",
+        "人文"
+      ]
+    },
+    {
+      "id": "huz-person-wuchangshuo",
+      "type": "person",
+      "name": "吴昌硕与安吉",
+      "aliases": [
+        "吴昌硕",
+        "缶庐",
+        "苦铁"
+      ],
+      "level": "清末民初篆刻家，西泠印社首任社长",
+      "location": "湖州安吉鄣吴村",
+      "facts": [
+        "吴昌硕（1844—1927 年），浙江湖州安吉鄣吴村人，清末民初篆刻家，亦工书法、绘画。",
+        "1904 年担任杭州孤山西泠印社社长。",
+        "篆刻从浙派入手，后专攻汉印，将篆刻刀法融入书法。",
+        "在清末民初画坛形成“吴昌硕流派”，晚年定居上海，被归入“海上画派”。"
+      ],
+      "fact_records": [
+        {
+          "text": "吴昌硕（1844—1927 年），浙江湖州安吉鄣吴村人，清末民初篆刻家，亦工书法、绘画。",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%90%B3%E6%98%8C%E7%A2%A9",
+          "source_title": "吴昌硕",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-wuchangshuo",
+          "evidence_quote": "吳昌碩（1844年9月12日—1927年11月29日）……浙江省湖州安吉縣鄣吳村人。清末民初篆刻家，亦工書法、繪畫。",
+          "fact_type": "person",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "1904 年担任杭州孤山西泠印社社长。",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%90%B3%E6%98%8C%E7%A2%A9",
+          "source_title": "吴昌硕",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-wuchangshuo",
+          "evidence_quote": "後來于1904年擔任在杭州孤山｢西泠印社｣社長",
+          "fact_type": "person",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "篆刻从浙派入手，后专攻汉印，将篆刻刀法融入书法。",
+          "fact_index": 2,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%90%B3%E6%98%8C%E7%A2%A9",
+          "source_title": "吴昌硕",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-wuchangshuo",
+          "evidence_quote": "他的篆刻从浙派入手，后专攻汉印。他將篆刻時的刀法融入了書法當中。",
+          "fact_type": "art",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "在清末民初画坛形成“吴昌硕流派”，晚年定居上海，被归入“海上画派”。",
+          "fact_index": 3,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%90%B3%E6%98%8C%E7%A2%A9",
+          "source_title": "吴昌硕",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-wuchangshuo",
+          "evidence_quote": "在清末民初的中國畫壇上，吳昌碩形成了｢吳昌碩流派｣。他晚年定居於上海，被後世歸於｢海上畫派｣",
+          "fact_type": "art",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
+      ],
+      "cultural_significance": "安吉走出的篆刻大家，西泠印社首任社长。",
+      "keywords_en": [
+        "Wu Changshuo Anji",
+        "Wu Changshuo seal carving"
+      ],
+      "imagery": [
+        "鄣吴村故居",
+        "印章与印谱",
+        "书画立轴",
+        "西泠印社铜像"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "刻印的人，最后把名字刻进了画史。",
+      "scenario_tags": [
+        "人物",
+        "篆刻",
+        "书画",
+        "近代"
+      ]
+    },
+    {
+      "id": "huz-dusongguan",
+      "type": "scenic",
+      "name": "独松关",
+      "aliases": [
+        "独松关",
+        "独松关和古驿道"
+      ],
+      "level": "全国重点文物保护单位",
+      "location": "湖州安吉县独松岭杭宣古道上",
+      "facts": [
+        "独松关位于安吉县独松岭杭宣古道上，是南宋都城临安抵御北方敌兵的重要关隘。",
+        "独松关始建于宋建炎年间，南北向开门，中有类似瓮城的天井。",
+        "门洞尚存门臼、内部发券等结构，北侧门洞形似壸门。",
+        "2006 年独松关与杭宣古道以“独松关和古驿道”名义列入第六批全国重点文物保护单位。"
+      ],
+      "fact_records": [
+        {
+          "text": "独松关位于安吉县独松岭杭宣古道上，是南宋都城临安抵御北方敌兵的重要关隘。",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E7%8B%AC%E6%9D%BE%E5%85%B3",
+          "source_title": "独松关",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-dusongguan",
+          "evidence_quote": "独松关位于浙江省安吉县独松岭，杭宣古道上，是南宋都城临安（今杭州）抵御北方敌兵的重要关隘。",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "独松关始建于宋建炎年间，南北向开门，中有类似瓮城的天井。",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E7%8B%AC%E6%9D%BE%E5%85%B3",
+          "source_title": "独松关",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-dusongguan",
+          "evidence_quote": "独松关始建于宋建炎年间，南北向开门，中有类似瓮城的天井。",
+          "fact_type": "architecture",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "门洞尚存门臼、内部发券等结构，北侧门洞形似壸门。",
+          "fact_index": 2,
+          "source_url": "https://zh.wikipedia.org/wiki/%E7%8B%AC%E6%9D%BE%E5%85%B3",
+          "source_title": "独松关",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-dusongguan",
+          "evidence_quote": "门洞尚存门臼、内部发券等结构，北侧门洞形似壸门。",
+          "fact_type": "architecture",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "2006 年独松关与杭宣古道以“独松关和古驿道”名义列入第六批全国重点文物保护单位。",
+          "fact_index": 3,
+          "source_url": "https://zh.wikipedia.org/wiki/%E7%8B%AC%E6%9D%BE%E5%85%B3",
+          "source_title": "独松关",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-dusongguan",
+          "evidence_quote": "2006年5月25日，独松关与杭宣古道以“独松关和古驿道”的名义列入第六批全国重点文物保护单位。",
+          "fact_type": "designation",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
+      ],
+      "cultural_significance": "南宋临安的北面屏障，杭宣古道上的关隘遗存。",
+      "keywords_en": [
+        "Dusong Pass Anji",
+        "Hangzhou-Xuancheng ancient road"
+      ],
+      "imagery": [
+        "关隘门洞",
+        "古道石阶",
+        "瓮城天井",
+        "岭上竹林"
+      ],
+      "best_season": "春秋两季",
+      "micro_drama_hook": "一道关，守着一座都城的北门。",
+      "scenario_tags": [
+        "古道",
+        "关隘",
+        "古建",
+        "徒步"
+      ]
+    },
+    {
+      "id": "huz-anji-baicha",
       "type": "cuisine",
-      "name": "诸老大粽子",
+      "name": "安吉白茶",
       "aliases": [
-        "湖州粽子",
-        "诸老大"
+        "安吉白茶",
+        "玉凤茶"
       ],
-      "location": "湖州湖州市",
+      "level": "中国地理标志产品",
+      "location": "湖州市安吉县",
       "facts": [
-        "诸老大传承的是嘉湖细点的江南风味。",
-        "粽子、茶食、月饼是诸老大的不同产品类别。"
+        "安吉白茶是浙江湖州安吉的土特产绿茶、中国地理标志产品。",
+        "1970 年代当地农业人员在安吉天荒坪镇大溪村桂家场发现单株野生白茶树，经培育而成。",
+        "因叶色玉白、形如凤羽，又名玉凤茶；采摘期只有 30 天，通常 4 月 15 日至 5 月 15 日。",
+        "2004 年 4 月 6 日录入中国地理标志产品保护列表；2020 年 9 月列入中欧地理标志协定。"
       ],
+      "fact_records": [
+        {
+          "text": "安吉白茶是浙江湖州安吉的土特产绿茶、中国地理标志产品。",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%AE%89%E5%90%89%E7%99%BD%E8%8C%B6",
+          "source_title": "安吉白茶",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-anjibaicha",
+          "evidence_quote": "安吉白茶，是中华人民共和国浙江省湖州市安吉的一个土特产綠茶、中国地理标志产品。",
+          "fact_type": "designation",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "1970 年代当地农业人员在安吉天荒坪镇大溪村桂家场发现单株野生白茶树，经培育而成。",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%AE%89%E5%90%89%E7%99%BD%E8%8C%B6",
+          "source_title": "安吉白茶",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-anjibaicha",
+          "evidence_quote": "1970年代，当地农业人员在安吉县天荒坪镇大溪村桂家场发现了单株野生白茶树，经过培育而成的茶树品种。",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "因叶色玉白、形如凤羽，又名玉凤茶；采摘期只有 30 天，通常 4 月 15 日至 5 月 15 日。",
+          "fact_index": 2,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%AE%89%E5%90%89%E7%99%BD%E8%8C%B6",
+          "source_title": "安吉白茶",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-anjibaicha",
+          "evidence_quote": "安吉白茶因叶色玉白，形如凤羽，又名玉凤茶……其采摘期只有30天（通常4月15日至5月15日）。",
+          "fact_type": "craft",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "2004 年 4 月 6 日录入中国地理标志产品保护列表；2020 年 9 月列入中欧地理标志协定。",
+          "fact_index": 3,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%AE%89%E5%90%89%E7%99%BD%E8%8C%B6",
+          "source_title": "安吉白茶",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-anjibaicha",
+          "evidence_quote": "2004年4月6日，录入中国地理标志产品保护列表。2020年9月，中国-欧盟签署中欧地理标志协定，安吉白茶位列其中。",
+          "fact_type": "designation",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
+      ],
+      "cultural_significance": "安吉的地理标志绿茶，以阶段性白化的叶色得名。",
       "keywords_en": [
-        "Huzhou Zhulaoda rice dumplings"
+        "Anji white tea",
+        "Anji baicha"
       ],
       "imagery": [
-        "湖州老字号店铺",
-        "粽叶包裹糯米"
+        "白茶园嫩芽",
+        "采摘特写",
+        "摊放与杀青",
+        "茶汤浅绿"
       ],
+      "best_season": "4 月中下旬采摘期",
+      "micro_drama_hook": "只有三十天，叶子的颜色是白的。",
       "scenario_tags": [
-        "老字号",
-        "美食"
+        "茶",
+        "地理标志",
+        "农业",
+        "安吉"
+      ]
+    },
+    {
+      "id": "huz-tianhuangping",
+      "type": "scenic",
+      "name": "天荒坪·江南天池",
+      "aliases": [
+        "江南天池",
+        "天荒坪抽水蓄能电站"
       ],
-      "sources": [
+      "level": "浙江省文物保护单位",
+      "location": "湖州安吉县天荒坪镇",
+      "facts": [
+        "天荒坪抽水蓄能电站位于安吉县，总装机容量 180 万千瓦，装机容量亚洲第一、世界第二。",
+        "山顶的蓄水水库被称为“江南天池”，可供游人参观。",
+        "电站总投资 71.18 亿元人民币，设计年发电量 31.60 亿千瓦时。",
+        "2023 年 6 月 29 日公布为浙江省文物保护单位。"
+      ],
+      "fact_records": [
         {
-          "title": "商务部老字号数字博物馆·诸老大",
-          "url": "https://lzhbwg.mofcom.gov.cn/edi_ecms_web_front/thb/detail/ae8b577cae20421fbc1ffa1462b17a97",
-          "checked_on": "2026-11-21"
+          "text": "天荒坪抽水蓄能电站位于安吉县，总装机容量 180 万千瓦，装机容量亚洲第一、世界第二。",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%A4%A9%E8%8D%92%E5%9D%AA%E6%8A%BD%E6%B0%B4%E8%93%84%E8%83%BD%E7%94%B5%E7%AB%99",
+          "source_title": "天荒坪抽水蓄能电站",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-tianhuangping",
+          "evidence_quote": "天荒坪抽水蓄能电站位于中国浙江省安吉县……总装机容量达180万KW（6台30万KW机组），装机容量亚洲第一、世界第二。",
+          "fact_type": "engineering",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "山顶的蓄水水库被称为“江南天池”，可供游人参观。",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%A4%A9%E8%8D%92%E5%9D%AA%E6%8A%BD%E6%B0%B4%E8%93%84%E8%83%BD%E7%94%B5%E7%AB%99",
+          "source_title": "天荒坪抽水蓄能电站",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-tianhuangping",
+          "evidence_quote": "山顶的蓄水水库被称为江南天池，可供游人参观",
+          "fact_type": "geography",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "电站总投资 71.18 亿元人民币，设计年发电量 31.60 亿千瓦时。",
+          "fact_index": 2,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%A4%A9%E8%8D%92%E5%9D%AA%E6%8A%BD%E6%B0%B4%E8%93%84%E8%83%BD%E7%94%B5%E7%AB%99",
+          "source_title": "天荒坪抽水蓄能电站",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-tianhuangping",
+          "evidence_quote": "电站总投资为71.18亿元人民币……发电量31.60亿千瓦时。",
+          "fact_type": "engineering",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "2023 年 6 月 29 日公布为浙江省文物保护单位。",
+          "fact_index": 3,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%A4%A9%E8%8D%92%E5%9D%AA%E6%8A%BD%E6%B0%B4%E8%93%84%E8%83%BD%E7%94%B5%E7%AB%99",
+          "source_title": "天荒坪抽水蓄能电站",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-tianhuangping",
+          "evidence_quote": "2023年6月29日公布为浙江省文物保护单位。",
+          "fact_type": "designation",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
         }
+      ],
+      "cultural_significance": "把山挖空建成的抽水蓄能电站，山顶水库成为“江南天池”景区。",
+      "keywords_en": [
+        "Tianhuangping pumped storage",
+        "Jiangnan Tianchi Anji"
+      ],
+      "imagery": [
+        "盘山公路",
+        "天池水面",
+        "天荒碑与地老碑",
+        "山巅云海"
+      ],
+      "best_season": "夏季避暑，冬季雪景",
+      "micro_drama_hook": "把水抽上山，就成了湖。",
+      "scenario_tags": [
+        "工程",
+        "湖泊",
+        "山地",
+        "安吉"
+      ]
+    },
+    {
+      "id": "huz-deqingyao",
+      "type": "intangible",
+      "name": "德清窑",
+      "aliases": [
+        "德清窑",
+        "德清黑瓷"
+      ],
+      "level": "中国古代瓷窑遗址",
+      "location": "湖州市德清县",
+      "facts": [
+        "德清窑是东晋至南朝中国南方自成系统的民窑，成熟烧制技术始于东晋，在南朝衰落。",
+        "核心窑址位于德清县，主要出产黑色陶瓷，兼烧青瓷。",
+        "德清窑是已知最早烧制黑瓷的窑场之一，在中国青瓷发展史上有重要意义。",
+        "德清黑瓷釉色上佳者色如黑漆，釉面莹润。"
+      ],
+      "fact_records": [
+        {
+          "text": "德清窑是东晋至南朝中国南方自成系统的民窑，成熟烧制技术始于东晋，在南朝衰落。",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%BE%B7%E6%B8%85%E7%AA%91",
+          "source_title": "德清窑",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-deqingyao",
+          "evidence_quote": "德清窯，東晉至南朝中國南方自成系統的民窯……成熟的燒製技術則始於東晉，在南朝衰落",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "核心窑址位于德清县，主要出产黑色陶瓷，兼烧青瓷。",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%BE%B7%E6%B8%85%E7%AA%91",
+          "source_title": "德清窑",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-deqingyao",
+          "evidence_quote": "核心窯址位於浙江省湖州市德清縣。德清窯主要出產黑色陶瓷，兼燒青瓷",
+          "fact_type": "archaeology",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "德清窑是已知最早烧制黑瓷的窑场之一，在中国青瓷发展史上有重要意义。",
+          "fact_index": 2,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%BE%B7%E6%B8%85%E7%AA%91",
+          "source_title": "德清窑",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-deqingyao",
+          "evidence_quote": "是已知的最早燒製黑瓷的窯場之一，在中國青瓷的發展史上有重要的意義。",
+          "fact_type": "archaeology",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "德清黑瓷釉色上佳者色如黑漆，釉面莹润。",
+          "fact_index": 3,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%BE%B7%E6%B8%85%E7%AA%91",
+          "source_title": "德清窑",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-deqingyao",
+          "evidence_quote": "德清黑瓷釉色上佳者色如黑漆，釉面瑩潤。",
+          "fact_type": "craft",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
+      ],
+      "cultural_significance": "中国最早烧制黑瓷的窑场之一，青瓷史的关键节点。",
+      "keywords_en": [
+        "Deqing kiln",
+        "Deqing black ware"
+      ],
+      "imagery": [
+        "黑釉鸡头壶",
+        "窑址地层",
+        "青瓷残片",
+        "博物馆展陈"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "一千六百年前，这里烧出了最黑的那只壶。",
+      "scenario_tags": [
+        "陶瓷",
+        "窑址",
+        "考古",
+        "非遗"
+      ]
+    },
+    {
+      "id": "huz-chengchi",
+      "type": "scenic",
+      "name": "湖州城池·下菰城",
+      "aliases": [
+        "下菰城",
+        "湖州城池",
+        "项王城"
+      ],
+      "level": "湖州建城史遗址",
+      "location": "湖州市南郊道场乡、市区",
+      "facts": [
+        "湖州建城始于战国末楚相春申君黄歇所立菰城县，今下菰城遗址为其治所。",
+        "秦始皇二十五年（前 222 年）改菰城县为乌程县，县治仍在菰城。",
+        "下菰城内城周长 1350 米，外城残长 2000 米，城垣全部用泥土夯筑。",
+        "子城最早为秦末项羽起兵前的屯兵之处，俗称“项王城”，后成为历代湖州衙署所在。"
+      ],
+      "fact_records": [
+        {
+          "text": "湖州建城始于战国末楚相春申君黄歇所立菰城县，今下菰城遗址为其治所。",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E6%B9%96%E5%B7%9E%E5%9F%8E%E6%B1%A0",
+          "source_title": "湖州城池",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-huzhouchengchi",
+          "evidence_quote": "戰國末，楚相春申君黃歇改封江東後，于吳墟西南立菰城縣，今下菰城遺址為菰城縣之治所。",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "秦始皇二十五年（前 222 年）改菰城县为乌程县，县治仍在菰城。",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E6%B9%96%E5%B7%9E%E5%9F%8E%E6%B1%A0",
+          "source_title": "湖州城池",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-huzhouchengchi",
+          "evidence_quote": "秦始皇二十五年（前222年），秦滅楚，改菰城縣為烏程縣，縣治仍設於斯",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "下菰城内城周长 1350 米，外城残长 2000 米，城垣全部用泥土夯筑。",
+          "fact_index": 2,
+          "source_url": "https://zh.wikipedia.org/wiki/%E6%B9%96%E5%B7%9E%E5%9F%8E%E6%B1%A0",
+          "source_title": "湖州城池",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-huzhouchengchi",
+          "evidence_quote": "下菰城內城居於外城東南隅，周長1350米……外城殘長2000米……城垣全部用泥土夯築而成。",
+          "fact_type": "archaeology",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "子城最早为秦末项羽起兵前的屯兵之处，俗称“项王城”，后成为历代湖州衙署所在。",
+          "fact_index": 3,
+          "source_url": "https://zh.wikipedia.org/wiki/%E6%B9%96%E5%B7%9E%E5%9F%8E%E6%B1%A0",
+          "source_title": "湖州城池",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-huzhouchengchi",
+          "evidence_quote": "子城最早爲秦末項羽起兵伐秦前的屯兵之處，俗稱「項王城」……子城遂成为历代湖州衙署所在。",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
+      ],
+      "cultural_significance": "湖州 2200 余年建城史的起点，从菰城到项王城的城址变迁。",
+      "keywords_en": [
+        "Huzhou ancient city",
+        "Xiagucheng site"
+      ],
+      "imagery": [
+        "下菰城土垣",
+        "护城河遗迹",
+        "田野与遗址",
+        "项王城旧址"
+      ],
+      "best_season": "春秋两季",
+      "micro_drama_hook": "湖州的第一座城，是用泥一层层夯出来的。",
+      "scenario_tags": [
+        "考古",
+        "城址",
+        "历史",
+        "人文"
+      ]
+    },
+    {
+      "id": "huz-changxing",
+      "type": "scenic",
+      "name": "长兴·顾渚山",
+      "aliases": [
+        "长兴县",
+        "顾渚山",
+        "大唐贡茶院"
+      ],
+      "level": "长兴县（湖州代管）",
+      "location": "湖州市长兴县",
+      "facts": [
+        "长兴县位于太湖西南岸，是浙江省最北部的行政区，处于苏浙皖交汇地带。",
+        "长兴古称长城，春秋时吴国夫概在此筑城，城形狭长，故名“长城”。",
+        "梁开平四年（910 年），吴越王钱镠为避讳改长城为长兴。",
+        "长兴三面环山、一臂挡湖，湖岸线长 31 公里，境内有顾渚山等风景区。",
+        "长兴有扬子鳄自然保护区、大唐贡茶院、南朝陈武帝故宫等景点。"
+      ],
+      "fact_records": [
+        {
+          "text": "长兴县位于太湖西南岸，是浙江省最北部的行政区，处于苏浙皖交汇地带。",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E9%95%BF%E5%85%B4%E5%8E%BF",
+          "source_title": "长兴县",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-changxing",
+          "evidence_quote": "长兴县位于太湖西南岸，是位于浙江省最北部的行政区，处于苏浙皖交汇地带",
+          "fact_type": "geography",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "长兴古称长城，春秋时吴国夫概在此筑城，城形狭长，故名“长城”。",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E9%95%BF%E5%85%B4%E5%8E%BF",
+          "source_title": "长兴县",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-changxing",
+          "evidence_quote": "长兴古称长城，春秋时吴国夫概在此筑城，城形狭长，故名“长城”。",
+          "fact_type": "toponymy",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "梁开平四年（910 年），吴越王钱镠为避讳改长城为长兴。",
+          "fact_index": 2,
+          "source_url": "https://zh.wikipedia.org/wiki/%E9%95%BF%E5%85%B4%E5%8E%BF",
+          "source_title": "长兴县",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-changxing",
+          "evidence_quote": "梁开平四年（910年），吴越王钱镠为避梁太祖父朱诚讳，改长城为长兴。",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "长兴三面环山、一臂挡湖，湖岸线长 31 公里，境内有顾渚山等风景区。",
+          "fact_index": 3,
+          "source_url": "https://zh.wikipedia.org/wiki/%E9%95%BF%E5%85%B4%E5%8E%BF",
+          "source_title": "长兴县",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-changxing",
+          "evidence_quote": "长兴县三面环山，一臂挡湖，湖岸线长达31公里，境内拥有环太湖旅游区，碧岩，香山，顾渚山等风景区。",
+          "fact_type": "geography",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "长兴有扬子鳄自然保护区、大唐贡茶院、南朝陈武帝故宫等景点。",
+          "fact_index": 4,
+          "source_url": "https://zh.wikipedia.org/wiki/%E9%95%BF%E5%85%B4%E5%8E%BF",
+          "source_title": "长兴县",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-changxing",
+          "evidence_quote": "长兴有扬子鳄自然保护区，大唐贡茶院，南朝陈武帝故宫等旅游景点。",
+          "fact_type": "venue",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
+      ],
+      "cultural_significance": "太湖南岸的县份，顾渚山是唐代贡茶产地与《茶经》成书背景地。",
+      "keywords_en": [
+        "Changxing Huzhou",
+        "Guzhu Mountain tea"
+      ],
+      "imagery": [
+        "顾渚山茶园",
+        "大唐贡茶院",
+        "太湖岸线",
+        "扬子鳄保护区"
+      ],
+      "best_season": "春季采茶",
+      "micro_drama_hook": "一条太湖岸线，一半是山，一半是茶。",
+      "scenario_tags": [
+        "县域",
+        "茶",
+        "太湖",
+        "历史"
+      ]
+    },
+    {
+      "id": "huz-person-luyu",
+      "type": "person",
+      "name": "陆羽与湖州茶事",
+      "aliases": [
+        "陆羽",
+        "茶圣",
+        "鸿渐"
+      ],
+      "level": "唐代茶学家，《茶经》作者",
+      "location": "湖州（隐居苕溪、顾渚山）",
+      "facts": [
+        "陆羽（733—803 年）是唐代茶学家，因著《茶经》被誉为“茶圣”。",
+        "唐上元初（760 年）陆羽至苕溪（今浙江湖州）隐居，在顾渚山与皎然、朱放等人论茶。",
+        "陆羽与皎然分别著有《茶经》和《茶诀》，当时以顾渚所产茶为第一。",
+        "《茶经》成书约在 760—780 年之间，此时陆羽主要隐居在湖州。"
+      ],
+      "fact_records": [
+        {
+          "text": "陆羽（733—803 年）是唐代茶学家，因著《茶经》被誉为“茶圣”。",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E9%99%B8%E7%BE%BD",
+          "source_title": "陆羽",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-luyu",
+          "evidence_quote": "陸羽（733年—803年冬季），字鴻漸、季疵……唐朝中期茶学家、学者。因著有世界第一部茶叶专著《茶经》而闻名于世……被誉为茶圣",
+          "fact_type": "person",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "唐上元初（760 年）陆羽至苕溪（今浙江湖州）隐居，在顾渚山与皎然、朱放等人论茶。",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E9%99%B8%E7%BE%BD",
+          "source_title": "陆羽",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-luyu",
+          "evidence_quote": "唐上元初（760年），至苕溪（今浙江湖州）隐居。在湖州的顾渚山，陆羽与皎然、朱放等人论茶。",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "陆羽与皎然分别著有《茶经》和《茶诀》，当时以顾渚所产茶为第一。",
+          "fact_index": 2,
+          "source_url": "https://zh.wikipedia.org/wiki/%E9%99%B8%E7%BE%BD",
+          "source_title": "陆羽",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-luyu",
+          "evidence_quote": "陆羽和皎然都是当时的茶叶名家，分别著有《茶经》和《茶诀》……当年陆氏与皎然、朱放等论茶，以顾渚为第一。",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "《茶经》成书约在 760—780 年之间，此时陆羽主要隐居在湖州。",
+          "fact_index": 3,
+          "source_url": "https://zh.wikipedia.org/wiki/%E8%8C%B6%E7%BB%8F",
+          "source_title": "茶经",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-chajing",
+          "evidence_quote": "《茶经》成书时间约在760—780年之间，此时陆羽主要隐居在湖州。",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
+      ],
+      "cultural_significance": "在湖州写出《茶经》的茶圣，顾渚山茶事的核心人物。",
+      "keywords_en": [
+        "Lu Yu tea sage",
+        "Chajing Classic of Tea"
+      ],
+      "imagery": [
+        "顾渚山茶园",
+        "《茶经》刻本",
+        "煎茶器具",
+        "苕溪水岸"
+      ],
+      "best_season": "春季",
+      "micro_drama_hook": "一部《茶经》，是在湖州的山里写完的。",
+      "scenario_tags": [
+        "人物",
+        "茶",
+        "唐代",
+        "人文"
+      ]
+    },
+    {
+      "id": "huz-person-jiaoran",
+      "type": "person",
+      "name": "皎然与杼山",
+      "aliases": [
+        "皎然",
+        "清昼",
+        "杼山妙喜寺"
+      ],
+      "level": "唐代诗僧，茶道提出者",
+      "location": "湖州杼山妙喜寺",
+      "facts": [
+        "皎然（约 720—799 年以后），俗姓谢，字清昼，吴兴郡（今湖州）人，唐代僧人、诗人。",
+        "皎然为谢灵运十世孙，中年后隐居家乡杼山妙喜寺，受戒出家。",
+        "皎然好饮茶，提出“茶道”，自称“三饮得道”。",
+        "皎然与陆羽有交往，并参与颜真卿《韵海镜源》编纂。"
+      ],
+      "fact_records": [
+        {
+          "text": "皎然（约 720—799 年以后），俗姓谢，字清昼，吴兴郡（今湖州）人，唐代僧人、诗人。",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E7%9A%8E%E7%84%B6",
+          "source_title": "皎然",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-jiaoran",
+          "evidence_quote": "皎然（約720年—約799年以後），俗姓謝，字清昼，吴兴郡（今浙江省湖州市）人……唐朝僧人、詩人。",
+          "fact_type": "person",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "皎然为谢灵运十世孙，中年后隐居家乡杼山妙喜寺，受戒出家。",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E7%9A%8E%E7%84%B6",
+          "source_title": "皎然",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-jiaoran",
+          "evidence_quote": "刘宋康乐县公谢灵运十世孙……中年以後隱居家鄉杼山妙喜寺（今湖州妙西），受戒出家",
+          "fact_type": "person",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "皎然好饮茶，提出“茶道”，自称“三饮得道”。",
+          "fact_index": 2,
+          "source_url": "https://zh.wikipedia.org/wiki/%E7%9A%8E%E7%84%B6",
+          "source_title": "皎然",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-jiaoran",
+          "evidence_quote": "好飲茶，提出「茶道」，自稱“三飲得道”",
+          "fact_type": "culture",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "皎然与陆羽有交往，并参与颜真卿《韵海镜源》编纂。",
+          "fact_index": 3,
+          "source_url": "https://zh.wikipedia.org/wiki/%E7%9A%8E%E7%84%B6",
+          "source_title": "皎然",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-jiaoran",
+          "evidence_quote": "與陆羽有交往……又參與顏真卿《韻海鏡源》之編纂",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
+      ],
+      "cultural_significance": "提出“茶道”二字的唐代诗僧，湖州茶文化的精神源头之一。",
+      "keywords_en": [
+        "Jiaoran monk Huzhou",
+        "tea ceremony Tang dynasty"
+      ],
+      "imagery": [
+        "杼山妙喜寺",
+        "茶席",
+        "诗碑",
+        "山间竹林"
+      ],
+      "best_season": "春季",
+      "micro_drama_hook": "“茶道”两个字，最早是一个湖州和尚说的。",
+      "scenario_tags": [
+        "人物",
+        "茶",
+        "唐代",
+        "诗僧"
+      ]
+    },
+    {
+      "id": "huz-person-chenqimei",
+      "type": "person",
+      "name": "陈其美与湖州",
+      "aliases": [
+        "陈其美",
+        "陈英士"
+      ],
+      "level": "辛亥革命元勋，湖州吴兴人",
+      "location": "湖州吴兴",
+      "facts": [
+        "陈其美（1878—1916 年），字英士，浙江吴兴人，青帮代表人物。",
+        "辛亥革命初期陈其美与黄兴同为孙中山的左右股肱。",
+        "1916 年 5 月 18 日，陈其美在上海法租界遇刺身亡。",
+        "陈其美与蒋介石关系密切，为蒋介石结义之兄。"
+      ],
+      "fact_records": [
+        {
+          "text": "陈其美（1878—1916 年），字英士，浙江吴兴人，青帮代表人物。",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E9%99%B3%E5%85%B6%E7%BE%8E",
+          "source_title": "陈其美",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-chenqimei",
+          "evidence_quote": "陳其美（1878年1月17日—1916年5月18日），字英士，号无为，男，浙江吳興人，青幫代表人物",
+          "fact_type": "person",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "辛亥革命初期陈其美与黄兴同为孙中山的左右股肱。",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E9%99%B3%E5%85%B6%E7%BE%8E",
+          "source_title": "陈其美",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-chenqimei",
+          "evidence_quote": "辛亥革命初期與黃興同為孫中山的左右股肱",
+          "fact_type": "person",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "1916 年 5 月 18 日，陈其美在上海法租界遇刺身亡。",
+          "fact_index": 2,
+          "source_url": "https://zh.wikipedia.org/wiki/%E9%99%B3%E5%85%B6%E7%BE%8E",
+          "source_title": "陈其美",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-chenqimei",
+          "evidence_quote": "1916年5月18日，在上海法租界遇刺身亡。",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "陈其美与蒋介石关系密切，为蒋介石结义之兄。",
+          "fact_index": 3,
+          "source_url": "https://zh.wikipedia.org/wiki/%E9%99%B3%E5%85%B6%E7%BE%8E",
+          "source_title": "陈其美",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-chenqimei",
+          "evidence_quote": "陳其美與蔣介石關係密切，為蔣介石結義之兄",
+          "fact_type": "person",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
+      ],
+      "cultural_significance": "辛亥革命时期的重要人物，湖州走出的革命元勋。",
+      "keywords_en": [
+        "Chen Qimei Huzhou",
+        "Chen Yingshi"
+      ],
+      "imagery": [
+        "陈其美墓",
+        "故居街巷",
+        "民国档案照",
+        "湖州老街"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "一个湖州人，把命留在了上海的法租界。",
+      "scenario_tags": [
+        "人物",
+        "近代",
+        "革命",
+        "民国"
+      ]
+    },
+    {
+      "id": "huz-person-shenyinmo",
+      "type": "person",
+      "name": "沈尹默与湖州",
+      "aliases": [
+        "沈尹默",
+        "沈君默"
+      ],
+      "level": "现代书法家，湖州吴兴人",
+      "location": "湖州吴兴",
+      "facts": [
+        "沈尹默（1883—1971 年），浙江吴兴（今湖州市吴兴区）人，中国书法家。",
+        "沈尹默出生于陕西汉阴厅，原名君默，字中，又字秋明。",
+        "沈尹默是早期尝试派诗人，在新文化运动时期有诗作发表。"
+      ],
+      "fact_records": [
+        {
+          "text": "沈尹默（1883—1971 年），浙江吴兴（今湖州市吴兴区）人，中国书法家。",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E6%B2%88%E5%B0%B9%E9%BB%98",
+          "source_title": "沈尹默",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-shenyinmo",
+          "evidence_quote": "沈尹默（1883年6月11日—1971年6月1日），原名君默，字中，又字秋明，号君墨……浙江吴兴（今浙江省湖州市吴兴区）人",
+          "fact_type": "person",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "沈尹默出生于陕西汉阴厅，原名君默，字中，又字秋明。",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E6%B2%88%E5%B0%B9%E9%BB%98",
+          "source_title": "沈尹默",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-shenyinmo",
+          "evidence_quote": "原名君默，字中，又字秋明，号君墨，别名匏瓜庵主人，男，浙江吴兴（今浙江省湖州市吴兴区）人，出生于陕西省汉阴厅",
+          "fact_type": "person",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "沈尹默是早期尝试派诗人，在新文化运动时期有诗作发表。",
+          "fact_index": 2,
+          "source_url": "https://zh.wikipedia.org/wiki/%E6%B2%88%E5%B0%B9%E9%BB%98",
+          "source_title": "沈尹默",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-shenyinmo",
+          "evidence_quote": "中国书法家，早期尝试派诗人。",
+          "fact_type": "art",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
+      ],
+      "cultural_significance": "以书法名世的湖州人，新文化运动时期的诗人。",
+      "keywords_en": [
+        "Shen Yinmo calligraphy",
+        "Shen Yinmo Huzhou"
+      ],
+      "imagery": [
+        "书法立轴",
+        "行书手札",
+        "湖州街巷",
+        "碑帖"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "字写得好的人，年轻时先写的是诗。",
+      "scenario_tags": [
+        "人物",
+        "书法",
+        "近代",
+        "人文"
+      ]
+    },
+    {
+      "id": "huz-person-qiansanqiang",
+      "type": "person",
+      "name": "钱三强与湖州",
+      "aliases": [
+        "钱三强",
+        "钱秉穹"
+      ],
+      "level": "核物理学家，“两弹一星”元勋",
+      "location": "湖州（吴越钱氏家族）",
+      "facts": [
+        "钱三强（1913—1992 年），浙江湖州人，中国原子核物理学家。",
+        "钱三强是中华人民共和国核科学的主要奠基人和核工业早期组织领导者。",
+        "钱三强出生于吴越钱氏家族，在“两弹一星”工程中贡献重大。",
+        "1999 年钱三强获中华人民共和国政府追封为“两弹一星元勋”。"
+      ],
+      "fact_records": [
+        {
+          "text": "钱三强（1913—1992 年），浙江湖州人，中国原子核物理学家。",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E9%8C%A2%E4%B8%89%E5%BC%B7",
+          "source_title": "钱三强",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-qiansanqiang",
+          "evidence_quote": "钱三强（1913年10月16日—1992年6月28日），原名钱秉穹，男，浙江湖州人，中国原子核物理学家",
+          "fact_type": "person",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "钱三强是中华人民共和国核科学的主要奠基人和核工业早期组织领导者。",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E9%8C%A2%E4%B8%89%E5%BC%B7",
+          "source_title": "钱三强",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-qiansanqiang",
+          "evidence_quote": "中华人民共和国核科学的主要奠基人和核工业早期组织领导者。",
+          "fact_type": "person",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "钱三强出生于吴越钱氏家族，在“两弹一星”工程中贡献重大。",
+          "fact_index": 2,
+          "source_url": "https://zh.wikipedia.org/wiki/%E9%8C%A2%E4%B8%89%E5%BC%B7",
+          "source_title": "钱三强",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-qiansanqiang",
+          "evidence_quote": "出生於吳越錢氏家族，“两弹一星”工程中貢獻重大",
+          "fact_type": "person",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "1999 年钱三强获中华人民共和国政府追封为“两弹一星元勋”。",
+          "fact_index": 3,
+          "source_url": "https://zh.wikipedia.org/wiki/%E9%8C%A2%E4%B8%89%E5%BC%B7",
+          "source_title": "钱三强",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-qiansanqiang",
+          "evidence_quote": "1999年獲中華人民共和國政府追封为“两弹一星元勋”。",
+          "fact_type": "designation",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
+      ],
+      "cultural_significance": "吴越钱氏后裔，中国核科学的奠基人之一。",
+      "keywords_en": [
+        "Qian Sanqiang nuclear physicist",
+        "Qian family Huzhou"
+      ],
+      "imagery": [
+        "钱三强故居",
+        "科研档案照",
+        "吴越钱氏家谱",
+        "湖州老街"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "一千年前吴越王的家族，一千年后出了个核物理学家。",
+      "scenario_tags": [
+        "人物",
+        "科学",
+        "近代",
+        "湖州"
+      ]
+    },
+    {
+      "id": "huz-person-xuchi",
+      "type": "person",
+      "name": "徐迟与南浔",
+      "aliases": [
+        "徐迟",
+        "徐商寿"
+      ],
+      "level": "报告文学作家，湖州南浔人",
+      "location": "湖州南浔",
+      "facts": [
+        "徐迟（1914—1996 年），浙江吴兴（今湖州市南浔区）人，中国现当代诗人、散文家、翻译家、报告文学作家。",
+        "徐迟原名徐商寿，笔名唐螂、史纲。"
+      ],
+      "fact_records": [
+        {
+          "text": "徐迟（1914—1996 年），浙江吴兴（今湖州市南浔区）人，中国现当代诗人、散文家、翻译家、报告文学作家。",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%BE%90%E8%BF%9F",
+          "source_title": "徐迟",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-xuchi",
+          "evidence_quote": "徐迟（1914年10月15日—1996年12月12日），原名徐商寿，笔名唐螂、史纲，男，浙江吴兴（今湖州市南浔区）人，中国现当代诗人、散文家、翻译家、报告文学作家。",
+          "fact_type": "person",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "徐迟原名徐商寿，笔名唐螂、史纲。",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%BE%90%E8%BF%9F",
+          "source_title": "徐迟",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-xuchi",
+          "evidence_quote": "原名徐商寿，笔名唐螂、史纲",
+          "fact_type": "person",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
+      ],
+      "cultural_significance": "南浔走出的报告文学作家。",
+      "keywords_en": [
+        "Xu Chi writer Nanxun",
+        "reportage literature"
+      ],
+      "imagery": [
+        "南浔老街",
+        "书桌与手稿",
+        "旧版书影"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "南浔的巷子里，走出过写科学家的作家。",
+      "scenario_tags": [
+        "人物",
+        "文学",
+        "近代",
+        "南浔"
+      ]
+    },
+    {
+      "id": "huz-person-yupingbo",
+      "type": "person",
+      "name": "俞平伯与德清",
+      "aliases": [
+        "俞平伯",
+        "俞铭衡"
+      ],
+      "level": "红学家，湖州德清人",
+      "location": "湖州德清",
+      "facts": [
+        "俞平伯（1900—1990 年），浙江德清人，中国现代诗人、作家、红学家。",
+        "俞平伯原名俞铭衡，清代朴学大师俞樾曾孙。",
+        "1950 年代之后，俞平伯与赵景深在昆曲界合称“南赵北俞”。"
+      ],
+      "fact_records": [
+        {
+          "text": "俞平伯（1900—1990 年），浙江德清人，中国现代诗人、作家、红学家。",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E4%BF%9E%E5%B9%B3%E4%BC%AF",
+          "source_title": "俞平伯",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-yupingbo",
+          "evidence_quote": "俞平伯（1900年1月8日—1990年10月15日），原名俞铭衡……浙江德清人……中国现代诗人、作家、红学家。",
+          "fact_type": "person",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "俞平伯原名俞铭衡，清代朴学大师俞樾曾孙。",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E4%BF%9E%E5%B9%B3%E4%BC%AF",
+          "source_title": "俞平伯",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-yupingbo",
+          "evidence_quote": "原名俞铭衡，乳名僧宝，字平伯，以字行……清代朴学大师俞樾曾孙。",
+          "fact_type": "person",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "1950 年代之后，俞平伯与赵景深在昆曲界合称“南赵北俞”。",
+          "fact_index": 2,
+          "source_url": "https://zh.wikipedia.org/wiki/%E4%BF%9E%E5%B9%B3%E4%BC%AF",
+          "source_title": "俞平伯",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-yupingbo",
+          "evidence_quote": "在1950年代之後，他與趙景深在昆曲界合稱“南趙北俞”。",
+          "fact_type": "culture",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
+      ],
+      "cultural_significance": "德清俞氏一门学术传统的延续者，红学与昆曲研究的重镇。",
+      "keywords_en": [
+        "Yu Pingbo Redology",
+        "Yu family Deqing"
+      ],
+      "imagery": [
+        "德清老宅",
+        "手稿与书影",
+        "昆曲曲谱"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "一门几代人，读的是同一部书。",
+      "scenario_tags": [
+        "人物",
+        "红学",
+        "近代",
+        "德清"
+      ]
+    },
+    {
+      "id": "huz-person-wujun",
+      "type": "person",
+      "name": "吴均与安吉",
+      "aliases": [
+        "吴均",
+        "吴叔庠"
+      ],
+      "level": "南朝梁史家、文学家",
+      "location": "湖州安吉（吴兴故鄣）",
+      "facts": [
+        "吴均（469—520 年），字叔庠，吴兴故鄣（今浙江安吉）人。",
+        "吴均是南朝梁史家及文学家，时官吴兴主簿。",
+        "明人辑有《吴朝请集》。"
+      ],
+      "fact_records": [
+        {
+          "text": "吴均（469—520 年），字叔庠，吴兴故鄣（今浙江安吉）人。",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%90%B4%E5%9D%87",
+          "source_title": "吴均",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-wujun",
+          "evidence_quote": "吳均（469年—520年），字叔庠，吴兴故鄣（今浙江安吉）人。",
+          "fact_type": "person",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "吴均是南朝梁史家及文学家，时官吴兴主簿。",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%90%B4%E5%9D%87",
+          "source_title": "吴均",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-wujun",
+          "evidence_quote": "南朝梁史家及文学家，時官吴兴主簿。",
+          "fact_type": "person",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "明人辑有《吴朝请集》。",
+          "fact_index": 2,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%90%B4%E5%9D%87",
+          "source_title": "吴均",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-wujun",
+          "evidence_quote": "明人辑有《吴朝請集》。",
+          "fact_type": "literature",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
+      ],
+      "cultural_significance": "南朝梁的史家与文学家，安吉人文谱系的早期人物。",
+      "keywords_en": [
+        "Wu Jun Liang dynasty",
+        "Wu Jun Anji"
+      ],
+      "imagery": [
+        "安吉山野",
+        "古籍书影",
+        "竹林"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "一千五百年前，安吉就出过写史的人。",
+      "scenario_tags": [
+        "人物",
+        "文学",
+        "南朝",
+        "安吉"
+      ]
+    },
+    {
+      "id": "huz-city",
+      "type": "scenic",
+      "name": "湖州古城",
+      "aliases": [
+        "湖州",
+        "吴兴",
+        "菰城"
+      ],
+      "level": "国家历史文化名城",
+      "location": "浙江省北部、太湖南岸",
+      "facts": [
+        "湖州古称乌程、吴兴，地处太湖南岸，是浙北丘陵区与杭嘉湖平原的交接带。",
+        "东苕溪、西苕溪自南往北流贯湖州，于城区汇合成苕溪注入太湖。",
+        "湖州是国家历史文化名城，长江三角洲城市群成员。",
+        "湖州是世界丝绸文明的发祥地之一、中国四大绸都之一，素有“湖丝衣天下”之说。"
+      ],
+      "fact_records": [
+        {
+          "text": "湖州古称乌程、吴兴，地处太湖南岸，是浙北丘陵区与杭嘉湖平原的交接带。",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E6%B9%96%E5%B7%9E%E5%B8%82",
+          "source_title": "湖州市",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-huzhou",
+          "evidence_quote": "湖州市……简称湖，古称乌程、吴兴，是中华人民共和国浙江省下轄的地級市……地处太湖南岸，浙北丘陵区与杭嘉湖平原交接带。",
+          "fact_type": "geography",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "东苕溪、西苕溪自南往北流贯湖州，于城区汇合成苕溪注入太湖。",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E6%B9%96%E5%B7%9E%E5%B8%82",
+          "source_title": "湖州市",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-huzhou",
+          "evidence_quote": "东苕溪、西苕溪自南往北流贯，于城区汇合成苕溪注入太湖",
+          "fact_type": "geography",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "湖州是国家历史文化名城，长江三角洲城市群成员。",
+          "fact_index": 2,
+          "source_url": "https://zh.wikipedia.org/wiki/%E6%B9%96%E5%B7%9E%E5%B8%82",
+          "source_title": "湖州市",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-huzhou",
+          "evidence_quote": "湖州是国家历史文化名城，长江三角洲城市群成员",
+          "fact_type": "designation",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "湖州是世界丝绸文明的发祥地之一、中国四大绸都之一，素有“湖丝衣天下”之说。",
+          "fact_index": 3,
+          "source_url": "https://zh.wikipedia.org/wiki/%E6%B9%96%E5%B7%9E%E5%B8%82",
+          "source_title": "湖州市",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-huzhou",
+          "evidence_quote": "亦是蠶鄉，世界絲綢文明的發祥地之一，中國四大綢都之一，素有“湖絲衣天下”之說。",
+          "fact_type": "culture",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
+      ],
+      "cultural_significance": "太湖南岸的历史文化名城，丝绸、湖笔与茶事共同构成的城市底色。",
+      "keywords_en": [
+        "Huzhou ancient city",
+        "Wuxing Huzhou"
+      ],
+      "imagery": [
+        "苕溪与桥",
+        "衣裳街老城",
+        "飞英塔天际线",
+        "太湖岸线"
+      ],
+      "best_season": "春秋两季",
+      "micro_drama_hook": "一座城，两条苕溪，一湖在望。",
+      "scenario_tags": [
+        "城市",
+        "历史",
+        "水乡",
+        "人文"
+      ]
+    },
+    {
+      "id": "huz-nanxun-district",
+      "type": "scenic",
+      "name": "南浔区·頔塘故道",
+      "aliases": [
+        "南浔区",
+        "頔塘",
+        "頔塘故道"
+      ],
+      "level": "湖州市辖区（含大运河頔塘段）",
+      "location": "湖州市南浔区",
+      "facts": [
+        "南浔区于 2003 年 1 月经国务院批准设立，区域面积 716 平方公里。",
+        "南浔区北濒太湖、东接江苏苏州，距上海、苏州、杭州均约 100 公里。",
+        "頔塘是自湖州市区经南浔镇至江苏平望镇的运河，位于杭嘉湖平原西北。",
+        "南浔区辖 9 个镇、1 个省级经济开发区，区政府驻南浔镇人瑞路 601 号。"
+      ],
+      "fact_records": [
+        {
+          "text": "南浔区于 2003 年 1 月经国务院批准设立，区域面积 716 平方公里。",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%8D%97%E6%B5%94%E5%8C%BA",
+          "source_title": "南浔区",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-nanxunqu",
+          "evidence_quote": "南潯區是中國浙江省湖州市下轄的一個區，於2003年1月經國務院批准設立……區域面積716平方公里",
+          "fact_type": "geography",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "南浔区北濒太湖、东接江苏苏州，距上海、苏州、杭州均约 100 公里。",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%8D%97%E6%B5%94%E5%8C%BA",
+          "source_title": "南浔区",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-nanxunqu",
+          "evidence_quote": "南潯區北瀕太湖，東接江蘇省蘇州市，地處長三角城市群的中心腹地，距離上海、蘇州、杭州等大城市均為100公里左右",
+          "fact_type": "geography",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "頔塘是自湖州市区经南浔镇至江苏平望镇的运河，位于杭嘉湖平原西北。",
+          "fact_index": 2,
+          "source_url": "https://zh.wikipedia.org/wiki/%E9%A0%94%E5%A1%98",
+          "source_title": "頔塘",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-ditang",
+          "evidence_quote": "頔（dí）塘为位于中国太湖流域杭嘉湖平原西北、自浙江省湖州市市区经南浔镇至江苏省平望镇的运河。",
+          "fact_type": "geography",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "南浔区辖 9 个镇、1 个省级经济开发区，区政府驻南浔镇人瑞路 601 号。",
+          "fact_index": 3,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%8D%97%E6%B5%94%E5%8C%BA",
+          "source_title": "南浔区",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-nanxunqu",
+          "evidence_quote": "轄9個鎮、1個省級經濟開發區，區人民政府駐南潯鎮人瑞路601號。",
+          "fact_type": "geography",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
+      ],
+      "cultural_significance": "南浔古镇所在的区，頔塘故道串起湖州与江南运河网络。",
+      "keywords_en": [
+        "Nanxun district Huzhou",
+        "Ditang canal"
+      ],
+      "imagery": [
+        "頔塘河道",
+        "运河驳岸",
+        "南浔镇街",
+        "桑地与水面"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "一条运河，把镇子和更大的世界连了起来。",
+      "scenario_tags": [
+        "水乡",
+        "运河",
+        "地理",
+        "南浔"
+      ]
+    },
+    {
+      "id": "huz-shanlian",
+      "type": "scenic",
+      "name": "善琏镇",
+      "aliases": [
+        "善琏镇",
+        "善琏湖笔之乡"
+      ],
+      "level": "江南水乡重镇（湖笔产地）",
+      "location": "湖州市南浔区善琏镇",
+      "facts": [
+        "善琏镇是浙江北部湖州市南浔区的一个镇，江南水乡重镇之一，面积 55 平方公里。",
+        "善琏镇历史上以生产优质毛笔著名，善琏湖笔为毛笔中的名品。",
+        "现今善琏当地仍有毛笔产业。"
+      ],
+      "fact_records": [
+        {
+          "text": "善琏镇是浙江北部湖州市南浔区的一个镇，江南水乡重镇之一，面积 55 平方公里。",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%96%84%E7%90%8F%E9%95%87",
+          "source_title": "善琏镇",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-shanlian",
+          "evidence_quote": "善璉鎮，浙江省北部湖州市南潯區的一個鎮，江南水鄉重鎮之一",
+          "fact_type": "geography",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "善琏镇历史上以生产优质毛笔著名，善琏湖笔为毛笔中的名品。",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%96%84%E7%90%8F%E9%95%87",
+          "source_title": "善琏镇",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-shanlian",
+          "evidence_quote": "歷史上以生產優質毛筆著名。善璉湖筆為毛筆中的名品。",
+          "fact_type": "craft",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "现今善琏当地仍有毛笔产业。",
+          "fact_index": 2,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%96%84%E7%90%8F%E9%95%87",
+          "source_title": "善琏镇",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-shanlian",
+          "evidence_quote": "現今當地仍有毛筆產業。",
+          "fact_type": "craft",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
+      ],
+      "cultural_significance": "湖笔的原产地，仍在做笔的水乡小镇。",
+      "keywords_en": [
+        "Shanlian town Huzhou",
+        "Shanlian brush town"
+      ],
+      "imagery": [
+        "笔庄作坊",
+        "水盆工序",
+        "小镇河道",
+        "老街门面"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "这个镇的招牌，是一支笔。",
+      "scenario_tags": [
+        "手工艺",
+        "水乡",
+        "非遗",
+        "小镇"
+      ]
+    },
+    {
+      "id": "huz-hu-zhou-fu",
+      "type": "scenic",
+      "name": "湖州府城",
+      "aliases": [
+        "湖州府",
+        "府城"
+      ],
+      "level": "明清湖州府治所",
+      "location": "湖州市区",
+      "facts": [
+        "湖州府是中国古代的府，从元朝开始先后隶属江浙行省、南直隶、浙江省。",
+        "湖州府为“下三府”之一，辖境相当于今浙江省湖州市全境。",
+        "湖州府于 1912 年废。"
+      ],
+      "fact_records": [
+        {
+          "text": "湖州府是中国古代的府，从元朝开始先后隶属江浙行省、南直隶、浙江省。",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E6%B9%96%E5%B7%9E%E5%BA%9C",
+          "source_title": "湖州府",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-huzhoufu",
+          "evidence_quote": "湖州府，中國古代的府。从元朝开始先后隸屬於江浙行省、南直隶、浙江省",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "湖州府为“下三府”之一，辖境相当于今浙江省湖州市全境。",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E6%B9%96%E5%B7%9E%E5%BA%9C",
+          "source_title": "湖州府",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-huzhoufu",
+          "evidence_quote": "「下三府」之一。轄境相當今浙江省湖州市全境。",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "湖州府于 1912 年废。",
+          "fact_index": 2,
+          "source_url": "https://zh.wikipedia.org/wiki/%E6%B9%96%E5%B7%9E%E5%BA%9C",
+          "source_title": "湖州府",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-huzhoufu",
+          "evidence_quote": "1912年廢。",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
+      ],
+      "cultural_significance": "元明清三代湖州府的行政建制，今湖州城市格局的来源。",
+      "keywords_en": [
+        "Huzhou prefecture",
+        "Huzhou fu"
+      ],
+      "imagery": [
+        "府城墙遗迹",
+        "衙署旧址",
+        "老城街巷"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "一个“府”字，用了六百年。",
+      "scenario_tags": [
+        "历史",
+        "行政",
+        "古城",
+        "人文"
+      ]
+    },
+    {
+      "id": "huz-taihu-sanbai",
+      "type": "cuisine",
+      "name": "太湖三白",
+      "aliases": [
+        "太湖三白",
+        "白鱼",
+        "白虾",
+        "银鱼"
+      ],
+      "level": "太湖传统水产",
+      "location": "湖州市太湖水域",
+      "facts": [
+        "银鱼科通称银鱼，古称脍残鱼，主要出产于中国。",
+        "太湖出产的银鱼与白鱼、白虾并称“太湖三白”。",
+        "银鱼可供鲜食用或晒鱼干。"
+      ],
+      "fact_records": [
+        {
+          "text": "银鱼科通称银鱼，古称脍残鱼，主要出产于中国。",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E9%93%B6%E9%B1%BC%E7%A7%91",
+          "source_title": "银鱼科",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-yinyu",
+          "evidence_quote": "银鱼科（学名：Salangidae）通称银鱼，古称脍残鱼……主要出产于中国。",
+          "fact_type": "nature",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "太湖出产的银鱼与白鱼、白虾并称“太湖三白”。",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E9%93%B6%E9%B1%BC%E7%A7%91",
+          "source_title": "银鱼科",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-yinyu",
+          "evidence_quote": "太湖出产的银鱼与白鱼、白虾并称太湖三白。",
+          "fact_type": "cuisine",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "银鱼可供鲜食用或晒鱼干。",
+          "fact_index": 2,
+          "source_url": "https://zh.wikipedia.org/wiki/%E9%93%B6%E9%B1%BC%E7%A7%91",
+          "source_title": "银鱼科",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-yinyu",
+          "evidence_quote": "银鱼可供鲜食用或晒鱼干。",
+          "fact_type": "cuisine",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
+      ],
+      "cultural_significance": "太湖水系的代表水产组合，湖州餐桌的地理标签。",
+      "keywords_en": [
+        "Taihu three whites",
+        "Taihu silver fish"
+      ],
+      "imagery": [
+        "银鱼入网",
+        "白虾特写",
+        "渔家灶台",
+        "太湖晨雾"
+      ],
+      "best_season": "春秋两季",
+      "micro_drama_hook": "湖里最白的三样东西，是湖州人的家常。",
+      "scenario_tags": [
+        "美食",
+        "水产",
+        "太湖",
+        "湖州"
       ]
     }
   ]

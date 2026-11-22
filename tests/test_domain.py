@@ -13,7 +13,8 @@ class DomainTests(unittest.TestCase):
         self.assertEqual(value.city, "杭州")
         self.assertEqual(value.output_resolution, "1080x1920")
         self.assertEqual(value.fps, 30)
-        self.assertEqual(value.music_ducking, "轻微")
+        # PR #3 把默认 ducking 从「轻微」改为「不压低」（保持音量不变，推荐）
+        self.assertEqual(value.music_ducking, "不压低")
         self.assertEqual(value.asset_source, "configured")
         self.assertEqual(value.shot_count, 0)
         with self.assertRaises(ValueError):

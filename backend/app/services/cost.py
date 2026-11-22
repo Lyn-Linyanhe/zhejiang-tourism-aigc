@@ -1,11 +1,4 @@
-"""成本台账。
-
-数据源只有各 provider 上报的 cost（契约已定义）。最贵的调用是画面生成，
-所以把每次调用的 cost 加总，不在这里另算单价。
-
-本文件是合并产物：P2 的按次台账（CostLedger / sum_costs）与 P1 的按 slot
-汇总（summarize_cost）各服务一端，二者都保留。
-"""
+"""Provider-reported cost summaries, kept separate from billing records."""
 
 from __future__ import annotations
 
@@ -105,27 +98,100 @@ class CostLedger:
 
 
 def summarize_cost(task: dict[str, Any]) -> dict[str, Any]:
-    """Summarize provider-reported costs without assuming a billing currency."""
+    """Summarize only amounts explicitly reported by providers.
+
+    A missing amount is never interpreted as a free call. Provider totals have
+    no implied currency and are distinct from manually entered billing records.
+    """
     by_slot = {"llm": 0.0, "asset": 0.0, "audio": 0.0, "render": 0.0}
     type_to_slot = {
         "llm": "llm", "asset": "asset", "image": "asset", "video": "asset",
-        "tts": "audio", "music": "audio", "render": "render",
+        "tts": "audio", "music": "audio", "audio": "audio", "render": "render",
     }
     events = (task.get("trace") or {}).get("events") or []
+    billable_events: list[dict[str, Any]] = []
     for event in events:
         if not isinstance(event, dict):
             continue
         slot = str(event.get("slot") or type_to_slot.get(str(event.get("type", "")), ""))
         if slot not in by_slot:
             continue
-        try:
-            by_slot[slot] += max(0.0, float(event.get("cost", 0) or 0))
-        except (TypeError, ValueError):
+        # Stage and fallback events are operational metadata, not billable calls.
+        if str(event.get("type", "")) not in type_to_slot and not event.get("billable"):
             continue
-    rounded = {key: round(value, 6) for key, value in by_slot.items()}
+        billable_events.append(event)
+
+    reported_total = 0.0
+    missing_count = 0
+    reported_count = 0
+    for event in billable_events:
+        if "cost" not in event or event.get("cost_reported") is not True:
+            missing_count += 1
+            continue
+        try:
+            amount = float(event["cost"])
+        except (TypeError, ValueError):
+            missing_count += 1
+            continue
+        if amount < 0:
+            missing_count += 1
+            continue
+        slot = str(event.get("slot") or type_to_slot.get(str(event.get("type", "")), ""))
+        by_slot[slot] += amount
+        reported_total += amount
+        reported_count += 1
+
+    if not billable_events or reported_count == 0:
+        amount_status = "not_reported"
+    elif missing_count:
+        amount_status = "incomplete"
+    else:
+        amount_status = "reported"
+    rounded_slots = {key: round(value, 6) for key, value in by_slot.items()}
     return {
-        "total": round(sum(rounded.values()), 6),
-        "by_slot": rounded,
+        "amount_status": amount_status,
+        "total": round(reported_total, 6) if amount_status == "reported" else None,
+        "reported_total": round(reported_total, 6),
+        "by_slot": rounded_slots,
+        "currency": None,
         "unit": "provider-reported",
-        "complete": all("cost" in event for event in events if isinstance(event, dict) and event.get("type") in type_to_slot),
+        "complete": amount_status == "reported",
+        "reported_event_count": reported_count,
+        "missing_event_count": missing_count,
+    }
+
+
+def summarize_billing(records: list[dict[str, Any]] | None) -> dict[str, Any]:
+    """Group manually documented actual charges by currency; never mix currencies."""
+    totals: dict[str, float] = {}
+    for record in records or []:
+        currency = str(record.get("currency") or "")
+        if not currency:
+            continue
+        totals[currency] = totals.get(currency, 0.0) + float(record.get("amount", 0) or 0)
+    return {
+        "records": list(records or []),
+        "by_currency": {currency: round(amount, 6) for currency, amount in sorted(totals.items())},
+        "source": "manually-documented-billing",
+    }
+
+
+def summarize_execution(task: dict[str, Any]) -> dict[str, Any]:
+    runs = [dict(run) for run in task.get("execution_runs") or [] if isinstance(run, dict)]
+    total = sum(max(0.0, float(run.get("duration_seconds", 0) or 0)) for run in runs)
+    return {
+        "runs": runs,
+        "completed_run_count": sum(1 for run in runs if run.get("status") == "completed"),
+        "failed_run_count": sum(1 for run in runs if run.get("status") == "failed"),
+        "total_seconds": round(total, 3) if runs else None,
+        "last_seconds": round(float(runs[-1]["duration_seconds"]), 3) if runs and "duration_seconds" in runs[-1] else None,
+    }
+
+
+def summarize_task_metrics(task: dict[str, Any]) -> dict[str, Any]:
+    return {
+        "cost": summarize_cost(task),
+        "billing": summarize_billing(task.get("billing_records")),
+        "execution": summarize_execution(task),
+        "publication_observations": list(task.get("publication_observations") or []),
     }

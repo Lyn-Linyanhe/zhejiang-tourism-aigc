@@ -242,6 +242,15 @@ class PexelsAssetProvider(StockProvider):
                     "height": selected.get("height"),
                     "quality": selected.get("quality", ""),
                 },
+                "provenance": {
+                    "classification": "external-candidate", "entity_id": str(shot.get("entity_id") or ""),
+                    "shot_tags": [shot["shot_tag"]] if shot.get("shot_tag") else [],
+                    "source_url": str(video.get("url") or ""), "source_title": str(video.get("alt") or ""),
+                    "source_publisher": "Pexels", "author": str(user.get("name") or "Pexels contributor"),
+                    "license": "Pexels License", "license_url": "https://www.pexels.com/license/",
+                    "license_status": "pending", "review_status": "pending", "allowed_usages": ["preview"],
+                    "search_query": query,
+                },
                 "event": {"type": "asset", "provider": self.name, "shot_id": shot.get("id"), "media_type": "video"},
             }
         raise RuntimeError("Pexels videos had no downloadable file")
@@ -279,6 +288,15 @@ class PexelsAssetProvider(StockProvider):
             "model": "pexels-photo-search",
             "prompt": query,
             "provider_metadata": {"pexels_id": photo.get("id"), "pexels_url": photo.get("url", "")},
+            "provenance": {
+                "classification": "external-candidate", "entity_id": str(shot.get("entity_id") or ""),
+                "shot_tags": [shot["shot_tag"]] if shot.get("shot_tag") else [],
+                "source_url": str(photo.get("url") or ""), "source_title": str(photo.get("alt") or ""),
+                "source_publisher": "Pexels", "author": str(photo.get("photographer") or "Pexels contributor"),
+                "license": "Pexels License", "license_url": "https://www.pexels.com/license/",
+                "license_status": "pending", "review_status": "pending", "allowed_usages": ["preview"],
+                "search_query": query,
+            },
             "event": {"type": "asset", "provider": self.name, "shot_id": shot.get("id"), "media_type": "image"},
         }
 

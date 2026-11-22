@@ -90,6 +90,10 @@ class RenderingTests(unittest.TestCase):
                 capture_output=True, text=True, check=True,
             )
             self.assertEqual(json.loads(probe.stdout)["streams"][0]["channels"], 2)
+            ass = (root / "media" / "task_test" / "subtitles.ass").read_text(encoding="utf-8-sig")
+            self.assertIn("PlayResX: 720", ass)
+            self.assertIn("PlayResY: 1280", ass)
+            self.assertIn("测试字幕", ass)
 
     def test_renderer_can_render_without_audio_when_user_disables_voice(self):
         with tempfile.TemporaryDirectory() as directory:

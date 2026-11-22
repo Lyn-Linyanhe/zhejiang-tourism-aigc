@@ -1,162 +1,287 @@
-"""Generate a West Lake sample via preview, edit, generate; --online verifies real stock footage."""
+"""30 秒离线西湖成片验收。走产品路径，不另写一套 ffmpeg 演示。
 
-import argparse
+从任意工作目录运行：
+
+    python path/to/scripts/accept_offline_30s.py
+
+配音用 tts.build_audio 的真实 cues。镜头时长由
+Orchestrator.apply_audio_durations 反推并锁到 30 秒。成片由
+VideoRenderer.render 写出。配音长于 30 秒时按现有规则裁到 30，不把成片拉长。
+字幕用 cues 的绝对时间，最后一条不超过 30。
+
+edge-tts 不可用时退出码非 0，不用静音假装对齐。
+标准输出一行 JSON。container / video / audio 都在 29.95 到 30.05 才退出码 0。
+"""
+
+from __future__ import annotations
+
 import json
-import re
 import subprocess
 import sys
-import time
-from dataclasses import replace
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from backend.app.config import settings
-from backend.app.models import TaskInput
-from backend.app.services.orchestrator import Orchestrator
-from backend.app.storage import Storage
 
-SHOTS = [
-    ("湖边出发", "杭州西湖，沿着湖岸慢慢走。"),
-    ("湖面山影", "远处的山，映在西湖的水面上。"),
-    ("湖上慢游", "一阵微风吹过，水面泛起波纹。"),
-    ("沿岸望湖", "沿着岸边走一段，再回头望望。"),
-    ("湖畔停留", "找个地方坐下，听一听湖边的声音。"),
-    ("西湖再见", "离开杭州以前，把这一眼西湖带走。"),
-]
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from backend.app.config import Settings  # noqa: E402
+from backend.app.models import Shot, Task, TaskInput  # noqa: E402
+from backend.app.providers.media import OfflineAssetProvider, PexelsAssetProvider  # noqa: E402
+from backend.app.providers.tts import build_audio  # noqa: E402
+from backend.app.services.orchestrator import Orchestrator  # noqa: E402
+from backend.app.services.renderer import VideoRenderer  # noqa: E402
 
 
-def run(online):
-    cfg = replace(settings, default_provider="offline",
-                  subtitle_alignment="auto" if online else "sentence")
-    app = Orchestrator(cfg, Storage(cfg.db_path))
-    task = app.create_preview(
-        TaskInput.from_dict(
-            dict(
-                city="杭州",
-                landmark="西湖",
-                theme="杭州西湖漫游",
-                shot_count=6,
-                duration=30,
-                style="诗意纪实",
-                voice="Windows 系统语音",
-                voice_engine="windows",
-                music_mood="舒缓",
-                asset_source="stock" if online else "offline",
-            )
-        )
+WIDTH = 720
+HEIGHT = 1280
+FPS = 25
+DURATION = 30
+MOOD = "雅致"
+
+SHOTS = (
+    ("shot_1", "苏堤春晓", "苏堤新柳拂过薄雾里的西湖，游船还没出港。", "苏堤春晓，柳色初齐。"),
+    ("shot_2", "断桥残雪", "断桥石栏还留着一层薄霜，远处保俶塔隐在晨雾中。", "断桥残雪，塔影依稀。"),
+    ("shot_3", "白堤闲步", "白堤两侧桃花才露一点粉，行人走得很慢。", "白堤闲步，花事未浓。"),
+    ("shot_4", "三潭印月", "三座石塔立在湖心，倒影被细浪轻轻拉开。", "三潭印月，塔影入波。"),
+    ("shot_5", "雷峰夕照", "雷峰塔在暖色里慢慢沉下去，湖面接住最后一点光。", "雷峰夕照，余光停在湖上。"),
+    ("shot_6", "平湖秋月", "平湖秋月的石栏外，一轮淡月已经悬在对岸山影上。", "平湖秋月，月色刚刚落下。"),
+)
+
+
+def _probe(path: Path, select: str) -> float:
+    result = subprocess.run(
+        [
+            "ffprobe",
+            "-v",
+            "error",
+            "-select_streams",
+            select,
+            "-show_entries",
+            "format=duration" if select == "a" else "stream=duration",
+            "-of",
+            "default=noprint_wrappers=1:nokey=1",
+            str(path),
+        ],
+        text=True,
+        capture_output=True,
+        check=False,
     )
-    if len(task.shots) != 6:
-        raise RuntimeError(task.error or "脚本没有生成六镜")
-    for shot, (title, narration) in zip(task.shots, SHOTS):
-        app.update_shot(
-            task.id,
-            shot.id,
-            dict(
+    values = []
+    for line in (result.stdout or "").splitlines():
+        try:
+            values.append(float(line.strip()))
+        except ValueError:
+            continue
+    return max(values) if values else 0.0
+
+
+def _probe_container(path: Path) -> float:
+    result = subprocess.run(
+        [
+            "ffprobe",
+            "-v",
+            "error",
+            "-show_entries",
+            "format=duration",
+            "-of",
+            "default=noprint_wrappers=1:nokey=1",
+            str(path),
+        ],
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+    try:
+        return float((result.stdout or "").strip())
+    except ValueError:
+        return 0.0
+
+
+def _srt_last_end(path: Path) -> float:
+    text = path.read_text(encoding="utf-8")
+    last = 0.0
+    for line in text.splitlines():
+        if "-->" not in line:
+            continue
+        stamp = line.split("-->", 1)[1].strip().split()[0]
+        hours, minutes, rest = stamp.split(":")
+        seconds, millis = rest.split(",")
+        value = int(hours) * 3600 + int(minutes) * 60 + int(seconds) + int(millis) / 1000
+        last = max(last, value)
+    return round(last, 3)
+
+
+def _fail(reason: str) -> int:
+    print(json.dumps({"ok": False, "reason": reason}, ensure_ascii=False))
+    return 1
+
+
+def main() -> int:
+    settings = Settings()
+    out_dir = settings.media_dir / "accept_30s"
+    out_dir.mkdir(parents=True, exist_ok=True)
+    assets_dir = out_dir / "assets"
+    assets_dir.mkdir(parents=True, exist_ok=True)
+
+    task_input = TaskInput.from_dict(
+        {
+            "city": "杭州",
+            "landmark": "西湖",
+            "theme": "西湖六景",
+            "culture": "宋韵",
+            "duration": DURATION,
+            "style": "诗意纪实",
+            "voice": "女声",
+            "music_mood": MOOD,
+            "shot_count": 6,
+            "asset_source": "offline",
+            "output_resolution": f"{WIDTH}x{HEIGHT}",
+            "fps": FPS,
+            "include_subtitles": True,
+            "include_ai_label": True,
+        }
+    )
+    shots = []
+    for index, (shot_id, title, visual, narration) in enumerate(SHOTS, start=1):
+        shots.append(
+            Shot(
+                id=shot_id,
+                order=index,
+                duration_sec=round(DURATION / len(SHOTS), 3),
                 title=title,
-                visual_prompt="杭州西湖，" + title,
+                visual_prompt=visual,
                 narration=narration,
                 subtitle=narration,
-            ),
+                transition=("fade", "dissolve", "slideleft", "slideright", "zoom", "fade")[index - 1],
+            )
         )
-    app.update_draft(
-        task.id,
-        dict(title="杭州西湖 · 沿湖慢行", narration="".join(s for _, s in SHOTS)),
+    task = Task(
+        id="accept_30s",
+        input=task_input,
+        title="西湖六景",
+        narration="".join(item[3] for item in SHOTS),
+        shots=shots,
     )
-    app.generate(task.id)
-    print(task.id, flush=True)
-    while True:
-        state = app.storage.get_task(task.id)
-        if state["status"] in {"completed", "failed"}:
-            break
-        time.sleep(1)
-    if state["status"] == "failed":
-        raise RuntimeError(state["error"])
-    folder = cfg.media_dir / task.id
-    info = json.loads(
-        subprocess.check_output(
-            [
-                "ffprobe",
-                "-v",
-                "error",
-                "-show_streams",
-                "-show_format",
-                "-of",
-                "json",
-                str(folder / "final.mp4"),
-            ]
-        )
-    )
-    durations = {s["codec_type"]: float(s["duration"]) for s in info["streams"]}
-    durations["container"] = float(info["format"]["duration"])
-    durations_ok = all(
-        abs(durations[k] - 30) <= 0.08 for k in ("video", "audio", "container")
-    )
-    footage = [
-        a
-        for a in state["assets"]
-        if a["media_type"] == "video"
-        and a["source"] in {"pixabay", "pexels"}
-        and a.get("page_url")
-    ]
-    stream_ids = set()
-    for a in footage:
-        streams = subprocess.check_output(
-            [
-                "ffprobe",
-                "-v",
-                "error",
-                "-select_streams",
-                "v:0",
-                "-show_entries",
-                "stream=codec_name",
-                "-of",
-                "csv=p=0",
-                a["local_path"],
-            ]
-        )
-        if streams.strip():
-            stream_ids.add(a["external_id"])
-    subtitle = (folder / "subtitles.srt").read_text(encoding="utf-8")
 
-    def seconds(stamp):
-        h, m, s, ms = map(int, re.split("[:,]", stamp))
-        return h * 3600 + m * 60 + s + ms / 1000
+    try:
+        audio = build_audio(
+            task.narration,
+            task.input.voice,
+            task.input.voice_rate,
+            task.input.music_mood,
+            [shot.__dict__.copy() for shot in task.shots],
+            out_dir,
+            settings.music_dir,
+        )
+    except Exception as exc:
+        return _fail(f"edge-tts 不可用，不用静音代替：{exc}")
 
-    bounds = [
-        tuple(map(seconds, line.split(" --> ")))
-        for line in subtitle.splitlines()
-        if " --> " in line
+    if str(audio.event.get("provider") or "") != "edge-tts":
+        return _fail(
+            "配音没有走 edge-tts（"
+            f"{audio.event.get('provider')}），拒绝用其他声音假装对齐"
+        )
+    if not audio.cues:
+        return _fail("edge-tts 没有返回 cues，不能假装字幕和声音对齐")
+
+    cues = [
+        {"shot_id": cue.shot_id, "start": cue.start, "end": cue.end, "text": cue.text}
+        for cue in audio.cues
     ]
-    subtitles_ok = bool(bounds) and all(
-        0 <= a < b <= 30.001 and (i == 0 or a >= bounds[i - 1][1])
-        for i, (a, b) in enumerate(bounds)
-    )
-    report = dict(
-        task_id=task.id,
-        online=online,
-        streams=durations,
-        subtitle_count=len(bounds),
-        subtitles_ok=subtitles_ok,
-        unique_stock_videos=len(stream_ids),
-        assets=state["assets"],
-        alignment=state["audio"].get("subtitle_alignment"),
-        voice=state["audio"]["voice_provider"],
-        music=state["audio"]["music_provider"],
-        music_notice=state["audio"].get("music_notice"),
-        passed=durations_ok and subtitles_ok and (not online or len(stream_ids) >= 4),
-    )
-    (folder / "acceptance.json").write_text(
-        json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8"
-    )
-    print(folder, report["passed"], flush=True)
-    return 0 if report["passed"] else 1
+    # 成片收到旁白结束再留半秒，不再把静图硬垫到 30 秒。
+    voice_end = max(float(cue["end"]) for cue in cues)
+    task.input.duration = round(min(float(DURATION), voice_end + 0.5), 3)
+    shot_sum = Orchestrator.apply_audio_durations(task, cues, float(audio.total_duration))
+    if abs(shot_sum - task.input.duration) > 0.05:
+        return _fail(f"镜头时长没有跟上旁白，实际 {shot_sum}")
+
+    provider: OfflineAssetProvider | PexelsAssetProvider
+    asset_source = "offline-scene-generator"
+    if settings.pexels_api_key:
+        provider = PexelsAssetProvider(settings.pexels_api_key, settings.pexels_base_url)
+        asset_source = "pexels"
+    else:
+        return _fail("没有 PEXELS_API_KEY，拒绝用技术场景图冒充实拍")
+    render_shots = []
+    for shot in task.shots:
+        if float(shot.duration_sec) <= 0:
+            continue
+        asset = provider.create_or_find(
+            task.id,
+            {
+                "id": shot.id,
+                "order": shot.order,
+                "title": shot.title,
+                "visual_prompt": shot.visual_prompt,
+                "duration_sec": shot.duration_sec,
+                "narration": shot.narration,
+            },
+            assets_dir,
+            "#24526a",
+            "#d6ad60",
+        )
+        shot.asset_local_path = asset["local_path"]
+        shot.asset_media_type = str(asset.get("media_type") or "image")
+        payload = shot.__dict__.copy()
+        payload["clip_start"] = float(asset.get("clip_start") or 0)
+        render_shots.append(payload)
+
+    task.audio = {
+        "voice_local_path": audio.voice_path,
+        "music_local_path": audio.music_path,
+        "music_file": Path(audio.music_path).name if audio.music_path else "",
+        "voice_provider": audio.event.get("provider", ""),
+        "cues": cues,
+        "duck": audio.event.get("mix") if isinstance(audio.event.get("mix"), dict) else {},
+        "requested_duration": float(task.input.duration),
+    }
+    try:
+        VideoRenderer(settings.media_dir).render(
+            task.id,
+            render_shots,
+            task.audio,
+            task.input.include_ai_label,
+            task.input.include_subtitles,
+            task.input.output_resolution,
+            task.input.fps,
+            task.input.voice_volume,
+            task.input.music_volume,
+        )
+    except Exception as exc:
+        return _fail(f"VideoRenderer.render 失败：{exc}")
+
+    final_path = out_dir / "final.mp4"
+    srt_path = out_dir / "subtitles.srt"
+    if not final_path.is_file() or not srt_path.is_file():
+        return _fail("成片或字幕没有写到 runtime/media/accept_30s")
+
+    container = _probe_container(final_path)
+    video = _probe(final_path, "v:0")
+    audio_sec = _probe(final_path, "a:0")
+    srt_last = _srt_last_end(srt_path)
+    report = {
+        "path": str(final_path),
+        "container_sec": round(container, 3),
+        "video_sec": round(video, 3),
+        "audio_sec": round(audio_sec, 3),
+        "srt_last_end": srt_last,
+        "shot_sum": round(shot_sum, 3),
+        "music_file": task.audio["music_file"],
+        "voice_provider": task.audio["voice_provider"],
+        "asset_source": asset_source,
+        "video_shots": sum(1 for shot in render_shots if shot.get("asset_media_type") == "video"),
+    }
+    print(json.dumps(report, ensure_ascii=False))
+    target = float(task.input.duration)
+    if srt_last > target + 0.05:
+        return 1
+    if not all(abs(value - target) <= 0.08 for value in (container, video, audio_sec)):
+        return 1
+    if report["video_shots"] < 4:
+        return 1
+    return 0
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
-    parser.add_argument(
-        "--online",
-        action="store_true",
-        help="Require at least four distinct stock videos",
-    )
-    sys.exit(run(parser.parse_args().online))
+    raise SystemExit(main())

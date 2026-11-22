@@ -46,7 +46,7 @@ def _project_path(name: str, default: str) -> Path:
 @dataclass(frozen=True)
 class Settings:
     host: str = _env("APP_HOST", "127.0.0.1")
-    port: int = int(_env("APP_PORT", "8787"))
+    port: int = int(_env("APP_PORT", "8790"))
     data_dir: Path = PROJECT_ROOT / _env("DATA_DIR", "runtime")
     default_provider: str = _env("DEFAULT_PROVIDER", "offline")
     llm_fallback_providers: tuple[str, ...] = _env_list("LLM_FALLBACK_PROVIDERS", "offline")
@@ -83,7 +83,10 @@ class Settings:
     # 逐镜素材生成的并发数。单镜实测约 110 秒（文生图 37~70s + 图生视频 44s），
     # 串行跑 4 镜要 8 分钟。网关限流时把这个值调小。
     asset_concurrency: int = max(1, int(_env("ASSET_CONCURRENCY", "4") or 4))
-    asset_provider: str = _env("ASSET_PROVIDER", "offline")
+    # 默认走 AI 生成（图生视频）：这是文旅 AIGC 的本分，不是可选项。
+    # 没配密钥时注册表会把 available=False 的档位跳过，降级链自然落到
+    # local-library / offline，不会假装生成了 AI 画面。
+    asset_provider: str = _env("ASSET_PROVIDER", "ai-video")
     asset_fallback_providers: tuple[str, ...] = _env_list(
         "ASSET_FALLBACK_PROVIDERS", "local-library,offline"
     )
@@ -140,12 +143,17 @@ class Settings:
         return self.data_dir / "media"
 
     @property
+    def library_dir(self) -> Path:
+        return self.data_dir / "entity-assets"
+
+    @property
     def logs_dir(self) -> Path:
         return self.data_dir / "logs"
 
     def ensure_dirs(self) -> None:
         self.db_path.parent.mkdir(parents=True, exist_ok=True)
         self.media_dir.mkdir(parents=True, exist_ok=True)
+        self.library_dir.mkdir(parents=True, exist_ok=True)
         self.logs_dir.mkdir(parents=True, exist_ok=True)
         self.audio_model_cache.mkdir(parents=True, exist_ok=True)
         (self.data_dir / "diagnostics").mkdir(parents=True, exist_ok=True)

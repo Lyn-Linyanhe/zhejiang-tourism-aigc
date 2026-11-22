@@ -102,8 +102,10 @@ class VoiceStudioTests(unittest.TestCase):
             with patch('backend.app.services.audio_sync.generate_system_speech') as synthesize:
                 path, trace = builder._synthesize_cached('测试。', '女声', 1, 'windows')
             synthesize.assert_not_called()
-            self.assertTrue(trace['cache_hit'])
-            self.assertEqual(probe_audio(path)['channels'], 2)
+            self.assertTrue(trace['cache_hit'])
+            # 合并后逐段保持 48kHz 单声道（PR #3 响度口径），立体声在拼接层统一转换；
+            # mono 旧缓存必须能直接命中，不允许重新计费合成。
+            self.assertEqual(probe_audio(path)['channels'], 1)
 
     def test_upload_never_silently_substitutes_voice(self):
         with tempfile.TemporaryDirectory() as directory:

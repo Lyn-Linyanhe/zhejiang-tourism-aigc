@@ -1,37 +1,119 @@
-# 本地配置：可能含 API 密钥，绝不提交
-.env
-
-# Python
-.venv*/
+# --- Python ---
 __pycache__/
 *.py[cod]
+.venv/
+venv/
+# 隔离的音频运行时（edge-tts / whisperx），由 scripts/setup-audio-runtime.ps1
+# 或手动 venv 创建，体积很大，不进仓库
+.venv-audio/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
 
-# FFmpeg 二进制：单个 242MB，超过 GitHub 单文件 100MB 上限
-# 用 scripts/setup-ffmpeg.ps1 下载，或从 Release 的完整包获取
-tools/ffmpeg/bin/*.exe
+# --- 密钥与本地配置：绝对不要提交 ---
+.env
+*.key
+*.pem
 
-# 运行时生成物（任务库、成片、日志、音频缓存）
-runtime/logs/
-runtime/media/
-runtime/db/
-runtime/audio-cache/
-runtime/uploads/
-runtime/models/
-runtime/music/*
-!runtime/music/catalog.json
-runtime/*.json
-runtime/*.db
-
-# 杂项
+# --- 编辑器与操作系统 ---
+.idea/
+.vscode/
+.claude/
 Thumbs.db
-.DS_Store
+desktop.ini
+
+# --- 前端 ---
+node_modules/
+dist/
+
+# --- 运行产物：数据库、媒体、日志 ---
+runtime/db/*.sqlite3
+!runtime/db/.gitkeep
+runtime/media/*
+!runtime/media/.gitkeep
+# 公开仓库只保留 30 秒离线验收成片，不带失败草稿和数据库。
+!runtime/media/accept_30s/
+!runtime/media/accept_30s/**
+runtime/logs/*
+!runtime/logs/.gitkeep
+runtime/audio-cache/
+runtime/models/
+runtime/entity-assets/
+# 对比实验明细是可追溯证据（作品报告素材）
+!runtime/kb_eval.json
+
+# --- 媒体与生成物 ---
+*.mp4
+*.wav
+*.mp3
+*.m4a
+*.srt
+*.ppm
+*.tmp
+*.log
+# 曲库和验收成片是演示所需，随仓库公开。密钥仍只留在本地 .env。
+!runtime/music/*.mp3
+!runtime/music/*.m4a
+!runtime/music/*.json
+!runtime/media/accept_30s/*.mp4
+!runtime/media/accept_30s/*.srt
+!runtime/media/accept_30s/*.mp3
+
+# 假素材包是生成物，用 team/假素材包/make_fixtures.py 重新生成
+team/假素材包/fixtures/
+
+# --- smoke 运行产物（scripts/smoke-test.ps1 写到 runtime-smoke/）---
+runtime-smoke*/
+
+# --- 随包交付物：便携 FFmpeg 与压缩包不进仓库 ---
 *.zip
 
 # 本机环境与运行结果
 .env.*
 !.env.example
-*.key
-*.pem
 runtime/diagnostics/
-runtime-smoke*/
-.pytest_cache/
+
+tools/ffmpeg/bin/
+
+# 探测数据库、失败草稿和抽帧图不进公开仓库
+runtime/_wire_probe*/
+runtime/_probe_assets/
+runtime/fix_task.json
+runtime/iterate_task.json
+runtime/show_task.json
+runtime/show_frames/
+runtime/review_frames/
+runtime/music/_replaced-20261007/
+
+# 小红书只读采集产物：会话 token 与第三方图片版权均不可入库
+runtime/_xhs_collect/
+runtime/_xhs_collect_multi/
+# 参考图（322 张 webp / 101MB）随仓库分发，作为图生图的输入。
+# 采集缓存（含会话 token）和拼图预览仍排除。
+# 授权状态见 docs/research/xhs-zhejiang-image-index.csv：全部 reference-only / unreviewed。
+runtime/_xhs_images/*.json
+runtime/_xhs_images/*.csv
+runtime/_xhs_images/contact_sheets/
+
+# 环境变量备份（含密钥），绝不入库
+.env.bak*
+.env.*.bak
+
+# 小红书 MCP 会话 cookies（含登录态），绝不入库
+cookies.json
+
+# 本会话临时产物：生成测试图/视频、云端验收结果、引文核验页面缓存
+runtime/_gen_test/
+runtime/_eval_cloud/
+runtime/_kb_page_cache/
+runtime/_xhs_login_qr.png
+
+# 工具缓存与本地临时文件
+.v2c/
+.video_agent/
+.zcode/
+NUL
+tools/
+
+# 合并工作区的隔离虚拟环境
+.venv-merge/

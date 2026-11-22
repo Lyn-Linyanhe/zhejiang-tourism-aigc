@@ -1,212 +1,1164 @@
 {
   "city": "台州",
-  "city_meta": {
-    "aliases": [
-      "台州府",
-      "浙东南台州"
-    ],
-    "city_dna": "临海府城、天台山文化、台州曲调"
-  },
   "entities": [
     {
-      "id": "taizhou-fucheng",
+      "id": "tz-fucheng",
       "type": "scenic",
       "name": "台州府城墙",
       "aliases": [
-        "临海古城墙",
         "江南长城",
-        "府城墙",
-        "兴善门"
+        "台州府城"
       ],
+      "level": "国家5A级旅游景区（2022，台州府城文化旅游区）",
       "location": "台州临海市",
       "facts": [
-        "台州府城墙位于临海古城。",
-        "从兴善门南望可以看到绕城而过的灵江。",
-        "从兴善门北望可见紫阳古街。"
+        "台州府城文化旅游区位于临海市，2022年入选国家5A级旅游景区。",
+        "城墙始建于东晋，历经各朝代修整保留，兼具军事和防洪需求，是明长城的范本，2006年起位于世界文化遗产预备名录之列。",
+        "府城平面大致为方形，总周长约6287米，高7米，设有4座城门、瓮城和8座马面。",
+        "戚继光驻守临海八年，联同知府谭纶加高加厚城墙并创新建造十三座二层空心敌台；后把经验带至北方用于长城修建。",
+        "北宋庆历五年（1045年）知州彭思永重修城墙，采用砖石包砌技术。"
       ],
+      "fact_records": [
+        {
+          "text": "台州府城文化旅游区位于临海市，2022年入选国家5A级旅游景区。",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%8F%B0%E5%B7%9E%E5%BA%9C%E5%9F%8E%E5%A2%99",
+          "source_title": "维基百科：台州府城墙",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-台州府城墙",
+          "evidence_quote": "台州府城，全称台州府城文化旅游区，是位于今中华人民共和国浙江省临海市的文化保护及风景旅游区。2022年入选国家5A级旅游景区。",
+          "fact_type": "designation",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "城墙始建于东晋，历经各朝代修整保留，兼具军事和防洪需求，是明长城的范本，2006年起位于世界文化遗产预备名录之列。",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%8F%B0%E5%B7%9E%E5%BA%9C%E5%9F%8E%E5%A2%99",
+          "source_title": "维基百科：台州府城墙",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-台州府城墙",
+          "evidence_quote": "其城墙始建于东晋，历经各朝代修整保留，兼具军事和防洪需求，是明长城的范本，2006年起位于世界文化遗产预备名录之列。",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "府城平面大致为方形，总周长约6287米，高7米，设有4座城门、瓮城和8座马面。",
+          "fact_index": 2,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%8F%B0%E5%B7%9E%E5%BA%9C%E5%9F%8E%E5%A2%99",
+          "source_title": "维基百科：台州府城墙",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-台州府城墙",
+          "evidence_quote": "台州府城平面大致为方形，总周长约6287米。城墙总体沿东北至西南方向延展，高7米，设有4座城门、瓮城和8座马面。",
+          "fact_type": "landscape",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "戚继光驻守临海八年，联同知府谭纶加高加厚城墙并创新建造十三座二层空心敌台；后把经验带至北方用于长城修建。",
+          "fact_index": 3,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%8F%B0%E5%B7%9E%E5%BA%9C%E5%9F%8E%E5%A2%99",
+          "source_title": "维基百科：台州府城墙",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-台州府城墙",
+          "evidence_quote": "明代名将戚继光在临海驻守八年期间，联同知府谭纶对台州府城墙进行加高加厚改造，以增强对倭寇的防御力。他们还创新建造了十三座二层空心敌台",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "北宋庆历五年（1045年）知州彭思永重修城墙，采用砖石包砌技术。",
+          "fact_index": 4,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%8F%B0%E5%B7%9E%E5%BA%9C%E5%9F%8E%E5%A2%99",
+          "source_title": "维基百科：台州府城墙",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-台州府城墙",
+          "evidence_quote": "北宋庆历五年（1045年），知州彭思永对城墙进行了重修，采用砖石包砌技术，并使用糯米或灰浆作为粘合剂",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
+      ],
+      "cultural_significance": "戚继光练手的长城“范本”——江南的城墙，北方长城的老师。",
       "keywords_en": [
-        "Taizhou ancient city wall Linhai"
+        "Taizhou city wall",
+        "Jiangnan Great Wall"
       ],
       "imagery": [
-        "城墙沿山势而上",
-        "兴善门和瓮城",
-        "城墙外的灵江"
+        "城墙山脊线",
+        "空心敌台",
+        "紫阳街城墙段",
+        "灵江落日"
       ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "爬一段“江南长城”，你会认出八达岭的影子。",
       "scenario_tags": [
+        "历史",
         "古建",
-        "徒步"
-      ],
-      "sources": [
-        {
-          "title": "浙江政务公开·台州府城墙",
-          "url": "https://zjjcmspublic.oss-cn-hangzhou-zwynet-d01-a.internet.cloud.zj.gov.cn/jcms_files/jcms1/web3453/site/attach/0/cef592d2e98c4eeeb938816bad3b7c8b.pdf",
-          "checked_on": "2026-11-21"
-        }
+        "登高",
+        "经典必游"
       ]
     },
     {
-      "id": "taizhou-tiantai",
+      "id": "tz-city",
       "type": "scenic",
-      "name": "天台山国清寺",
+      "name": "台州古城",
       "aliases": [
-        "国清寺",
-        "天台寺",
-        "天台山"
+        "海州",
+        "山海水城"
       ],
-      "location": "台州天台县",
+      "level": "地级市（唐武德五年始名台州）",
+      "location": "台州市（浙江东部沿海）",
       "facts": [
-        "国清寺前身天台寺始建于隋开皇十八年，即598年。",
-        "隋大业元年，即605年，天台寺改名国清寺。"
+        "台州简称台，是浙江省东部沿海的地级市。",
+        "唐武德五年（622年）置海州，次年以境内天台山改名台州，为台州一名之始。",
+        "东吴太平二年（257年）分会稽郡东部置临海郡，为台州建郡之始。",
+        "北有天台山，南有括苍山、雁荡山；永安溪、始丰溪汇合成灵江，注入台州湾出海。"
       ],
+      "fact_records": [
+        {
+          "text": "台州简称台，是浙江省东部沿海的地级市。",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%8F%B0%E5%B7%9E%E5%B8%82",
+          "source_title": "维基百科：台州市",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-台州市",
+          "evidence_quote": "简称台，是中华人民共和国浙江省下辖的地级市，位于浙江省东部沿海。",
+          "fact_type": "geography",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "唐武德五年（622年）置海州，次年以境内天台山改名台州，为台州一名之始。",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%8F%B0%E5%B7%9E%E5%B8%82",
+          "source_title": "维基百科：台州市",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-台州市",
+          "evidence_quote": "唐武德五年（622年）置海州，次年以境内天台山（位于今天台县）改名台州（《元和郡县图志》卷二十六：“盖因天台山为名”），为台州一名之始。",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "东吴太平二年（257年）分会稽郡东部置临海郡，为台州建郡之始。",
+          "fact_index": 2,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%8F%B0%E5%B7%9E%E5%B8%82",
+          "source_title": "维基百科：台州市",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-台州市",
+          "evidence_quote": "东吴太平二年（257年），分会稽郡东部置临海郡，隶扬州，郡治在章安……此为台州建郡之始。",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "北有天台山，南有括苍山、雁荡山；永安溪、始丰溪汇合成灵江，注入台州湾出海。",
+          "fact_index": 3,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%8F%B0%E5%B7%9E%E5%B8%82",
+          "source_title": "维基百科：台州市",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-台州市",
+          "evidence_quote": "北有天台山，南有括苍山、雁荡山，东部为温黄平原。永安溪、始丰溪于市境中部汇合成灵江，往东流汇集永宁江后称椒江，并注入台州湾出海。",
+          "fact_type": "geography",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
+      ],
+      "cultural_significance": "以一座山命名的城市——山、江、海在台州各占三分之一的镜头。",
       "keywords_en": [
-        "Guoqing Temple Tiantai Taizhou"
+        "Taizhou",
+        "Taizhou city"
       ],
       "imagery": [
-        "隋塔",
-        "古寺屋檐",
-        "山门甬道"
+        "椒江两岸",
+        "临海古城",
+        "大陈岛海景",
+        "天台云瀑"
       ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "山一半、海一半——台州的名字里就有一座山。",
       "scenario_tags": [
-        "古建",
-        "研学"
-      ],
-      "sources": [
-        {
-          "title": "台州地方志·天台景区",
-          "url": "https://tzsz.zjtz.gov.cn/art/2018/12/13/art_1229209654_54440085.html",
-          "checked_on": "2026-11-21"
-        }
+        "城市",
+        "自然",
+        "人文",
+        "山海"
       ]
     },
     {
-      "id": "taizhou-cidiao",
-      "type": "intangible",
-      "name": "临海词调",
+      "id": "tz-shitang",
+      "type": "scenic",
+      "name": "石塘",
       "aliases": [
-        "才子调",
-        "仙鹤调"
+        "石塘镇",
+        "画中镇"
       ],
-      "location": "台州临海市",
+      "level": "国家级中心渔港所在地",
+      "location": "台州温岭市东南沿海",
       "facts": [
-        "临海词调亦有“才子调”和“仙鹤调”的称呼。",
-        "词调流传于临海一带，唱法讲究吐字和行腔。"
+        "石塘镇位于温岭市东南沿海，由原石塘、箬山、钓浜三镇于2001年合并重组而成，全镇面积28.47平方公里，海岸线长5.5公里。",
+        "镇内建筑多用岩石垒成，是依山而建的石头渔村。",
+        "温岭中心渔港位于境内，是国家级中心渔港；箬山一带为闽南民系聚居。",
+        "2013年8月，里箬村获批第二批中国传统村落。"
       ],
+      "fact_records": [
+        {
+          "text": "石塘镇位于温岭市东南沿海，由原石塘、箬山、钓浜三镇于2001年合并重组而成，全镇面积28.47平方公里，海岸线长5.5公里。",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E7%9F%B3%E5%A1%98%E9%95%87_%28%E6%B8%A9%E5%B2%AD%E5%B8%82%29",
+          "source_title": "维基百科：石塘镇 (温岭市)",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-石塘镇 (温岭市)",
+          "evidence_quote": "石塘镇位于浙江省温岭市东南沿海，由原温岭市石塘、箬山、钓浜三镇于2001年合并重组而成，全镇面积28.47平方公里，海岸线长5.5公里",
+          "fact_type": "geography",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "镇内建筑多用岩石垒成，是依山而建的石头渔村。",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E7%9F%B3%E5%A1%98%E9%95%87_%28%E6%B8%A9%E5%B2%AD%E5%B8%82%29",
+          "source_title": "维基百科：石塘镇 (温岭市)",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-石塘镇 (温岭市)",
+          "evidence_quote": "镇内的建筑多用岩石垒成，与温岭市松门镇相邻。",
+          "fact_type": "landscape",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "温岭中心渔港位于境内，是国家级中心渔港；箬山一带为闽南民系聚居。",
+          "fact_index": 2,
+          "source_url": "https://zh.wikipedia.org/wiki/%E7%9F%B3%E5%A1%98%E9%95%87_%28%E6%B8%A9%E5%B2%AD%E5%B8%82%29",
+          "source_title": "维基百科：石塘镇 (温岭市)",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-石塘镇 (温岭市)",
+          "evidence_quote": "温岭中心渔港位于境内，是国家级中心渔港。箬山镇是閩南民系。",
+          "fact_type": "industry",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "2013年8月，里箬村获批第二批中国传统村落。",
+          "fact_index": 3,
+          "source_url": "https://zh.wikipedia.org/wiki/%E7%9F%B3%E5%A1%98%E9%95%87_%28%E6%B8%A9%E5%B2%AD%E5%B8%82%29",
+          "source_title": "维基百科：石塘镇 (温岭市)",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-石塘镇 (温岭市)",
+          "evidence_quote": "2013年8月，里箬村获批第二批中国传统村落。",
+          "fact_type": "designation",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
+      ],
+      "cultural_significance": "石头垒出来的渔村挂在海崖上——中国大陆新千年第一缕曙光在这里。",
       "keywords_en": [
-        "Linhai Cidiao folk music"
+        "Shitang",
+        "Wenling stone fishing town"
       ],
       "imagery": [
-        "小型曲艺舞台",
-        "艺人演唱",
-        "丝竹伴奏"
+        "石屋群落",
+        "海崖石屋日出",
+        "渔港桅杆",
+        "里箬古村"
       ],
+      "best_season": "夏秋两季",
+      "micro_drama_hook": "石头房的缝隙里都是海风——新年的第一缕阳光先照这里。",
       "scenario_tags": [
-        "演艺",
-        "非遗体验"
-      ],
-      "sources": [
-        {
-          "title": "中国非遗网·临海词调",
-          "url": "https://www.ihchina.cn/project_details/13681.html",
-          "checked_on": "2026-11-21"
-        }
+        "海岛",
+        "人文",
+        "摄影",
+        "自然"
       ]
     },
     {
-      "id": "taizhou-lion",
-      "type": "festival",
-      "name": "黄沙狮子",
-      "aliases": [
-        "黄沙舞狮",
-        "临海黄沙狮子"
-      ],
-      "location": "台州临海市白水洋镇",
-      "facts": [
-        "黄沙狮子主要流传在临海白水洋镇黄沙洋一带。",
-        "表演把舞狮与武术结合，旧时艺人在春节至二月初二间走村表演。"
-      ],
-      "keywords_en": [
-        "Huangsha lion dance Linhai"
-      ],
-      "imagery": [
-        "狮舞演员在村落表演",
-        "锣鼓和武术动作"
-      ],
-      "scenario_tags": [
-        "民俗",
-        "演艺"
-      ],
-      "sources": [
-        {
-          "title": "中国非遗网·黄沙狮子",
-          "url": "https://www.ihchina.cn/project_details/12868.html",
-          "checked_on": "2026-11-21"
-        }
-      ]
-    },
-    {
-      "id": "taizhou-jigong",
-      "type": "legend",
-      "name": "济公传说",
-      "aliases": [
-        "天台济公",
-        "道济传说"
-      ],
-      "location": "台州天台县",
-      "facts": [
-        "济公传说以南宋僧人道济相关故事为基础发展。",
-        "天台流传少年济公与济公扶危济困等故事。"
-      ],
-      "keywords_en": [
-        "Jigong folklore Tiantai"
-      ],
-      "imagery": [
-        "古寺山门",
-        "戏曲中的蒲扇与僧衣"
-      ],
-      "scenario_tags": [
-        "传说",
-        "人文"
-      ],
-      "sources": [
-        {
-          "title": "中国非遗网·济公传说",
-          "url": "https://www.ihchina.cn/project_details/12205.html",
-          "checked_on": "2026-11-21"
-        }
-      ]
-    },
-    {
-      "id": "taizhou-shenxianju",
+      "id": "tz-shenxianju",
       "type": "scenic",
       "name": "神仙居",
       "aliases": [
-        "仙居神仙居",
-        "如意桥",
-        "神仙居观音峰"
+        "仙居风景名胜区"
       ],
-      "location": "台州仙居县",
+      "level": "国家5A级景区（仙居景区）、浙江省级风景名胜区",
+      "location": "台州仙居县境内",
       "facts": [
-        "神仙居以火山流纹岩峰林见长。",
-        "景区可见天然观音峰，如意桥也是景区的一处人文景观。"
+        "神仙居在浙江台州市仙居县境内，当地号称拥有奇山、奇峰、奇岩、奇石、奇瀑等风景。",
+        "区内如意桥2020年10月开始对外开放。",
+        "北宋景德四年（1007年），宋真宗以“洞天名山，屏蔽周卫，而多神仙之宅”诏改仙居，意为“仙人居住之地”。",
+        "仙居县地处括苍山和四明山之间，永安溪自西向东贯穿全境。"
       ],
+      "fact_records": [
+        {
+          "text": "神仙居在浙江台州市仙居县境内，当地号称拥有奇山、奇峰、奇岩、奇石、奇瀑等风景。",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E7%A5%9E%E4%BB%99%E5%B1%85",
+          "source_title": "维基百科：神仙居",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-神仙居",
+          "evidence_quote": "神仙居为中國一風景区名，在浙江台州市仙居县境内，當地號稱擁有奇山、奇峰、奇岩、奇石、奇瀑等風景。",
+          "fact_type": "landscape",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "区内如意桥2020年10月开始对外开放。",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E7%A5%9E%E4%BB%99%E5%B1%85",
+          "source_title": "维基百科：神仙居",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-神仙居",
+          "evidence_quote": "如意橋，2020年10月開始對外開放。",
+          "fact_type": "landscape",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "北宋景德四年（1007年），宋真宗以“洞天名山，屏蔽周卫，而多神仙之宅”诏改仙居，意为“仙人居住之地”。",
+          "fact_index": 2,
+          "source_url": "https://zh.wikipedia.org/wiki/%E4%BB%99%E5%B1%85%E5%8E%BF",
+          "source_title": "维基百科：仙居县",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-仙居县",
+          "evidence_quote": "北宋景德四年（公元1007年），宋真宗以其“洞天名山，屏蔽周卫，而多神仙之宅”，诏改仙居，意为“仙人居住之地”。",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "仙居县地处括苍山和四明山之间，永安溪自西向东贯穿全境。",
+          "fact_index": 3,
+          "source_url": "https://zh.wikipedia.org/wiki/%E4%BB%99%E5%B1%85%E5%8E%BF",
+          "source_title": "维基百科：仙居县",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-仙居县",
+          "evidence_quote": "仙居地处括苍山和四明山之间，地势南北高、中间低，永安溪自西向东贯穿全境",
+          "fact_type": "geography",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
+      ],
+      "cultural_significance": "连县名都是皇帝赐的“仙人居住之地”——奇峰云海配一座悬空如意桥。",
       "keywords_en": [
-        "Shenxianju Xianju Taizhou"
+        "Shenxianju",
+        "Xianju scenic area"
       ],
       "imagery": [
-        "火山岩峰林",
-        "悬崖间如意桥",
-        "云海"
+        "如意桥",
+        "奇峰栈道",
+        "云海佛光",
+        "西罨慈帆"
       ],
+      "best_season": "春秋两季",
+      "micro_drama_hook": "走一趟如意桥，人间烦恼留在桥那头。",
       "scenario_tags": [
         "自然",
+        "自然奇观",
+        "登山",
         "摄影"
+      ]
+    },
+    {
+      "id": "tz-tiantaishan",
+      "type": "scenic",
+      "name": "天台山",
+      "aliases": [
+        "华顶山",
+        "国清寺"
       ],
-      "sources": [
+      "level": "佛教天台宗发源地、国家5A级景区（天台山景区）",
+      "location": "台州市天台县",
+      "facts": [
+        "天台山主要位于天台县境内，是甬江、曹娥江和灵江的分水岭，主峰华顶山海拔1138米。",
+        "天台山为佛教天台宗的发源地。",
+        "国清寺是我国创立的第一个佛教宗派天台宗的发源地，始建于隋开皇十八年，初名天台寺，后改名国清寺；2001年列为全国重点文物保护单位。",
+        "国清寺宋建炎二年修复后名列“五山十刹”之一；清雍正十一年下诏重建。",
+        "国家级非遗“济公传说”的所在地即浙江省天台县。"
+      ],
+      "fact_records": [
         {
-          "title": "央广网·当“十”神仙居",
-          "url": "https://www.cnr.cn/xzpd/20251121/t20251121_527437131.shtml",
-          "checked_on": "2026-11-21"
+          "text": "天台山主要位于天台县境内，是甬江、曹娥江和灵江的分水岭，主峰华顶山海拔1138米。",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%A4%A9%E5%8F%B0%E5%B1%B1_%28%E6%B5%99%E6%B1%9F%29",
+          "source_title": "维基百科：天台山 (浙江)",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-天台山 (浙江)",
+          "evidence_quote": "天台（tāi）山主要位于浙江省台州市天台县境内，甬江、曹娥江和灵江的分水岭……主峰华顶山，海拔1,138米，在天台县城东北，为花岗岩组成。",
+          "fact_type": "geography",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "天台山为佛教天台宗的发源地。",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%A4%A9%E5%8F%B0%E5%B1%B1_%28%E6%B5%99%E6%B1%9F%29",
+          "source_title": "维基百科：天台山 (浙江)",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-天台山 (浙江)",
+          "evidence_quote": "多懸崖飛瀑等名勝，為佛教天台宗的發源地。",
+          "fact_type": "culture",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "国清寺是我国创立的第一个佛教宗派天台宗的发源地，始建于隋开皇十八年，初名天台寺，后改名国清寺；2001年列为全国重点文物保护单位。",
+          "fact_index": 2,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%A4%A9%E5%8F%B0%E5%8E%BF",
+          "source_title": "维基百科：天台县",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-天台县",
+          "evidence_quote": "国清寺是我国创立的第一个佛教宗派天台宗的发源地，位于浙江省天台县城关镇北。始建于隋开皇十八年，初名天台寺，后改名国清寺。……名称：国清寺编号：5-0291-3-097公布时间：2001年6月25日",
+          "fact_type": "designation",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "国清寺宋建炎二年修复后名列“五山十刹”之一；清雍正十一年下诏重建。",
+          "fact_index": 3,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%A4%A9%E5%8F%B0%E5%8E%BF",
+          "source_title": "维基百科：天台县",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-天台县",
+          "evidence_quote": "曾毁于唐武宗灭佛和北宋宣和二年。宋建炎二年修复，名列“五山十刹”之一。清雍正十一年（1733年）下诏重建",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "国家级非遗“济公传说”的所在地即浙江省天台县。",
+          "fact_index": 4,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%A4%A9%E5%8F%B0%E5%8E%BF",
+          "source_title": "维基百科：天台县",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-天台县",
+          "evidence_quote": "名称：济公传说编号：Ⅰ—11公布时间：2006年6月6日类型：民间文学所在地：浙江省天台县",
+          "fact_type": "legend",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
         }
+      ],
+      "cultural_significance": "天台宗从这里开宗立派——一座山养出了东亚佛教的源头活水。",
+      "keywords_en": [
+        "Tiantai Mountain",
+        "Tiantai Buddhism"
+      ],
+      "imagery": [
+        "国清寺隋塔",
+        "石梁飞瀑",
+        "华顶云锦杜鹃",
+        "赤城山"
+      ],
+      "best_season": "春秋两季",
+      "micro_drama_hook": "隋梅还开着——1400年的寺，还在讲天台宗的第一课。",
+      "scenario_tags": [
+        "人文",
+        "祈福",
+        "自然",
+        "研学"
+      ]
+    },
+    {
+      "id": "tz-puotan",
+      "type": "scenic",
+      "name": "皤滩古镇",
+      "aliases": [
+        "皤滩乡",
+        "皤滩古街"
+      ],
+      "level": "第4批中国历史文化名镇",
+      "location": "台州仙居县城西26公里",
+      "facts": [
+        "皤滩乡位于仙居县城以西26公里，总面积67平方公里，人口14752人。",
+        "乡内名胜古迹有皤滩古街、桐江书院等；皤滩古镇为第4批中国历史文化名镇。",
+        "2013年8月，上街下街村获批第二批中国传统村落。"
+      ],
+      "fact_records": [
+        {
+          "text": "皤滩乡位于仙居县城以西26公里，总面积67平方公里，人口14752人。",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E7%9A%A4%E6%BB%A9%E4%B9%A1",
+          "source_title": "维基百科：皤滩乡",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-皤滩乡",
+          "evidence_quote": "皤滩乡位于仙居县城以西26公里。皤滩乡总面积67平方公里，人口14752人。",
+          "fact_type": "geography",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "乡内名胜古迹有皤滩古街、桐江书院等；皤滩古镇为第4批中国历史文化名镇。",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E7%9A%A4%E6%BB%A9%E4%B9%A1",
+          "source_title": "维基百科：皤滩乡",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-皤滩乡",
+          "evidence_quote": "该乡名胜古迹有皤滩古街、桐江书院等。皤滩古镇为第4批中国历史文化名镇。",
+          "fact_type": "landscape",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "2013年8月，上街下街村获批第二批中国传统村落。",
+          "fact_index": 2,
+          "source_url": "https://zh.wikipedia.org/wiki/%E7%9A%A4%E6%BB%A9%E4%B9%A1",
+          "source_title": "维基百科：皤滩乡",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-皤滩乡",
+          "evidence_quote": "2013年8月，上街下街村获批第二批中国传统村落。",
+          "fact_type": "designation",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
+      ],
+      "cultural_significance": "盐埠商埠留下的龙形古街，鹅卵石上还走着旧时光。",
+      "keywords_en": [
+        "Puotan ancient town",
+        "Puotan old street"
+      ],
+      "imagery": [
+        "皤滩古街",
+        "鹅卵石路面",
+        "桐江书院",
+        "老铺招牌"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "一条龙形的古街——走完它像读了一本盐商账簿。",
+      "scenario_tags": [
+        "古镇",
+        "人文",
+        "历史",
+        "摄影"
+      ]
+    },
+    {
+      "id": "tz-dachen",
+      "type": "scenic",
+      "name": "大陈岛",
+      "aliases": [
+        "上下大陈",
+        "台州列岛"
+      ],
+      "level": "省级海上森林公园",
+      "location": "台州椒江区东南22公里东海海上",
+      "facts": [
+        "大陈岛隶属于椒江区大陈镇，位于椒江区东南22公里的东海海上，由上大陈岛（7平方公里）与下大陈岛（4.89平方公里）组成，同属台州列岛。",
+        "岛上森林覆盖率达50—60%，为省级海上森林公园。",
+        "1955年国民党军民经美军第七舰队护航全部撤出大陈岛，史称“大陈岛撤退”。",
+        "1956年1月胡耀邦号召青年组成志愿垦荒队开发建设大陈岛。"
+      ],
+      "fact_records": [
+        {
+          "text": "大陈岛隶属于椒江区大陈镇，位于椒江区东南22公里的东海海上，由上大陈岛（7平方公里）与下大陈岛（4.89平方公里）组成，同属台州列岛。",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%A4%A7%E9%99%88%E5%B2%9B",
+          "source_title": "维基百科：大陈岛",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-大陈岛",
+          "evidence_quote": "大陈岛行政上隶属于中华人民共和国浙江省台州市椒江区大陈镇，位于椒江区东南22公里的东海海上。大陈岛由“上大陈岛”（面积7平方公里）和“下大陈岛”（面积4.89平方公里）组成，同属台州列岛。",
+          "fact_type": "geography",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "岛上森林覆盖率达50—60%，为省级海上森林公园。",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%A4%A7%E9%99%88%E5%B2%9B",
+          "source_title": "维基百科：大陈岛",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-大陈岛",
+          "evidence_quote": "岛上森林覆盖率达50—60%，为省级海上森林公园。",
+          "fact_type": "nature",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "1955年国民党军民经美军第七舰队护航全部撤出大陈岛，史称“大陈岛撤退”。",
+          "fact_index": 2,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%A4%A7%E9%99%88%E5%B2%9B",
+          "source_title": "维基百科：大陈岛",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-大陈岛",
+          "evidence_quote": "於同年二月由美军第七舰队护航，将所有军民撤出大陈岛，史称大陈岛撤退。",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "1956年1月胡耀邦号召青年组成志愿垦荒队开发建设大陈岛。",
+          "fact_index": 3,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%A4%A7%E9%99%88%E5%B2%9B",
+          "source_title": "维基百科：大陈岛",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-大陈岛",
+          "evidence_quote": "1956年1月，时任共青团中央书记处第一书记的胡耀邦向温州青年发出「组成志愿垦荒队，开发建设大陈岛」的号召。",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
+      ],
+      "cultural_significance": "一片垦荒精神种出来的海岛——历史和海风都停在这里。",
+      "keywords_en": [
+        "Dachen Island",
+        "Dachen islands"
+      ],
+      "imagery": [
+        "垦荒纪念碑",
+        "甲午岩海崖",
+        "渔村石屋",
+        "环岛海岸"
+      ],
+      "best_season": "夏秋两季",
+      "micro_drama_hook": "悬崖看海，纪念碑看历史——大陈岛两样都齐了。",
+      "scenario_tags": [
+        "海岛",
+        "爱国教育",
+        "自然",
+        "徒步"
+      ]
+    },
+    {
+      "id": "tz-xianju-huadeng",
+      "type": "intangible",
+      "name": "仙居花灯",
+      "aliases": [
+        "针刺无骨花灯",
+        "唐灯"
+      ],
+      "level": "国家级非遗（2006年第一批·传统美术）",
+      "location": "台州仙居县皤滩",
+      "facts": [
+        "灯彩（仙居花灯）2006年列入第一批国家级非遗名录（传统美术，项目编号Ⅶ-50）。",
+        "仙居针刺无骨花灯因灯面图案由刀凿针刺成孔、灯身无骨而得名，发源地即仙居县皤滩。",
+        "相传无骨花灯始于唐代，俗称“唐灯”；1996年获中国民间艺术作品金奖。",
+        "2000年，仙居县被文化部命名为“中国民间艺术之乡”。"
+      ],
+      "fact_records": [
+        {
+          "text": "灯彩（仙居花灯）2006年列入第一批国家级非遗名录（传统美术，项目编号Ⅶ-50）。",
+          "fact_index": 0,
+          "source_url": "https://www.ihchina.cn/project_details/14058.html",
+          "source_title": "中国非物质文化遗产网·灯彩（仙居花灯）",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-14058",
+          "evidence_quote": "灯彩（仙居花灯）项目序号：349项目编号：Ⅶ-50公布时间：2006(第一批)类别：传统美术……申报地区或单位：浙江省仙居县",
+          "fact_type": "designation",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "仙居针刺无骨花灯因灯面图案由刀凿针刺成孔、灯身无骨而得名，发源地即仙居县皤滩。",
+          "fact_index": 1,
+          "source_url": "https://www.ihchina.cn/project_details/14058.html",
+          "source_title": "中国非物质文化遗产网·灯彩（仙居花灯）",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-14058",
+          "evidence_quote": "仙居针刺无骨花灯系因灯面图案由刀凿针刺成孔、灯身无骨而得名，其发源地在浙江省仙居县皤滩",
+          "fact_type": "craft",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "相传无骨花灯始于唐代，俗称“唐灯”；1996年获中国民间艺术作品金奖。",
+          "fact_index": 2,
+          "source_url": "https://www.ihchina.cn/project_details/14058.html",
+          "source_title": "中国非物质文化遗产网·灯彩（仙居花灯）",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-14058",
+          "evidence_quote": "相传无骨花灯始于唐代，俗称“唐灯”，明清时技艺趋于成熟。1996年，仙居针刺无骨花灯荣获中国民间艺术作品金奖、澳门第四届国际艺术博览会金奖。",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "2000年，仙居县被文化部命名为“中国民间艺术之乡”。",
+          "fact_index": 3,
+          "source_url": "https://www.ihchina.cn/project_details/14058.html",
+          "source_title": "中国非物质文化遗产网·灯彩（仙居花灯）",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-14058",
+          "evidence_quote": "2000年，仙居县被文化部命名为“中国民间艺术之乡”。",
+          "fact_type": "designation",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        }
+      ],
+      "cultural_significance": "没有一根骨架的花灯——针在纸上刺出光，从唐朝亮到现在。",
+      "keywords_en": [
+        "Xianju boneless lantern",
+        "needle-punched lantern"
+      ],
+      "imagery": [
+        "无骨花灯",
+        "针刺灯片",
+        "元宵灯会",
+        "灯片拼粘"
+      ],
+      "best_season": "元宵季",
+      "micro_drama_hook": "整盏灯没有一根骨头，全是针眼透出的光。",
+      "scenario_tags": [
+        "非遗体验",
+        "手工艺",
+        "民俗",
+        "夜景"
+      ]
+    },
+    {
+      "id": "tz-fanhuang-zhudiao",
+      "type": "intangible",
+      "name": "黄岩翻簧竹雕",
+      "aliases": [
+        "贴簧",
+        "反簧"
+      ],
+      "level": "国家级非遗（2008年第二批扩展·传统美术）",
+      "location": "台州黄岩区",
+      "facts": [
+        "竹刻（黄岩翻簧竹雕）2008年列入第二批国家级非遗扩展项目名录（传统美术，项目编号Ⅶ-46）。",
+        "黄岩翻簧竹雕始创于清代同治九年（1870年），黄岩是国内最早创制翻簧竹雕的地区之一。",
+        "其工艺将毛竹去青取簧，胶合在木胎上再雕刻山水、人物、花鸟，成品色泽光润类似象牙。",
+        "浅浮雕和线雕能在厚度不到半毫米的簧面上表现画面层次，精致异常。"
+      ],
+      "fact_records": [
+        {
+          "text": "竹刻（黄岩翻簧竹雕）2008年列入第二批国家级非遗扩展项目名录（传统美术，项目编号Ⅶ-46）。",
+          "fact_index": 0,
+          "source_url": "https://www.ihchina.cn/project_details/14035.html",
+          "source_title": "中国非物质文化遗产网·竹刻（黄岩翻簧竹雕）",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-14035",
+          "evidence_quote": "竹刻（黄岩翻簧竹雕）项目序号：345项目编号：Ⅶ-46公布时间：2008(第二批)类别：传统美术……申报地区或单位：浙江省台州市黄岩区",
+          "fact_type": "designation",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "黄岩翻簧竹雕始创于清代同治九年（1870年），黄岩是国内最早创制翻簧竹雕的地区之一。",
+          "fact_index": 1,
+          "source_url": "https://www.ihchina.cn/project_details/14035.html",
+          "source_title": "中国非物质文化遗产网·竹刻（黄岩翻簧竹雕）",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-14035",
+          "evidence_quote": "黄岩翻簧竹雕是浙江省黄岩地区民间传统的工艺品种，它始创于清代同治九年（1870），至今已有百余年历史。黄岩是国内最早创制翻簧竹雕的地区之一",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "其工艺将毛竹去青取簧，胶合在木胎上再雕刻山水、人物、花鸟，成品色泽光润类似象牙。",
+          "fact_index": 2,
+          "source_url": "https://www.ihchina.cn/project_details/14035.html",
+          "source_title": "中国非物质文化遗产网·竹刻（黄岩翻簧竹雕）",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-14035",
+          "evidence_quote": "其工艺是将毛竹去青取簧，经过煮、压、刨、晒等工序后，胶合或镶嵌在木胎、竹片上……再在上面雕刻各种山水、人物、花鸟图案，最后形成色泽光润类似象牙的成品。",
+          "fact_type": "craft",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "浅浮雕和线雕能在厚度不到半毫米的簧面上表现画面层次，精致异常。",
+          "fact_index": 3,
+          "source_url": "https://www.ihchina.cn/project_details/14035.html",
+          "source_title": "中国非物质文化遗产网·竹刻（黄岩翻簧竹雕）",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-14035",
+          "evidence_quote": "浅浮雕和线雕是翻簧制品的主要装饰手法，线条粗中有细、疏密结合，能在厚度不到半毫米的簧面上表现出画面的不同层次，精致异常。",
+          "fact_type": "craft",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        }
+      ],
+      "cultural_significance": "在半毫米厚的竹簧上刻山水——黄岩人的刻刀比发丝还稳。",
+      "keywords_en": [
+        "Huangyan fanhuang bamboo carving"
+      ],
+      "imagery": [
+        "翻簧笔筒",
+        "竹簧雕刻",
+        "象牙色泽",
+        "匠人台屏"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "竹子翻过来的那一层“簧”，被刻成了象牙。",
+      "scenario_tags": [
+        "非遗体验",
+        "手工艺",
+        "艺术",
+        "人文"
+      ]
+    },
+    {
+      "id": "tz-liuruan",
+      "type": "legend",
+      "name": "刘阮传说",
+      "aliases": [
+        "刘晨阮肇",
+        "天台遇仙"
+      ],
+      "level": "国家级非遗（2014年第四批·民间文学）",
+      "location": "台州天台县桃源一带",
+      "facts": [
+        "刘阮传说2014年列入第四批国家级非遗名录（民间文学，项目编号Ⅰ-129）。",
+        "传说以刘晨、阮肇采药遇仙、与仙女结为姻缘为主要内容，主要流传于天台县桃源周边村落。",
+        "刘阮传说始于东汉，东晋干宝《搜神记》、南朝刘义庆《幽明录》等都有记录。"
+      ],
+      "fact_records": [
+        {
+          "text": "刘阮传说2014年列入第四批国家级非遗名录（民间文学，项目编号Ⅰ-129）。",
+          "fact_index": 0,
+          "source_url": "https://www.ihchina.cn/project_details/12378.html",
+          "source_title": "中国非物质文化遗产网·刘阮传说",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-12378",
+          "evidence_quote": "刘阮传说项目序号：1223项目编号：Ⅰ-129公布时间：2014(第四批)类别：民间文学……申报地区或单位：浙江省天台县",
+          "fact_type": "designation",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "传说以刘晨、阮肇采药遇仙、与仙女结为姻缘为主要内容，主要流传于天台县桃源周边村落。",
+          "fact_index": 1,
+          "source_url": "https://www.ihchina.cn/project_details/12378.html",
+          "source_title": "中国非物质文化遗产网·刘阮传说",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-12378",
+          "evidence_quote": "刘阮传说是以刘晨、阮肇采药遇仙，与仙女结为姻缘为主要内容的神话爱情故事，主要流传于浙江省天台县桃源周边的上宝相、下宝相、水磨坑、白岩等村",
+          "fact_type": "legend",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "刘阮传说始于东汉，东晋干宝《搜神记》、南朝刘义庆《幽明录》等都有记录。",
+          "fact_index": 2,
+          "source_url": "https://www.ihchina.cn/project_details/12378.html",
+          "source_title": "中国非物质文化遗产网·刘阮传说",
+          "source_publisher": "中国非物质文化遗产网",
+          "source_id": "ihchina-12378",
+          "evidence_quote": "刘阮传说始于东汉，在民间口耳相传，是流传甚广的神话爱情故事。东晋干宝《搜神记》、南朝刘义庆《幽明录》等都有记录。",
+          "fact_type": "legend",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据再分发许可；仅摘短事实并保留链接，许可待核",
+          "reuse_status": "fact-only-pending-license-review"
+        }
+      ],
+      "cultural_significance": "两个采药人误入仙乡——中国最早的“桃花源式”爱情故事在天台。",
+      "keywords_en": [
+        "Liu Ruan legend",
+        "Tiantai immortal tale"
+      ],
+      "imagery": [
+        "桃源洞",
+        "双女峰",
+        "采药山径",
+        "遇仙溪涧"
+      ],
+      "best_season": "春夏两季",
+      "micro_drama_hook": "进山采药七天，出山已过百年——天台的仙气有出处。",
+      "scenario_tags": [
+        "传说",
+        "人文",
+        "研学",
+        "徒步"
+      ]
+    },
+    {
+      "id": "tz-shibingtong",
+      "type": "cuisine",
+      "name": "食饼筒",
+      "aliases": [
+        "麦油脂",
+        "麦焦",
+        "饺饼筒",
+        "拭饼"
+      ],
+      "level": "台州传统小吃",
+      "location": "台州全域（各县称呼不同）",
+      "facts": [
+        "食饼筒是中国浙江省台州市的一种传统小吃，呈圆筒形，内含多样馅料，类似煎饼、春卷。",
+        "相传明朝中期东南沿海百姓为支援戚继光抗倭，用薄饼包裹菜肴犒劳将士，形成食饼筒。",
+        "馅料一般包括蛋丝、红烧肉、韭菜、洋葱炒肉、卷心菜、绿豆芽等。",
+        "每逢立夏、端午、春节等节日台州人便做食饼筒，端午节在台州被称为“麦饼节”。"
+      ],
+      "fact_records": [
+        {
+          "text": "食饼筒是中国浙江省台州市的一种传统小吃，呈圆筒形，内含多样馅料，类似煎饼、春卷。",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E9%A3%9F%E9%A5%BC%E7%AD%92",
+          "source_title": "维基百科：食饼筒",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-食饼筒",
+          "evidence_quote": "是中国浙江省台州市的一种传统小吃。它类似于煎饼、春卷等，呈圆筒形，内含多样的馅料。台州人在端午、立夏等节日经常制作食饼筒。",
+          "fact_type": "cuisine",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "相传明朝中期东南沿海百姓为支援戚继光抗倭，用薄饼包裹菜肴犒劳将士，形成食饼筒。",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E9%A3%9F%E9%A5%BC%E7%AD%92",
+          "source_title": "维基百科：食饼筒",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-食饼筒",
+          "evidence_quote": "一是相传是在明朝中期，浙江的东南沿海百姓为了支援戚继光抗击倭寇，用家中的原料制作成菜来犒劳将士，但不便携带，就用薄饼包裹，形成了现在的食饼筒。",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "馅料一般包括蛋丝、红烧肉、韭菜、洋葱炒肉、卷心菜、绿豆芽等。",
+          "fact_index": 2,
+          "source_url": "https://zh.wikipedia.org/wiki/%E9%A3%9F%E9%A5%BC%E7%AD%92",
+          "source_title": "维基百科：食饼筒",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-食饼筒",
+          "evidence_quote": "食饼筒的馅料一般包括蛋丝、红烧肉、韭菜、洋葱炒肉、卷心菜，绿豆芽等",
+          "fact_type": "cuisine",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "每逢立夏、端午、春节等节日台州人便做食饼筒，端午节在台州被称为“麦饼节”。",
+          "fact_index": 3,
+          "source_url": "https://zh.wikipedia.org/wiki/%E9%A3%9F%E9%A5%BC%E7%AD%92",
+          "source_title": "维基百科：食饼筒",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-食饼筒",
+          "evidence_quote": "每逢立夏、端午、五月十三、春节等节日，台州人便会做食饼筒，其中端午节更是在台州被称为“麦饼节”。",
+          "fact_type": "culture",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
+      ],
+      "cultural_significance": "一张薄饼卷下十样菜——台州人的餐桌独立宣言。",
+      "keywords_en": [
+        "Shibingtong",
+        "Taizhou food roll"
+      ],
+      "imagery": [
+        "摊皮卷菜",
+        "切段横截面",
+        "平底锅煎",
+        "节日家宴"
+      ],
+      "best_season": "立夏/端午",
+      "micro_drama_hook": "什么都包得进——台州人的团圆，是卷着吃的。",
+      "scenario_tags": [
+        "美食",
+        "小吃",
+        "民俗",
+        "家常"
+      ]
+    },
+    {
+      "id": "tz-wangshixing",
+      "type": "person",
+      "name": "王士性",
+      "aliases": [
+        "恒叔",
+        "太初"
+      ],
+      "level": "明代人文地理学家、巡抚",
+      "location": "台州府临海县人",
+      "facts": [
+        "王士性（1547—1598），字恒叔，号太初，浙江台州府临海县人，明朝政治人物。",
+        "他一生喜游历，漫游名山，旅途中写了许多笔记。",
+        "著有《广志绎》《五岳游草》《广游志》等，今被辑成《王士性地理书三种》。"
+      ],
+      "fact_records": [
+        {
+          "text": "王士性（1547—1598），字恒叔，号太初，浙江台州府临海县人，明朝政治人物。",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E7%8E%8B%E5%A3%AB%E6%80%A7",
+          "source_title": "维基百科：王士性",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-王士性",
+          "evidence_quote": "王士性（1547年—1598年），字恒叔，號太初，浙江台州府臨海縣人，民籍，明朝政治人物。",
+          "fact_type": "person",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "他一生喜游历，漫游名山，旅途中写了许多笔记。",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E7%8E%8B%E5%A3%AB%E6%80%A7",
+          "source_title": "维基百科：王士性",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-王士性",
+          "evidence_quote": "一生喜游历，漫游名山，旅途中寫了許多筆記",
+          "fact_type": "person",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "著有《广志绎》《五岳游草》《广游志》等，今被辑成《王士性地理书三种》。",
+          "fact_index": 2,
+          "source_url": "https://zh.wikipedia.org/wiki/%E7%8E%8B%E5%A3%AB%E6%80%A7",
+          "source_title": "维基百科：王士性",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-王士性",
+          "evidence_quote": "有《朗陵》《燕市》《台山》《掖垣》诸集，又有《史逸》《诗筏》、《廣志繹》、《五嶽遊草》、《廣遊志》等，今被輯成《王士性地理書三種》。",
+          "fact_type": "person",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
+      ],
+      "cultural_significance": "比徐霞客早半个世纪走遍大明的台州人，笔下的地理分了“三格”。",
+      "keywords_en": [
+        "Wang Shixing",
+        "Ming dynasty geographer"
+      ],
+      "imagery": [
+        "临海古城",
+        "行旅手稿",
+        "山水纪游",
+        "方志书影"
+      ],
+      "best_season": "四季皆宜",
+      "micro_drama_hook": "徐霞客之前，台州已经出过一个用脚写地理的人。",
+      "scenario_tags": [
+        "历史名人",
+        "人文",
+        "研学",
+        "历史"
       ]
     }
   ]

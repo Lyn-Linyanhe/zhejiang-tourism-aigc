@@ -12,7 +12,7 @@
 
 - Windows 10/11
 - Python 3.11 或更高版本。Python 3.12 可以直接使用本项目。
-- FFmpeg 和 FFprobe 已加入 PATH
+- FFmpeg 和 FFprobe 已加入 PATH（首次启动会自动补下载；离线包已随包提供）
 - Chrome、Edge 或 Firefox
 - DeepSeek API key（真实脚本生成）
 - 若不使用上传素材，需要配置 `PEXELS_API_KEY` 或接受技术测试场景图
@@ -22,11 +22,13 @@
 
 1. 安装 Python 3.11 或 3.12，并将其加入 PATH。
 2. 双击 `START.cmd`。首次启动会联网安装 Edge TTS。若系统和项目目录均未提供 FFmpeg 与 FFprobe，启动流程会下载所需工具。
-3. 服务就绪后打开 [浙里成片](http://127.0.0.1:8787/)。默认配置可用来验证本地创作流程。离线验证时可选 Windows 系统语音或上传配音，并选择「无音乐」。
+3. 服务就绪后打开 [浙里成片](http://127.0.0.1:8790/)。默认配置可用来验证本地创作流程。离线验证时可选 Windows 系统语音或上传配音，并选择「无音乐」。
 
 使用联网服务时，将 `.env.example` 复制为本地 `.env`，按所选文本、素材、图库和音频服务填写配置。曲库初始为空，可在系统页导入已获授权的音乐。
 
 [11 月 21 日更新说明](docs/2026-11-21.md)
+
+## 真实创作与素材
 
 - 本包的 `.env` 不含任何 API key，预设 `DEFAULT_PROVIDER=offline` 和 `ASSET_PROVIDER=offline`。该模式用于验收流程，离线场景图不等同于真实旅游照片。
 

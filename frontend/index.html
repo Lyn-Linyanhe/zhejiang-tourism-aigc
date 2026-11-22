@@ -37,13 +37,13 @@
                   <div class="field-row"><label>城市 <span>*</span><select id="city" name="city" required><option value="杭州">杭州</option></select><input data-custom-for="city" placeholder="请输入自定义内容" aria-label="自定义city" hidden /></label><label>核心地标<select id="landmark" name="landmark"><option value="">未指定</option></select><input data-custom-for="landmark" placeholder="请输入自定义内容" aria-label="自定义landmark" hidden /></label></div>
                   <div class="field-row"><label>传播主题 <span>*</span><input name="theme" value="春日城市漫游" maxlength="80" required placeholder="例如：西湖边的宋韵春天" /></label><label>目标受众<select name="audience"><option value="">未指定</option></select><input data-custom-for="audience" placeholder="请输入自定义内容" aria-label="自定义audience" hidden /></label></div>
                   <div class="field-row"><label>文化线索<select name="culture"><option value="">未指定</option></select><input data-custom-for="culture" placeholder="请输入自定义内容" aria-label="自定义culture" hidden /></label><label>节庆 / 活动<select name="festival"><option value="">未指定</option></select><input data-custom-for="festival" placeholder="请输入自定义内容" aria-label="自定义festival" hidden /></label></div>
-                  <div class="field-row"><label>成片时长 <select name="duration"><option value="15">15 秒</option><option value="30" selected>30 秒</option><option value="60">60 秒</option></select></label><label>镜头数量 <select name="shot_count"><option value="0" selected>自动匹配</option><option value="4">4 个镜头</option><option value="6">6 个镜头</option><option value="8">8 个镜头</option></select></label></div>
-                  <div class="field-row"><label>叙事风格<select name="style" required><option value="诗意纪实">诗意纪实</option></select><input data-custom-for="style" placeholder="请输入自定义内容" aria-label="自定义style" hidden /></label><label>素材来源<select name="asset_source"><option value="configured" selected>使用服务端配置</option></select></label></div>
-                  <div class="field-row"><label>输出规格<select name="output_resolution"><option value="720x1280">720 × 1280 竖屏</option><option value="1080x1920" selected>1080 × 1920 竖屏</option><option value="1920x1080">1920 × 1080 横屏</option><option value="1080x1080">1080 × 1080 方形</option></select></label><label>帧率 <select name="fps"><option value="24">24 fps</option><option value="25">25 fps</option><option value="30" selected>30 fps</option><option value="60">60 fps</option></select></label></div>
-                  <div class="field-row"><label>配音<select name="voice" required><option value="晓晓·温暖女声">晓晓·温暖女声</option></select><small class="field-note" id="create-voice-note"></small></label><label>背景音乐<select name="music_mood" required><option value="无音乐">无音乐</option></select><input data-custom-for="music_mood" placeholder="请输入自定义内容" aria-label="自定义music_mood" hidden /></label></div>
+                  <div class="field-row"><label>成片时长 <input name="duration" type="number" min="5" max="180" step="1" value="15" required /><small class="field-note">5–180 秒可任意填；常用 <button type="button" class="link-button" data-duration-preset="15">15</button> / <button type="button" class="link-button" data-duration-preset="30">30</button> / <button type="button" class="link-button" data-duration-preset="60">60</button> 秒</small></label><label>镜头数量 <select name="shot_count"><option value="0" selected>自动（按脚本定）</option><option value="2">2 个</option><option value="3">3 个</option><option value="4">4 个</option><option value="5">5 个</option><option value="6">6 个</option><option value="7">7 个</option><option value="8">8 个</option><option value="9">9 个</option><option value="10">10 个</option><option value="12">12 个</option></select><small class="field-note">2–12 个，每镜至少 3 秒</small></label></div>
+                  <div class="field-row"><label>叙事风格<select name="style" required><option value="诗意纪实">诗意纪实</option><option value="城市漫游">城市漫游</option><option value="国风雅韵">国风雅韵</option><option value="青春活力">青春活力</option><option value="节庆热烈">节庆热烈</option></select><input data-custom-for="style" placeholder="请输入自定义内容" aria-label="自定义style" hidden /></label><label>素材来源<select name="asset_source"><option value="ai-video" selected>AI 图生视频（默认）</option><option value="ai-t2v">AI 文生视频（最快）</option><option value="ai-image">AI 静帧（画面不动）</option><option value="pexels">Pexels 在线素材</option><option value="local-library">本地素材库</option><option value="offline">离线占位图</option></select></label></div>
+                  <div class="field-row"><label>输出规格<select name="output_resolution"><option value="720x1280">竖屏 9:16 · 720P（抖音/小红书）</option><option value="1080x1920" selected>竖屏 9:16 · 1080P</option><option value="1920x1080">横屏 16:9 · 1080P（B站/官网）</option><option value="1080x1080">方形 1:1</option></select></label><label>帧率 <select name="fps"><option value="24">24 fps</option><option value="25">25 fps</option><option value="30" selected>30 fps</option><option value="60">60 fps</option></select></label></div>
+                  <div class="field-row"><label>配音<select name="voice" required><option value="晓晓·温暖女声">晓晓·温暖女声</option></select><small class="field-note" id="create-voice-note"></small></label><label>背景音乐<select name="music_mood" required><option value="无音乐">无音乐</option></select><input data-custom-for="music_mood" placeholder="请输入自定义内容" aria-label="自定义music_mood" hidden /><small class="field-note"><button type="button" id="browse-music" class="link-button">浏览曲库（<span id="music-count">…</span> 首）</button></small></label></div>
                   <div class="field-row"><label>配音语速 <input name="voice_rate" type="number" min="0.5" max="2" step="0.1" value="1" /></label><label>配音音高 <input name="voice_pitch" type="number" min="-50" max="50" step="5" value="0" /><small class="field-note">赫兹偏移，0 为不变调；神经音色做音高偏移容易发假，非必要别动。</small></label></div>
                   <div class="field-row"><label>配音音量 <input name="voice_volume" type="number" min="0" max="2" step="0.05" value="1" /></label><label>音乐音量 <input name="music_volume" type="number" min="0" max="1" step="0.01" value="0.18" /></label></div>
-                  <div class="field-row"><label>旁白出现时的音乐<select name="music_ducking"><option value="不压低">保持音量不变</option><option value="轻微" selected>轻微压低</option><option value="标准">标准压低</option></select></label></div>
+                  <div class="field-row"><label>旁白出现时的音乐<select name="music_ducking"><option value="不压低" selected>保持音量不变（推荐）</option><option value="轻微">轻微压低</option><option value="标准">标准压低</option></select></label></div>
                   <div class="field-row toggle-row"><label class="toggle-label">烧录字幕 <input type="checkbox" name="include_subtitles" checked /><span class="toggle"></span></label><label class="toggle-label">保留 AIGC 标识 <input type="checkbox" name="include_ai_label" checked /><span class="toggle"></span></label></div>
                   <label>主体锁定<textarea name="subject_lock" maxlength="500" placeholder="写明跨镜头不能变化的同一个人/物件/地标，例如：同一座断桥，石栏缺口、桥拱比例与青灰色石材保持一致。"></textarea><small class="field-note">这会逐镜复用为生成条件；风格词、seed 和调色不能替代主体锁定。填写主体锁定时应同时提供参考图。</small></label>
                   <label>主体参考图路径<input name="subject_reference_path" maxlength="1000" placeholder="可选：本地参考图绝对路径，例如 E:\assets\subject.png" /></label>
@@ -56,7 +56,7 @@
                 <div id="city-preview" class="city-preview"><div class="preview-city">杭州</div><div class="preview-landmark">选择城市后显示文旅线索</div></div>
                 <div class="preview-rule"></div>
                 <div class="mini-metrics"><div><strong id="metric-shots">自动</strong><span>镜头数量</span></div><div><strong id="metric-resolution">9:16</strong><span>输出画幅</span></div><div><strong id="metric-provider">DeepSeek</strong><span>文本 provider</span></div></div>
-                <div class="preview-tip"><span>!</span><p>脚本预览可编辑。选择“上传素材”时，确认生成前需要为每个镜头绑定图片或视频；在线素材会从已配置的平台检索。</p></div>
+                <div class="preview-tip"><span>!</span><p>脚本预览可编辑。选择“上传素材”时，确认生成前需要为每个镜头绑定图片或视频；在线素材会从已配置的平台检索；正式发布模式只能使用本地素材库中已审核的条目。</p></div>
               </section>
             </div>
           </div>
@@ -72,6 +72,11 @@
 
         <section class="view" id="view-projects">
           <div class="view-intro"><span class="section-index">B / ARCHIVE</span><h2>作品档案</h2><p>每个任务都保留输入、脚本、分镜、素材授权、音频 provider、渲染结果和错误记录。</p></div>
+          <section class="panel metrics-panel">
+            <div class="panel-heading"><div><span class="section-index">B / MEASURE</span><h3>成本与传播观测</h3></div></div>
+            <p class="metrics-note">真实账单需有金额、币种和凭证/来源；provider 报告金额不等于实际账单。平台指标按平台与观测窗口分别展示，不跨平台求和；数据来自录入的公开帖文观测，不代表因果效果。</p>
+            <div id="metrics-overview" class="metrics-overview"></div>
+          </section>
           <div id="project-list" class="project-list"></div>
           <details class="project-trash">
             <summary>回收站 <span id="trash-count" class="trash-count">0</span></summary>
@@ -143,6 +148,69 @@
       </form>
     </dialog>
     <div id="toast" class="toast" role="status"></div>
+    <div id="music-modal" class="modal" hidden>
+      <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="music-modal-title">
+        <div class="modal-head">
+          <h3 id="music-modal-title">浏览曲库</h3>
+          <button type="button" id="music-modal-close" class="icon-button" aria-label="关闭">×</button>
+        </div>
+        <p class="field-note" id="music-modal-note">只显示已授权且文件存在的曲目。情绪标签按节奏自动估计，未逐首试听，选之前建议先点「试听」。风格目前都是通用，所以不参与筛选。</p>
+        <div class="music-filters">
+          <label>情绪 <select id="music-filter-mood"><option value="">全部</option></select></label>
+        </div>
+        <div id="music-list" class="music-list"></div>
+      </div>
+    </div>
+=======
+          <div class="workspace-grid">
+            <section class="panel form-panel">
+              <div class="panel-heading"><div><span class="section-index">01 / BRIEF</span><h3>定义这支视频</h3></div><span class="required-note">* 必填</span></div>
+              <form id="create-form">
+                <div class="field-row"><label>城市 <span>*</span><select id="city" name="city" required><option value="杭州">杭州</option></select><input data-custom-for="city" placeholder="请输入自定义内容" aria-label="自定义city" hidden /></label><label>核心地标<select id="landmark" name="landmark"><option value="">未指定</option></select><input data-custom-for="landmark" placeholder="请输入自定义内容" aria-label="自定义landmark" hidden /></label></div>
+                <label>传播主题 <span>*</span><input name="theme" value="春日城市漫游" maxlength="80" required placeholder="例如：西湖边的宋韵春天" /></label>
+                <div class="field-row"><label>文化线索<select name="culture"><option value="">未指定</option></select><input data-custom-for="culture" placeholder="请输入自定义内容" aria-label="自定义culture" hidden /></label><label>节庆 / 活动<select name="festival"><option value="">未指定</option></select><input data-custom-for="festival" placeholder="请输入自定义内容" aria-label="自定义festival" hidden /></label></div>
+                <div class="field-row"><label>目标受众<select name="audience"><option value="">未指定</option></select><input data-custom-for="audience" placeholder="请输入自定义内容" aria-label="自定义audience" hidden /></label><label>成片时长 <input name="duration" type="number" min="5" max="180" step="1" value="15" required /><small class="field-note">5–180 秒可任意填；常用 <button type="button" class="link-button" data-duration-preset="15">15</button> / <button type="button" class="link-button" data-duration-preset="30">30</button> / <button type="button" class="link-button" data-duration-preset="60">60</button> 秒</small></label></div>
+                <div class="field-row"><label>镜头数量 <select name="shot_count"><option value="0" selected>自动（按脚本定）</option><option value="2">2 个</option><option value="3">3 个</option><option value="4">4 个</option><option value="5">5 个</option><option value="6">6 个</option><option value="7">7 个</option><option value="8">8 个</option><option value="9">9 个</option><option value="10">10 个</option><option value="12">12 个</option></select><small class="field-note">2–12 个，每镜至少 3 秒</small></label><label>叙事风格<select name="style" required><option value="诗意纪实">诗意纪实</option><option value="城市漫游">城市漫游</option><option value="国风雅韵">国风雅韵</option><option value="青春活力">青春活力</option><option value="节庆热烈">节庆热烈</option></select></label></div>
+                <div class="field-row"><label>配音<select name="voice" required><option value="晓晓·温暖女声">晓晓·温暖女声</option></select><small class="field-note" id="create-voice-note"></small></label><label>背景音乐<select name="music_mood" required><option value="无音乐">无音乐</option><option value="舒缓">舒缓</option><option value="雅致">雅致</option><option value="轻快">轻快</option><option value="热烈">热烈</option></select><small class="field-note"><button type="button" id="browse-music" class="link-button">浏览曲库（<span id="music-count">…</span> 首）</button></small></label></div>
+                <div class="field-row"><label>素材来源<select name="asset_source"><option value="ai-video" selected>AI 图生视频（默认）</option><option value="ai-t2v">AI 文生视频（最快）</option><option value="ai-image">AI 静帧（画面不动）</option><option value="pexels">Pexels 在线素材</option><option value="local-library">本地素材库</option><option value="offline">离线占位图</option></select></label><label>输出规格<select name="output_resolution"><option value="720x1280" selected>竖屏 9:16 · 720P（抖音/小红书）</option><option value="1080x1920">竖屏 9:16 · 1080P</option><option value="1920x1080">横屏 16:9 · 1080P（B站/官网）</option><option value="1080x1080">方形 1:1</option></select></label></div>
+                <div class="field-row"><label>帧率 <select name="fps"><option value="24">24 fps</option><option value="25" selected>25 fps</option><option value="30">30 fps</option><option value="60">60 fps</option></select></label><label>配音语速 <input name="voice_rate" type="number" min="0.5" max="2" step="0.1" value="1" /></label></div>
+                <label>配音音高 <input name="voice_pitch" type="number" min="-50" max="50" step="5" value="0" /><small class="field-note">赫兹偏移，0 为不变调；神经音色做音高偏移容易发假，非必要别动。</small></label>
+                <div class="field-row"><label>配音音量 <input name="voice_volume" type="number" min="0" max="2" step="0.05" value="1" /></label><label>音乐音量 <input name="music_volume" type="number" min="0" max="1" step="0.01" value="0.18" /></label></div>
+                <label>旁白出现时的音乐<select name="music_ducking"><option value="不压低" selected>保持音量不变（推荐）</option><option value="轻微">轻微压低</option><option value="标准">标准压低</option></select></label>
+                <div class="field-row toggle-row"><label class="toggle-label">烧录字幕 <input type="checkbox" name="include_subtitles" checked /><span class="toggle"></span></label><label class="toggle-label">保留 AIGC 标识 <input type="checkbox" name="include_ai_label" checked /><span class="toggle"></span></label></div>
+                <label>补充要求<textarea name="custom_brief" maxlength="500" placeholder="可以指定开场、镜头节奏、口号、禁用表达、必须出现的内容等。"></textarea></label>
+                <div class="form-footer"><span>提交后先生成脚本和分镜，不会立即消耗素材或渲染任务。</span><button class="primary-button" type="submit"><span>生成脚本预览</span><b>→</b></button></div>
+              </form>
+            </section>
+            <section class="panel insight-panel">
+              <div class="panel-heading"><div><span class="section-index">02 / INPUT</span><h3>输入检查</h3></div></div>
+              <div id="city-preview" class="city-preview"><div class="preview-city">杭州</div><div class="preview-landmark">选择城市后显示文旅线索</div></div>
+              <div class="preview-rule"></div>
+              <div class="mini-metrics"><div><strong id="metric-shots">自动</strong><span>镜头数量</span></div><div><strong id="metric-resolution">9:16</strong><span>输出画幅</span></div><div><strong id="metric-provider">DeepSeek</strong><span>文本 provider</span></div></div>
+              <div class="preview-tip"><span>!</span><p>脚本预览可编辑。选择“上传素材”时，确认生成前需要为每个镜头绑定图片或视频；选择 Pexels 时需要服务端配置 API key。</p></div>
+            </section>
+          </div>
+          <section class="panel task-panel"><div class="panel-heading"><div><span class="section-index">03 / PIPELINE</span><h3>当前任务</h3></div><button class="text-button" id="view-latest">打开最近任务 →</button></div><div id="active-task" class="empty-state">提交创作需求后，这里会出现可编辑脚本、分镜、素材、音频和成片状态。</div></section>
+        </section>
+
+        <section class="view" id="view-projects"><div class="view-intro"><span class="section-index">B / ARCHIVE</span><h2>作品档案</h2><p>成本状态、运行耗时和传播平台手工记录分开展示；平台数据来自录入的公开帖文观测，不代表因果效果。</p></div><section class="panel metrics-panel"><div class="panel-heading"><div><span class="section-index">B / MEASURE</span><h3>成本与传播观测</h3></div></div><p class="metrics-note">真实账单需有金额、币种和凭证/来源；provider 报告金额不等于实际账单。平台指标按平台与观测窗口分别展示，不跨平台求和。</p><div id="metrics-overview" class="metrics-overview"></div></section><div id="project-list" class="project-list"></div></section>
+        <section class="view" id="view-about"><div class="view-intro"><span class="section-index">C / SYSTEM</span><h2>Provider 与流水线</h2><p>此页从后端注册表实时读取能力与可用状态，不展示密钥。新增实现只需注册，无需修改编排分支。</p></div><div id="system-pipeline" class="system-pipeline"></div><div id="provider-registry" class="about-grid"><article><span class="section-index">LOADING</span><h3>正在读取配置</h3></article></div></section>
+      </main>
+    </div>
+    <div id="toast" class="toast"></div>
+    <div id="music-modal" class="modal" hidden>
+      <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="music-modal-title">
+        <div class="modal-head">
+          <h3 id="music-modal-title">浏览曲库</h3>
+          <button type="button" id="music-modal-close" class="icon-button" aria-label="关闭">×</button>
+        </div>
+        <p class="field-note" id="music-modal-note">只显示已授权且文件存在的曲目。情绪标签按节奏自动估计，未逐首试听，选之前建议先点「试听」。风格目前都是通用，所以不参与筛选。</p>
+        <div class="music-filters">
+          <label>情绪 <select id="music-filter-mood"><option value="">全部</option></select></label>
+        </div>
+        <div id="music-list" class="music-list"></div>
+      </div>
+    </div>
     <script src="/voice-studio.js"></script>
     <script src="/app.js"></script>
   </body>

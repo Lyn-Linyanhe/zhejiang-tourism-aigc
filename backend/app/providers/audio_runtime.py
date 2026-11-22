@@ -53,6 +53,14 @@ class AudioRuntimeClient:
             timeout_seconds=settings.audio_timeout_seconds,
         )
 
+    def available(self) -> bool:
+        """隔离运行时的解释器是否存在。
+
+        edge-tts 不需要 torch/whisper 那套 3.11 环境，所以调用方可以先用这个方法
+        判断，缺运行时就走主进程的 edge-tts，而不是降级到 Windows SAPI。
+        """
+        return self.python_executable.is_file()
+
     def _invoke(self, request: dict[str, Any]) -> dict[str, Any]:
         if not self.python_executable.is_file():
             raise AudioRuntimeError(

@@ -66,7 +66,8 @@ class AudioSyncTests(unittest.TestCase):
             info = probe_audio(Path(result.voice_path))
             self.assertEqual(info["sample_rate"], 48000)
             self.assertEqual(info["channels"], 2)
-            self.assertEqual(probe_audio(old_silence)["channels"], 2)
+            # 静音段复用保持 48kHz 单声道（逐段口径），最终立体声在拼接层生成
+            self.assertEqual(probe_audio(old_silence)["channels"], 1)
             self.assertLessEqual(abs(result.total_duration - sum(shot.duration_sec for shot in shots)), 0.001)
 
 

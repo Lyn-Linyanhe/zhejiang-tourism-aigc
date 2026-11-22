@@ -17,14 +17,25 @@ from urllib.parse import parse_qs, unquote, urlparse
 
 from .config import settings
 from .models import TaskInput
-from .providers.contract import CONTRACT_VERSION
+from .providers.contract import CONTRACT_VERSION, SHOT_TAGS
 from .providers.media_ffmpeg import validate_audio_file
 from .providers.tts import generate_system_speech
-from .services.catalog import bank_voices, get_catalog
+from .services.catalog import bank_voices, get_catalog, get_music_library, resolve_music_track
 from .services.audio_sync import _atomic_normalize
 from .services.cost import summarize_cost
 from .services.music_library import import_music, list_music_library
+from .services.metrics import (
+    MAX_BILLING_RECORDS_PER_TASK,
+    MAX_OBSERVATIONS_PER_TASK,
+    observation_key,
+    summarize_task_metrics,
+    validate_billing_record,
+    validate_publication_observation,
+)
+from .services.knowledge import list_entities
+from .services.library import create_library_upload
 from .services.orchestrator import Orchestrator
+from .services.script_export import export_script
 from .services.provider_settings import public_settings, uses_local_speech, validate_changes, write_dotenv
 from .services.subject_review import save_reference
 from .services.uploads import validate_audio_upload
@@ -58,7 +69,8 @@ class AppHandler(BaseHTTPRequestHandler):
 
     def log_message(self, fmt: str, *args: object) -> None:
         line = f"{self.address_string()} - {fmt % args}\n"
-        (settings.logs_dir / "access.log").open("a", encoding="utf-8").write(line)
+        with (settings.logs_dir / "access.log").open("a", encoding="utf-8") as log:
+            log.write(line)
 
     def _send(
         self,
@@ -144,11 +156,23 @@ class AppHandler(BaseHTTPRequestHandler):
                 self._json(200, knowledge.stats())
                 return
             if path == "/api/catalog":
-                self._json(200, get_catalog(orchestrator.settings))
+                payload = get_catalog()
+                payload["entities"] = list_entities()
+                payload["shot_tags"] = SHOT_TAGS
+                self._json(200, payload)
+                return
+            if path == "/api/music/library":
+                # 前端"浏览曲库"：只列已授权且文件存在的曲目
+                self._json(
+                    200,
+                    get_music_library(settings.music_catalog_path, settings.music_dir),
+                )
                 return
             if path == "/api/tasks":
                 limit = int(parse_qs(parsed.query).get("limit", ["50"])[0])
                 items = storage.list_tasks(limit)
+                for task in items:
+                    task["metrics"] = summarize_task_metrics(task)
                 self._json(
                     200,
                     {"items": items, "total": len(storage.list_tasks(200))},
@@ -170,7 +194,22 @@ class AppHandler(BaseHTTPRequestHandler):
                     elif path.endswith("/visual-review"):
                         self._json(200, read_review(directory) if task.get("status") == "completed" else None)
                     else:
-                        self._json(200, {**summarize_cost(task), "billing": cost_ledger(task, directory)})
+                        self._json(200, summarize_task_metrics(task))
+                return
+            if path.startswith("/api/tasks/") and path.endswith("/export"):
+                task_id = path.split("/")[3]
+                task = storage.get_task(task_id)
+                if not task:
+                    self._json(404, {"error": "TASK_NOT_FOUND", "message": "Task does not exist"})
+                    return
+                fmt = parse_qs(parsed.query).get("format", ["md"])[0]
+                body, content_type, filename = export_script(task, fmt)
+                self._send(
+                    200,
+                    body,
+                    content_type,
+                    headers={"Content-Disposition": f'attachment; filename="{filename}"'},
+                )
                 return
             if path == "/api/assets":
                 task_id = parse_qs(parsed.query).get("task_id", [""])[0]
@@ -180,7 +219,13 @@ class AppHandler(BaseHTTPRequestHandler):
                 return
             if path == "/api/library/assets":
                 query = parse_qs(parsed.query)
-                items = storage.list_library_assets(query.get("type", [""])[0], query.get("q", [""])[0])
+                items = storage.list_library_assets(
+                    query.get("type", [""])[0], query.get("q", [""])[0],
+                    entity_id=query.get("entity_id", [""])[0],
+                    shot_tag=query.get("shot_tag", [""])[0],
+                    review_status=query.get("review_status", [""])[0],
+                    city=query.get("city", [""])[0], usage=query.get("usage", ["preview"])[0],
+                )
                 self._json(200, {"items": items, "total": len(items)})
                 return
             if path.startswith("/api/tasks/"):
@@ -193,11 +238,33 @@ class AppHandler(BaseHTTPRequestHandler):
                     )
                 else:
                     directory = settings.media_dir / task_id
+                    task["metrics"] = summarize_task_metrics(task)
                     billing = cost_ledger(task, directory)
                     task["cost"] = {**summarize_cost(task), "billing": billing}
                     if task.get("status") == "completed":
                         task["visual_review"] = read_review(directory)
                     self._json(200, task)
+                return
+            if path.startswith("/library-media/"):
+                self._serve_media(path)
+                return
+            if path.startswith("/music/"):
+                # resolve_music_track 只放行 catalog 里已授权、且落在 music_dir 内的文件，
+                # 这里不再套 _serve_file 的 PROJECT_ROOT 限制（曲库目录可以配到仓库外）。
+                target = resolve_music_track(
+                    path.removeprefix("/music/"),
+                    settings.music_catalog_path,
+                    settings.music_dir,
+                )
+                if target is None:
+                    self._send(404, b"Not Found", "text/plain; charset=utf-8")
+                    return
+                self._send(
+                    200,
+                    target.read_bytes(),
+                    mimetypes.guess_type(target.name)[0] or "audio/mpeg",
+                    headers={"Content-Disposition": f'inline; filename="{target.name}"'},
+                )
                 return
             if path.startswith("/media/"):
                 self._serve_media(path)
@@ -215,6 +282,8 @@ class AppHandler(BaseHTTPRequestHandler):
                 )
                 return
             self._send(404, b"Not Found", "text/plain; charset=utf-8")
+        except ValueError as exc:
+            self._json(400, {"error": "INVALID_REQUEST", "message": str(exc)})
         except Exception as exc:
             self._json(500, {"error": "INTERNAL_ERROR", "message": str(exc)})
 
@@ -313,11 +382,55 @@ class AppHandler(BaseHTTPRequestHandler):
                     track = import_music(self._read_json(), active.music_catalog_path, active.music_dir)
                     self._json(201, track)
                 return
+            if path == "/api/library/assets":
+                self._json(201, create_library_upload(storage, settings.library_dir, self._read_json()))
+                return
             if path == "/api/assets":
                 self._create_asset()
                 return
             if path == "/api/uploads":
                 self._create_upload()
+                return
+            if path.startswith("/api/tasks/") and path.endswith("/billing"):
+                task_id = path.split("/")[3]
+                data = self._read_json()
+                record = validate_billing_record(data)
+                task = storage.get_task(task_id)
+                if not task:
+                    raise KeyError("Task does not exist")
+                records = list(task.get("billing_records") or [])
+                if len(records) >= MAX_BILLING_RECORDS_PER_TASK:
+                    raise ValueError("Billing record limit reached")
+                record["id"] = str(data.get("id") or f"bill_{int(datetime.now(timezone.utc).timestamp() * 1000)}")
+                record["recorded_at"] = datetime.now(timezone.utc).isoformat()
+                records.append(record)
+                task["billing_records"] = records
+                storage.save_raw_task(task)
+                self._json(201, {"items": records, "by_currency": summarize_task_metrics(task)["billing"]["by_currency"]})
+                return
+            if path.startswith("/api/tasks/") and path.endswith("/publication-observations"):
+                task_id = path.split("/")[3]
+                record = validate_publication_observation(self._read_json())
+                task = storage.get_task(task_id)
+                if not task:
+                    raise KeyError("Task does not exist")
+                observations = list(task.get("publication_observations") or [])
+                key = observation_key(record)
+                existing_index = next((index for index, item in enumerate(observations) if observation_key(item) == key), None)
+                if existing_index is None and len(observations) >= MAX_OBSERVATIONS_PER_TASK:
+                    raise ValueError("Publication observation limit reached")
+                record["updated_at"] = datetime.now(timezone.utc).isoformat()
+                if existing_index is None:
+                    observations.append(record)
+                else:
+                    previous = observations[existing_index]
+                    history = list(previous.get("revisions") or [])
+                    history.append({key: value for key, value in previous.items() if key != "revisions"})
+                    record["revisions"] = history[-20:]
+                    observations[existing_index] = record
+                task["publication_observations"] = observations
+                storage.save_raw_task(task)
+                self._json(201, {"items": observations})
                 return
             self._json(404, {"error": "NOT_FOUND", "message": "Endpoint does not exist"})
         except (ValueError, json.JSONDecodeError) as exc:
@@ -338,9 +451,16 @@ class AppHandler(BaseHTTPRequestHandler):
         parsed = urlparse(self.path)
         path = unquote(parsed.path)
         try:
+            if path.startswith("/api/library/assets/") and path.count("/") == 4:
+                asset_id = path.split("/")[4]
+                self._json(200, storage.update_library_asset(asset_id, self._read_json()))
+                return
             if path.startswith("/api/tasks/") and path.count("/") == 3:
                 task_id = path.split("/")[3]
-                self._json(200, orchestrator.update_draft(task_id, self._read_json()))
+                task = orchestrator.update_draft(task_id, self._read_json())
+                task["metrics"] = summarize_task_metrics(task)
+                task["cost"] = task["metrics"]["cost"]
+                self._json(200, task)
                 return
             if path.startswith("/api/tasks/") and "/shots/" in path:
                 parts = path.split("/")
@@ -387,9 +507,18 @@ class AppHandler(BaseHTTPRequestHandler):
         self._send(200, path.read_bytes(), content_type)
 
     def _serve_media(self, path: str) -> None:
-        relative = Path(*path.removeprefix("/media/").split("/"))
-        target = (settings.media_dir / relative).resolve()
-        if not target.is_relative_to(settings.media_dir.resolve()) or not target.exists():
+        if path.startswith("/media/"):
+            relative = Path(*path.removeprefix("/media/").split("/"))
+            target = (settings.media_dir / relative).resolve()
+            root = settings.media_dir.resolve()
+        elif path.startswith("/library-media/"):
+            relative = Path(*path.removeprefix("/library-media/").split("/"))
+            target = (settings.library_dir / relative).resolve()
+            root = settings.library_dir.resolve()
+        else:
+            self._send(404, b"Not Found", "text/plain; charset=utf-8")
+            return
+        if not target.is_relative_to(root) or not target.is_file():
             self._send(404, b"Not Found", "text/plain; charset=utf-8")
             return
         content_type = mimetypes.guess_type(target.name)[0] or "application/octet-stream"

@@ -27,7 +27,7 @@
       "level": "5A",
       "location": "杭州市西湖区",
       "facts": [
-        "2011 年列入《世界遗产名录》，是中国首个湖泊类世界文化遗产，也是中国唯一一处湖泊类文化景观遗产",
+        "2011 年 6 月 24 日，杭州西湖文化景观列入世界遗产名录。",
         "西湖十景（苏堤春晓、断桥残雪、曲院风荷、平湖秋月、柳浪闻莺、花港观鱼、雷峰夕照、双峰插云、南屏晚钟、三潭印月）得名于南宋，经清康熙帝御题碑刻而定型，是中国最早的景观题名文化",
         "三潭印月肇始于北宋苏轼元祐四年（1089 年）所立的三座量水塔，现存石塔为明天启元年（1621 年）补立",
         "苏轼任杭州知州期间（1089—1091年）疏浚西湖并以湖泥筑成苏堤，全长约 2.8 公里",
@@ -35,6 +35,23 @@
         "西湖水域面积约 6.38 平方公里，汇水面积约 21.22 平方公里"
       ],
       "cultural_significance": "江南山水美学的代表，中国文人精神家园的象征，历代留下诗词逾两万首",
+      "fact_records": [
+        {
+          "text": "2011 年 6 月 24 日，杭州西湖文化景观列入世界遗产名录。",
+          "source_url": "https://zh.wikipedia.org/wiki/%E8%A5%BF%E6%B9%96",
+          "source_title": "西湖",
+          "source_publisher": "维基百科",
+          "evidence_quote": "2011年6月24日，杭州西湖文化景观列入世界遗产名录。",
+          "fact_type": "visual_description",
+          "retrieved_at": "2026-11-20",
+          "checked_at": "2026-11-20",
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution",
+          "fact_index": 0,
+          "notes": "原事实写作“中国首个湖泊类世界文化遗产、中国唯一一处湖泊类文化景观遗产”，单一来源无法支撑这两个排他性表述，已收敛为来源原文能支撑的入遗日期；如要恢复排他性表述，需补 UNESCO 或住建部官方名录出处",
+          "source_id": "zhwiki-xihu"
+        }
+      ],
       "keywords_en": [
         "West Lake Hangzhou",
         "West Lake China",
@@ -56,14 +73,6 @@
         "赏花",
         "夜游",
         "徒步"
-      ],
-      "sources": [
-        {
-          "title": "UNESCO·杭州西湖文化景观",
-          "url": "https://whc.unesco.org/en/list/1334/",
-          "checked_on": "2026-11-21",
-          "scope": "提供实体与画面核对参考"
-        }
       ]
     },
     {
@@ -84,6 +93,22 @@
         "位于白堤东端，连接北山街与孤山，是游客量最大的西湖景点之一"
       ],
       "cultural_significance": "西湖十景之首，融自然景观与民间传说于一体",
+      "fact_records": [
+        {
+          "text": "雨中的断桥，行人撑伞走过。",
+          "source_url": "https://commons.wikimedia.org/wiki/File:Broken_Bridge_(Hangzhou)_20250505.jpg",
+          "source_title": "Broken Bridge (Hangzhou) 20250505",
+          "source_publisher": "Wikimedia Commons / Suicasmo",
+          "evidence_quote": "Broken Bridge (Hangzhou)",
+          "fact_type": "visual_description",
+          "retrieved_at": "2026-11-20",
+          "checked_at": "2026-11-20",
+          "license_status": "画面描述经目视核对；照片为 CC0，未将本图描述为断桥残雪",
+          "reuse_status": "fact-only-pending-license-review",
+          "fact_index": 0,
+          "notes": "原 reuse_status=attributed-visual-description；画面描述经目视核对；照片为 CC0，未将本图描述为断桥残雪"
+        }
+      ],
       "keywords_en": [
         "Broken Bridge West Lake",
         "West Lake bridge winter",
@@ -101,14 +126,6 @@
         "摄影",
         "爱情",
         "雪景"
-      ],
-      "sources": [
-        {
-          "title": "杭州市文化广电旅游局·杭州文旅线路与西湖十景",
-          "url": "https://wgly.hangzhou.gov.cn/attach/538/2307051510367229.pdf",
-          "checked_on": "2026-11-21",
-          "scope": "提供实体与画面核对参考"
-        }
       ]
     },
     {
@@ -130,6 +147,22 @@
         "西湖十景“雷峰夕照”由此得名"
       ],
       "cultural_significance": "吴越国佛教文化见证，白蛇传说中法海镇白娘子之地",
+      "fact_records": [
+        {
+          "text": "今天的雷峰塔新塔，于2002年落成。",
+          "source_url": "http://en.leifengta.com/about.aspx?c_kind=2&c_kind2=10",
+          "source_title": "Leifeng Pagoda scenic area introduction",
+          "source_publisher": "雷峰塔景区",
+          "evidence_quote": "In 977, Qian Chu, the king of Wuyue Kingdom built Leifeng pagoda to store the Silver Mini-pagoda of King Asoka that was containing crystalline Buddha’s hair remains",
+          "fact_type": "verified_short_summary",
+          "retrieved_at": "2026-11-20",
+          "checked_at": "2026-11-20",
+          "license_status": "事实短述并保留官网来源；不据此授予页面叙述或图片的复用许可",
+          "reuse_status": "fact-only-pending-license-review",
+          "notes": "原 reuse_status=fact-only-attributed；事实短述并保留官网来源；不据此授予页面叙述或图片的复用许可",
+          "fact_index": 0
+        }
+      ],
       "keywords_en": [
         "Leifeng Pagoda",
         "West Lake pagoda sunset",
@@ -148,14 +181,6 @@
         "登高",
         "夜景",
         "传说"
-      ],
-      "sources": [
-        {
-          "title": "杭州市文化广电旅游局·杭州文旅线路与西湖十景",
-          "url": "https://wgly.hangzhou.gov.cn/attach/538/2307051510367229.pdf",
-          "checked_on": "2026-11-21",
-          "scope": "提供实体与画面核对参考"
-        }
       ]
     },
     {
@@ -179,6 +204,22 @@
         "大雄宝殿内 24.8 米高的释迦牟尼佛像为中国最大的香樟木坐佛"
       ],
       "cultural_significance": "江南佛教文化中心，济公传说发源地，中国石窟艺术江南代表",
+      "fact_records": [
+        {
+          "text": "公元326年，灵隐寺在杭州始建。",
+          "source_url": "https://en.lingyinsi.org/intro/",
+          "source_title": "Lingyin Temple — Brief Introduction",
+          "source_publisher": "灵隐寺",
+          "evidence_quote": "Lingyin Temple, founded in 326AD, is regarded as the most recognized temple in Hangzhou with a long history of about 1,700 years.",
+          "fact_type": "verified_short_summary",
+          "retrieved_at": "2026-11-20",
+          "checked_at": "2026-11-20",
+          "license_status": "事实短述并保留官网来源；本镜仅展示大雄宝殿，不声称画面是飞来峰造像",
+          "reuse_status": "fact-only-pending-license-review",
+          "notes": "原 reuse_status=fact-only-attributed；事实短述并保留官网来源；本镜仅展示大雄宝殿，不声称画面是飞来峰造像",
+          "fact_index": 0
+        }
+      ],
       "keywords_en": [
         "Lingyin Temple Hangzhou",
         "Feilai Peak Buddha carvings",
@@ -224,6 +265,22 @@
         "炒制一锅 250 克干茶约需 4-5 小时，锅温须在 60-200℃ 间精细调控"
       ],
       "cultural_significance": "中国绿茶代表，杭州茶文化核心，被誉为“中国十大名茶之首”",
+      "fact_records": [
+        {
+          "text": "西湖龙井制茶技艺，是2022年入选的中国传统制茶非遗项目的一部分。",
+          "source_url": "https://www.ehangzhou.gov.cn/2025-03/21/c_293024.htm",
+          "source_title": "West Lake Longjing tea and traditional tea-making",
+          "source_publisher": "杭州市政府英文网",
+          "evidence_quote": "In late 2022, China's traditional tea-making, of which West Lake Longjing tea is an important component, was inscribed on the UNESCO intangible cultural heritage list.",
+          "fact_type": "verified_short_summary",
+          "retrieved_at": "2026-11-20",
+          "checked_at": "2026-11-20",
+          "license_status": "事实短述并保留官方来源；茶汤特写仅作实体细节，非炒茶工艺过程证据",
+          "reuse_status": "fact-only-pending-license-review",
+          "fact_index": 0,
+          "notes": "原 reuse_status=fact-only-attributed；事实短述并保留官方来源；茶汤特写仅作实体细节，非炒茶工艺过程证据"
+        }
+      ],
       "keywords_en": [
         "Longjing tea",
         "Chinese green tea",
@@ -243,14 +300,6 @@
         "研学",
         "非遗体验",
         "自然"
-      ],
-      "sources": [
-        {
-          "title": "中国非遗网·西湖龙井绿茶制作技艺",
-          "url": "https://www.ihchina.cn/project_details/14605",
-          "checked_on": "2026-11-21",
-          "scope": "提供实体与画面核对参考"
-        }
       ]
     },
     {
@@ -267,7 +316,7 @@
       "location": "杭州市",
       "facts": [
         "2009 年“中国蚕桑丝织技艺”列入联合国教科文组织人类非物质文化遗产代表作名录，杭罗织造技艺为其组成部分",
-        "杭罗与江苏云锦、四川蜀锦并称中国三大名绸",
+        "杭罗与苏缎、云锦同为中国华东地区的三大丝绸名产；杭罗原产杭州，系用纯桑蚕丝以平纹和纱罗组织而成。",
         "杭罗以纯桑蚕丝手工织造，工序包括蚕丝整理、上机织造、水洗等十余道",
         "杭州自唐代起即为丝绸重镇，南宋时设“文思院”专管丝织",
         "“丝绸之府”之名始于唐代，杭州丝绸曾沿海上丝绸之路远销海外"
@@ -291,6 +340,38 @@
         "研学",
         "购物",
         "人文"
+      ],
+      "fact_records": [
+        {
+          "text": "2009 年“中国蚕桑丝织技艺”列入联合国教科文组织人类非物质文化遗产代表作名录，杭罗织造技艺为其组成部分",
+          "fact_index": 0,
+          "source_url": "https://www.ihchina.cn/project_details/19984.html",
+          "source_title": "蚕丝织造技艺（杭罗织造技艺）·国家级非遗代表性项目",
+          "source_publisher": "中国非物质文化遗产网·中国非物质文化遗产数字博物馆",
+          "source_id": "ihchina-19984",
+          "evidence_quote": "项目序号：882项目编号：Ⅷ-99公布时间：2008(第二批)类别：传统技艺所属地区：浙江省类型：新增项目申报地区或单位：浙江省杭州市福兴丝绸厂",
+          "fact_type": "intangible_heritage_designation",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据许可；仅保留短事实引用并标注来源，正式发布前需确认复用范围",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "杭罗与苏缎、云锦同为中国华东地区的三大丝绸名产；杭罗原产杭州，系用纯桑蚕丝以平纹和纱罗组织而成。",
+          "fact_index": 1,
+          "source_url": "https://www.ihchina.cn/project_details/19984.html",
+          "source_title": "蚕丝织造技艺（杭罗织造技艺）·国家级非遗代表性项目",
+          "source_publisher": "中国非物质文化遗产网·中国非物质文化遗产数字博物馆",
+          "source_id": "ihchina-19984",
+          "evidence_quote": "杭罗与苏缎、云锦同为中国华东地区的三大丝绸名产。杭罗原产杭州，系用纯桑蚕丝以平纹和纱罗组织而成",
+          "fact_type": "craft",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据许可；仅保留短事实引用并标注来源，正式发布前需确认复用范围",
+          "reuse_status": "fact-only-pending-license-review"
+        }
       ]
     },
     {
@@ -330,6 +411,23 @@
         "人文",
         "研学",
         "老字号"
+      ],
+      "fact_records": [
+        {
+          "text": "建筑群为全国重点文物保护单位，是国内保存最完好的晚清徽派商业建筑群之一",
+          "fact_index": 2,
+          "source_url": "https://zh.wikipedia.org/wiki/%E8%83%A1%E6%85%B6%E9%A4%98%E5%A0%82",
+          "source_title": "胡庆余堂",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-huqingyutang",
+          "evidence_quote": "胡慶餘堂位于中华人民共和国浙江省杭州市上城区大井巷95号，1988年被列为第三批全国重点文物保护单位。",
+          "fact_type": "heritage",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
       ]
     },
     {
@@ -365,6 +463,23 @@
         "美食",
         "杭帮菜",
         "经典必游"
+      ],
+      "fact_records": [
+        {
+          "text": "杭州传统名菜之首，选用西湖草鱼，以沸水汆熟后淋糖醋芡汁，讲究“鱼肉不带土腥味”",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E8%A5%BF%E6%B9%96%E9%86%8B%E9%B1%BC",
+          "source_title": "西湖醋鱼",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-xihucuyu",
+          "evidence_quote": "西湖醋鱼，又名杭州醋鱼、西湖醋溜鱼，杭帮菜特色菜肴之一，以西湖孤山楼外楼的最为有名。",
+          "fact_type": "cuisine",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
       ]
     },
     {
@@ -401,6 +516,23 @@
         "美食",
         "杭帮菜",
         "人文"
+      ],
+      "fact_records": [
+        {
+          "text": "相传为苏轼任杭州知州时疏浚西湖期间以猪肉犒劳民工的做法演变而来",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E6%9D%B1%E5%9D%A1%E8%82%89",
+          "source_title": "东坡肉",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-dongporou",
+          "evidence_quote": "東坡肉為江浙菜系中的一道名菜，相传为苏东坡以古法改良而创。其以豬肉加之醬油、冰糖、紹酒等調料慢火紅燒而成。",
+          "fact_type": "cuisine",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
       ]
     },
     {
@@ -439,6 +571,23 @@
         "民俗",
         "摄影",
         "亲子"
+      ],
+      "fact_records": [
+        {
+          "text": "新西湖十景于 1985 年评选产生，满陇桂雨为其中之一",
+          "fact_index": 3,
+          "source_url": "https://zh.wikipedia.org/wiki/%E8%A5%BF%E6%B9%96%E5%8D%81%E6%99%AF",
+          "source_title": "西湖十景",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-xihushijing",
+          "evidence_quote": "1985年，杭州市多家单位重新评选了西湖十景，并将新评选的西湖十景命名为“新西湖十景”。",
+          "fact_type": "designation",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
       ]
     },
     {
@@ -475,6 +624,38 @@
         "夜游",
         "摄影",
         "经典必游"
+      ],
+      "fact_records": [
+        {
+          "text": "2016 年 G20 杭州峰会文艺演出《最忆是杭州》即在此地呈现，向世界展示西湖",
+          "fact_index": 2,
+          "source_url": "https://zh.wikipedia.org/wiki/2016%E5%B9%B4%E4%BA%8C%E5%8D%81%E5%9B%BD%E9%9B%86%E5%9B%A2%E6%9D%AD%E5%B7%9E%E5%B3%B0%E4%BC%9A",
+          "source_title": "2016年二十国集团杭州峰会",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-g20-hangzhou",
+          "evidence_quote": "此次峰会配套的文藝晚會名称定为《最憶是杭州》，来源于唐朝诗人白居易的诗词《忆江南》之《江南忆》。演出由張藝謀執導，是在印象系列之一《印象西湖》的基础上升级而来的",
+          "fact_type": "event",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "演出融合灯光、水雾、音乐与舞蹈，演出名称取自白居易《忆江南》",
+          "fact_index": 3,
+          "source_url": "https://zh.wikipedia.org/wiki/2016%E5%B9%B4%E4%BA%8C%E5%8D%81%E5%9B%BD%E9%9B%86%E5%9B%A2%E6%9D%AD%E5%B7%9E%E5%B3%B0%E4%BC%9A",
+          "source_title": "2016年二十国集团杭州峰会",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-g20-hangzhou",
+          "evidence_quote": "此次峰会配套的文藝晚會名称定为《最憶是杭州》，来源于唐朝诗人白居易的诗词《忆江南》之《江南忆》。演出由張藝謀執導，是在印象系列之一《印象西湖》的基础上升级而来的",
+          "fact_type": "culture",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
       ]
     },
     {
@@ -513,6 +694,23 @@
         "爱情",
         "人文",
         "演艺"
+      ],
+      "fact_records": [
+        {
+          "text": "故事基本定型于明代冯梦龙《警世通言·白娘子永镇雷峰塔》",
+          "fact_index": 2,
+          "source_url": "https://zh.wikipedia.org/wiki/%E7%99%BD%E8%9B%87%E4%BC%A0",
+          "source_title": "白蛇传",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-baishezhuan",
+          "evidence_quote": "与《孟姜女》、《牛郎织女》、《梁山伯与祝英台》并称为中国四大民间传说，又名《许仙与白娘子》。故事成于南宋或更早，在清代成熟盛行",
+          "fact_type": "legend",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
       ]
     },
     {
@@ -550,6 +748,38 @@
         "爱情",
         "人文",
         "研学"
+      ],
+      "fact_records": [
+        {
+          "text": "万松书院始建于明弘治十一年（1498 年），是明清时期杭州规模最大的书院",
+          "fact_index": 2,
+          "source_url": "https://zh.wikipedia.org/wiki/%E6%A2%81%E5%B1%B1%E4%BC%AF%E8%88%87%E7%A5%9D%E8%8B%B1%E5%8F%B0",
+          "source_title": "梁山伯与祝英台",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-liangzhu",
+          "evidence_quote": "梁山伯與祝英台，常簡稱梁祝，是中國四大民间傳說之一……2006年被列入中華人民共和國第一批國家級非物質文化遺產名錄。",
+          "fact_type": "legend",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "杭州万松书院相传为梁山伯与祝英台同窗共读之地，现存为明清格局重建",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E4%B8%87%E6%9D%BE%E4%B9%A6%E9%99%A2",
+          "source_title": "万松书院",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-wansongshuyuan",
+          "evidence_quote": "万松书院位于中国浙江省杭州市上城区凤凰山西麓孔家山万松岭上……为明弘治十一年（1498）浙江右参政周木以报恩寺故址（始建于唐贞元年间）改建",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
       ]
     },
     {
@@ -587,6 +817,23 @@
         "历史名人",
         "研学",
         "宋韵"
+      ],
+      "fact_records": [
+        {
+          "text": "任知州期间主持疏浚西湖，以葑泥堆筑长堤即今苏堤，并建六桥以通水",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E8%8B%8F%E8%BD%BC",
+          "source_title": "苏轼",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-sushi",
+          "evidence_quote": "苏轼（1037年1月8日—1101年8月24日），字子瞻，一字和仲，号东坡居士、鐵冠道人，眉州眉山（今四川省眉山市）人，北宋文學家、政治家、藝術家。",
+          "fact_type": "person",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
       ]
     },
     {
@@ -626,6 +873,23 @@
         "历史名人",
         "爱国教育",
         "研学"
+      ],
+      "fact_records": [
+        {
+          "text": "岳王庙始建于南宋嘉定十四年（1221 年），历经重修，现存为清代重建格局",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E6%9D%AD%E5%B7%9E%E5%B2%B3%E7%8E%8B%E5%BA%99",
+          "source_title": "杭州岳王庙",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-yuewangmiao",
+          "evidence_quote": "岳王庙位于杭州西湖西北角、栖霞岭南麓，始建于南宋嘉定十四年（1221年），因岳飛葬於此地，故杭州岳王廟又称岳坟。1961年，杭州岳王廟被中华人民共和国国务院列为全国重点文物保护单位。",
+          "fact_type": "heritage",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
       ]
     },
     {
@@ -667,6 +931,53 @@
         "摄影",
         "古建",
         "徒步"
+      ],
+      "fact_records": [
+        {
+          "text": "京杭大运河北起北京、南至杭州，全长约 1794 公里，2014 年列入《世界遗产名录》",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E4%BA%AC%E6%9D%AD%E5%A4%A7%E8%BF%90%E6%B2%B3",
+          "source_title": "京杭大运河",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-grandcanal",
+          "evidence_quote": "2014年，京杭大运河作为大运河的一部分，被列入世界遗产名录。京杭大运河北起北京通州五河交汇处，南至杭州……全长1794公里。",
+          "fact_type": "geography",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "拱宸桥始建于明崇祯四年（1631 年），是京杭大运河最南端的标志性古桥",
+          "fact_index": 2,
+          "source_url": "https://zh.wikipedia.org/wiki/%E6%8B%B1%E5%AE%B8%E6%A1%A5",
+          "source_title": "拱宸桥",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-gongchenqiao",
+          "evidence_quote": "该桥始建于明崇祯四年（1631），清光绪十一年（1885）重建……是杭州城区现存最大的石拱桥，京杭大运河到杭州的终点标志。",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "桥名“拱宸”意为百姓对帝王的敬意，“宸”指帝王居所",
+          "fact_index": 3,
+          "source_url": "https://zh.wikipedia.org/wiki/%E6%8B%B1%E5%AE%B8%E6%A1%A5",
+          "source_title": "拱宸桥",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-gongchenqiao",
+          "evidence_quote": "拱宸桥中的“宸”意为帝王宫殿，高大的拱形石桥，象征对帝王的相迎和敬意，桥由此而得名。",
+          "fact_type": "toponymy",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
       ]
     },
     {
@@ -704,6 +1015,23 @@
         "演艺",
         "夜游",
         "宋韵"
+      ],
+      "fact_records": [
+        {
+          "text": "园区按《清明上河图》意境复原宋代市井风貌，设市井街、怪街、仙山等主题区",
+          "fact_index": 2,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%AE%8B%E5%9F%8E",
+          "source_title": "宋城",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-songcheng",
+          "evidence_quote": "宋城是杭州市的一个主题公园……是中国最大的宋朝文化主题公园之一。由杭州宋城旅游发展股份有限公司（宋城集团旗下）投资、开发和经营。",
+          "fact_type": "venue",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
       ]
     },
     {
@@ -743,6 +1071,53 @@
         "考古",
         "研学",
         "摄影"
+      ],
+      "fact_records": [
+        {
+          "text": "2019 年列入《世界遗产名录》，填补了《世界遗产名录》东亚地区新石器时代城市考古遗址的空白",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E8%89%AF%E6%B8%9A%E9%81%97%E5%9D%80",
+          "source_title": "良渚遗址",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-liangzhu",
+          "evidence_quote": "1996年，被列为第四批全国重点文物保护单位。2019年7月6日，被列入世界遗产名录。",
+          "fact_type": "designation",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "距今约 5300—4300 年，被誉为“实证中华五千年文明史的圣地”",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E8%89%AF%E6%B8%9A%E9%81%97%E5%9D%80",
+          "source_title": "良渚遗址",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-liangzhu",
+          "evidence_quote": "遗址年代为公元前3300年—公元前2300年……被誉为“中华第一城”或“中华五千年文明实证”。",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "遗址由古城、水利系统与祭坛组成，古城面积约 300 万平方米",
+          "fact_index": 2,
+          "source_url": "https://zh.wikipedia.org/wiki/%E8%89%AF%E6%B8%9A%E9%81%97%E5%9D%80",
+          "source_title": "良渚遗址",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-liangzhu",
+          "evidence_quote": "是以良渚古城遗址为中心的遗址群，总面积34平方公里",
+          "fact_type": "archaeology",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
       ]
     },
     {
@@ -784,6 +1159,53 @@
         "摄影",
         "徒步",
         "赏花"
+      ],
+      "fact_records": [
+        {
+          "text": "2012 年被评为国家 5A 级旅游景区，是中国首个国家湿地公园（2005 年挂牌）",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E8%A5%BF%E6%BA%AA%E6%BF%95%E5%9C%B0",
+          "source_title": "西溪湿地",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-xixi",
+          "evidence_quote": "是中国第一个集城市湿地、农耕湿地、文化湿地于一体的国家湿地公园……现为国家5A级旅游景区。2005年4月30日，西溪湿地挂牌西溪国家湿地公园并正式开园。",
+          "fact_type": "designation",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "总面积约 11.5 平方公里，其中水域面积约 68%，是罕见的城中次生湿地",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E8%A5%BF%E6%BA%AA%E6%BF%95%E5%9C%B0",
+          "source_title": "西溪湿地",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-xixi",
+          "evidence_quote": "湿地占地总面积约11.5平方公里……是一块城中次生湿地",
+          "fact_type": "geography",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "现存桑田、竹林、芦荡等次生湿地景观，保留明清时期“西溪且留下”的渔耕文化",
+          "fact_index": 2,
+          "source_url": "https://zh.wikipedia.org/wiki/%E8%A5%BF%E6%BA%AA%E6%BF%95%E5%9C%B0",
+          "source_title": "西溪湿地",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-xixi",
+          "evidence_quote": "西溪湿地位于中华人民共和国浙江省杭州市城西，距西湖5公里，是一块城中次生湿地，得名于西溪河",
+          "fact_type": "geography",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
       ]
     },
     {
@@ -825,6 +1247,38 @@
         "摄影",
         "避暑",
         "水上活动"
+      ],
+      "fact_records": [
+        {
+          "text": "2010 年被评为国家 5A 级旅游景区，湖区面积约 573 平方公里",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%8D%83%E5%B2%9B%E6%B9%96",
+          "source_title": "千岛湖",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-qiandaohu",
+          "evidence_quote": "面积达567.40平方公里",
+          "fact_type": "geography",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "因湖中有 1078 个岛屿而得名，是 1959 年新安江水电站建成蓄水后形成的人工湖",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%8D%83%E5%B2%9B%E6%B9%96",
+          "source_title": "千岛湖",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-qiandaohu",
+          "evidence_quote": "1959年在新安江建德马铜官峡筑坝兴建水电站而形成的人工湖……2500平方米以上岛屿共1078个，因此新安江水库得名千岛湖。",
+          "fact_type": "geography",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
       ]
     },
     {
@@ -864,6 +1318,38 @@
         "摄影",
         "茶文化",
         "避暑"
+      ],
+      "fact_records": [
+        {
+          "text": "新西湖十景之一，名称“九溪烟树”于 1985 年评选产生",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E4%B9%9D%E6%BA%AA%E7%83%9F%E6%A0%91",
+          "source_title": "九溪烟树",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-jiuxi",
+          "evidence_quote": "九溪烟树位于浙江省杭州市西湖西侧，为新西湖十景之一，又称“九溪十八涧”",
+          "fact_type": "designation",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "溪流发源于杨梅岭，沿途汇合九条溪水，穿行于茶园与山林之间",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E4%B9%9D%E6%BA%AA%E7%83%9F%E6%A0%91",
+          "source_title": "九溪烟树",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-jiuxi",
+          "evidence_quote": "北起龙井村，南至九溪村，两侧均为山林与茶园，沿途汇合九坞之水形成7公里溪涧",
+          "fact_type": "geography",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
       ]
     },
     {
@@ -904,6 +1390,23 @@
         "夜游",
         "人文",
         "老字号"
+      ],
+      "fact_records": [
+        {
+          "text": "南宋御街为南宋都城临安的主轴线，全长约 4185 米，2009 年完成保护性整治开放",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%8D%97%E5%AE%8B%E5%BE%A1%E8%A1%97",
+          "source_title": "南宋御街",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-nansongyujie",
+          "evidence_quote": "南宋御街是杭州市的一条特色商业步行街，南北走向，属于上城区中山中路。它北至西湖大道（东西走向），南接河坊街（东西走向）。",
+          "fact_type": "geography",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
       ]
     },
     {
@@ -943,6 +1446,23 @@
         "赏花",
         "自然",
         "研学"
+      ],
+      "fact_records": [
+        {
+          "text": "杭州植物园 1956 年建园，占地约 248 公顷，收集国内外植物 6000 余种（含品种）",
+          "fact_index": 2,
+          "source_url": "https://zh.wikipedia.org/wiki/%E6%9D%AD%E5%B7%9E%E6%A4%8D%E7%89%A9%E5%9B%AD",
+          "source_title": "杭州植物园",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-hzbg",
+          "evidence_quote": "杭州植物园位于浙江省杭州市西湖区西湖西北的桃源岭，北邻浙大玉泉校区，占地248.46公顷。1955年成立筹委会，1965年7月正式成立",
+          "fact_type": "venue",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
       ]
     },
     {
@@ -984,6 +1504,38 @@
         "自然",
         "人文",
         "经典必游"
+      ],
+      "fact_records": [
+        {
+          "text": "“虎跑梦泉”为 1985 年评选的新西湖十景之一",
+          "fact_index": 2,
+          "source_url": "https://zh.wikipedia.org/wiki/%E8%99%8E%E8%B7%91%E6%B3%89",
+          "source_title": "虎跑泉",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-hupao",
+          "evidence_quote": "用虎跑泉水泡龙井茶被认为是最佳的搭配。“虎跑梦泉”为新西湖十景之一。",
+          "fact_type": "designation",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "泉水因表面张力大，注满杯中可高出杯沿而不溢，用以冲泡龙井茶为“西湖双绝”",
+          "fact_index": 3,
+          "source_url": "https://zh.wikipedia.org/wiki/%E8%99%8E%E8%B7%91%E6%B3%89",
+          "source_title": "虎跑泉",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-hupao",
+          "evidence_quote": "用虎跑泉水泡龙井茶被认为是最佳的搭配。",
+          "fact_type": "culture",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
       ]
     },
     {
@@ -1025,6 +1577,38 @@
         "摄影",
         "观潮",
         "研学"
+      ],
+      "fact_records": [
+        {
+          "text": "六和塔始建于北宋开宝三年（970 年），吴越国王钱俶为镇江潮而建，现塔为南宋绍兴年间重建",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%85%AD%E5%92%8C%E5%A1%94",
+          "source_title": "六和塔",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-liuheta",
+          "evidence_quote": "该塔由吴越国国王钱俶命僧人修建，以镇伏钱塘江江潮。此后六和塔在方腊起义中被毁，南宋时建成现存塔身。",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "塔高 59.89 米，外观十三层、内部七层，是中国现存最完整的宋代楼阁式塔之一",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%85%AD%E5%92%8C%E5%A1%94",
+          "source_title": "六和塔",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-liuheta",
+          "evidence_quote": "该塔平面呈八角形，现存塔身七层，塔身外的外檐为明七层暗六层，塔身内建有回廊和塔心室。",
+          "fact_type": "architecture",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
       ]
     },
     {
@@ -1066,6 +1650,38 @@
         "摄影",
         "民俗",
         "亲子"
+      ],
+      "fact_records": [
+        {
+          "text": "潮水最大潮差可达 8-9 米，涌潮推进速度约每秒 10 米，是世界著名涌潮",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E9%92%B1%E6%B1%9F%E6%BD%AE",
+          "source_title": "钱江潮",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-qiantangchao",
+          "evidence_quote": "钱江潮一日两次，相隔约12小时，潮头最高时达3.5米，潮差可达8－9米。",
+          "fact_type": "nature",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "成因是杭州湾喇叭口地形与天体引潮力叠加，一年中农历八月十八潮最大",
+          "fact_index": 2,
+          "source_url": "https://zh.wikipedia.org/wiki/%E9%92%B1%E6%B1%9F%E6%BD%AE",
+          "source_title": "钱江潮",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-qiantangchao",
+          "evidence_quote": "每年的农历八月十八，是流传千年的传统观潮节。",
+          "fact_type": "culture",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
       ]
     },
     {
@@ -1107,6 +1723,38 @@
         "摄影",
         "古建",
         "赏花"
+      ],
+      "fact_records": [
+        {
+          "text": "以“保存金石、研究印学”为宗旨，被誉为“天下第一名社”",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E8%A5%BF%E6%B3%A0%E5%8D%B0%E7%A4%BE",
+          "source_title": "西泠印社",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-xiling",
+          "evidence_quote": "是中国研究金石篆刻的一个百年学术团体，有“天下第一名社”之称，今为全国重点文物保护单位。",
+          "fact_type": "designation",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "社址依孤山而建，含柏堂、竹阁、题襟馆等建筑与摩崖题刻，为全国重点文物保护单位",
+          "fact_index": 2,
+          "source_url": "https://zh.wikipedia.org/wiki/%E8%A5%BF%E6%B3%A0%E5%8D%B0%E7%A4%BE",
+          "source_title": "西泠印社",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-xiling",
+          "evidence_quote": "西泠（líng）印社，位于中华人民共和国浙江省杭州市西湖区孤山路31号西泠橋旁……今为全国重点文物保护单位。西泠印社的金石篆刻技艺是国家级非物质文化遗产。",
+          "fact_type": "heritage",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
       ]
     },
     {
@@ -1147,6 +1795,23 @@
         "非遗体验",
         "人文",
         "夜游"
+      ],
+      "fact_records": [
+        {
+          "text": "发源于浙江嵊州，1906 年首次以“小歌班”形式登台，是新中国成立后发展最快的剧种",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E8%B6%8A%E5%89%A7",
+          "source_title": "越剧",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-yueju",
+          "evidence_quote": "越剧，中国主要戏曲剧种之一，起源于浙江嵊州，兴盛于上海，主要流行于苏浙沪等地区，目前为中国第二大戏曲剧种。",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
       ]
     },
     {
@@ -1186,6 +1851,23 @@
         "老字号",
         "购物",
         "研学"
+      ],
+      "fact_records": [
+        {
+          "text": "始创于明崇祯元年（1628 年），创始人张小泉，制剪技艺传承近 400 年",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%BC%A0%E5%B0%8F%E6%B3%89%E5%89%AA%E5%88%80",
+          "source_title": "张小泉剪刀",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-zhangxiaoquan",
+          "evidence_quote": "张小泉剪刀",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
       ]
     },
     {
@@ -1226,6 +1908,23 @@
         "老字号",
         "购物",
         "艺术"
+      ],
+      "fact_records": [
+        {
+          "text": "制作需经取材、制骨、糊面、折面、修整等 86 道工序，多数须手工完成",
+          "fact_index": 3,
+          "source_url": "https://zh.wikipedia.org/wiki/%E7%8E%8B%E6%98%9F%E8%AE%B0%E6%89%87%E5%AD%90",
+          "source_title": "王星记扇子",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-wangxingji",
+          "evidence_quote": "王星记扇子是中华人民共和国浙江省杭州市的百年老字号扇子生产厂家。和浙江丝绸、龙井茶并称「杭产三绝」。",
+          "fact_type": "culture",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
       ]
     },
     {
@@ -1265,6 +1964,23 @@
         "人文",
         "市井",
         "演艺"
+      ],
+      "fact_records": [
+        {
+          "text": "起源于清末民初街头卖梨膏糖的说唱表演，以说、学、逗、唱结合为特点",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%B0%8F%E7%83%AD%E6%98%8F",
+          "source_title": "小热昏",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-xiaorehun",
+          "evidence_quote": "小热昏，曾名“小锣书”，是一种流行于江浙、上海等地的说唱艺术，始创者为清末民初的杭州艺人杜宝林。小热昏以小锣、三巧板伴奏，主题为讥讽时事。由于说唱者兼卖梨膏糖，因而又俗称“卖梨膏糖”。",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
       ]
     },
     {
@@ -1304,6 +2020,38 @@
         "人文",
         "非遗体验",
         "研学"
+      ],
+      "fact_records": [
+        {
+          "text": "2006 年“金石篆刻（西泠印社）”列入首批国家级非物质文化遗产名录",
+          "fact_index": 0,
+          "source_url": "https://www.ihchina.cn/project_details/20047.html",
+          "source_title": "金石篆刻（西泠印社）·国家级非遗代表性项目",
+          "source_publisher": "中国非物质文化遗产网·中国非物质文化遗产数字博物馆",
+          "source_id": "ihchina-20047",
+          "evidence_quote": "项目序号：331项目编号：Ⅶ-32公布时间：2006(第一批)类别：传统美术所属地区：浙江省类型：新增项目申报地区或单位：浙江省杭州市西泠印社",
+          "fact_type": "intangible_heritage_designation",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据许可；仅保留短事实引用并标注来源，正式发布前需确认复用范围",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "西泠印社为该项目主要保护单位，社址位于西湖孤山",
+          "fact_index": 3,
+          "source_url": "https://www.ihchina.cn/project_details/20047.html",
+          "source_title": "金石篆刻（西泠印社）·国家级非遗代表性项目",
+          "source_publisher": "中国非物质文化遗产网·中国非物质文化遗产数字博物馆",
+          "source_id": "ihchina-20047",
+          "evidence_quote": "西泠印社创立于清光绪三十年，是主要从事金石篆刻创作与研究，同时兼及书画创作的民间社团。社址坐落于浙江省杭州市西湖景区孤山西麓",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据许可；仅保留短事实引用并标注来源，正式发布前需确认复用范围",
+          "reuse_status": "fact-only-pending-license-review"
+        }
       ]
     },
     {
@@ -1320,7 +2068,7 @@
       "facts": [
         "“桐君中药文化”源于上古药祖桐君，相传桐君在浙江桐庐桐君山采药济世",
         "桐君堂始创于清乾隆年间，传承中药炮制与配方技艺两百余年",
-        "“桐君传统中药文化”列入国家级非物质文化遗产代表性项目名录",
+        "“传统中医药文化（桐君传统中药文化）”于 2021 年列入第五批国家级非物质文化遗产代表性项目名录（扩展项目），申报地区为浙江省杭州市桐庐县。",
         "中药炮制含炒、炙、煅、蒸、煮等技法，用以减毒增效，讲究“法古不泥古”"
       ],
       "cultural_significance": "中药炮制技艺传承样本，浙江中医药文化的重要构成",
@@ -1342,6 +2090,38 @@
         "人文",
         "研学",
         "养生"
+      ],
+      "fact_records": [
+        {
+          "text": "“传统中医药文化（桐君传统中药文化）”于 2021 年列入第五批国家级非物质文化遗产代表性项目名录（扩展项目），申报地区为浙江省杭州市桐庐县。",
+          "fact_index": 2,
+          "source_url": "https://www.ihchina.cn/project_details/23852.html",
+          "source_title": "传统中医药文化（桐君传统中药文化）·国家级非遗代表性项目",
+          "source_publisher": "中国非物质文化遗产网·中国非物质文化遗产数字博物馆",
+          "source_id": "ihchina-23852",
+          "evidence_quote": "项目序号：971项目编号：Ⅸ-11公布时间：2021(第五批)类别：传统医药所属地区：浙江省类型：扩展项目申报地区或单位：浙江省杭州市桐庐县",
+          "fact_type": "intangible_heritage_designation",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据许可；仅保留短事实引用并标注来源，正式发布前需确认复用范围",
+          "reuse_status": "fact-only-pending-license-review"
+        },
+        {
+          "text": "中药炮制含炒、炙、煅、蒸、煮等技法，用以减毒增效，讲究“法古不泥古”",
+          "fact_index": 3,
+          "source_url": "https://www.ihchina.cn/project_details/23852.html",
+          "source_title": "传统中医药文化（桐君传统中药文化）·国家级非遗代表性项目",
+          "source_publisher": "中国非物质文化遗产网·中国非物质文化遗产数字博物馆",
+          "source_id": "ihchina-23852",
+          "evidence_quote": "桐君传统中药文化是我国中医药文化的重要组成部分，内涵丰富，以中药采集与炮制技艺为核心内容",
+          "fact_type": "craft",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "中国非物质文化遗产网未发现开放数据许可；仅保留短事实引用并标注来源，正式发布前需确认复用范围",
+          "reuse_status": "fact-only-pending-license-review"
+        }
       ]
     },
     {
@@ -1379,6 +2159,23 @@
         "美食",
         "市井",
         "早餐"
+      ],
+      "fact_records": [
+        {
+          "text": "杭州最具代表性的面食，起源于清末，由杭州老字号奎元馆创制",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E7%89%87%E5%84%BF%E5%B7%9D",
+          "source_title": "片儿川",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-pianerchuan",
+          "evidence_quote": "片儿川是杭州的一种汤面，面的浇头主要由雪菜、笋片、瘦肉片组成。片儿川最早由杭州老店奎元馆首创",
+          "fact_type": "cuisine",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
       ]
     },
     {
@@ -1417,6 +2214,23 @@
         "市井",
         "小吃",
         "历史"
+      ],
+      "fact_records": [
+        {
+          "text": "杭州传统街头小吃，以面饼卷入油条与葱段，压烤至酥脆，刷甜面酱或辣酱食用",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E8%91%B1%E5%8C%85%E6%A1%A7%E5%84%BF",
+          "source_title": "葱包桧儿",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-congbaohuier",
+          "evidence_quote": "葱包桧儿，或称葱包桧，是一种杭州特产小吃，以春饼裹以面皮及葱（切成条状），用铁板用力按压在平锅上，反复数次，达成一定的熟度后做出。传统上会在春饼上添加甜面酱或者辣酱来调味。",
+          "fact_type": "cuisine",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
       ]
     },
     {
@@ -1455,6 +2269,23 @@
         "小吃",
         "民俗",
         "伴手礼"
+      ],
+      "fact_records": [
+        {
+          "text": "杭州传统糕点，以米粉包裹豆沙馅蒸制，形如银锭，色泽淡红",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%AE%9A%E5%8B%9D%E7%B3%95",
+          "source_title": "定胜糕",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-dingshenggao",
+          "evidence_quote": "定胜糕是江南地区一种糕团，属松糕类，在苏州、杭州、湖州等地流行。定胜糕的主要原料为粗糯米和粗粳米。",
+          "fact_type": "cuisine",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
       ]
     },
     {
@@ -1493,12 +2324,21 @@
         "杭帮菜",
         "茶文化"
       ],
-      "sources": [
+      "fact_records": [
         {
-          "title": "中国非遗网·西湖龙井绿茶制作技艺",
-          "url": "https://www.ihchina.cn/project_details/14605",
-          "checked_on": "2026-11-21",
-          "scope": "提供实体与画面核对参考"
+          "text": "杭帮菜四大名菜之一，以龙井新茶与河虾仁同炒，讲究“茶香入馔、清鲜不腻”",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E9%BE%99%E4%BA%95%E8%99%BE%E4%BB%81",
+          "source_title": "龙井虾仁",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-longjingxiaren",
+          "evidence_quote": "龙井虾仁是浙江杭州的一道特色名菜，以龙井茶叶与河虾仁为主料烹制而成，有茶叶的清香与虾的鲜美。 杭州楼外楼是制作龙井虾仁的名店。",
+          "fact_type": "cuisine",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
         }
       ]
     },
@@ -1537,6 +2377,23 @@
         "美食",
         "杭帮菜",
         "历史"
+      ],
+      "fact_records": [
+        {
+          "text": "杭州传统名菜，以鳜鱼或鲈鱼蒸熟取肉，配火腿丝、香菇、笋丝勾芡成羹",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%AE%8B%E5%AB%82%E9%B1%BC%E7%BE%B9",
+          "source_title": "宋嫂鱼羹",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-songsaoyugeng",
+          "evidence_quote": "宋嫂鱼羹是中国浙江杭州的一道名菜，其历史可以追溯到南宋初年……现在杭州餐饮店所供应的宋嫂鱼羹又名赛蟹羹，是用鳜鱼（或鲈鱼）制作的羹汤类菜肴。",
+          "fact_type": "cuisine",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
       ]
     },
     {
@@ -1575,6 +2432,23 @@
         "美食",
         "杭帮菜",
         "非遗体验"
+      ],
+      "fact_records": [
+        {
+          "text": "杭帮菜四大名菜之一，以荷叶包裹整鸡，外糊黄泥，入火煨烤至熟",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E5%8F%AB%E5%8C%96%E9%9B%9E",
+          "source_title": "叫化鸡",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-jiaohuaji",
+          "evidence_quote": "叫化儿（huār）鸡，也称叫花鸡、叫化子鸡、黄泥煨鸡、乞兒雞、富貴雞等，是苏菜的一道名菜，流行于江苏、浙江。",
+          "fact_type": "cuisine",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
       ]
     },
     {
@@ -1614,6 +2488,23 @@
         "甜品",
         "赏花",
         "秋日"
+      ],
+      "fact_records": [
+        {
+          "text": "杭州传统甜点，以莲藕填入糯米，加桂花糖汁慢煮，切片后淋汁食用",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E7%B3%96%E8%97%95",
+          "source_title": "糖藕",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-tangou",
+          "evidence_quote": "糖藕，或称甜藕、糯米藕、江米藕、瓤藕等，是一种发源于太湖周边地区、流行于中国各地的甜味食物，用莲藕、糯米（江米）、食糖等制作而成。",
+          "fact_type": "cuisine",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
       ]
     },
     {
@@ -1655,6 +2546,23 @@
         "人文",
         "祈福",
         "亲子"
+      ],
+      "fact_records": [
+        {
+          "text": "济公原型为南宋高僧道济（1148—1209 年），浙江天台人，先后驻锡灵隐寺、净慈寺",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E6%B5%8E%E5%85%AC",
+          "source_title": "济公",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-jigong",
+          "evidence_quote": "济公（1148年—1209年），南宋時期佛教楊岐宗禪師，台州（今浙江省台州市天台县赤城街道永宁村）人，法號道濟",
+          "fact_type": "person",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
       ]
     },
     {
@@ -1694,6 +2602,23 @@
         "历史名人",
         "诗词",
         "研学"
+      ],
+      "fact_records": [
+        {
+          "text": "白居易（772—846 年）于长庆二年至四年（822—824 年）任杭州刺史，任期约三年",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E7%99%BD%E5%B1%85%E6%98%93",
+          "source_title": "白居易",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-baijuyi",
+          "evidence_quote": "白居易（772年2月28日—846年9月8日），字樂天，晚號香山居士、醉吟先生",
+          "fact_type": "person",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
       ]
     },
     {
@@ -1733,6 +2658,38 @@
         "历史名人",
         "古建",
         "研学"
+      ],
+      "fact_records": [
+        {
+          "text": "钱镠（852—932 年）为五代吴越国开国君主，定都杭州，在位期间公元 907—932 年",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E9%92%B1%E9%8F%A0",
+          "source_title": "钱镠",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-qianliu",
+          "evidence_quote": "吴越太祖钱镠（liú）（852年3月10日—932年5月6日）……杭州临安縣（今浙江省杭州市临安区）人。五代十国时期吴越國開國君主。",
+          "fact_type": "person",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "主持修筑钱塘江海塘、疏浚西湖与太湖流域，奠定杭州城市发展格局",
+          "fact_index": 1,
+          "source_url": "https://zh.wikipedia.org/wiki/%E9%92%B1%E9%8F%A0",
+          "source_title": "钱镠",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-qianliu",
+          "evidence_quote": "在位期间，曾征用民工，修建钱塘江海塘，又在太湖流域，普造堰闸，以时蓄洪，不畏旱涝，并建立水网圩区的维修制度",
+          "fact_type": "history",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
       ]
     },
     {
@@ -1772,6 +2729,38 @@
         "历史名人",
         "爱国教育",
         "研学"
+      ],
+      "fact_records": [
+        {
+          "text": "于谦（1398—1457 年），明代名臣，杭州钱塘人，官至少保、兵部尚书",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E4%BA%8E%E8%B0%A6",
+          "source_title": "于谦",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-yuqian",
+          "evidence_quote": "于謙（1398年—1457年2月16日），字廷益，号节庵，谥忠肃，明朝大臣，浙江杭州府錢塘縣（今浙江省杭州市）人。官至兵部尚書、太子太傅。",
+          "fact_type": "person",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        },
+        {
+          "text": "1457 年夺门之变后遭诬陷被杀，成化年间平反复官，弘治年间赐谥肃愍，万历十八年改谥忠肃",
+          "fact_index": 2,
+          "source_url": "https://zh.wikipedia.org/wiki/%E4%BA%8E%E8%B0%A6%E5%A2%93",
+          "source_title": "于谦墓",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-yuqianmu",
+          "evidence_quote": "于谦墓，位于中华人民共和国浙江省杭州市西湖区西湖南岸的三台山山麓，是明朝兵部尚书于谦的墓葬……2006年，于谦墓被列为全国重点文物保护单位。",
+          "fact_type": "heritage",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
       ]
     },
     {
@@ -1810,6 +2799,23 @@
         "历史名人",
         "研学",
         "近代史"
+      ],
+      "fact_records": [
+        {
+          "text": "章太炎（1869—1936 年），名炳麟，浙江余杭人，近代民主革命家、国学大师",
+          "fact_index": 0,
+          "source_url": "https://zh.wikipedia.org/wiki/%E7%AB%A0%E5%A4%AA%E7%82%8E",
+          "source_title": "章太炎",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-zhangtaiyan",
+          "evidence_quote": "章太炎（1869年1月12日—1936年6月14日），原名學乘，字枚叔……浙江餘杭人，清末民初思想家、史學家、樸学大师、民族主義革命家",
+          "fact_type": "person",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
       ]
     },
     {
@@ -1848,6 +2854,23 @@
         "春季节庆",
         "民俗",
         "研学"
+      ],
+      "fact_records": [
+        {
+          "text": "西湖龙井核心产区包含狮峰山、龙井村、翁家山、虎跑、梅家坞“狮龙云虎梅”五大字号（梅字号为后增）",
+          "fact_index": 3,
+          "source_url": "https://zh.wikipedia.org/wiki/%E9%BE%99%E4%BA%95%E8%8C%B6",
+          "source_title": "龙井茶",
+          "source_publisher": "维基百科",
+          "source_id": "zhwiki-longjingcha",
+          "evidence_quote": "龍井茶得名於大陸地區浙江省杭州市西湖區龍井，是中國十大名茶、中国地理标志产品之一，屬於綠茶。目前中國大陸主要產於浙江省中部一帶，分為西湖、錢塘（杭州产区）、越州（绍兴产区）三個產區",
+          "fact_type": "geography",
+          "retrieved_at": "2026-11-22",
+          "checked_at": "2026-11-22",
+          "valid_until": null,
+          "license_status": "维基百科文本为 CC BY-SA 4.0；仅摘短事实并署名来源，商业使用需评估相同方式共享义务",
+          "reuse_status": "fact-only-cc-by-sa-attribution"
+        }
       ]
     }
   ]

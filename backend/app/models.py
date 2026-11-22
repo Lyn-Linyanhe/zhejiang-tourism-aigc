@@ -7,16 +7,36 @@ from dataclasses import asdict, dataclass, field
 from datetime import datetime, timezone
 from typing import Any
 
+from .providers.contract import AssetProvenance, VISUAL_USAGES
+
 
 STAGES = ("scripting", "storyboard", "audio", "assets", "rendering", "review")
 TERMINAL_STATUSES = ("completed", "failed")
-ALLOWED_DURATIONS = (15, 30, 60)
-ALLOWED_SHOT_COUNTS = (0, 4, 6, 8)
+# 时长与镜头数原本写死成 (15,30,60) 和 (0,4,6,8)，用户选 20 秒就整条被拒。
+# 那只是常用档位，不是能力边界：真正的硬约束在下游——图生视频单镜 4–15 秒，
+# 所以只要保证「每镜 ≥ MIN_SHOT_SECONDS」就能跑。这里改成范围校验，
+# 默认值仍走 15 秒 / 自动镜头数，前端保留快捷档。
+DEFAULT_DURATION = 15
+DURATION_RANGE = (5, 180)
+DURATION_PRESETS = (15, 30, 60)
+SHOT_COUNT_RANGE = (2, 12)
+# 0 表示交给 LLM 按脚本自己定，是默认值。
+SHOT_COUNT_AUTO = 0
+# 图生视频模型的下限是 4 秒；给 1 秒余量避免分镜时长四舍五入后踩线。
+MIN_SHOT_SECONDS = 3.0
+MAX_SHOT_SECONDS = 15.0
 ALLOWED_RESOLUTIONS = {
     "720x1280": (720, 1280),
     "1080x1920": (1080, 1920),
     "1920x1080": (1920, 1080),
     "1080x1080": (1080, 1080),
+}
+# 画幅的显示名，供前端与文档统一口径。
+RESOLUTION_LABELS = {
+    "720x1280": "竖屏 9:16（720P）",
+    "1080x1920": "竖屏 9:16（1080P）",
+    "1920x1080": "横屏 16:9（1080P）",
+    "1080x1080": "方形 1:1",
 }
 ALLOWED_STYLES = ("诗意纪实", "城市漫游", "国风雅韵", "青春活力", "节庆热烈")
 ALLOWED_VOICES = ("女声", "男声", "无配音")
@@ -46,22 +66,52 @@ class TaskInput:
     music_mood: str
     include_ai_label: bool = True
     custom_brief: str = ""
-    subject_lock: str = ""
-    subject_reference_path: str = ""
     shot_count: int = 0
     include_subtitles: bool = True
     asset_source: str = "configured"
     output_resolution: str = "1080x1920"
     fps: int = 30
     voice_rate: float = 1.0
-    # edge 的音高偏移（赫兹）。0 = 不变调。
+    voice_volume: float = 1.0
+    music_volume: float = 0.18
+    # 新增参数置于旧参数之后，保留历史位置构造的音量语义。
     voice_pitch: float = 0.0
     voice_style: str = "natural"
     voice_expressiveness: float = 0.5
     voice_engine: str = "configured"
-    voice_volume: float = 1.0
-    music_volume: float = 0.18
-    music_ducking: str = "轻微"
+    music_ducking: str = "不压低"
+    visual_usage: str = "preview"
+    # 主体锁定（PR #2）置于末尾：位置参数契约（shot_count 起的既有位置）不受影响，
+    # from_dict 与前端表单都按关键字传入，不受字段顺序影响。
+    subject_lock: str = ""
+    subject_reference_path: str = ""
+
+    def __post_init__(self) -> None:
+        # b89698f briefly exposed the new voice controls before the legacy
+        # volume fields. Accept that positional shape while keeping the
+        # original volume positions used by older callers.
+        if (
+            isinstance(self.voice_volume, (int, float))
+            and isinstance(self.music_volume, str)
+            and self.music_volume in {"natural", "warm", "story", "bright", "neutral"}
+            and isinstance(self.voice_pitch, (int, float))
+            and isinstance(self.voice_style, str)
+            and self.voice_style in {"configured", "edge", "windows", "upload", "tianyi"}
+            and isinstance(self.voice_expressiveness, (int, float))
+            and isinstance(self.voice_engine, (int, float))
+        ):
+            old_pitch = self.voice_volume
+            old_style = self.music_volume
+            old_expressiveness = self.voice_pitch
+            old_engine = self.voice_style
+            old_voice_volume = self.voice_expressiveness
+            old_music_volume = self.voice_engine
+            self.voice_pitch = old_pitch
+            self.voice_style = old_style
+            self.voice_expressiveness = old_expressiveness
+            self.voice_engine = old_engine
+            self.voice_volume = old_voice_volume
+            self.music_volume = old_music_volume
 
     @classmethod
     def from_dict(cls, raw: dict[str, Any]) -> "TaskInput":
@@ -92,8 +142,11 @@ class TaskInput:
             "voice_engine": str(raw.get("voice_engine", "configured")),
             "voice_volume": float(raw.get("voice_volume", 1.0)),
             "music_volume": float(raw.get("music_volume", 0.18)),
-            "music_ducking": str(raw.get("music_ducking", cls.music_ducking)).strip(),
+            "music_ducking": str(raw.get("music_ducking", "不压低")).strip(),
+            "visual_usage": str(raw.get("visual_usage", "preview")).strip(),
         }
+        if values["visual_usage"] not in VISUAL_USAGES:
+            raise ValueError(f"visual_usage must be one of {VISUAL_USAGES}")
         # Retired source: preserve its upload-only behavior for historical drafts.
         if values["voice_engine"] == "xstudio":
             values["voice_engine"] = "upload"
@@ -112,10 +165,28 @@ class TaskInput:
             raise ValueError("subject_lock 长度不能超过 500 个字符")
         if len(values["subject_reference_path"]) > 1000:
             raise ValueError("subject_reference_path 长度不能超过 1000 个字符")
-        if values["shot_count"] not in ALLOWED_SHOT_COUNTS:
-            raise ValueError("shot_count must be 4, 6, or 8")
-        if values["duration"] not in ALLOWED_DURATIONS:
-            raise ValueError(f"duration 只能是 {ALLOWED_DURATIONS}")
+        shot_count = values["shot_count"]
+        if shot_count != SHOT_COUNT_AUTO and not (
+            SHOT_COUNT_RANGE[0] <= shot_count <= SHOT_COUNT_RANGE[1]
+        ):
+            raise ValueError(
+                f"shot_count 只能是 {SHOT_COUNT_AUTO}（自动）或 "
+                f"{SHOT_COUNT_RANGE[0]}–{SHOT_COUNT_RANGE[1]} 之间的整数"
+            )
+        duration = values["duration"]
+        if not (DURATION_RANGE[0] <= duration <= DURATION_RANGE[1]):
+            raise ValueError(
+                f"duration 必须在 {DURATION_RANGE[0]}–{DURATION_RANGE[1]} 秒之间"
+            )
+        # 每镜时长决定图生视频能不能跑：模型只接受 4–15 秒。
+        # 这里只在用户显式给了镜头数时校验；自动模式由分镜阶段按范围切分。
+        if shot_count:
+            per_shot = duration / shot_count
+            if per_shot < MIN_SHOT_SECONDS:
+                raise ValueError(
+                    f"{duration} 秒分 {shot_count} 个镜头，每镜只有 {per_shot:.1f} 秒，"
+                    f"低于单镜下限 {MIN_SHOT_SECONDS:.0f} 秒；请减少镜头数或延长时长"
+                )
         if values["asset_source"] not in {
             "configured", "offline", "upload", "pexels", "pixabay", "stock",
             "local-library", "library",
@@ -178,6 +249,9 @@ class Shot:
     voice_rate_scale: float = 1.0
     voice_pitch_offset: float = 0.0
     voice_pause_after: float | None = None
+    entity_id: str = ""
+    shot_tag: str = ""
+    library_asset_id: str = ""
 
 
 @dataclass
@@ -207,6 +281,7 @@ class AssetRecord:
     first_frame_path: str = ""
     cost: float = 0.0
     created_at: str = field(default_factory=now_iso)
+    provenance: AssetProvenance = field(default_factory=dict)
 
 
 @dataclass
@@ -241,6 +316,9 @@ class Task:
     created_at: str = field(default_factory=now_iso)
     updated_at: str = field(default_factory=now_iso)
     initial_input: dict[str, Any] | None = None
+    billing_records: list[dict[str, Any]] = field(default_factory=list)
+    publication_observations: list[dict[str, Any]] = field(default_factory=list)
+    execution_runs: list[dict[str, Any]] = field(default_factory=list)
 
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)

@@ -3,3 +3,6 @@
 # fastapi>=0.115
 # uvicorn[standard]>=0.30
 # pydantic>=2.8
+
+# 实体素材库记录图片尺寸（manifest provenance width/height）需要 Pillow
+pillow>=10.0.0

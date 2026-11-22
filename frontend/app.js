@@ -2,6 +2,8 @@ const state = {
   catalog: null, systemConfig: null, latestTaskId: null, recentTaskId: null,
   view: "create", taskDetail: false, pollTimer: null, taskRequest: 0,
   projects: [], trashedProjects: [], projectRequest: 0,
+  activeTask: null,
+  libraryAssets: [], publicationLibraryAssets: [], libraryRequest: 0, musicLibrary: null,
 };
 const $ = (selector) => document.querySelector(selector);
 const $$ = (selector) => Array.from(document.querySelectorAll(selector));
@@ -36,16 +38,20 @@ function choiceOptions(values, selected) {
   return [...new Set([...values, ...(selected ? [selected] : [])])].map(value => `<option value="${escapeHtml(value)}" ${value === selected ? "selected" : ""}>${escapeHtml(value)}</option>`).join("");
 }
 
-function fillChoice(name, values, fallback = "", optional = false) {
+function fillChoice(name, values, fallback = "", optional = false, allowCustom = true) {
   const field = $(`#create-form [name='${name}']`);
   const current = field.value || fallback;
-  field.innerHTML = (optional ? '<option value="">未指定</option>' : "") + choiceOptions(values, current === "__custom__" ? "" : current) + '<option value="__custom__">自定义…</option>';
+  const customOption = allowCustom ? '<option value="__custom__">自定义…</option>' : "";
+  field.innerHTML = (optional ? '<option value="">未指定</option>' : "") + choiceOptions(values, current === "__custom__" ? "" : current) + customOption;
   field.value = current;
 }
 
 function createChoiceValue(name) {
   const field = $(`#create-form [name='${name}']`);
-  return field.value === "__custom__" ? $(`[data-custom-for='${name}']`).value.trim() : field.value;
+  if (field.value !== "__custom__") return field.value;
+  // 风格与背景音乐只允许固定选项，没有自定义输入框；这里兜住旧缓存或手改 DOM 的情况。
+  const custom = $(`[data-custom-for='${name}']`);
+  return custom ? custom.value.trim() : field.value;
 }
 
 function voiceChoiceOptions(selected) {
@@ -94,9 +100,11 @@ async function loadCatalog() {
   fillChoice("city", state.catalog.cities.map(item => item.name), "杭州");
   fillChoice("festival", state.catalog.festivals, "", true);
   fillChoice("audience", state.catalog.audiences, "", true);
-  fillChoice("style", state.catalog.styles, "诗意纪实");
+  // 风格与背景音乐必须是曲库/知识库认识的标准值，不给「自定义…」，
+  // 否则手填「国风」这类词会导致选曲失败。
+  fillChoice("style", state.catalog.styles, "诗意纪实", false, false);
   $("#create-form [name='voice']").innerHTML = voiceChoiceOptions($("#create-form [name='voice']").value);
-  fillChoice("music_mood", state.catalog.music_moods, "无音乐");
+  fillChoice("music_mood", state.catalog.music_moods, "无音乐", false, false);
   fillChoice("culture", state.catalog.cities.flatMap(item => item.culture.split("、")), "", true);
   $$("[data-custom-for]").forEach(custom => {
     const field = $(`#create-form [name='${custom.dataset.customFor}']`);
@@ -110,6 +118,15 @@ async function loadCatalog() {
   $("#city").addEventListener("input", updateCityPreview);
   $("[data-custom-for='city']").addEventListener("input", updateCityPreview);
   $("#create-form [name='voice']").addEventListener("change", syncCreateVoice);
+  // 时长是自由输入，快捷档只是把常用值填进去，不锁死选项。
+  $$("[data-duration-preset]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const input = $("#create-form [name='duration']");
+      if (!input) return;
+      input.value = button.dataset.durationPreset;
+      input.dispatchEvent(new Event("input", { bubbles: true }));
+    });
+  });
   $("#create-form").addEventListener("input", updateInputMetrics);
   updateCityPreview();
   updateInputMetrics();
@@ -204,6 +221,12 @@ function attachVisibility() {
 }
 
 function syncAttachPanels() {
+  const publication = draftFieldValue("visual_usage") === "publication";
+  const source = $('.draft-editor [data-input-field="asset_source"]');
+  if (source) {
+    if (publication) source.value = "local-library";
+    source.disabled = publication;
+  }
   const visible = attachVisibility();
   $$(".draft-editor [data-when]").forEach((panel) => {
     panel.classList.toggle("is-hidden", !visible[panel.dataset.when]);
@@ -470,6 +493,7 @@ function reviewSettingsMarkup(task) {
     <section class="review-block">
       <div class="review-block-head"><span class="section-index">01 / 画面</span><h5>镜头画面从哪来</h5></div>
       <label class="source-picker">素材来源<select ${draft("asset_source")}${visibleAssetSource(input.asset_source) !== input.asset_source ? ` data-saved-source="${escapeHtml(input.asset_source)}"` : ""}>${assetProviderOptions(input.asset_source)}</select></label>
+      <label class="source-picker">使用模式<select ${draft("visual_usage")}><option value="preview" ${input.visual_usage === "preview" ? "selected" : ""}>技术预览（允许待审素材）</option><option value="publication" ${input.visual_usage === "publication" ? "selected" : ""}>正式发布（仅审核通过）</option></select></label>
       <p class="section-note" id="source-note">${escapeHtml(describeSource(input.asset_source))}</p>
       ${assetAttachPanel(task)}
       <div class="review-settings-grid">
@@ -510,9 +534,48 @@ function reviewSettingsMarkup(task) {
   </div>`;
 }
 
+function shotTagOptions(selected) {
+  const tags = Object.entries(state.catalog?.shot_tags || {wide:"地点全景", detail:"建筑或器物细节", process:"工艺过程", performance:"人物或演出", ambient:"环境空镜"});
+  return `<option value="">未指定</option>${tags.map(([value, label]) => `<option value="${value}" ${value === selected ? "selected" : ""}>${escapeHtml(label)}</option>`).join("")}`;
+}
+
+function entityOptions(city, selected) {
+  const items = (state.catalog?.entities || []).filter(item => !city || item.city === String(city).replace(/市$/, ""));
+  return `<option value="">自动识别</option>${items.map(item => `<option value="${escapeHtml(item.id)}" ${item.id === selected ? "selected" : ""}>${escapeHtml(item.name)} / ${escapeHtml(item.type)}</option>`).join("")}`;
+}
+
+function libraryStatus(asset) {
+  const labels = {pending:"待审核", approved:"已通过", rejected:"已驳回"};
+  return `${labels[asset.review_status] || "待审核"} / 授权${labels[asset.license_status] || "待审核"}`;
+}
+
+async function loadLibraryAssets(filters = {}) {
+  const params = new URLSearchParams({ type: "", usage: "preview", ...filters });
+  const data = await api(`/api/library/assets?${params.toString()}`);
+  return data.items || [];
+}
+
+function libraryAssetOptions(shot, usage = draftFieldValue("visual_usage") || state.activeTask?.input?.visual_usage) {
+  const assets = usage === "publication"
+    ? state.publicationLibraryAssets
+    : state.libraryAssets.filter(asset => asset.review_status !== "rejected");
+  const entityId = shot.entity_id || "";
+  const shotTag = shot.shot_tag || "";
+  if (!entityId || !shotTag) return "";
+  const options = assets.filter(asset => asset.entity_id === entityId && (asset.shot_tags || []).includes(shotTag));
+  const bound = shot.library_asset_id;
+  const missing = bound && !options.some(asset => asset.id === bound)
+    ? `<option value="${escapeHtml(bound)}" selected>已绑定素材（正在核对可用状态）</option>` : "";
+  return missing + options.map(asset => `<option value="${escapeHtml(asset.id)}" ${asset.id === bound ? "selected" : ""}>${escapeHtml(asset.name)} / ${escapeHtml(libraryStatus(asset))}</option>`).join("");
+}
+
 function shotEditor(task) {
   return (task.shots || []).map((shot) => `<article class="shot-editor">
     <div class="shot-editor-header"><strong>镜头 ${String(shot.order).padStart(2, "0")}</strong><span>${escapeHtml(shot.id)}</span></div>
+    <label>知识实体<select data-shot-field="entity_id" data-shot-id="${escapeHtml(shot.id)}">${entityOptions(task.input.city, shot.entity_id)}</select></label>
+    <label>镜头意图<select data-shot-field="shot_tag" data-shot-id="${escapeHtml(shot.id)}">${shotTagOptions(shot.shot_tag)}</select></label>
+    <label>绑定库素材<select data-shot-field="library_asset_id" data-shot-id="${escapeHtml(shot.id)}"><option value="">自动选材</option>${libraryAssetOptions(shot)}</select></label>
+    <p class="section-note">正式发布只允许已审核、授权有效且文件指纹未变化的素材。</p>
     <label>镜头标题<input data-shot-field="title" data-shot-id="${escapeHtml(shot.id)}" value="${escapeHtml(shot.title)}" /></label>
     <label>连续主体组（图生视频）<input data-shot-field="subject_group" data-shot-id="${escapeHtml(shot.id)}" maxlength="80" value="${escapeHtml(shot.subject_group || "")}" placeholder="相同主体填写相同组名" /></label>
     <label>组内参考图（每组一张）<input data-reference-file type="file" accept="image/jpeg,image/png" /></label>
@@ -528,6 +591,215 @@ function shotEditor(task) {
     <label>焦点 Y<input type="number" min="0" max="1" step="0.01" data-shot-field="focus_y" data-shot-id="${escapeHtml(shot.id)}" value="${shot.focus_y ?? ""}" placeholder="自动" /></label>
     <label>时长（秒）<input type="number" min="1" max="20" step="0.1" data-shot-field="duration_sec" data-shot-id="${escapeHtml(shot.id)}" value="${shot.duration_sec}" /></label>
   </article>`).join("");
+}
+
+function libraryPanelMarkup(task) {
+  const entityList = (state.catalog?.entities || []).filter(item => item.city === String(task.input.city || "").replace(/市$/, ""));
+  const entities = `<option value="">未关联实体</option>${entityList.map(item => `<option value="${escapeHtml(item.id)}">${escapeHtml(item.name)}</option>`).join("")}`;
+  const tags = Object.entries(state.catalog?.shot_tags || {wide:"地点全景", detail:"建筑或器物细节", process:"工艺过程", performance:"人物或演出", ambient:"环境空镜"});
+  const tagOptions = `<option value="">未指定意图</option>${tags.map(([key,label]) => `<option value="${key}">${escapeHtml(label)}</option>`).join("")}`;
+  return `<section class="review-block library-panel" id="library-assets-panel">
+    <div class="review-block-head"><span class="section-index">05 / 素材库</span><h5>实体素材与授权审核</h5></div>
+    <p class="section-note">新上传素材默认为待审核和仅预览。授权证据、来源和有效期核实后，再单独审核通过。</p>
+    <div class="library-filter-grid">
+      <label>筛选实体<select id="library-filter-entity"><option value="">全部实体</option>${entityList.map(item => `<option value="${escapeHtml(item.id)}">${escapeHtml(item.name)}</option>`).join("")}</select></label>
+      <label>筛选镜头意图<select id="library-filter-tag">${tagOptions}</select></label>
+      <label>审核状态<select id="library-filter-status"><option value="">全部状态</option><option value="pending">待审核</option><option value="approved">已通过</option><option value="rejected">已驳回</option></select></label>
+    </div>
+    <div class="library-upload-form">
+      <div class="library-upload-heading"><strong>加入素材库</strong><span>图片或短视频，单文件不超过 20 MB</span></div>
+      <div class="library-edit-grid">
+        <label>文件<input id="library-file" type="file" accept="image/*,video/mp4,video/quicktime,video/webm" /></label>
+        <label>知识实体<select id="library-upload-entity">${entities}</select></label>
+        <label>镜头意图<select id="library-upload-tag">${tagOptions}</select></label>
+        <label>绑定任务镜头<select id="library-upload-shot"><option value="">仅登记素材库</option>${shotOptions(task)}</select></label>
+        <label>来源页面<input id="library-source-url" type="url" placeholder="https://..." /></label>
+        <label>来源标题<input id="library-source-title" placeholder="素材原始页面标题" /></label>
+        <label>发布方<input id="library-source-publisher" placeholder="网站或机构" /></label>
+        <label>作者 / 摄影者<input id="library-author" placeholder="署名原文" /></label>
+        <label>许可名称<input id="library-license" placeholder="CC BY 4.0 / 团队书面授权" /></label>
+        <label>许可链接<input id="library-license-url" type="url" placeholder="https://creativecommons.org/..." /></label>
+        <label>许可证据<input id="library-license-evidence" placeholder="授权凭证或核验记录" /></label>
+        <label>使用范围<input id="library-usage-scope" placeholder="发布渠道与许可限制" /></label>
+        <label>有效期<input id="library-valid-until" type="date" /></label>
+      </div>
+      <button type="button" id="library-upload">上传并登记为待审核</button>
+    </div>
+    <div id="library-assets-list" class="library-assets-list"><p class="muted">正在读取素材库…</p></div>
+  </section>`;
+}
+
+function renderLibraryItems(task) {
+  const root = $("#library-assets-list");
+  if (!root) return;
+  const entity = $("#library-filter-entity")?.value || "";
+  const tag = $("#library-filter-tag")?.value || "";
+  const status = $("#library-filter-status")?.value || "";
+  const assets = state.libraryAssets.filter(asset =>
+    (!entity || asset.entity_id === entity) &&
+    (!tag || (asset.shot_tags || []).includes(tag)) &&
+    (!status || (asset.review_status || "pending") === status) &&
+    ["image", "video"].includes(asset.asset_type)
+  );
+  if (!assets.length) {
+    root.innerHTML = `<p class="muted">没有符合筛选条件的素材。</p>`;
+    return;
+  }
+  root.innerHTML = assets.map(asset => `<article class="library-asset-row" data-library-asset="${escapeHtml(asset.id)}">
+    <div class="library-asset-preview">${asset.asset_type === "video" ? `<video controls preload="metadata" src="${escapeHtml(asset.url)}"></video>` : `<img loading="lazy" src="${escapeHtml(asset.url)}" alt="${escapeHtml(asset.name)}" />`}</div>
+    <div class="library-asset-meta"><div class="library-asset-heading"><strong>${escapeHtml(asset.name)}</strong><span class="library-state state-${escapeHtml(asset.review_status || "pending")}">${escapeHtml(libraryStatus(asset))}</span></div>
+      <small>${escapeHtml(asset.city || "未关联城市")} · ${escapeHtml(entityListName(asset.entity_id))} · ${escapeHtml((asset.shot_tags || []).map(tag => state.catalog?.shot_tags?.[tag] || tag).join("、") || "未指定意图")}</small>
+      <p class="section-note">${state.publicationLibraryAssets.some(item => item.id === asset.id) ? "可用于正式发布" : "当前仅供预览，尚未满足发布条件"} · 已核验 ${escapeHtml(asset.checked_at || "未核验")} · ${escapeHtml(asset.sha256?.slice(0, 16) || "未记录指纹")}</p>
+      <div class="library-evidence-grid">
+        <label>来源标题<input data-library-field="source_title" value="${escapeHtml(asset.source_title || "")}" /></label>
+        <label>发布方<input data-library-field="source_publisher" value="${escapeHtml(asset.source_publisher || "")}" /></label>
+        <label>来源页面<input data-library-field="source_url" value="${escapeHtml(asset.source_url || "")}" /></label>
+        <label>作者<input data-library-field="author" value="${escapeHtml(asset.author || "")}" /></label>
+        <label>许可<input data-library-field="license" value="${escapeHtml(asset.license || "")}" /></label>
+        <label>许可链接<input data-library-field="license_url" value="${escapeHtml(asset.license_url || "")}" /></label>
+        <label>许可证据<input data-library-field="license_evidence" value="${escapeHtml(asset.license_evidence || "")}" /></label>
+        <label>有效期<input data-library-field="valid_until" type="date" value="${escapeHtml(asset.valid_until || "")}" /></label>
+        <label>使用范围<input data-library-field="usage_scope" value="${escapeHtml(asset.usage_scope || "")}" /></label>
+      </div>
+      <div class="library-asset-actions"><button type="button" data-library-save="${escapeHtml(asset.id)}">保存许可信息</button><button type="button" data-library-review="approved" data-library-id="${escapeHtml(asset.id)}">审核通过并允许发布</button><button type="button" data-library-review="rejected" data-library-id="${escapeHtml(asset.id)}">驳回</button></div>
+    </div>
+  </article>`).join("");
+  root.querySelectorAll("[data-library-save]").forEach(button => button.addEventListener("click", () => saveLibraryMetadata(button.dataset.librarySave)));
+  root.querySelectorAll("[data-library-review]").forEach(button => button.addEventListener("click", () => reviewLibraryAsset(button.dataset.libraryId, button.dataset.libraryReview)));
+}
+
+function entityListName(entityId) {
+  return (state.catalog?.entities || []).find(item => item.id === entityId)?.name || "未关联实体";
+}
+
+function refreshShotLibraryOptions() {
+  $$("[data-shot-field='library_asset_id']").forEach(select => {
+    const current = select.value;
+    const editor = select.closest(".shot-editor");
+    const shot = state.activeTask?.shots?.find(item => item.id === select.dataset.shotId);
+    if (!shot || !editor) return;
+    const edited = {
+      ...shot,
+      entity_id: editor.querySelector('[data-shot-field="entity_id"]').value,
+      shot_tag: editor.querySelector('[data-shot-field="shot_tag"]').value,
+      library_asset_id: current,
+    };
+    select.innerHTML = `<option value="">自动选材</option>${libraryAssetOptions(edited)}`;
+    if (current && !Array.from(select.options).some(option => option.value === current)) {
+      const unavailable = document.createElement("option");
+      unavailable.value = current;
+      unavailable.textContent = "当前绑定不符合筛选条件，请重新选择";
+      select.append(unavailable);
+    }
+    select.value = current;
+  });
+}
+
+async function loadTaskLibrary(task) {
+  if (!task || !$("#library-assets-panel")) return;
+  const requestId = ++state.libraryRequest;
+  try {
+    const [preview, publication] = await Promise.all([
+      loadLibraryAssets({city: task.input.city || ""}),
+      loadLibraryAssets({city: task.input.city || "", usage: "publication"}),
+    ]);
+    if (state.activeTask?.id !== task.id || state.libraryRequest !== requestId) return;
+    state.libraryAssets = preview;
+    state.publicationLibraryAssets = publication;
+    refreshShotLibraryOptions();
+    renderLibraryItems(task);
+  } catch (error) {
+    if (state.activeTask?.id !== task.id || state.libraryRequest !== requestId) return;
+    const root = $("#library-assets-list");
+    if (root) root.innerHTML = `<p class="error-box">${escapeHtml(error.message)}</p>`;
+  }
+}
+
+async function uploadLibraryAsset(taskId) {
+  const file = $("#library-file")?.files?.[0];
+  if (!file) return showToast("请选择图片或视频文件。");
+  if (file.size > 20 * 1024 * 1024) return showToast("素材文件不能超过 20 MB。");
+  const metadata = {
+    name: file.name,
+    city: state.activeTask?.input?.city || "",
+    entity_id: $("#library-upload-entity")?.value || "",
+    shot_tags: $("#library-upload-tag")?.value ? [$("#library-upload-tag").value] : [],
+    source_url: $("#library-source-url")?.value?.trim() || "",
+    source_title: $("#library-source-title")?.value?.trim() || "",
+    source_publisher: $("#library-source-publisher")?.value?.trim() || "",
+    author: $("#library-author")?.value?.trim() || "",
+    license: $("#library-license")?.value?.trim() || "",
+    license_url: $("#library-license-url")?.value?.trim() || "",
+    license_evidence: $("#library-license-evidence")?.value?.trim() || "",
+    usage_scope: $("#library-usage-scope")?.value?.trim() || "",
+    valid_until: $("#library-valid-until")?.value || null,
+  };
+  if (!metadata.entity_id || !metadata.shot_tags.length) return showToast("上传前请选择知识实体和镜头意图。");
+  const shotId = $("#library-upload-shot")?.value || "";
+  const button = $("#library-upload");
+  button.disabled = true;
+  try {
+    metadata.data_base64 = await readFileAsDataUrl(file);
+    if (taskId && shotId) {
+      metadata.task_id = taskId;
+      metadata.shot_id = shotId;
+      if (!await saveDraft(taskId, {refresh:false, notify:false})) return;
+    }
+    const asset = await api("/api/library/assets", {method:"POST", body:JSON.stringify(metadata)});
+    if (shotId) applyUploadedLibraryBinding(shotId, asset);
+    showToast(asset.review_status === "approved" ? "文件已存在，保留原审核信息。" : "素材已登记为待审核，仅可用于预览。");
+    await loadTaskLibrary(state.activeTask);
+  } catch (error) { showToast(error.message); }
+  finally { button.disabled = false; }
+}
+
+function applyUploadedLibraryBinding(shotId, asset) {
+  const shot = state.activeTask?.shots?.find(item => item.id === shotId);
+  if (!shot) return;
+  Object.assign(shot, {entity_id:asset.entity_id, shot_tag:shot.shot_tag || asset.shot_tags?.[0] || "", library_asset_id:asset.id});
+  for (const field of ["entity_id", "shot_tag", "library_asset_id"]) {
+    const select = $(`[data-shot-id="${CSS.escape(shotId)}"][data-shot-field="${field}"]`);
+    if (!select) continue;
+    if (field === "library_asset_id" && !Array.from(select.options).some(option => option.value === asset.id)) {
+      const option = document.createElement("option");
+      option.value = asset.id;
+      option.textContent = `${asset.name} / ${libraryStatus(asset)}`;
+      select.append(option);
+    }
+    select.value = shot[field];
+  }
+}
+
+async function saveLibraryMetadata(assetId) {
+  const row = $(`[data-library-asset="${CSS.escape(assetId)}"]`);
+  const patch = {};
+  row?.querySelectorAll("[data-library-field]").forEach(field => { patch[field.dataset.libraryField] = field.value.trim() || null; });
+  try {
+    const updated = await api(`/api/library/assets/${encodeURIComponent(assetId)}`, {method:"PATCH", body:JSON.stringify(patch)});
+    showToast(updated.review_status === "pending" ? "许可信息已保存，请重新审核发布条件。" : "素材许可信息已保存。");
+    await loadTaskLibrary(state.activeTask);
+  } catch (error) { showToast(error.message); }
+}
+
+async function reviewLibraryAsset(assetId, status) {
+  const row = $(`[data-library-asset="${CSS.escape(assetId)}"]`);
+  const patch = {review_status:status};
+  if (status === "approved") {
+    const fields = {};
+    row?.querySelectorAll("[data-library-field]").forEach(field => { fields[field.dataset.libraryField] = field.value.trim(); });
+    if (!fields.author || !fields.license || !fields.source_url || !(fields.license_url || fields.license_evidence)) {
+      return showToast("通过审核前需填写作者、许可、来源和许可凭证。");
+    }
+    Object.assign(patch, fields, {license_status:"approved", allowed_usages:["preview", "publication"]});
+  } else {
+    patch.license_status = "rejected";
+    patch.allowed_usages = ["preview"];
+  }
+  try {
+    await api(`/api/library/assets/${encodeURIComponent(assetId)}`, {method:"PATCH", body:JSON.stringify(patch)});
+    showToast(status === "approved" ? "素材已审核，可用于正式发布。" : "素材已驳回。" );
+    await loadTaskLibrary(state.activeTask);
+  } catch (error) { showToast(error.message); }
 }
 
 function assetList(task) {
@@ -671,9 +943,11 @@ function renderTask(task) {
   if (task.input?.voice_engine === "xstudio") task = {...task, input:{...task.input, voice_engine:"upload", voice:"上传配音音频"}};
   if (task.input?.voice_engine === "tianyi") task = {...task, input:{...task.input, voice_engine:"reselect", voice:"请选择新音色"}};
   state.latestTaskId = task.id;
+  state.activeTask = task;
   const error = task.error ? `<div class="error-box"><strong>任务失败</strong><p>${escapeHtml(task.error)}</p><button class="text-button" data-retry="${escapeHtml(task.id)}">从脚本阶段重试</button></div>` : "";
   const render = task.render || {};
-  const links = render.video_url ? `<div class="task-links"><a href="${render.video_url}" target="_blank">打开 MP4</a><a href="${render.video_url}" download>下载 MP4</a><a href="${render.subtitle_url}" target="_blank">下载 SRT</a>${task.audio?.voice_url ? `<a href="${task.audio.voice_url}" target="_blank">试听配音</a>` : ""}${task.audio?.music_url ? `<a href="${task.audio.music_url}" target="_blank">试听音乐</a>` : ""}</div><video class="result-video" controls playsinline src="${render.video_url}"></video>` : "";
+  const mediaLinks = render.video_url ? `<a href="${render.video_url}" target="_blank">打开 MP4</a><a href="${render.video_url}" download>下载 MP4</a><a href="${render.subtitle_url}" target="_blank">下载 SRT</a>${task.audio?.voice_url ? `<a href="${task.audio.voice_url}" target="_blank">试听配音</a>` : ""}${task.audio?.music_url ? `<a href="${task.audio.music_url}" target="_blank">试听音乐</a>` : ""}` : "";
+  const links = `<div class="task-links"><a href="/api/tasks/${encodeURIComponent(task.id)}/export?format=md" download title="导出已保存版本；未保存的修改请先保存">导出文案</a>${mediaLinks}</div>${render.video_url ? `<video class="result-video" controls playsinline src="${render.video_url}"></video>` : ""}`;
   const draft = task.shots?.length && ["draft", "edited", "failed"].includes(task.status) ? `<div class="draft-editor">
     <div class="draft-editor-header"><div><span class="section-index">SCRIPT REVIEW</span><h4>审核并修改后再生成</h4></div><button class="primary-button" data-generate-task="${escapeHtml(task.id)}"><span>确认并生成实际视频</span><b>→</b></button></div>
     <label>标题<input class="draft-title" value="${escapeHtml(task.title)}" /></label><label>摘要<textarea class="draft-summary">${escapeHtml(task.summary)}</textarea></label><label>CTA<textarea class="draft-cta">${escapeHtml(task.cta)}</textarea></label><label>完整旁白<textarea class="draft-narration">${escapeHtml(task.narration)}</textarea></label>
@@ -682,6 +956,7 @@ function renderTask(task) {
       <div class="review-block-head"><span class="section-index">04 / 分镜脚本</span><h5>逐镜要念的、要拍的</h5></div>
       <div class="shot-editor-grid">${shotEditor(task)}</div>
     </section>
+    ${libraryPanelMarkup(task)}
     <button class="text-button" data-save-draft="${escapeHtml(task.id)}">保存脚本、分镜和参数修改</button>
   </div>` : "";
   $("#active-task").innerHTML = `<div class="task-progress"><div class="task-meta"><div><h4>${escapeHtml(task.title || "脚本预览")}</h4><p>${escapeHtml(task.summary || "请审核脚本和分镜后生成。")} / ${escapeHtml(task.status)} / ${escapeHtml(task.id)}</p></div><strong>${task.progress}%</strong></div><div class="progress-bar"><span style="width:${task.progress}%"></span></div><div class="pipeline">${stageMarkup(task)}</div>${record}${error}${draft}${links}<div class="task-links"><a href="/api/tasks/${encodeURIComponent(task.id)}/ledger" download>下载任务底账</a></div>${visualReviewMarkup(task)}${billingMarkup(task)}${(task.audio?.subject_reviews || []).map(s => s.url ? `<a href="${escapeHtml(s.url)}" target="_blank">复核 ${escapeHtml(s.group)} · 首中尾帧</a>` : escapeHtml(s.error)).join(" ")}${task.audio?.subtitle_alignment ? '<p>字幕对齐 · ' + task.audio.subtitle_alignment.segments.map(s=>escapeHtml(s.shot_id + " " + (s.source === "sentence" ? "句级（"+s.reason+"）" : s.source))).join(" / ") + '</p>' : ""}<p>${escapeHtml(task.audio?.music_notice || (task.audio?.music_match?.id ? (task.audio.music_match.title || task.audio.music_match.id) + " · " + task.audio.music_match.license : ""))}</p><div class="asset-summary"><strong>素材记录</strong>${assetList(task)}</div>${visualQaMarkup(task)}<div class="trace-line">文本 provider: ${escapeHtml(task.trace?.provider || "pending")} / 模型: ${escapeHtml(task.trace?.model || "pending")} / fallback: ${String(Boolean(task.trace?.fallback_used))}<br />配音: ${escapeHtml(task.audio?.voice_provider || "pending")} / 音乐: ${escapeHtml(task.audio?.music_provider || "pending")} / 音频: ${render.has_audio ? "有" : "无"} / 烧录字幕: ${render.has_burned_subtitles ? "有" : "无"}<br />Provider 报告成本: ${Number(task.cost?.total || 0).toFixed(4)}（${escapeHtml(task.cost?.unit || "等待统计")}）</div></div>`;
@@ -707,15 +982,24 @@ function renderTask(task) {
   });
   const uploadButton = $("#upload-asset");
   if (uploadButton) uploadButton.addEventListener("click", () => uploadAsset(uploadButton.dataset.uploadTask));
+  const libraryUploadButton = $("#library-upload");
+  if (libraryUploadButton) libraryUploadButton.addEventListener("click", () => uploadLibraryAsset(task.id));
+  ["library-filter-entity", "library-filter-tag", "library-filter-status"].forEach(id => {
+    const field = $(`#${id}`);
+    if (field) field.addEventListener("change", () => renderLibraryItems(task));
+  });
+  loadTaskLibrary(task);
   $$("[data-upload-audio]").forEach((button) => button.addEventListener("click", () => uploadAudio(button.dataset.uploadTask, button.dataset.uploadAudio)));
   // 改素材来源/配音/音乐要立刻反映到上传面板上：选 AI 生成就不该再看到上传框。
   // 只切 class 不重渲染，免得把用户还没保存的改动冲掉。
   const editor = $(".draft-editor");
   if (editor) {
+    editor.addEventListener("input", (event) => { if (event.target.dataset?.inputField) syncAttachPanels(); });
     editor.addEventListener("change", (event) => {
       const field = event.target;
       if (field.dataset.inputField === "asset_source") delete field.dataset.savedSource;
-      if (field.dataset.inputField) syncAttachPanels();
+      if (field.dataset?.inputField) syncAttachPanels();
+      if (["entity_id", "shot_tag"].includes(field.dataset?.shotField) || field.dataset?.inputField === "visual_usage") refreshShotLibraryOptions();
     });
   }
   syncAttachPanels();
@@ -732,7 +1016,7 @@ function readFileAsDataUrl(file) {
   });
 }
 
-async function saveDraft(taskId) {
+async function saveDraft(taskId, {refresh = true, notify = true} = {}) {
   try {
     const topLevel = { title: $(".draft-title").value, summary: $(".draft-summary").value, cta: $(".draft-cta").value, narration: $(".draft-narration").value };
     const input = {};
@@ -742,16 +1026,21 @@ async function saveDraft(taskId) {
       if (["voice_rate", "voice_pitch", "voice_volume", "music_volume", "voice_expressiveness"].includes(field.dataset.inputField)) value = Number(value);
       input[field.dataset.inputField] = value;
     });
-    await api(`/api/tasks/${taskId}`, { method: "PATCH", body: JSON.stringify({ ...topLevel, input }) });
+    if (input.visual_usage === "publication" && (input.asset_source === "upload" || input.asset_source === "pexels")) {
+      throw new Error("正式发布必须使用已审核的本地实体素材库；Pexels/上传候选不能直接进入成片。");
+    }
     const grouped = {};
-    $$("[data-shot-field]").forEach((field) => {
+    $$(`[data-shot-field]`).forEach((field) => {
       const shotId = field.dataset.shotId;
       grouped[shotId] ||= {};
-      grouped[shotId][field.dataset.shotField] = ["voice_pause_after", "focus_x", "focus_y"].includes(field.dataset.shotField) && field.value === "" ? null : field.type === "number" ? Number(field.value) : field.value;
+      const empty = field.value === "" && ["voice_pause_after", "focus_x", "focus_y", "library_asset_id", "entity_id", "shot_tag"].includes(field.dataset.shotField);
+      grouped[shotId][field.dataset.shotField] = empty ? null : field.type === "number" ? Number(field.value) : field.value;
     });
-    for (const [shotId, patch] of Object.entries(grouped)) await api(`/api/tasks/${taskId}/shots/${shotId}`, { method: "PATCH", body: JSON.stringify(patch) });
-    showToast("修改已保存。确认后才会生成实际视频。");
-    renderTask(await api(`/api/tasks/${taskId}`));
+    const shots = Object.entries(grouped).map(([id, patch]) => ({id, ...patch}));
+    const saved = await api(`/api/tasks/${taskId}`, {method:"PATCH", body:JSON.stringify({...topLevel, input, shots})});
+    state.activeTask = saved;
+    if (notify) showToast("修改已保存。确认后才会生成实际视频。");
+    if (refresh) renderTask(saved);
     return true;
   } catch (error) { showToast(error.message); return false; }
 }
@@ -763,13 +1052,31 @@ async function generateTask(taskId) {
 }
 
 async function uploadAsset(taskId) {
-  const file = $("#asset-file").files[0];
+  const file = $("#asset-file")?.files?.[0];
+  const shotId = $("#upload-shot")?.value || "";
   if (!file) return showToast("请先选择图片或视频。");
+  if (file.size > 20 * 1024 * 1024) return showToast("素材文件不能超过 20 MB。");
+  const entityId = $(`[data-shot-id="${CSS.escape(shotId)}"][data-shot-field="entity_id"]`)?.value || "";
+  const shotTag = $(`[data-shot-id="${CSS.escape(shotId)}"][data-shot-field="shot_tag"]`)?.value || "";
+  if (!entityId || !shotTag) return showToast("请先为目标镜头选择知识实体和镜头意图。");
+  const button = $("#upload-asset");
+  button.disabled = true;
   try {
-    await api("/api/assets", { method: "POST", body: JSON.stringify({ task_id: taskId, shot_id: $("#upload-shot").value, name: file.name, data_base64: await readFileAsDataUrl(file), license: $("#asset-license").value, author: $("#asset-author").value, usage_scope: $("#asset-scope").value, grantor: $("#asset-grantor").value, authorization_ref: $("#asset-authorization-ref").value, page_url: $("#asset-source-url").value }) });
-    showToast("素材已上传并绑定镜头。");
-    renderTask(await api(`/api/tasks/${taskId}`));
+    const payload = {
+      task_id:taskId, shot_id:shotId, name:file.name, data_base64:await readFileAsDataUrl(file),
+      city:state.activeTask.input.city, entity_id:entityId, shot_tags:[shotTag],
+      license:$("#asset-license")?.value?.trim() || "",
+      author:$("#asset-author")?.value?.trim() || "",
+      usage_scope:$("#asset-scope")?.value?.trim() || "",
+      source_url:$("#asset-source-url")?.value?.trim() || "",
+    };
+    if (!await saveDraft(taskId, {refresh:false, notify:false})) return;
+    const asset = await api("/api/library/assets", {method:"POST", body:JSON.stringify(payload)});
+    applyUploadedLibraryBinding(shotId, asset);
+    await loadTaskLibrary(state.activeTask);
+    showToast("素材已入库并绑定镜头。请在素材库补齐许可并审核。");
   } catch (error) { showToast(error.message); }
+  finally { button.disabled = false; }
 }
 
 async function uploadAudio(taskId, kind) {
@@ -845,6 +1152,8 @@ function projectCard(task, trashed = false) {
   const actions = trashed ? `<button type="button" data-restore-task="${id}">恢复任务</button>` : `
     ${task.render?.video_url ? `<a href="${escapeHtml(task.render.video_url)}" target="_blank" rel="noopener">打开 MP4</a>` : ""}
     <button type="button" data-open-task="${id}">打开任务</button>
+    <button type="button" class="text-button" data-add-observation="${id}">记录平台观测</button>
+    <button type="button" class="text-button" data-add-billing="${id}">登记实际账单</button>
     <button type="button" class="project-delete" data-delete-task="${id}" aria-label="删除任务：${title}"
       title="${busy ? "任务正在生成" : "删除任务"}" ${busy ? "disabled" : ""}>
       <svg aria-hidden="true" focusable="false" width="24" height="26" viewBox="0 0 24 26"
@@ -852,13 +1161,15 @@ function projectCard(task, trashed = false) {
         <path d="M2 6h20M9 6V5a3 3 0 0 1 6 0v1M4 6l1.6 17c.05.6.55 1 1.15 1h10.5c.6 0 1.1-.4 1.15-1L20 6M10 11v8m4-8v8" />
       </svg>
     </button>`;
+  const {costLabel, durationLabel} = taskMetricsLabels(task);
   return `<article class="project-card">
     ${poster ? `<img src="${escapeHtml(poster)}" alt="" loading="lazy" />` : '<div class="project-placeholder" aria-hidden="true"></div>'}
     <div>
       <span class="status ${task.status === "failed" ? "failed" : ""}">${escapeHtml(task.status.toUpperCase())}</span>
       <h3>${title}</h3>
       <p>${escapeHtml(task.input.city)} / ${escapeHtml(task.input.landmark || "未指定地标")} / ${escapeHtml(task.input.duration)}s
-        <br />${trashed ? `移入时间 ${escapeHtml(new Date(task.trashed_at).toLocaleString("zh-CN"))}` : escapeHtml(task.updated_at)}</p>
+        <br />${trashed ? `移入时间 ${escapeHtml(new Date(task.trashed_at).toLocaleString("zh-CN"))}` : escapeHtml(task.updated_at)}
+        ${trashed ? "" : `<br />${escapeHtml(costLabel)}<br />${escapeHtml(durationLabel)}`}</p>
     </div>
     <div class="project-card-actions">${actions}</div>
   </article>`;
@@ -943,6 +1254,76 @@ async function restoreTask(taskId, button) {
   }
 }
 
+
+// 作品档案顶部的指标总览（PR #3）：成本报告状态、人工登记账单、平台观测。
+// 列表本体仍由 renderProjects/projectCard 渲染，这里只画总览。
+function renderMetricsOverview(tasks) {
+  const overview = $("#metrics-overview");
+  if (!overview) return;
+  const billingCurrencies = new Map();
+  for (const task of tasks) {
+    for (const [currency, amount] of Object.entries(task.metrics?.billing?.by_currency || {})) {
+      billingCurrencies.set(currency, (billingCurrencies.get(currency) || 0) + Number(amount || 0));
+    }
+  }
+  const billingMarkup = [...billingCurrencies.entries()].sort(([a],[b]) => a.localeCompare(b)).map(([currency, amount]) => `<article class="metric-tile"><span>已记录账单 · ${escapeHtml(currency)}</span><strong>${Number(amount).toFixed(2)} ${escapeHtml(currency)}</strong><small>人工登记金额，不代表已完成对账</small></article>`).join("");
+  const unknownCostCount = tasks.filter((task) => task.metrics?.cost?.amount_status !== "reported").length;
+  const costMarkup = `<article class="metric-tile"><span>Provider 成本状态</span><strong>${unknownCostCount} / ${tasks.length} 待完整报告</strong><small>未报告或不完整金额按未知处理；不推断为免费</small></article>`;
+  const observations = tasks.flatMap((task) => (task.metrics?.publication_observations || []).map((item) => ({...item, title:task.title || task.input?.theme || task.id})));
+  const observationMarkup = observations.length ? observations.slice(0, 12).map((item) => `<article class="observation-card"><strong>${escapeHtml(item.platform)} · ${escapeHtml(item.title)}</strong><small>${escapeHtml(item.published_at)} / 发布后 ${Number(item.window_days)} 天观测 / ${escapeHtml(item.observed_at)}</small><a href="${escapeHtml(item.post_url)}" target="_blank" rel="noopener noreferrer">查看原帖</a><div class="observation-metrics">${Object.entries(item.metrics || {}).map(([key,value]) => `<span>${escapeHtml(key)} <b>${Number(value).toLocaleString()}</b></span>`).join("")}</div></article>`).join("") : `<p class="metrics-empty">尚无平台观测数据。需录入平台帖子与带时间窗口的后台指标；未录入不代表 0。</p>`;
+  overview.innerHTML = `${costMarkup}${billingMarkup}<div class="observation-list">${observationMarkup}</div>`;
+}
+
+function taskMetricsLabels(task) {
+  const cost = task.metrics?.cost || {};
+  const costLabel = cost.amount_status === "reported" ? `${Number(cost.total).toFixed(4)} ${cost.currency || "币种未声明"} · Provider 报告` : cost.amount_status === "incomplete" ? `部分报告 ${Number(cost.reported_total || 0).toFixed(4)} · 未完整` : "成本未报告";
+  const execution = task.metrics?.execution || {};
+  const durationLabel = execution.last_seconds == null ? "运行耗时未记录" : `最近运行 ${Number(execution.last_seconds).toFixed(1)} 秒`;
+  return {costLabel, durationLabel};
+}
+
+
+async function recordBilling(taskId) {
+  const amount = Number(prompt("账单金额（不含币种符号）:"));
+  if (!Number.isFinite(amount) || amount < 0) return showToast("金额必须是非负数字。");
+  const currency = prompt("币种代码（3 位大写 ISO，如 CNY、USD）:", "CNY");
+  if (!currency) return;
+  const source = prompt("账单/发票/后台记录来源（建议含单号）:");
+  if (!source) return;
+  const capturedAt = prompt("记录日期 YYYY-MM-DD:", new Date().toISOString().slice(0, 10));
+  if (!capturedAt) return;
+  const note = prompt("备注（可选）:", "");
+  try {
+    await api(`/api/tasks/${encodeURIComponent(taskId)}/billing`, {method:"POST", body:JSON.stringify({amount,currency,source,captured_at:capturedAt,note:note || ""})});
+    showToast("人工账单记录已保存，与 provider 报告成本分开列示。");
+    await loadProjects();
+  } catch (error) { showToast(error.message); }
+}
+
+async function recordPublicationObservation(taskId) {
+  const platform = prompt("平台 slug: douyin / xiaohongshu / bilibili / youtube / weibo / wechat-channels / other");
+  if (!platform) return;
+  const postUrl = prompt("公开帖子 URL:");
+  if (!postUrl) return;
+  const publishedAt = prompt("发布日期 YYYY-MM-DD:");
+  if (!publishedAt) return;
+  const observedAt = prompt("数据抓取日期 YYYY-MM-DD:");
+  if (!observedAt) return;
+  const windowDays = Number(prompt("发布后第几天观测 (1–365):", "7"));
+  const metricsText = prompt("输入后台可见指标 JSON；只填实际报告值，例如 {\"views\":123,\"likes\":4}。未显示的指标不要填 0:");
+  if (!metricsText) return;
+  let metrics;
+  try { metrics = JSON.parse(metricsText); } catch { return showToast("指标必须是有效 JSON 对象。"); }
+  const sourceNote = prompt("数据来源/截图备注（可选）:", "手工读取平台公开页面");
+  try {
+    await api(`/api/tasks/${encodeURIComponent(taskId)}/publication-observations`, {method:"POST", body:JSON.stringify({platform,post_url:postUrl,published_at:publishedAt,observed_at:observedAt,window_days:windowDays,metrics,source_note:sourceNote || ""})});
+    showToast("平台观测已记录；这是描述性数据，不代表因果归因或 ROI。");
+    await loadProjects();
+  } catch (error) { showToast(error.message); }
+}
+
+// 打开一条任务并把 id 写进地址栏。这样刷新、收藏、把链接发给别人，
+// 都能直接回到同一条片子，而不是回到空白的创作工作台。
 function openTask(taskId, updateUrl = true) {
   if (!taskId) return;
   const hash = `#task=${encodeURIComponent(taskId)}`;
@@ -1048,13 +1429,172 @@ async function boot() {
     if (button.dataset.openTask) openTask(button.dataset.openTask);
     if (button.dataset.deleteTask) confirmDeleteTask(button.dataset.deleteTask);
     if (button.dataset.restoreTask) restoreTask(button.dataset.restoreTask, button);
+    if (button.dataset.addObservation) recordPublicationObservation(button.dataset.addObservation);
+    if (button.dataset.addBilling) recordBilling(button.dataset.addBilling);
   });
   $("#trash-confirm").addEventListener("click", deleteConfirmedTask);
   $("#trash-dialog").addEventListener("cancel", (event) => {
     if ($("#trash-confirm").disabled) event.preventDefault();
   });
+  bindMusicLibrary();
   window.addEventListener("popstate", restoreLinkedTask);
   restoreLinkedTask();
+}
+
+// ---- 曲库浏览 ----
+// 曲目标签由后端 catalog 提供，前端只负责展示与筛选，避免两边各写一份词表。
+async function loadMusicLibrary() {
+  if (state.musicLibrary) return state.musicLibrary;
+  const payload = await api("/api/music/library");
+  state.musicLibrary = payload;
+  return payload;
+}
+
+// 曲目风格目前对全部曲目都是「全风格通用」（catalog 里就是这么标的），
+// 所以逐首列出 5 个风格只是噪音，这里合并成一个「通用」标签；
+// 哪天有曲目真正限定风格，就会自动显示成它自己的标签。
+function musicStyleTag(track, library) {
+  const all = (library.styles || []).length;
+  const own = (track.styles || []).length;
+  if (all > 0 && own >= all) return "通用";
+  return own ? (track.styles || []).join("、") : "未标风格";
+}
+
+function renderMusicList(library, mood) {
+  const list = $("#music-list");
+  if (!list) return;
+  const tracks = (library.tracks || []).filter((track) => {
+    if (mood && !(track.moods || []).includes(mood)) return false;
+    return true;
+  });
+  if (!tracks.length) {
+    list.innerHTML = '<p class="field-note">没有符合筛选条件的曲目，试试放宽情绪。</p>';
+    return;
+  }
+  list.innerHTML = tracks.map((track) => `
+    <div class="music-row">
+      <div class="music-row-main">
+        <strong>${escapeHtml(track.name)}</strong>
+        <span class="music-tags">${(track.moods || []).map((m) => `<em>${escapeHtml(m)}</em>`).join("")}</span>
+        <span class="music-tags music-tags-style"><em>${escapeHtml(musicStyleTag(track, library))}</em></span>
+      </div>
+      <div class="music-row-actions">
+        <span class="field-note">${escapeHtml(track.usage_scope || "")}</span>
+        <button type="button" class="text-button" data-preview-music="${escapeHtml(track.id)}">试听</button>
+        <button type="button" class="text-button" data-pick-music="${escapeHtml(track.id)}">用这首</button>
+      </div>
+    </div>`).join("");
+}
+
+// 试听共用一个 <audio>，避免一屏 47 个音频元素
+let musicPreview = null;
+let musicPreviewId = "";
+
+function toggleMusicPreview(trackId) {
+  const track = (state.musicLibrary?.tracks || []).find((t) => t.id === trackId);
+  if (!track) return;
+  if (!musicPreview) {
+    musicPreview = new Audio();
+    musicPreview.addEventListener("ended", () => { musicPreviewId = ""; syncPreviewButtons(); });
+  }
+  if (musicPreviewId === trackId && !musicPreview.paused) {
+    musicPreview.pause();
+    musicPreviewId = "";
+    syncPreviewButtons();
+    return;
+  }
+  musicPreviewId = trackId;
+  musicPreview.src = `/music/${encodeURIComponent(track.file)}`;
+  musicPreview.play().catch((error) => {
+    musicPreviewId = "";
+    syncPreviewButtons();
+    showToast(error?.name === "NotAllowedError"
+      ? "浏览器拦截了自动播放，再点一次「试听」即可。"
+      : "这段音频浏览器放不了，可以下载后本地试听。");
+  });
+  syncPreviewButtons();
+}
+
+function syncPreviewButtons() {
+  document.querySelectorAll("[data-preview-music]").forEach((button) => {
+    const playing = button.dataset.previewMusic === musicPreviewId;
+    button.textContent = playing ? "停止" : "试听";
+  });
+}
+
+// 点「用这首」= 把该曲目的第一个情绪填进背景音乐下拉框。
+// 生成时后端按「情绪 + 叙事风格」再挑具体曲目，所以这里只能定情绪，不能锁定单曲。
+function pickMusicTrack(trackId) {
+  const library = state.musicLibrary;
+  const track = (library?.tracks || []).find((t) => t.id === trackId);
+  if (!track) return;
+  const moods = (state.catalog?.music_moods || []).filter((m) => m !== "无音乐");
+  const mood = (track.moods || []).find((m) => moods.includes(m));
+  if (!mood) {
+    showToast("这首曲子的情绪不在当前选项里，换一首试试。");
+    return;
+  }
+  const select = document.querySelector("#create-form [name='music_mood']");
+  if (select) {
+    select.value = mood;
+    select.dispatchEvent(new Event("change", { bubbles: true }));
+  }
+  if (musicPreview) { musicPreview.pause(); musicPreviewId = ""; }
+  $("#music-modal").hidden = true;
+  showToast(`背景音乐已设为「${mood}」，生成时会从该情绪的曲目里挑选。`);
+}
+
+async function openMusicLibrary() {
+  const modal = $("#music-modal");
+  if (!modal) return;
+  try {
+    const library = await loadMusicLibrary();
+    const count = $("#music-count");
+    if (count) count.textContent = String(library.total || 0);
+    const moodSelect = $("#music-filter-mood");
+    if (moodSelect && moodSelect.options.length <= 1) {
+      (library.moods || []).forEach((m) => moodSelect.add(new Option(m, m)));
+    }
+    renderMusicList(library, moodSelect?.value || "");
+    modal.hidden = false;
+  } catch (error) {
+    showToast("曲库加载失败，请确认服务已启动。");
+  }
+}
+
+function bindMusicLibrary() {
+  const browse = $("#browse-music");
+  if (browse) browse.addEventListener("click", openMusicLibrary);
+  const close = $("#music-modal-close");
+  if (close) close.addEventListener("click", () => {
+    if (musicPreview) musicPreview.pause();
+    musicPreviewId = "";
+    $("#music-modal").hidden = true;
+  });
+  const modal = $("#music-modal");
+  if (modal) modal.addEventListener("click", (event) => {
+    if (event.target !== modal) return;
+    if (musicPreview) musicPreview.pause();
+    musicPreviewId = "";
+    modal.hidden = true;
+  });
+  const list = $("#music-list");
+  if (list) list.addEventListener("click", (event) => {
+    const pick = event.target.closest("[data-pick-music]");
+    if (pick) { pickMusicTrack(pick.dataset.pickMusic); return; }
+    const preview = event.target.closest("[data-preview-music]");
+    if (preview) toggleMusicPreview(preview.dataset.previewMusic);
+  });
+  const moodFilter = $("#music-filter-mood");
+  if (moodFilter) moodFilter.addEventListener("change", async () => {
+    const library = await loadMusicLibrary();
+    renderMusicList(library, moodFilter.value || "");
+  });
+  // 首次加载就把曲目数填进按钮文案
+  loadMusicLibrary().then((library) => {
+    const count = $("#music-count");
+    if (count) count.textContent = String(library.total || 0);
+  }).catch(() => {});
 }
 
 boot();
