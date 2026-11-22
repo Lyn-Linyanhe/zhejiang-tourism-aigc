@@ -23,6 +23,7 @@ from .cost import billing_scope
 from .subtitle_alignment import align_subtitles
 from . import consistency
 from . import knowledge as zhejiang_kb
+from . import visual_qa
 from .audio_sync import PerShotAudioBuilder
 from .voice_studio import validate_clip, plan_track
 from ..providers.contract import TRANSITIONS
@@ -101,7 +102,7 @@ class Orchestrator:
         task.trace = TraceRecord(
             provider="pending",
             model="pending",
-            prompt_version="zj-tourism-prompt-v1",
+            prompt_version=consistency.PROMPT_VERSION,
             fallback_used=False,
         )
         self.storage.save_task(task)
@@ -116,7 +117,7 @@ class Orchestrator:
         task.trace = TraceRecord(
             provider="pending",
             model="pending",
-            prompt_version="zj-tourism-prompt-v1",
+            prompt_version=consistency.PROMPT_VERSION,
             fallback_used=False,
         )
         self.storage.save_task(task)
@@ -308,6 +309,7 @@ class Orchestrator:
             narration=data.get("narration", ""),
             audio=dict(data.get("audio", {})),
             render=dict(data.get("render", {})),
+            visual_qa=dict(data.get("visual_qa", {})),
             error=data.get("error", ""),
             created_at=data.get("created_at", now_iso()),
             updated_at=data.get("updated_at", now_iso()),
@@ -416,7 +418,7 @@ class Orchestrator:
         task.trace = TraceRecord(
             provider=result.provider,
             model=result.model,
-            prompt_version=result.event.get("prompt_version", "zj-tourism-prompt-v1"),
+            prompt_version=result.event.get("prompt_version", consistency.PROMPT_VERSION),
             fallback_used=result.fallback_used,
             events=[*(task.trace.events if task.trace else []), result.event],
         )
@@ -491,9 +493,18 @@ class Orchestrator:
         # P2 一致性策略：统一调色参数（进 RenderRequest.grade），画面 provider 与渲染线共用
         style_ctx = {
             "task_id": task.id,
+            "city": task.input.city,
+            "landmark": task.input.landmark,
+            "theme": task.input.theme,
+            "culture": task.input.culture,
             "style": task.input.style,
             "color": knowledge.get("color", "#2d6c63"),
             "accent": knowledge.get("accent", "#d6ad60"),
+            "subject_lock": task.input.subject_lock,
+            "subject_reference_path": task.input.subject_reference_path,
+            "subject_lock_required": bool(task.input.subject_lock),
+            "image_reference_field": getattr(self.settings, "image_reference_field", "image"),
+            "pexels_media_mode": getattr(self.settings, "pexels_media_mode", "video-first"),
             # 成片规格单独放一份；resolution / ratio / size 是 provider 认的口径，
             # 直接塞 "720x1280" 会被 video.normalize_resolution 拒掉。
             "output_resolution": task.input.output_resolution,
@@ -614,6 +625,26 @@ class Orchestrator:
             except (ValueError, OSError, subprocess.SubprocessError) as exc:
                 reviews.append({"group":group,"error":str(exc)})
         task.audio["subject_reviews"] = reviews
+        primary_source = candidates[0] if candidates else asset_source
+        requires_video = primary_source in {"pexels", "ai-video", "ai-t2v"}
+        min_video_shots = (
+            int(getattr(self.settings, "visual_qa_min_video_shots", 4))
+            if requires_video else 0
+        )
+        qa_report = visual_qa.verify_task_visuals(
+            task.to_dict(),
+            min_video_shots=min_video_shots,
+            strict_media=bool(getattr(self.settings, "visual_qa_strict", False)),
+            strict_reference=bool(
+                task.input.subject_reference_path
+                and getattr(self.settings, "visual_qa_strict", False)
+            ),
+        )
+        task.visual_qa = qa_report
+        if getattr(self.settings, "visual_qa_enabled", True):
+            visual_qa.write_report(qa_report, self.settings.media_dir / task.id / "visual_qa.json")
+        if getattr(self.settings, "visual_qa_strict", False) and not qa_report["passed"]:
+            raise RuntimeError("视觉验收未通过: " + "; ".join(qa_report.get("failures") or []))
         self.update(
             task,
             stage="assets",
@@ -624,6 +655,8 @@ class Orchestrator:
                 "status": "completed",
                 "asset_count": len(task.assets),
                 "source": ",".join(sorted(used_sources)) or asset_source,
+                "video_shot_count": qa_report["requirements"]["video_shot_count"],
+                "visual_qa_passed": qa_report["passed"],
             },
         )
 

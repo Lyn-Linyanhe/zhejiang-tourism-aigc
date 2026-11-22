@@ -46,6 +46,8 @@ class TaskInput:
     music_mood: str
     include_ai_label: bool = True
     custom_brief: str = ""
+    subject_lock: str = ""
+    subject_reference_path: str = ""
     shot_count: int = 0
     include_subtitles: bool = True
     asset_source: str = "configured"
@@ -76,6 +78,8 @@ class TaskInput:
             "music_mood": str(raw.get("music_mood", "舒缓")).strip(),
             "include_ai_label": bool(raw.get("include_ai_label", True)),
             "custom_brief": str(raw.get("custom_brief", "")).strip(),
+            "subject_lock": str(raw.get("subject_lock", "")).strip(),
+            "subject_reference_path": str(raw.get("subject_reference_path", "")).strip(),
             "shot_count": int(raw.get("shot_count", 0)),
             "include_subtitles": bool(raw.get("include_subtitles", True)),
             "asset_source": str(raw.get("asset_source", "configured")).strip().lower(),
@@ -104,6 +108,10 @@ class TaskInput:
             raise ValueError("theme 长度不能超过 80 个字符")
         if len(values["custom_brief"]) > 500:
             raise ValueError("custom_brief 长度不能超过 500 个字符")
+        if len(values["subject_lock"]) > 500:
+            raise ValueError("subject_lock 长度不能超过 500 个字符")
+        if len(values["subject_reference_path"]) > 1000:
+            raise ValueError("subject_reference_path 长度不能超过 1000 个字符")
         if values["shot_count"] not in ALLOWED_SHOT_COUNTS:
             raise ValueError("shot_count must be 4, 6, or 8")
         if values["duration"] not in ALLOWED_DURATIONS:
@@ -227,6 +235,7 @@ class Task:
     assets: list[AssetRecord] = field(default_factory=list)
     audio: dict[str, Any] = field(default_factory=dict)
     render: dict[str, Any] = field(default_factory=dict)
+    visual_qa: dict[str, Any] = field(default_factory=dict)
     trace: TraceRecord | None = None
     error: str = ""
     created_at: str = field(default_factory=now_iso)

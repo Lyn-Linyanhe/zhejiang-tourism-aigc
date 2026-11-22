@@ -16,6 +16,7 @@ from backend.app.providers.video import (
     VideoConfigError,
     build_video_payload,
 )
+from backend.app.services.consistency import subject_lock as resolve_subject_lock
 
 
 _IMAGE_ENV = ("IMAGE_BASE_URL", "IMAGE_API_KEY", "IMAGE_MODEL", "IMAGE_SIZE")
@@ -45,6 +46,11 @@ class CloudPayloadTests(unittest.TestCase):
         )
         self.assertEqual(payload["seed"], 42)
         self.assertNotIn("urlopen", str(payload))
+        locked = build_image_payload(
+            "同一主体", model="local-test", size="1024x1536", seed=42,
+            negative="文字", reference_image="data:image/png;base64,abc",
+        )
+        self.assertEqual(locked["image"], "data:image/png;base64,abc")
 
     def test_video_refuses_without_key_and_first_frame_is_an_image_item(self):
         cleared = {name: "" for name in _VIDEO_ENV}
@@ -105,6 +111,41 @@ class CloudPayloadTests(unittest.TestCase):
         )
         self.assertEqual(bare["seed"], 7)
         self.assertFalse(any(item.get("type") == "image_url" for item in bare["content"]))
+
+    def test_image_provider_sends_the_same_subject_reference_with_the_locked_prompt(self):
+        with tempfile.TemporaryDirectory() as directory:
+            reference = Path(directory) / "subject.png"
+            reference.write_bytes(b"\x89PNG\r\n\x1a\nreference")
+            provider = CloudImageProvider(
+                settings={}, base_url="https://example.invalid/v1", model="test-image"
+            )
+            style_ctx = {
+                "task_id": "task_lock",
+                "city": "杭州",
+                "landmark": "西湖",
+                "subject_lock": "同一座断桥，石栏缺口和青灰石材保持不变",
+                "subject_reference_path": str(reference),
+                "image_reference_field": "image",
+                "size": "1024x1536",
+            }
+            captured: dict = {}
+
+            def _fake_request(url, payload, api_key):
+                captured.update(url=url, payload=payload, api_key=api_key)
+                return b"generated-image"
+
+            with patch("backend.app.providers.image.request_image", side_effect=_fake_request):
+                result = provider.generate(
+                    {"id": "shot_1", "order": 1, "visual_prompt": "断桥侧面，清晨薄雾"},
+                    directory,
+                    style_ctx,
+                )
+            lock = resolve_subject_lock(style_ctx)
+            self.assertIn(lock["id"], captured["payload"]["prompt"])
+            self.assertIn("同一座断桥", captured["payload"]["prompt"])
+            self.assertTrue(captured["payload"]["image"].startswith("data:image/png;base64,"))
+            self.assertEqual(result.event["subject_id"], lock["id"])
+            self.assertTrue(result.event["subject_reference_used"])
 
 
 if __name__ == "__main__":

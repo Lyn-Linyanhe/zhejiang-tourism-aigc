@@ -154,6 +154,7 @@ function assetProviderOptions(source) {
     { name: "local-library", label: "本地素材库", available: true },
     { name: "upload", label: "逐镜头上传", available: true },
     { name: "stock", label: "在线素材", available: true },
+    { name: "pexels", label: "Pexels 视频优先素材", available: true },
     { name: "offline", label: "技术测试场景图", available: true },
   ];
   const selected = visibleAssetSource(source);
@@ -502,6 +503,8 @@ function reviewSettingsMarkup(task) {
         <label>成片时长<select ${draft("duration")}>${[15, 30, 60].map((value) => `<option value="${value}" ${Number(input.duration) === value ? "selected" : ""}>${value} 秒</option>`).join("")}</select></label>
         <label>镜头数量<select ${draft("shot_count")}>${[0, 4, 6, 8].map((value) => `<option value="${value}" ${Number(input.shot_count) === value ? "selected" : ""}>${value || "自动"}${value ? " 个" : ""}</option>`).join("")}</select></label>
       </div>
+      <label>主体锁定<textarea ${draft("subject_lock")} placeholder="同一座断桥、同一件器物或同一位人物的固定外观">${escapeHtml(input.subject_lock || "")}</textarea><small class="field-note">逐镜复用主体描述；填写参考图路径时可进一步启用图像条件。</small></label>
+      <label>主体参考图路径<input ${draft("subject_reference_path")} value="${escapeHtml(input.subject_reference_path || "")}" placeholder="可选：本地图片绝对路径" /></label>
       <label>补充要求<textarea ${draft("custom_brief")}>${escapeHtml(input.custom_brief)}</textarea></label>
     </section>
   </div>`;
@@ -529,7 +532,7 @@ function shotEditor(task) {
 
 function assetList(task) {
   if (!task.assets?.length) return `<p class="muted">尚未绑定素材。</p>`;
-  return `<div class="asset-list">${task.assets.map((asset) => `<div class="asset-row"><span>镜头 ${escapeHtml(asset.shot_id || "-")}</span><strong>${escapeHtml(asset.name)}</strong><small>${escapeHtml(asset.source)} / ${escapeHtml(asset.author)} / ${escapeHtml(asset.license)} ${asset.page_url?.startsWith("https://") ? `<a href="${escapeHtml(asset.page_url)}" target="_blank" rel="noopener">原始素材</a>` : ""}</small></div>`).join("")}</div>`;
+  return `<div class="asset-list">${task.assets.map((asset) => `<div class="asset-row"><span>镜头 ${escapeHtml(asset.shot_id || "-")}</span><strong>${escapeHtml(asset.name)}</strong><small>${escapeHtml(asset.source)} / ${escapeHtml(asset.media_type || "未标注")} / ${escapeHtml(asset.author)} / ${escapeHtml(asset.license)} ${asset.page_url?.startsWith("https://") ? `<a href="${escapeHtml(asset.page_url)}" target="_blank" rel="noopener">原始素材</a>` : ""}</small></div>`).join("")}</div>`;
 }
 
 const RECORD_FIELDS = [
@@ -647,6 +650,21 @@ function bindDeliveryForms(task) {
   }));
 }
 
+function visualQaMarkup(task) {
+  const qa = task.visual_qa;
+  if (!qa || !qa.version) return "";
+  const requirements = qa.requirements || {};
+  const cross = qa.cross_shot || {};
+  const failures = Array.isArray(qa.failures) && qa.failures.length
+    ? `<ul>${qa.failures.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul>`
+    : "<p>未发现阻断项。</p>";
+  return `<section class="review-block"><div class="review-block-head"><span class="section-index">QA / VISUAL</span><h5>画面与主体一致性验收</h5></div>
+    <div class="mini-metrics"><div><strong>${qa.passed ? "通过" : "未通过"}</strong><span>总结果</span></div><div><strong>${Number(requirements.video_shot_count || 0)} / ${Number(requirements.min_video_shots || 0)}</strong><span>视频镜头</span></div><div><strong>${qa.generation_contract?.passed ? "一致" : "不一致"}</strong><span>主体契约</span></div></div>
+    <p class="section-note">亮度波动 ${escapeHtml(cross.brightness_cv ?? "未测")} / 色彩相似度 ${escapeHtml(cross.min_color_hist_similarity ?? "未测")}。验收读取实际像素；语义级身份核验仍需接入视觉嵌入或主体识别模型。</p>
+    ${failures}<p><a href="/media/${encodeURIComponent(task.id)}/visual_qa.json" target="_blank">打开完整视觉验收 JSON</a></p>
+  </section>`;
+}
+
 function renderTask(task) {
   const record = taskRecordMarkup(task.input || {}, task.initial_input);
   // Old drafts retain their uploaded audio when the retired source is opened.
@@ -666,7 +684,7 @@ function renderTask(task) {
     </section>
     <button class="text-button" data-save-draft="${escapeHtml(task.id)}">保存脚本、分镜和参数修改</button>
   </div>` : "";
-  $("#active-task").innerHTML = `<div class="task-progress"><div class="task-meta"><div><h4>${escapeHtml(task.title || "脚本预览")}</h4><p>${escapeHtml(task.summary || "请审核脚本和分镜后生成。")} / ${escapeHtml(task.status)} / ${escapeHtml(task.id)}</p></div><strong>${task.progress}%</strong></div><div class="progress-bar"><span style="width:${task.progress}%"></span></div><div class="pipeline">${stageMarkup(task)}</div>${record}${error}${draft}${links}<div class="task-links"><a href="/api/tasks/${encodeURIComponent(task.id)}/ledger" download>下载任务底账</a></div>${visualReviewMarkup(task)}${billingMarkup(task)}${(task.audio?.subject_reviews || []).map(s => s.url ? `<a href="${escapeHtml(s.url)}" target="_blank">复核 ${escapeHtml(s.group)} · 首中尾帧</a>` : escapeHtml(s.error)).join(" ")}${task.audio?.subtitle_alignment ? '<p>字幕对齐 · ' + task.audio.subtitle_alignment.segments.map(s=>escapeHtml(s.shot_id + " " + (s.source === "sentence" ? "句级（"+s.reason+"）" : s.source))).join(" / ") + '</p>' : ""}<p>${escapeHtml(task.audio?.music_notice || (task.audio?.music_match?.id ? (task.audio.music_match.title || task.audio.music_match.id) + " · " + task.audio.music_match.license : ""))}</p><div class="asset-summary"><strong>素材记录</strong>${assetList(task)}</div><div class="trace-line">文本 provider: ${escapeHtml(task.trace?.provider || "pending")} / 模型: ${escapeHtml(task.trace?.model || "pending")} / fallback: ${String(Boolean(task.trace?.fallback_used))}<br />配音: ${escapeHtml(task.audio?.voice_provider || "pending")} / 音乐: ${escapeHtml(task.audio?.music_provider || "pending")} / 音频: ${render.has_audio ? "有" : "无"} / 烧录字幕: ${render.has_burned_subtitles ? "有" : "无"}</div></div>`;
+  $("#active-task").innerHTML = `<div class="task-progress"><div class="task-meta"><div><h4>${escapeHtml(task.title || "脚本预览")}</h4><p>${escapeHtml(task.summary || "请审核脚本和分镜后生成。")} / ${escapeHtml(task.status)} / ${escapeHtml(task.id)}</p></div><strong>${task.progress}%</strong></div><div class="progress-bar"><span style="width:${task.progress}%"></span></div><div class="pipeline">${stageMarkup(task)}</div>${record}${error}${draft}${links}<div class="task-links"><a href="/api/tasks/${encodeURIComponent(task.id)}/ledger" download>下载任务底账</a></div>${visualReviewMarkup(task)}${billingMarkup(task)}${(task.audio?.subject_reviews || []).map(s => s.url ? `<a href="${escapeHtml(s.url)}" target="_blank">复核 ${escapeHtml(s.group)} · 首中尾帧</a>` : escapeHtml(s.error)).join(" ")}${task.audio?.subtitle_alignment ? '<p>字幕对齐 · ' + task.audio.subtitle_alignment.segments.map(s=>escapeHtml(s.shot_id + " " + (s.source === "sentence" ? "句级（"+s.reason+"）" : s.source))).join(" / ") + '</p>' : ""}<p>${escapeHtml(task.audio?.music_notice || (task.audio?.music_match?.id ? (task.audio.music_match.title || task.audio.music_match.id) + " · " + task.audio.music_match.license : ""))}</p><div class="asset-summary"><strong>素材记录</strong>${assetList(task)}</div>${visualQaMarkup(task)}<div class="trace-line">文本 provider: ${escapeHtml(task.trace?.provider || "pending")} / 模型: ${escapeHtml(task.trace?.model || "pending")} / fallback: ${String(Boolean(task.trace?.fallback_used))}<br />配音: ${escapeHtml(task.audio?.voice_provider || "pending")} / 音乐: ${escapeHtml(task.audio?.music_provider || "pending")} / 音频: ${render.has_audio ? "有" : "无"} / 烧录字幕: ${render.has_burned_subtitles ? "有" : "无"}<br />Provider 报告成本: ${Number(task.cost?.total || 0).toFixed(4)}（${escapeHtml(task.cost?.unit || "等待统计")}）</div></div>`;
   $$("[data-retry]").forEach((button) => button.addEventListener("click", () => retryTask(button.dataset.retry)));
   $$("[data-generate-task]").forEach((button) => button.addEventListener("click", () => generateTask(button.dataset.generateTask)));
   $$("[data-save-draft]").forEach((button) => button.addEventListener("click", () => saveDraft(button.dataset.saveDraft)));

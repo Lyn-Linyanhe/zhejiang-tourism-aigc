@@ -201,7 +201,7 @@ class OfflineLLMProvider(LLMProvider):
             "type": "llm",
             "provider": self.name,
             "model": self.model,
-            "prompt_version": "zj-tourism-prompt-v1",
+            "prompt_version": "zj-tourism-prompt-v2",
             "prompt_sha256": hashlib.sha256(prompt.encode("utf-8")).hexdigest(),
             "ok": True,
             "cost_basis": "no_external_charge",

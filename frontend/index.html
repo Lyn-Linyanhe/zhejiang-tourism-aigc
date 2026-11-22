@@ -45,6 +45,8 @@
                   <div class="field-row"><label>配音音量 <input name="voice_volume" type="number" min="0" max="2" step="0.05" value="1" /></label><label>音乐音量 <input name="music_volume" type="number" min="0" max="1" step="0.01" value="0.18" /></label></div>
                   <div class="field-row"><label>旁白出现时的音乐<select name="music_ducking"><option value="不压低">保持音量不变</option><option value="轻微" selected>轻微压低</option><option value="标准">标准压低</option></select></label></div>
                   <div class="field-row toggle-row"><label class="toggle-label">烧录字幕 <input type="checkbox" name="include_subtitles" checked /><span class="toggle"></span></label><label class="toggle-label">保留 AIGC 标识 <input type="checkbox" name="include_ai_label" checked /><span class="toggle"></span></label></div>
+                  <label>主体锁定<textarea name="subject_lock" maxlength="500" placeholder="写明跨镜头不能变化的同一个人/物件/地标，例如：同一座断桥，石栏缺口、桥拱比例与青灰色石材保持一致。"></textarea><small class="field-note">这会逐镜复用为生成条件；风格词、seed 和调色不能替代主体锁定。填写主体锁定时应同时提供参考图。</small></label>
+                  <label>主体参考图路径<input name="subject_reference_path" maxlength="1000" placeholder="可选：本地参考图绝对路径，例如 E:\assets\subject.png" /></label>
                   <label>补充要求<textarea name="custom_brief" maxlength="500" placeholder="可以指定开场、镜头节奏、口号、禁用表达、必须出现的内容等。"></textarea></label>
                   <div class="form-footer"><span>提交后先生成脚本和分镜，不会立即消耗素材或渲染任务。</span><button class="primary-button" type="submit"><span>生成脚本预览</span><b>→</b></button></div>
                 </form>

@@ -34,7 +34,7 @@ from pathlib import Path
 from typing import Any
 
 from .contract import MEDIA_TYPE_VIDEO, AssetResult
-from ..services.consistency import compose_prompt, seed_for_shot
+from ..services.consistency import compose_prompt, seed_for_shot, subject_lock
 
 
 PROVIDER_NAME = "cloud-i2v"
@@ -370,7 +370,9 @@ class CloudVideoProvider:
         visual = str(shot.get("visual_prompt") or shot.get("prompt") or "").strip()
         if not visual:
             raise RuntimeError("视频生成缺少 visual_prompt")
-        prompt = compose_prompt(visual, style_ctx)
+        # 首帧负责锁定可见身份，文字负责约束运动与跨帧稳定。只重复风格词或
+        # seed 并不能锁住主体，因此提示词必须带同一主体锚点和生成约束。
+        prompt = compose_prompt(visual, style_ctx, shot=shot)
         task_id = str(shot.get("task_id") or style_ctx.get("task_id") or "")
         seed = seed_for_shot(task_id, shot, style_ctx)
         duration = clamp_duration(
@@ -380,9 +382,11 @@ class CloudVideoProvider:
         ratio = normalize_ratio(str(style_ctx.get("ratio") or self.ratio))
         image_url = image_to_data_url(frame_path) if frame_path else ""
         if self.api_style == "tokendance":
-            return self._generate_tokendance(
+            result = self._generate_tokendance(
                 shot, frame_path, output_dir, prompt, seed, duration, resolution, ratio
             )
+            result.event.update(_subject_event(style_ctx, frame_path))
+            return result
         payload = build_video_payload(
             model=self.model,
             prompt=prompt,
@@ -421,6 +425,7 @@ class CloudVideoProvider:
                 "resolution": resolution,
                 "ratio": ratio,
                 "mode": "i2v" if frame_path else "t2v",
+                **_subject_event(style_ctx, frame_path),
             },
         )
         result.validate()
@@ -537,6 +542,15 @@ class CloudVideoProvider:
             raise RuntimeError("TokenDance 图生视频请求超时；未自动重试，避免重复提交") from exc
         if not isinstance(payload, dict): raise RuntimeError("TokenDance 图生视频返回格式不是 JSON 对象")
         return payload
+
+
+def _subject_event(style_ctx: dict[str, Any], frame_path: Path | None) -> dict[str, Any]:
+    lock = subject_lock(style_ctx)
+    return {
+        "subject_id": str(lock.get("id") or ""),
+        "subject_reference_sha256": str(lock.get("reference_sha256") or ""),
+        "first_frame_anchored": bool(frame_path),
+    }
 
 
 def build_provider(settings: Any = None) -> CloudVideoProvider:

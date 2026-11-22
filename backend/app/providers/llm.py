@@ -107,6 +107,10 @@ class OpenAICompatibleLLMProvider(LLMProvider):
         per_shot_floor = budget["per_shot_floor"]
         total_chars = budget["total_chars"]
         custom_brief = str(context.get("custom_brief", "")).strip()
+        subject_lock = str(context.get("subject_lock", "")).strip()
+        if not subject_lock:
+            place = f"{context.get('city', '')}{context.get('landmark', '')}".strip()
+            subject_lock = f"{place or '核心景点'}的可辨识主体、轮廓、材质和标志性细节"
         knowledge_context = _resolve_knowledge_context(context)
         schema = (
             '{"title":"string","summary":"string","cta":"string",'
@@ -136,6 +140,11 @@ class OpenAICompatibleLLMProvider(LLMProvider):
             f"（可用空格代替逗号、去掉句末标点），长度不超过 {per_shot_chars} 字；"
             "不要另起一个短标题，观众读到的字必须和听到的话一致。"
             "每个镜头必须有具体可视化画面、旁白和字幕，不能使用空字符串、占位符或泛泛的“风景”。"
+            f"全片必须锁定同一主体：{subject_lock}。"
+            "每个 visual_prompt 都要明确写出这个主体如何出现，并只改变机位、景别、动作、时间和光线；"
+            "不得在不同镜头重新设计主体，也不要用风格形容词代替主体描述。"
+            "visual_prompt 的推荐结构是：主体及其固定外观 + 本镜场景/动作 + 景别与机位 + 光线；"
+            "不要写抽象空话，不要指定文字、水印或画面内字幕。"
             f"{fallback_rule}"
             f"{knowledge_context}"
             "只输出 JSON，不要 Markdown，不要解释。JSON 结构必须符合："
@@ -174,7 +183,7 @@ class OpenAICompatibleLLMProvider(LLMProvider):
                         f"全片 {total} 字。"
                         f"请把每镜 narration 改写成正好 {per_shot_chars} 字左右"
                         f"（全片约 {total_chars} 字，不得少于 {min_total} 字，不得多于 {total_chars} 字）。"
-                        "保留同样的分镜结构、画面描述和事实依据；"
+                        "保留同样的分镜结构、主体锁定、画面描述和事实依据；"
                         "每镜多写一个具体的景物、动作或可核实的细节来补足字数，"
                         "不要用重复句、空话或感叹词凑数。"
                         "subtitle 与改写后的 narration 逐字对应。重新输出完整 JSON。"
@@ -200,6 +209,8 @@ class OpenAICompatibleLLMProvider(LLMProvider):
                 "narration_target": total_chars,
                 "narration_rewrite_attempts": attempts,
                 "billing_instrumented": True,
+                "prompt_version": "zj-tourism-prompt-v2",
+                "subject_lock": subject_lock,
             },
         )
 

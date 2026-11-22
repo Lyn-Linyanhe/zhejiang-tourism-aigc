@@ -28,6 +28,15 @@
 
 [11 月 21 日更新说明](docs/2026-11-21.md)
 
+- 本包的 `.env` 不含任何 API key，预设 `DEFAULT_PROVIDER=offline` 和 `ASSET_PROVIDER=offline`。该模式用于验收流程，离线场景图不等同于真实旅游照片。
+
+## AI 画面与跨镜一致性
+
+- Pexels 现在优先查询 `/videos/search`，返回真实 MP4 时标记 `media_type=video`；只有在允许降级时才回退照片，并明确标记为 `image`。
+- `subject_lock` 会作为统一的身份/形制条件写入每个镜头；启用主体锁定时必须同时提供 `subject_reference_path`。参考图会随请求发送，并用 SHA-256 校验所有镜头引用的是同一张图。只写主体描述会被验收标为 `prompt-only`，不会冒充真正的图像条件锁定；风格词、seed 和调色也不再被当作证明。
+- 素材阶段会写出 `visual_qa.json`，其中包含真实视频镜头数、解码后的对比度/清晰度/熵/裁剪比例、跨镜亮度与色彩漂移。最终 `manifest.json` 会嵌入该报告。
+- 独立验收命令：`py -3.12 scripts/verify_visual_acceptance.py --task-id task_xxx --data-dir runtime`。默认要求至少 4 个可解码视频镜头；纯静图离线 smoke 请显式传 `--min-video-shots 0`。
+
 ## 使用流程
 
 1. 在创作工作台填写城市、地标、主题、文化线索、受众、时长、镜头数、风格、配音、音乐和输出规格。
